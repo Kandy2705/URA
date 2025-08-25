@@ -396,23 +396,3 @@
 {"msg":"enqueueNode","enqueuedNodeAnnotation":"MovedFromExtractor-Combine Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll.mvfrm","enqueuedNodeIndex":337,"enqueueingNodeAnnotation":"Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)","enqueueingNodeIndex":335}
 {"msg":"enqueueNode","enqueuedNodeAnnotation":"WriteText Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll.mvfrm.rsp","enqueuedNodeIndex":336,"enqueueingNodeAnnotation":"MovedFromExtractor-Combine Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll.mvfrm","enqueueingNodeIndex":337}
 {"msg":"enqueueNode","enqueuedNodeAnnotation":"CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb","enqueuedNodeIndex":397,"enqueueingNodeAnnotation":"ScriptAssemblies","enqueueingNodeIndex":6}
-{"msg":"nodeRetryBuild","annotation":"Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll (+2 others)","index":319}
-{"msg":"runNodeAction","annotation":"Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll (+2 others)","displayName":"Compiling C# (Assembly-CSharp)","index":319}
-{"msg":"noderesult","processed_node_count":390,"number_of_nodes_ever_queued":397,"annotation":"Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll (+2 others)","index":319,"exitcode":0,"outputfile":"Library\\Bee\\artifacts\\1900b0aE.dag\\Assembly-CSharp.dll"}
-{"msg":"newNode","annotation":"CopyFiles Library/ScriptAssemblies/Assembly-CSharp.pdb","index":395}
-{"msg":"runNodeAction","annotation":"CopyFiles Library/ScriptAssemblies/Assembly-CSharp.pdb","displayName":"Copying Assembly-CSharp.pdb","index":395}
-{"msg":"noderesult","processed_node_count":391,"number_of_nodes_ever_queued":397,"annotation":"CopyFiles Library/ScriptAssemblies/Assembly-CSharp.pdb","index":395,"exitcode":0,"outputfile":"Library\\ScriptAssemblies\\Assembly-CSharp.pdb"}
-{"msg":"newNode","annotation":"Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)","index":335}
-{"msg":"runNodeAction","annotation":"Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)","displayName":"Compiling C# (Assembly-CSharp-Editor)","index":335}
-{"msg":"newNode","annotation":"CopyFiles Library/ScriptAssemblies/Assembly-CSharp.dll","index":394}
-{"msg":"runNodeAction","annotation":"CopyFiles Library/ScriptAssemblies/Assembly-CSharp.dll","displayName":"Copying Assembly-CSharp.dll","index":394}
-{"msg":"noderesult","processed_node_count":392,"number_of_nodes_ever_queued":397,"annotation":"CopyFiles Library/ScriptAssemblies/Assembly-CSharp.dll","index":394,"exitcode":0,"outputfile":"Library\\ScriptAssemblies\\Assembly-CSharp.dll"}
-{"msg":"noderesult","processed_node_count":393,"number_of_nodes_ever_queued":397,"annotation":"Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)","index":335,"exitcode":0,"outputfile":"Library\\Bee\\artifacts\\1900b0aE.dag\\Assembly-CSharp-Editor.dll"}
-{"msg":"newNode","annotation":"CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb","index":397}
-{"msg":"runNodeAction","annotation":"CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb","displayName":"Copying Assembly-CSharp-Editor.pdb","index":397}
-{"msg":"noderesult","processed_node_count":394,"number_of_nodes_ever_queued":397,"annotation":"CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb","index":397,"exitcode":0,"outputfile":"Library\\ScriptAssemblies\\Assembly-CSharp-Editor.pdb"}
-{"msg":"newNode","annotation":"CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.dll","index":396}
-{"msg":"runNodeAction","annotation":"CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.dll","displayName":"Copying Assembly-CSharp-Editor.dll","index":396}
-{"msg":"noderesult","processed_node_count":395,"number_of_nodes_ever_queued":397,"annotation":"CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.dll","index":396,"exitcode":0,"outputfile":"Library\\ScriptAssemblies\\Assembly-CSharp-Editor.dll"}
-{"msg":"newNode","annotation":"ScriptAssemblies","index":6}
-{"msg":"runNodeAction","annotation":"ScriptAssemblies","index":6}
