@@ -15,7 +15,7 @@ D:/game/URA
 -logFile
 Logs/AssetImportWorker1.log
 -srvPort
-49941
+53486
 -job-worker-count
 7
 -background-job-worker-count
@@ -59,12 +59,12 @@ D:/game/URA
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [16448]  Target information:
+Player connection [396]  Target information:
 
-Player connection [16448]  * "[IP] 192.168.1.53 [Port] 0 [Flags] 2 [Guid] 2996951697 [EditorId] 2996951697 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-I8RA7AQE) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [396]  * "[IP] 192.168.1.138 [Port] 0 [Flags] 2 [Guid] 430051003 [EditorId] 430051003 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-I8RA7AQE) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [16448] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [16448] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [396] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [396] Host joined alternative multi-casting on [225.0.0.222:34997]...
 JobSystem: Creating JobQueue using job-worker-count value 7
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
@@ -76,7 +76,7 @@ Library Redirect Path: Library/
 [Physics::Module] SDK Version: 4.1.2
 [Physics::Module] Integration Version: 1.0.0
 [Physics::Module] Threading Mode: Multi-Threaded
-Refreshing native plugins compatible for Editor in 378.30 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 4.80 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.44f1 (101c91f3a8fb)
 [Subsystems] Discovering subsystems at path D:/game/6000.0.44f1/Editor/Data/Resources/UnitySubsystems
@@ -92,46 +92,46 @@ Initialize mono
 Mono path[0] = 'D:/game/6000.0.44f1/Editor/Data/Managed'
 Mono path[1] = 'D:/game/6000.0.44f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'D:/game/6000.0.44f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56064
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56232
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: D:/game/6000.0.44f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
 Register platform support module: D:/game/6000.0.44f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
-Registered in 0.005870 seconds.
-- Loaded All Assemblies, in  1.046 seconds
+Registered in 0.497711 seconds.
+- Loaded All Assemblies, in  1.143 seconds
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 509 ms
+Android Extension - Scanning For ADB Devices 567 ms
 Native extension for WindowsStandalone target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.013 seconds
-Domain Reload Profiling: 2059ms
-	BeginReloadAssembly (689ms)
+- Finished resetting the current domain, in  1.233 seconds
+Domain Reload Profiling: 2377ms
+	BeginReloadAssembly (281ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (4ms)
-	RebuildCommonClasses (56ms)
-	RebuildNativeTypeToScriptingClass (13ms)
-	initialDomainReloadingComplete (57ms)
-	LoadAllAssembliesAndSetupDomain (231ms)
-		LoadAssemblies (686ms)
+		CreateAndSetChildDomain (3ms)
+	RebuildCommonClasses (48ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (568ms)
+	LoadAllAssembliesAndSetupDomain (236ms)
+		LoadAssemblies (279ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (223ms)
-			TypeCache.Refresh (221ms)
-				TypeCache.ScanAssembly (203ms)
+		AnalyzeDomain (226ms)
+			TypeCache.Refresh (224ms)
+				TypeCache.ScanAssembly (202ms)
 			BuildScriptInfoCaches (0ms)
-			ResolveRequiredComponents (1ms)
-	FinalizeReload (1014ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (1235ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (963ms)
+		SetupLoadedEditorAssemblies (1172ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (600ms)
-			SetLoadedEditorAssemblies (7ms)
-			BeforeProcessingInitializeOnLoad (85ms)
-			ProcessInitializeOnLoadAttributes (172ms)
-			ProcessInitializeOnLoadMethodAttributes (98ms)
+			InitializePlatformSupportModulesInManaged (685ms)
+			SetLoadedEditorAssemblies (8ms)
+			BeforeProcessingInitializeOnLoad (150ms)
+			ProcessInitializeOnLoadAttributes (223ms)
+			ProcessInitializeOnLoadMethodAttributes (105ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -140,109 +140,827 @@ Domain Reload Profiling: 2059ms
 Worker process is ready to serve import requests
 Import Worker Mode flag is 0x00
 Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.019 seconds
-Refreshing native plugins compatible for Editor in 4.13 ms, found 3 plugins.
+- Loaded All Assemblies, in  1.088 seconds
+Refreshing native plugins compatible for Editor in 2.22 ms, found 3 plugins.
 Native extension for Android target not found
 Native extension for WindowsStandalone target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.961 seconds
-Domain Reload Profiling: 1981ms
-	BeginReloadAssembly (229ms)
+- Finished resetting the current domain, in  0.836 seconds
+Domain Reload Profiling: 1925ms
+	BeginReloadAssembly (322ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (9ms)
+		DisableScriptedObjects (8ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (44ms)
-	RebuildCommonClasses (36ms)
-	RebuildNativeTypeToScriptingClass (12ms)
-	initialDomainReloadingComplete (35ms)
-	LoadAllAssembliesAndSetupDomain (707ms)
-		LoadAssemblies (539ms)
+		CreateAndSetChildDomain (65ms)
+	RebuildCommonClasses (37ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (34ms)
+	LoadAllAssembliesAndSetupDomain (685ms)
+		LoadAssemblies (608ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (299ms)
-			TypeCache.Refresh (261ms)
-				TypeCache.ScanAssembly (228ms)
-			BuildScriptInfoCaches (30ms)
+		AnalyzeDomain (283ms)
+			TypeCache.Refresh (219ms)
+				TypeCache.ScanAssembly (183ms)
+			BuildScriptInfoCaches (55ms)
 			ResolveRequiredComponents (5ms)
-	FinalizeReload (962ms)
+	FinalizeReload (837ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (780ms)
+		SetupLoadedEditorAssemblies (667ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (16ms)
+			InitializePlatformSupportModulesInManaged (15ms)
 			SetLoadedEditorAssemblies (5ms)
-			BeforeProcessingInitializeOnLoad (74ms)
-			ProcessInitializeOnLoadAttributes (647ms)
-			ProcessInitializeOnLoadMethodAttributes (37ms)
-			AfterProcessingInitializeOnLoad (1ms)
+			BeforeProcessingInitializeOnLoad (98ms)
+			ProcessInitializeOnLoadAttributes (524ms)
+			ProcessInitializeOnLoadMethodAttributes (23ms)
+			AfterProcessingInitializeOnLoad (3ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (8ms)
-database is locked
-Failed to delete database file Library/ShaderCache.db
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.02 seconds
-Refreshing native plugins compatible for Editor in 3.18 ms, found 3 plugins.
+		AwakeInstancesAfterBackupRestoration (7ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 1.86 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 22 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 3347 unused Assets / (1.4 MB). Loaded Objects now: 3850.
-Memory consumption went from 86.0 MB to 84.7 MB.
-Total: 12.240400 ms (FindLiveObjects: 1.086100 ms CreateObjectMapping: 0.830400 ms MarkObjects: 7.711500 ms  DeleteObjects: 2.608200 ms)
+Memory consumption went from 86.7 MB to 85.3 MB.
+Total: 10.983100 ms (FindLiveObjects: 0.651800 ms CreateObjectMapping: 0.683500 ms MarkObjects: 6.991800 ms  DeleteObjects: 2.642200 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 501176.713597 seconds.
-  path: Assets/Prefabs/Supermercado/Milk.fbx
-  artifactKey: Guid(ef6e84985431b3443bf525c1245fa461) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/Milk.fbx using Guid(ef6e84985431b3443bf525c1245fa461) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '4c164c2dd9b2f610ce703aabff7f7f71') in 0.6945239 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 22
+  Time since last request: 12748.954535 seconds.
+  path: Assets/Prefabs/supermarket/source
+  artifactKey: Guid(0688628a4f6ffd84c9d4ead4cbc9947d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source using Guid(0688628a4f6ffd84c9d4ead4cbc9947d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '88d5eb003550b330267299255ae9b31a') in 0.0171447 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000051 seconds.
-  path: Assets/Prefabs/Supermercado/toaster.fbx
-  artifactKey: Guid(abb6448a8e7dc5942862d2a8119e731a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/toaster.fbx using Guid(abb6448a8e7dc5942862d2a8119e731a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '10f825be3e3ca4ac03e5ea36f0e2efeb') in 0.1068841 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 24
+  Time since last request: 4.536857 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model
+  artifactKey: Guid(cd378e4a6d30d3241941652bb31a7a3d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model using Guid(cd378e4a6d30d3241941652bb31a7a3d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'db54c72aede620d30553ec3b64bec6fd') in 0.0006169 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000059 seconds.
-  path: Assets/Prefabs/Supermercado/coffee.fbx
-  artifactKey: Guid(366e71d5f630d54488a2a403932fdcd1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/coffee.fbx using Guid(366e71d5f630d54488a2a403932fdcd1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'df53ba7174f01bc3d999811e7cb82057') in 0.071826 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 16
+  Time since last request: 0.055154 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273231716-abebdfc305.jpg
+  artifactKey: Guid(5cd6957b641f45d469cb5a237102534e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273231716-abebdfc305.jpg using Guid(5cd6957b641f45d469cb5a237102534e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7f54c47ec8303f63c69f5ba46fbd2df8') in 0.1233496 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000895 seconds.
-  path: Assets/Prefabs/Supermercado/Eggs.fbx
-  artifactKey: Guid(9614fd84d7e920747aff67d65bb05c6d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/Eggs.fbx using Guid(9614fd84d7e920747aff67d65bb05c6d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2e472eb7f697490b1130d0ea60e5351a') in 0.0800165 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 16
+  Time since last request: 0.000029 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1294981325-1fee77a00b.jpg
+  artifactKey: Guid(d421f666c6c303a4ead0633fc3c43c38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1294981325-1fee77a00b.jpg using Guid(d421f666c6c303a4ead0633fc3c43c38) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '04ab59dbb8410c440c7aa7992b97358d') in 0.0245152 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000111 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/__StandingSeam_Metal_Roof_.jpg
+  artifactKey: Guid(98aa74e38c7c04b44a8b0640351a1fe8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/__StandingSeam_Metal_Roof_.jpg using Guid(98aa74e38c7c04b44a8b0640351a1fe8) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '89aa5f59492b7e007bfe6cc333a2eb92') in 0.0388407 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000075 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273231930-b2890047c2.jpg
+  artifactKey: Guid(ea9f766e88b3d1943913cb92aebe8c2e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273231930-b2890047c2.jpg using Guid(ea9f766e88b3d1943913cb92aebe8c2e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b26fa6563d17810179f97c7d16082793') in 0.0385011 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000061 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273231950-0efd8a3c66.jpg
+  artifactKey: Guid(a30098a28da70f54795f5c500e39d5c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273231950-0efd8a3c66.jpg using Guid(a30098a28da70f54795f5c500e39d5c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5f5ff38edf285f90eec4e2687ee5f432') in 0.0344371 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000068 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/__Tile-small_ceramic_.jpg
+  artifactKey: Guid(b40e152c72fdfcf4582bd8042d7e31f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/__Tile-small_ceramic_.jpg using Guid(b40e152c72fdfcf4582bd8042d7e31f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c1882af28894bceef41e025690c90600') in 0.025869 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/material_5.jpg
+  artifactKey: Guid(4fb2b0fcb05d09445ae154e20fcf797c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/material_5.jpg using Guid(4fb2b0fcb05d09445ae154e20fcf797c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7fb1229f33d27091f85b36e98ba912ba') in 0.0246793 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1284772188-10b15e59a2.jpg
+  artifactKey: Guid(5c48599a34c4b2b4e9de5b30421a7186) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1284772188-10b15e59a2.jpg using Guid(5c48599a34c4b2b4e9de5b30421a7186) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c1e50b8d9b13cce36519ac7b92bce17c') in 0.0188139 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/material_6.png
+  artifactKey: Guid(a577584c508bac4469317c504394621b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/material_6.png using Guid(a577584c508bac4469317c504394621b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '89cbb058f70e42029c5bcd022ff3e261') in 0.0252447 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 ========================================================================
 Received Import Request.
   Time since last request: 0.000027 seconds.
-  path: Assets/Prefabs/Supermercado/IceCream.fbx
-  artifactKey: Guid(3dcfc2f9da5747c4197641c45d5b7d01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/IceCream.fbx using Guid(3dcfc2f9da5747c4197641c45d5b7d01) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'ae947500b17f13b0cc7034e465ee05ec') in 0.0719569 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 16
+  path: Assets/Prefabs/supermarket/source/supermarket/model/__Concrete_rough_02_.jpg
+  artifactKey: Guid(21bad958a6b32cc4b825d0ee1b74e661) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/__Concrete_rough_02_.jpg using Guid(21bad958a6b32cc4b825d0ee1b74e661) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '31f60b8876e444af20e854dce356c267') in 0.0233494 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000037 seconds.
-  path: Assets/Prefabs/Supermercado/Door.fbx
-  artifactKey: Guid(859cbee0ef998df418fb3b8b9d1c440e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/Door.fbx using Guid(859cbee0ef998df418fb3b8b9d1c440e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5b5d5fa266b036d7b1f656c8929542cb') in 0.0611613 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 15
+  Time since last request: 0.000041 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273231946-359484b8d7.jpg
+  artifactKey: Guid(194e1e16322b3c848b6a9b14d3c214d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273231946-359484b8d7.jpg using Guid(194e1e16322b3c848b6a9b14d3c214d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '1f5d9613420700d4fac389172421a0c1') in 0.0225696 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000041 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/__Low_E_Glass_4.jpg
+  artifactKey: Guid(dc59fcbf8c94eb54fb04fadab01c3032) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/__Low_E_Glass_4.jpg using Guid(dc59fcbf8c94eb54fb04fadab01c3032) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '869c7c4c77c519ad681e4805fd677664') in 0.0239183 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273233637-b46c252836.jpg
+  artifactKey: Guid(82ebd8d1de4738f4e8357ac94f55f492) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273233637-b46c252836.jpg using Guid(82ebd8d1de4738f4e8357ac94f55f492) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '78ced363184dd60701eb41bb2b686595') in 0.0268939 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1285898721-b29e9584b7.jpg
+  artifactKey: Guid(bf19b31fb7d02644d8446d571bb3eecb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1285898721-b29e9584b7.jpg using Guid(bf19b31fb7d02644d8446d571bb3eecb) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '9f5240e35425709d468ee013592c5d16') in 0.0237909 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/__Wood_Cherry_Original_2.jpg
+  artifactKey: Guid(fcee4b270a5528e44bd3347e02a517f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/__Wood_Cherry_Original_2.jpg using Guid(fcee4b270a5528e44bd3347e02a517f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '0c6054bf290fe336f9d5fd26eac1d4ed') in 0.0266682 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 ========================================================================
 Received Import Request.
   Time since last request: 0.000042 seconds.
-  path: Assets/Prefabs/Supermercado/fish2.fbx
-  artifactKey: Guid(da59bd0f1999e63469d00c59a4ca9637) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/fish2.fbx using Guid(da59bd0f1999e63469d00c59a4ca9637) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd760464e5c26710f8e65ae24235fd5b1') in 0.0813273 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 23
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1299560590-362c382d48.jpg
+  artifactKey: Guid(21eb5d111cbdf3f41aedd8c8a9e7f058) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1299560590-362c382d48.jpg using Guid(21eb5d111cbdf3f41aedd8c8a9e7f058) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '0c5796302310a8714657c09a37f7b03c') in 0.0265053 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000041 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1283349594-2401196b85.jpg
+  artifactKey: Guid(4e6942f18e2384e4b8cfa6a9925756ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1283349594-2401196b85.jpg using Guid(4e6942f18e2384e4b8cfa6a9925756ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '6696900c24da0babdc63e58c7e0ca741') in 0.0222546 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1299560597-b8e5a0f925.jpg
+  artifactKey: Guid(b3f3af09e20fd4443a96e0198d16b060) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1299560597-b8e5a0f925.jpg using Guid(b3f3af09e20fd4443a96e0198d16b060) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '0bdaaefeb312f01376fd555f4971a7bf') in 0.0310472 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000041 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273231950-e0060720fe.jpg
+  artifactKey: Guid(c87cdafc8413b4f4c92e5da719bdbc97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273231950-e0060720fe.jpg using Guid(c87cdafc8413b4f4c92e5da719bdbc97) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7ca4c49456b96d665fda5602dd534ca1') in 0.0236046 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000168 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/__Wood_Cherry_Original_2_2.jpg
+  artifactKey: Guid(5c7885a56b1b9e641b6cc16dce33f3ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/__Wood_Cherry_Original_2_2.jpg using Guid(5c7885a56b1b9e641b6cc16dce33f3ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '67a66a87d84238e3a861f0088ef1d937') in 0.0298319 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1283350284-30150adf0a.jpg
+  artifactKey: Guid(76f8ed09c3db0d84199d029902c04b8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1283350284-30150adf0a.jpg using Guid(76f8ed09c3db0d84199d029902c04b8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '9823653fc10b7d40722657092ed2cf57') in 0.0397257 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000051 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Material1.jpg
+  artifactKey: Guid(e54a4a44fa68f6644b02834b147d766c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Material1.jpg using Guid(e54a4a44fa68f6644b02834b147d766c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b84c5def0ee03627ac124e8bf57ac7fa') in 0.0350255 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273246126-c77303284f.jpg
+  artifactKey: Guid(a4355ca996f09244e8a9fb5b21f9a9eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273246126-c77303284f.jpg using Guid(a4355ca996f09244e8a9fb5b21f9a9eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'fc4597a8f5134070b85ec418f6397114') in 0.0256769 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1283350172-17817d4149.jpg
+  artifactKey: Guid(efa4c7cd97f0c1f438201c1b005f86a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1283350172-17817d4149.jpg using Guid(efa4c7cd97f0c1f438201c1b005f86a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'cb93411d8c79f7585c2f9859cfa08a29') in 0.0276141 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1305036061-9f7f250218.jpg
+  artifactKey: Guid(c44ec8b545651cc4880c131d7c0b5667) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1305036061-9f7f250218.jpg using Guid(c44ec8b545651cc4880c131d7c0b5667) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c15e1cf9c287fdaf9ddc658710ae19a0') in 0.0301432 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000096 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Material3.jpg
+  artifactKey: Guid(6fade8d2667f898439afa57ab9ac940e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Material3.jpg using Guid(6fade8d2667f898439afa57ab9ac940e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '08ccfa145422705937200dc10eb3f1f8') in 0.0419613 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000053 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/__Glass_Blue_Tint_.jpg
+  artifactKey: Guid(1eb361c602d337043ba22f017cf7e7ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/__Glass_Blue_Tint_.jpg using Guid(1eb361c602d337043ba22f017cf7e7ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd80fc28d45993fbac43b98e023895756') in 0.0447289 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000124 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1288152132-cf337aaaaa.jpg
+  artifactKey: Guid(4d22f9e6f5f2a2844ad953f607443700) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1288152132-cf337aaaaa.jpg using Guid(4d22f9e6f5f2a2844ad953f607443700) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a4075c208ef72a2b9e0fb7d27632f70a') in 0.0358669 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000056 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1274930285-03b45ac01c.jpg
+  artifactKey: Guid(89bc5b26932894b4c89870372c3b9266) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1274930285-03b45ac01c.jpg using Guid(89bc5b26932894b4c89870372c3b9266) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e38d25e34f92cf46dfcbca086b2fddcd') in 0.0649258 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000324 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1288846983-2570a0f0bc.jpg
+  artifactKey: Guid(5021e96a515c67f4e9c902e1295ecb37) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1288846983-2570a0f0bc.jpg using Guid(5021e96a515c67f4e9c902e1295ecb37) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c591061775fb698e9c6f903b8f546134') in 0.0390021 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000043 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1283573259-1fdaec168a.jpg
+  artifactKey: Guid(3230ce6f41e6afa4a9f6f37c6e6293d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1283573259-1fdaec168a.jpg using Guid(3230ce6f41e6afa4a9f6f37c6e6293d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a10964bee93cedb6e12f047db4b3a876') in 0.0424651 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000087 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273241442-09919a4b28.jpg
+  artifactKey: Guid(c87d762584e5066409a7b839ec8591be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1273241442-09919a4b28.jpg using Guid(c87d762584e5066409a7b839ec8591be) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '76c06548ea641c83e759857934e5f1ac') in 0.0366678 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1283350239-51a06d320a.jpg
+  artifactKey: Guid(e2a4d2ce88eb82d4e9ec67df3b30115f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/_260x260-1283350239-51a06d320a.jpg using Guid(e2a4d2ce88eb82d4e9ec67df3b30115f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8c0e49d74c4e569393b65a2dbc022a93') in 0.0474098 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.669590 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/material_9.png
+  artifactKey: Guid(74ec49a4c655cb74d8aeb730b8e69fa4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/material_9.png using Guid(74ec49a4c655cb74d8aeb730b8e69fa4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e1b50ed0baf6355032af7ea00b88d9b1') in 0.0329474 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000052 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/SSS.jpg
+  artifactKey: Guid(a7ecb9bff38dd9645b0c1af567bb78a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/SSS.jpg using Guid(a7ecb9bff38dd9645b0c1af567bb78a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2d6300ffb3670ce40ecabc12b284bce3') in 0.0276679 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/texture_1.png
+  artifactKey: Guid(8d6a3461e73e7ff4cb5b2edf0a1afb7a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/texture_1.png using Guid(8d6a3461e73e7ff4cb5b2edf0a1afb7a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e701749b4fc11423be87eef5cca0b6f4') in 0.0277489 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/texture.png
+  artifactKey: Guid(30fce4565da5af542a118147d387ebaf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/texture.png using Guid(30fce4565da5af542a118147d387ebaf) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b16cd3dfee8feb9a584c424f41e66750') in 0.0322617 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/texture_7.png
+  artifactKey: Guid(078e584f9914ae34fb6fd581028ba749) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/texture_7.png using Guid(078e584f9914ae34fb6fd581028ba749) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'ac6776402d32b600403c814f4bc83574') in 0.0344446 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000054 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/texture_8.png
+  artifactKey: Guid(7a80119cc02b0704ab4ecd44ac381be3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/texture_8.png using Guid(7a80119cc02b0704ab4ecd44ac381be3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2ab55974337ca0f293d214f851e72581') in 0.0348438 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000077 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254473047001.jpg
+  artifactKey: Guid(99af782ebc041524bbd35b78e4b2cf4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254473047001.jpg using Guid(99af782ebc041524bbd35b78e4b2cf4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b252977ba4be1d568f3e47d98048c9d8') in 0.030179 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3083680085304.jpg
+  artifactKey: Guid(878bf4b50d17e0742906409cc961143d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3083680085304.jpg using Guid(878bf4b50d17e0742906409cc961143d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '42a6e76841b548e0cdb98440c1ee74d2') in 0.0257121 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254560020962.jpg
+  artifactKey: Guid(a83261e791cde9843bcda77e343ab348) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254560020962.jpg using Guid(a83261e791cde9843bcda77e343ab348) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f10eee79998b144125e8c8bd2e1c808d') in 0.0204841 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Translucent_Glass_Block_Dark.jpg
+  artifactKey: Guid(51a94a4376dc86047a778406899515b7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Translucent_Glass_Block_Dark.jpg using Guid(51a94a4376dc86047a778406899515b7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b35bfdaf6b5ac641f53ced78d63ec273') in 0.0245507 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Metal_Corrogated_Shiny_1.jpg
+  artifactKey: Guid(974b6ef40bbca03489b9b8254f484de6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Metal_Corrogated_Shiny_1.jpg using Guid(974b6ef40bbca03489b9b8254f484de6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '07a5381f3e55111538927bcec9b9a4ee') in 0.0237859 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Metal_Corrogated_Shiny.jpg
+  artifactKey: Guid(9162430c19451d44da485f6cd7789f2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Metal_Corrogated_Shiny.jpg using Guid(9162430c19451d44da485f6cd7789f2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'aeba652a49ba88481df0375e992c6f1f') in 0.0137556 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254560028579.jpg
+  artifactKey: Guid(c2873db65a4350741a3c73b69b9d355e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254560028579.jpg using Guid(c2873db65a4350741a3c73b69b9d355e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'fed1c94836c9ca2afcbc97ddac6578ea') in 0.0251961 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000054 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/texture_5.png
+  artifactKey: Guid(5bf9421a68b0d054fb13cce04f5e53da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/texture_5.png using Guid(5bf9421a68b0d054fb13cce04f5e53da) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f83674a6efa37d28e86f74ddb09dd2c9') in 0.0302401 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3017800016862.jpg
+  artifactKey: Guid(7939db02276db8b4ebbbde4fb02c056a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3017800016862.jpg using Guid(7939db02276db8b4ebbbde4fb02c056a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '001de131e81f42cd9cd40eaae9d2ccd4') in 0.0316622 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254560025424.jpg
+  artifactKey: Guid(f8d6429e755ec6e46af7bf4463eeef7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254560025424.jpg using Guid(f8d6429e755ec6e46af7bf4463eeef7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '09783583831bc8c7b57c59f8159a812c') in 0.0262606 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000095 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/texture_6.png
+  artifactKey: Guid(920ff7c718769054aa33ae716d1efc36) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/texture_6.png using Guid(920ff7c718769054aa33ae716d1efc36) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '9b3fc77205cecb0950c71a78054361ed') in 0.027227 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/texture_2.png
+  artifactKey: Guid(b02e93c148f02a6449104ca13aedb3f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/texture_2.png using Guid(b02e93c148f02a6449104ca13aedb3f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f7590b31a3cc36d40ba303babcce7f76') in 0.0268386 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000064 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Metal_Panel.jpg
+  artifactKey: Guid(b1d6d0ce051d9a542850bd2a8b74d5a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Metal_Panel.jpg using Guid(b1d6d0ce051d9a542850bd2a8b74d5a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '680ac03f077c0b7406835a8bb1ce6583') in 0.0363436 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/texture_0.png
+  artifactKey: Guid(28bf6ec07f1f71844818e93327932c3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/texture_0.png using Guid(28bf6ec07f1f71844818e93327932c3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '46a3ce7a0afb4842813f935cc3da91cd') in 0.0292764 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000063 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3276535922101.jpg
+  artifactKey: Guid(38aa478e79f79be4986ba8ce6e253b84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3276535922101.jpg using Guid(38aa478e79f79be4986ba8ce6e253b84) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e1e7557566013e8f7fa247f43b8a43b9') in 0.0220751 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254560065130.jpg
+  artifactKey: Guid(70a460197a418dd42a9813b2902660d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254560065130.jpg using Guid(70a460197a418dd42a9813b2902660d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '219d15913e9d22efb599f0acd218c86a') in 0.0265641 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710346936.jpg
+  artifactKey: Guid(8cc747794ce69204bbd32ad33e75583a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710346936.jpg using Guid(8cc747794ce69204bbd32ad33e75583a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '581b31a91a8844f97d678180e9d1dcb6') in 0.0235499 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710753468.jpg
+  artifactKey: Guid(50c8643f1df0c9948845a3227630515c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710753468.jpg using Guid(50c8643f1df0c9948845a3227630515c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '692476a3ec95ece768ae88c70983213f') in 0.0291981 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000050 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_9501006000021.jpg
+  artifactKey: Guid(18454276b720df443a95e2670d18b229) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_9501006000021.jpg using Guid(18454276b720df443a95e2670d18b229) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c91024b3e743f73c12b4f6675740d5bf') in 0.0353437 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000062 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710347001.jpg
+  artifactKey: Guid(9c6a3aa2a82a14e4183830eecb9efae3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710347001.jpg using Guid(9c6a3aa2a82a14e4183830eecb9efae3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c53f5397d72068cca273ddf875c28ddf') in 0.0265871 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000067 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3333160001028.jpg
+  artifactKey: Guid(a4184f39b872f7d41a0b47eec492f496) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3333160001028.jpg using Guid(a4184f39b872f7d41a0b47eec492f496) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '23463bec5463f0a7c5c0b326fc0e9496') in 0.0307943 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000064 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710211388.jpg
+  artifactKey: Guid(86ff765528244bb4e8009e0dac626992) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710211388.jpg using Guid(86ff765528244bb4e8009e0dac626992) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '9eafeb74c7b9504e72b9ff817d91c408') in 0.0281658 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000104 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710194148.jpg
+  artifactKey: Guid(728dc2f6699a75b4bb29f6ee9c0f8a2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710194148.jpg using Guid(728dc2f6699a75b4bb29f6ee9c0f8a2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '29cb0417b892fb62dc33bcc92321cd78') in 0.0290669 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000099 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254560601895.jpg
+  artifactKey: Guid(639883122e11c5d4e9c4ececb62ba45b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254560601895.jpg using Guid(639883122e11c5d4e9c4ececb62ba45b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b847deb5cc2801b821c7efc4f238251a') in 0.0355479 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000063 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710207824.jpg
+  artifactKey: Guid(2e4ac57e21e814641b98f2746699866c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710207824.jpg using Guid(2e4ac57e21e814641b98f2746699866c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '772dbaf1043f34c712351cf031da3b07') in 0.0311442 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710743445.jpg
+  artifactKey: Guid(a90cbf012712cd046a2d2d69014abdaa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710743445.jpg using Guid(a90cbf012712cd046a2d2d69014abdaa) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '46a6b4153a4adb469f3fca9a627aac70') in 0.0333522 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000150 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254560033740.jpg
+  artifactKey: Guid(3e5c8e6f8ec786941978b4739b238323) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254560033740.jpg using Guid(3e5c8e6f8ec786941978b4739b238323) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '862db538bfcc6f09a720965d2d87fda0') in 0.0315762 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/texture_3.png
+  artifactKey: Guid(0596d14571c36d64eb9c6397f7a0e104) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/texture_3.png using Guid(0596d14571c36d64eb9c6397f7a0e104) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '115d7e1c489f86ff013376293f4523ed') in 0.0363721 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710090105.jpg
+  artifactKey: Guid(14e2dffd22d67ab48835845d73750ceb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710090105.jpg using Guid(14e2dffd22d67ab48835845d73750ceb) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5ef3b30c36d46b7f44e7f7983367c997') in 0.0333906 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710310210.jpg
+  artifactKey: Guid(898f9be2b7672264f82d116def2b5d7f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3596710310210.jpg using Guid(898f9be2b7672264f82d116def2b5d7f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '3d0afdae4d2132409bf77a83e28c6bf7') in 0.0400467 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000068 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254560544918.jpg
+  artifactKey: Guid(d55cbe6710eafbb4c8848eabeee1b628) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3254560544918.jpg using Guid(d55cbe6710eafbb4c8848eabeee1b628) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '817acc83271b82b9b722b38e057c96f5') in 0.0373181 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000049 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/texture_4.png
+  artifactKey: Guid(d2d3e270278dce849a824bdef9dea230) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/texture_4.png using Guid(d2d3e270278dce849a824bdef9dea230) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '262fa65f61baa234f76bcc4e622ff274') in 0.0353782 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000108 seconds.
+  path: Assets/Prefabs/supermarket/source/supermarket/model/Z0_3215352590056.jpg
+  artifactKey: Guid(445a3b0dbed67ab448b2fc431c9f0222) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/source/supermarket/model/Z0_3215352590056.jpg using Guid(445a3b0dbed67ab448b2fc431c9f0222) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '3fcba2892921c310c0ead83fa120e0a3') in 0.0327096 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 519.346636 seconds.
+  path: Assets/Prefabs/supermarket/textures/_260x260-1273231930-b2890047c2.jpeg
+  artifactKey: Guid(75c16bbc9916cd049a545f1a8832eb73) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/_260x260-1273231930-b2890047c2.jpeg using Guid(75c16bbc9916cd049a545f1a8832eb73) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '6f4f8f67bd458d539e67ebd478425cc3') in 0.0827898 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000208 seconds.
+  path: Assets/Prefabs/supermarket/textures/_260x260-1285898721-b29e9584b7.jpeg
+  artifactKey: Guid(6aeeddde02cee4d44bc34880d6883c89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/_260x260-1285898721-b29e9584b7.jpeg using Guid(6aeeddde02cee4d44bc34880d6883c89) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2b417a79e687e47b4673493ef9a02676') in 0.0320748 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000191 seconds.
+  path: Assets/Prefabs/supermarket/textures/__Wood_Cherry_Original_2_2.jpeg
+  artifactKey: Guid(3d1220f67e61f704ba378e85dba600b7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/__Wood_Cherry_Original_2_2.jpeg using Guid(3d1220f67e61f704ba378e85dba600b7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '3ef6703b8dac8162be9210861d14db08') in 0.0329396 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000083 seconds.
+  path: Assets/Prefabs/supermarket/textures/__Concrete_rough_02_.jpeg
+  artifactKey: Guid(ffb1739439c505742b5944c57f46a386) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/__Concrete_rough_02_.jpeg using Guid(ffb1739439c505742b5944c57f46a386) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'cd6f0effff2e20cf19572017cb8abc65') in 0.034614 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000069 seconds.
+  path: Assets/Prefabs/supermarket/textures/_260x260-1288846983-2570a0f0bc.jpeg
+  artifactKey: Guid(ee1e2a8cef34987479a085ff84d0d7a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/_260x260-1288846983-2570a0f0bc.jpeg using Guid(ee1e2a8cef34987479a085ff84d0d7a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd268fdcf2ce5bd8aaec18027892557f3') in 0.01564 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000066 seconds.
+  path: Assets/Prefabs/supermarket/textures/__StandingSeam_Metal_Roof_.jpeg
+  artifactKey: Guid(94ac23eb2579a104588083d9c31a12b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/__StandingSeam_Metal_Roof_.jpeg using Guid(94ac23eb2579a104588083d9c31a12b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8905df62831b6a00b84f7f6a9389292c') in 0.0355469 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000124 seconds.
+  path: Assets/Prefabs/supermarket/textures/_260x260-1294981325-1fee77a00b.jpeg
+  artifactKey: Guid(5aa57e0a1575b7e479630e914fb472a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/_260x260-1294981325-1fee77a00b.jpeg using Guid(5aa57e0a1575b7e479630e914fb472a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '19a8bef58c7336decf964799ef89d3cc') in 0.0080543 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000067 seconds.
+  path: Assets/Prefabs/supermarket/textures/_260x260-1299560597-b8e5a0f925.jpeg
+  artifactKey: Guid(c52e37e961b6b52408026a73a1d04795) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/_260x260-1299560597-b8e5a0f925.jpeg using Guid(c52e37e961b6b52408026a73a1d04795) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c047f3efd7eb4c99dedb77443ceaed58') in 0.0158299 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000041 seconds.
+  path: Assets/Prefabs/supermarket/textures/__Tile-small_ceramic_.jpeg
+  artifactKey: Guid(cb76061ab2a8bff42a648deea1f26f47) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/__Tile-small_ceramic_.jpeg using Guid(cb76061ab2a8bff42a648deea1f26f47) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b3366fd13bce834678f976dbc6acfa07') in 0.0295183 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Prefabs/supermarket/textures/_260x260-1273246126-c77303284f.jpeg
+  artifactKey: Guid(f36a0a2e5e85ea54cb123a5c79c1fe07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/_260x260-1273246126-c77303284f.jpeg using Guid(f36a0a2e5e85ea54cb123a5c79c1fe07) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '06062d801b585ad10948f761f1b28063') in 0.0268254 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000049 seconds.
+  path: Assets/Prefabs/supermarket/textures/_260x260-1288152132-cf337aaaaa.jpeg
+  artifactKey: Guid(2a4157c0cae0f5849981e52c60391a9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/_260x260-1288152132-cf337aaaaa.jpeg using Guid(2a4157c0cae0f5849981e52c60391a9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '854b5fd8899b54e12c54093d322ce980') in 0.0130534 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000095 seconds.
+  path: Assets/Prefabs/supermarket/textures/_260x260-1283350284-30150adf0a.jpeg
+  artifactKey: Guid(8277173a77ed5ff4f9d2f61b229998b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/_260x260-1283350284-30150adf0a.jpeg using Guid(8277173a77ed5ff4f9d2f61b229998b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e61c06a181bc2d84b606965da2351cf6') in 0.0113708 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000059 seconds.
+  path: Assets/Prefabs/supermarket/textures/_260x260-1283350239-51a06d320a.jpeg
+  artifactKey: Guid(b6d9a9fc392050d459a86cc32702f052) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/_260x260-1283350239-51a06d320a.jpeg using Guid(b6d9a9fc392050d459a86cc32702f052) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '498e9be12cfae59c438f8547beef30ad') in 0.0287981 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/Prefabs/supermarket/textures/Material3.jpeg
+  artifactKey: Guid(a408dbd9003f0a1438c0908c83e9d9c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Material3.jpeg using Guid(a408dbd9003f0a1438c0908c83e9d9c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '350c22791079db736512aa05898676b0') in 0.0149039 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000124 seconds.
+  path: Assets/Prefabs/supermarket/textures/_260x260-1283573259-1fdaec168a.jpeg
+  artifactKey: Guid(4cf39d7281c251540ac42217c9020b5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/_260x260-1283573259-1fdaec168a.jpeg using Guid(4cf39d7281c251540ac42217c9020b5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '654a97f64fd91c2b9e429741ae20a7ed') in 0.0370652 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000104 seconds.
+  path: Assets/Prefabs/supermarket/textures/_260x260-1284772188-10b15e59a2.jpeg
+  artifactKey: Guid(ffbe5a835de0f7140bf0d79ce778ac2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/_260x260-1284772188-10b15e59a2.jpeg using Guid(ffbe5a835de0f7140bf0d79ce778ac2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '10c388f1ed803a6d34b204246e36e7a1') in 0.0127041 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000043 seconds.
+  path: Assets/Prefabs/supermarket/textures/_260x260-1273241442-09919a4b28.jpeg
+  artifactKey: Guid(2c6aff841b009f641b55a9479a527486) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/_260x260-1273241442-09919a4b28.jpeg using Guid(2c6aff841b009f641b55a9479a527486) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e0663da3123707d5bcd2c19be01fc239') in 0.028217 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000046 seconds.
+  path: Assets/Prefabs/supermarket/textures/__Glass_Blue_Tint_.jpeg
+  artifactKey: Guid(adaae228c3804bd42a105d415a6f3ec3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/__Glass_Blue_Tint_.jpeg using Guid(adaae228c3804bd42a105d415a6f3ec3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '50f29637a5fcb2fd5746b8bec6477a33') in 0.0151444 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.463418 seconds.
+  path: Assets/Prefabs/supermarket/textures/Metal_Corrogated_Shiny.jpeg
+  artifactKey: Guid(21c799636b757124db7f5479126ef074) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Metal_Corrogated_Shiny.jpeg using Guid(21c799636b757124db7f5479126ef074) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '21f65043490d3eec7725f0d8f3416277') in 0.0166129 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000053 seconds.
+  path: Assets/Prefabs/supermarket/textures/texture_0.png
+  artifactKey: Guid(84d408fedd9bc6041a5b37ef563edb0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/texture_0.png using Guid(84d408fedd9bc6041a5b37ef563edb0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e8be27487d07d7116ac5de15cdf1b788') in 0.0203088 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000094 seconds.
+  path: Assets/Prefabs/supermarket/textures/texture_1.png
+  artifactKey: Guid(c1726b87edfadfc42a7a5ee6aee38f11) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/texture_1.png using Guid(c1726b87edfadfc42a7a5ee6aee38f11) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '9d5bbda5a4347b62efdcecc5c619192f') in 0.0578041 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000062 seconds.
+  path: Assets/Prefabs/supermarket/textures/Metal_Corrogated_Shiny_1.jpeg
+  artifactKey: Guid(75ddd0b68d126d447be60f4c5bcccdde) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Metal_Corrogated_Shiny_1.jpeg using Guid(75ddd0b68d126d447be60f4c5bcccdde) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2f38c11ebd8f11300dd70a79186af3ae') in 0.0155958 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000061 seconds.
+  path: Assets/Prefabs/supermarket/textures/Metal_Panel.jpeg
+  artifactKey: Guid(43540ec5c2bcce04bb274caf13c0ca99) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Metal_Panel.jpeg using Guid(43540ec5c2bcce04bb274caf13c0ca99) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '60fb2f3731b311a9b07cfee079dc7387') in 0.1011063 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
 AssetImportWorker is now disconnected from the server

@@ -15,7 +15,7 @@ D:/game/URA
 -logFile
 Logs/AssetImportWorker3.log
 -srvPort
-49941
+53486
 -job-worker-count
 7
 -background-job-worker-count
@@ -59,12 +59,12 @@ D:/game/URA
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [30980]  Target information:
+Player connection [7280]  Target information:
 
-Player connection [30980]  * "[IP] 192.168.1.53 [Port] 0 [Flags] 2 [Guid] 3830181328 [EditorId] 3830181328 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-I8RA7AQE) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [7280]  * "[IP] 192.168.1.138 [Port] 0 [Flags] 2 [Guid] 3804142893 [EditorId] 3804142893 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-I8RA7AQE) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [30980] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [30980] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [7280] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [7280] Host joined alternative multi-casting on [225.0.0.222:34997]...
 JobSystem: Creating JobQueue using job-worker-count value 7
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
@@ -76,7 +76,7 @@ Library Redirect Path: Library/
 [Physics::Module] SDK Version: 4.1.2
 [Physics::Module] Integration Version: 1.0.0
 [Physics::Module] Threading Mode: Multi-Threaded
-Refreshing native plugins compatible for Editor in 7.39 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.78 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.44f1 (101c91f3a8fb)
 [Subsystems] Discovering subsystems at path D:/game/6000.0.44f1/Editor/Data/Resources/UnitySubsystems
@@ -92,46 +92,46 @@ Initialize mono
 Mono path[0] = 'D:/game/6000.0.44f1/Editor/Data/Managed'
 Mono path[1] = 'D:/game/6000.0.44f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'D:/game/6000.0.44f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56028
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56628
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: D:/game/6000.0.44f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
 Register platform support module: D:/game/6000.0.44f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
-Registered in 0.006534 seconds.
-- Loaded All Assemblies, in  0.758 seconds
+Registered in 0.006577 seconds.
+- Loaded All Assemblies, in  0.949 seconds
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 613 ms
+Android Extension - Scanning For ADB Devices 558 ms
 Native extension for WindowsStandalone target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.253 seconds
-Domain Reload Profiling: 2013ms
-	BeginReloadAssembly (301ms)
+- Finished resetting the current domain, in  1.193 seconds
+Domain Reload Profiling: 2143ms
+	BeginReloadAssembly (437ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (4ms)
-	RebuildCommonClasses (69ms)
-	RebuildNativeTypeToScriptingClass (19ms)
-	initialDomainReloadingComplete (95ms)
-	LoadAllAssembliesAndSetupDomain (274ms)
-		LoadAssemblies (296ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (71ms)
+	RebuildNativeTypeToScriptingClass (16ms)
+	initialDomainReloadingComplete (75ms)
+	LoadAllAssembliesAndSetupDomain (349ms)
+		LoadAssemblies (437ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (267ms)
-			TypeCache.Refresh (263ms)
-				TypeCache.ScanAssembly (241ms)
-			BuildScriptInfoCaches (1ms)
+		AnalyzeDomain (340ms)
+			TypeCache.Refresh (336ms)
+				TypeCache.ScanAssembly (306ms)
+			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (1255ms)
+	FinalizeReload (1194ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1170ms)
+		SetupLoadedEditorAssemblies (1124ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (758ms)
-			SetLoadedEditorAssemblies (8ms)
-			BeforeProcessingInitializeOnLoad (125ms)
-			ProcessInitializeOnLoadAttributes (183ms)
-			ProcessInitializeOnLoadMethodAttributes (97ms)
+			InitializePlatformSupportModulesInManaged (714ms)
+			SetLoadedEditorAssemblies (5ms)
+			BeforeProcessingInitializeOnLoad (74ms)
+			ProcessInitializeOnLoadAttributes (225ms)
+			ProcessInitializeOnLoadMethodAttributes (107ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -140,235 +140,51 @@ Domain Reload Profiling: 2013ms
 Worker process is ready to serve import requests
 Import Worker Mode flag is 0x00
 Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.012 seconds
-Refreshing native plugins compatible for Editor in 4.62 ms, found 3 plugins.
+- Loaded All Assemblies, in  1.288 seconds
+Refreshing native plugins compatible for Editor in 1.20 ms, found 3 plugins.
 Native extension for Android target not found
 Native extension for WindowsStandalone target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.963 seconds
-Domain Reload Profiling: 1974ms
-	BeginReloadAssembly (233ms)
+- Finished resetting the current domain, in  1.150 seconds
+Domain Reload Profiling: 2438ms
+	BeginReloadAssembly (344ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (11ms)
+		DisableScriptedObjects (9ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (53ms)
-	RebuildCommonClasses (33ms)
-	RebuildNativeTypeToScriptingClass (11ms)
-	initialDomainReloadingComplete (35ms)
-	LoadAllAssembliesAndSetupDomain (698ms)
-		LoadAssemblies (518ms)
+		CreateAndSetChildDomain (63ms)
+	RebuildCommonClasses (74ms)
+	RebuildNativeTypeToScriptingClass (22ms)
+	initialDomainReloadingComplete (69ms)
+	LoadAllAssembliesAndSetupDomain (779ms)
+		LoadAssemblies (695ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (303ms)
-			TypeCache.Refresh (254ms)
-				TypeCache.ScanAssembly (219ms)
-			BuildScriptInfoCaches (40ms)
-			ResolveRequiredComponents (4ms)
-	FinalizeReload (964ms)
+		AnalyzeDomain (306ms)
+			TypeCache.Refresh (251ms)
+				TypeCache.ScanAssembly (220ms)
+			BuildScriptInfoCaches (43ms)
+			ResolveRequiredComponents (5ms)
+	FinalizeReload (1151ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (785ms)
+		SetupLoadedEditorAssemblies (977ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (17ms)
-			SetLoadedEditorAssemblies (5ms)
-			BeforeProcessingInitializeOnLoad (84ms)
-			ProcessInitializeOnLoadAttributes (635ms)
-			ProcessInitializeOnLoadMethodAttributes (39ms)
+			InitializePlatformSupportModulesInManaged (21ms)
+			SetLoadedEditorAssemblies (9ms)
+			BeforeProcessingInitializeOnLoad (143ms)
+			ProcessInitializeOnLoadAttributes (769ms)
+			ProcessInitializeOnLoadMethodAttributes (33ms)
 			AfterProcessingInitializeOnLoad (3ms)
-			EditorAssembliesLoaded (0ms)
+			EditorAssembliesLoaded (1ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (7ms)
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.02 seconds
-Refreshing native plugins compatible for Editor in 3.15 ms, found 3 plugins.
+		AwakeInstancesAfterBackupRestoration (6ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 1.37 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 22 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 3347 unused Assets / (1.0 MB). Loaded Objects now: 3850.
-Memory consumption went from 86.0 MB to 85.0 MB.
-Total: 12.222000 ms (FindLiveObjects: 1.519900 ms CreateObjectMapping: 0.829600 ms MarkObjects: 7.693700 ms  DeleteObjects: 2.175300 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 501176.713689 seconds.
-  path: Assets/Prefabs/Supermercado/ChickenLeg.fbx
-  artifactKey: Guid(e86f3a88f690f72459b50ef34085873c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/ChickenLeg.fbx using Guid(e86f3a88f690f72459b50ef34085873c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b96ebd8aa5e6a4b90843e7fade646694') in 0.6891648 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 16
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000051 seconds.
-  path: Assets/Prefabs/Supermercado
-  artifactKey: Guid(f37b03271b25339458882298bfae6a99) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado using Guid(f37b03271b25339458882298bfae6a99) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '99cb4975a8947c4451fc027b0651a59f') in 0.0011303 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000210 seconds.
-  path: Assets/Prefabs/Supermercado/Bread.fbx
-  artifactKey: Guid(82b93a22833600d47abb9953b5f2d40b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/Bread.fbx using Guid(82b93a22833600d47abb9953b5f2d40b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '240891aaa1129125318a047f1920589e') in 0.085376 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 18
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000040 seconds.
-  path: Assets/Prefabs/Supermercado/shelfMarker.fbx
-  artifactKey: Guid(a8fcf5d463189e94f91bc0c80660e1b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/shelfMarker.fbx using Guid(a8fcf5d463189e94f91bc0c80660e1b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '9ddaa1fda209c112bf2ea8afbb151f0d') in 0.0486951 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 8
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000080 seconds.
-  path: Assets/Prefabs/Supermercado/Pasta.fbx
-  artifactKey: Guid(1b22c4834bde0c0478034137e7e0aa0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/Pasta.fbx using Guid(1b22c4834bde0c0478034137e7e0aa0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5f4db064716373def058dcf56a01b11f') in 0.070137 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 16
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000052 seconds.
-  path: Assets/Prefabs/Supermercado/fish.fbx
-  artifactKey: Guid(a89b8b18a881e4c458bc3abf9742476f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/fish.fbx using Guid(a89b8b18a881e4c458bc3abf9742476f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b59c4536c00b822c9a309b36eabe16e8') in 0.0492025 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 9
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000053 seconds.
-  path: Assets/Prefabs/Supermercado/lettuce.fbx
-  artifactKey: Guid(3121c5a9d13134d459e0f17cd463aaa1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/lettuce.fbx using Guid(3121c5a9d13134d459e0f17cd463aaa1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7d04673af4a32bf1190bbe84f00e30d4') in 0.0885625 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 16
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000034 seconds.
-  path: Assets/Prefabs/Supermercado/grapes.fbx
-  artifactKey: Guid(50acec0defaa824488ea9a003e531260) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/grapes.fbx using Guid(50acec0defaa824488ea9a003e531260) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '3dd80e784ec70c664bd28ed9f66031a7') in 0.0636301 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 16
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000034 seconds.
-  path: Assets/Prefabs/Supermercado/chocolate.fbx
-  artifactKey: Guid(0f73a9ed69eb4804789e72e4cd1e0a14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/chocolate.fbx using Guid(0f73a9ed69eb4804789e72e4cd1e0a14) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'fcbbd371220fec5b9adf2041ba620c07') in 0.062941 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 16
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000039 seconds.
-  path: Assets/Prefabs/Supermercado/shelfMarker4.fbx
-  artifactKey: Guid(f0bb379693ac5ea4988ecd099dfcc21f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Supermercado/shelfMarker4.fbx using Guid(f0bb379693ac5ea4988ecd099dfcc21f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '07f89dca81baadfc62d754817e3f8c42') in 0.0553731 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 16
-
-========================================================================
-Received Import Request.
-  Time since last request: 517.093732 seconds.
-  path: Assets/Cute Supermarket Lite/Prefabs/apple_green.prefab
-  artifactKey: Guid(abbf234617205844db11a1e767893e4f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Cute Supermarket Lite/Prefabs/apple_green.prefab using Guid(abbf234617205844db11a1e767893e4f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '881fd9ad1f7dd9e6c35b9e639f8c1fa6') in 0.9742706 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 10
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000137 seconds.
-  path: Assets/Cute Supermarket Lite/Prefabs/dressing_mayo.prefab
-  artifactKey: Guid(737c2fda69259de40b4fb5965b86a9e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Cute Supermarket Lite/Prefabs/dressing_mayo.prefab using Guid(737c2fda69259de40b4fb5965b86a9e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e17b13da52a948e817fcce9a0030be62') in 0.0401403 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 10
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000039 seconds.
-  path: Assets/Cute Supermarket Lite/Prefabs/chocolate.prefab
-  artifactKey: Guid(9aaf52fce2e472c428b3649bcc1d719a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Cute Supermarket Lite/Prefabs/chocolate.prefab using Guid(9aaf52fce2e472c428b3649bcc1d719a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c3419b5ee5407cad16aa8d7113fbbf94') in 0.0353284 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 10
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000021 seconds.
-  path: Assets/Cute Supermarket Lite/Prefabs/can_food_square_red.prefab
-  artifactKey: Guid(f08a4f8cd29edd940a8f696ff2a3649f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Cute Supermarket Lite/Prefabs/can_food_square_red.prefab using Guid(f08a4f8cd29edd940a8f696ff2a3649f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '3dd4bca6c0a99b8bfe39a2c07e988a0e') in 0.0471843 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 10
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000052 seconds.
-  path: Assets/Cute Supermarket Lite/Prefabs/bottle_yogurt_strawberry.prefab
-  artifactKey: Guid(9d5a2f06615648c47b3f7ff76e60342a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Cute Supermarket Lite/Prefabs/bottle_yogurt_strawberry.prefab using Guid(9d5a2f06615648c47b3f7ff76e60342a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2f6ab1405818d61c308872250e0af8b6') in 0.0427192 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 10
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000037 seconds.
-  path: Assets/Cute Supermarket Lite/Prefabs/bottle_small_red.prefab
-  artifactKey: Guid(b6d32a74e9000654f911b575dc121e87) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Cute Supermarket Lite/Prefabs/bottle_small_red.prefab using Guid(b6d32a74e9000654f911b575dc121e87) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c9e0e9376e4d7ec7165fdc9086e2e78a') in 0.0365899 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 10
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000026 seconds.
-  path: Assets/Cute Supermarket Lite/Prefabs/bottle_flat_darkBlue.prefab
-  artifactKey: Guid(1d1b2b5435f5e7446abb1ddfb79cb8fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Cute Supermarket Lite/Prefabs/bottle_flat_darkBlue.prefab using Guid(1d1b2b5435f5e7446abb1ddfb79cb8fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '77cfa111985ee7b7e7a3599c4468824b') in 0.0407499 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 10
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000034 seconds.
-  path: Assets/Cute Supermarket Lite/Prefabs/can_food_small_brown.prefab
-  artifactKey: Guid(b20045e6c3596734b856aa518cc09686) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Cute Supermarket Lite/Prefabs/can_food_small_brown.prefab using Guid(b20045e6c3596734b856aa518cc09686) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7b9a53620794fe1ffc64d050a0068033') in 0.0336619 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 10
-
-========================================================================
-Received Import Request.
-  Time since last request: 6.809779 seconds.
-  path: Assets/Cute Supermarket Lite/Models/bottle2_pink.fbx
-  artifactKey: Guid(f707e3e8c66c215439a0a44134d8bc2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Cute Supermarket Lite/Models/bottle2_pink.fbx using Guid(f707e3e8c66c215439a0a44134d8bc2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7c192f0919357fc46b6aad210962b928') in 0.1032585 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 7
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000044 seconds.
-  path: Assets/Cute Supermarket Lite/Models/flask_coffee.fbx
-  artifactKey: Guid(9fc2551ee836ace45bd44b795b9fabbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Cute Supermarket Lite/Models/flask_coffee.fbx using Guid(9fc2551ee836ace45bd44b795b9fabbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b982add7252e997948d32bf7bea38139') in 0.0640995 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 7
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000067 seconds.
-  path: Assets/Cute Supermarket Lite/Models/can_food_square_red.fbx
-  artifactKey: Guid(56adb472b01d2254b95cc6b89ebaf121) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Cute Supermarket Lite/Models/can_food_square_red.fbx using Guid(56adb472b01d2254b95cc6b89ebaf121) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '545de1216dce39cb531902b5e2f3675d') in 0.0841696 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 7
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000032 seconds.
-  path: Assets/Cute Supermarket Lite/Models/cream_jar_yellow.fbx
-  artifactKey: Guid(7132d3aace80be14fbac8a59a0f79e94) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Cute Supermarket Lite/Models/cream_jar_yellow.fbx using Guid(7132d3aace80be14fbac8a59a0f79e94) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '9e0f6d0ff01437bbfc2185d5b5c135ff') in 0.06487 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 7
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000035 seconds.
-  path: Assets/Cute Supermarket Lite/Models/chocolate.fbx
-  artifactKey: Guid(090177f1cfdaf224c94b6a0166b488ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Cute Supermarket Lite/Models/chocolate.fbx using Guid(090177f1cfdaf224c94b6a0166b488ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2a175b660d92f28904e2abb58aff2d2c') in 0.0630947 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 7
+Unloading 3347 unused Assets / (0.9 MB). Loaded Objects now: 3850.
+Memory consumption went from 86.7 MB to 85.8 MB.
+Total: 9.662200 ms (FindLiveObjects: 0.664500 ms CreateObjectMapping: 0.298900 ms MarkObjects: 7.208600 ms  DeleteObjects: 1.486700 ms)
 
 Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
 AssetImportWorker is now disconnected from the server
