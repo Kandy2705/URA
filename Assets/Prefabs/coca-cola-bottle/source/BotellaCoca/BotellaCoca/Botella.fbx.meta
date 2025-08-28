@@ -7,13 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: BotellaSt
-    second: {fileID: -8499701361930146817, guid: 00dc4a5c891905446a104edf6568a7f1, type: 3}
+      name: CorcholataSt
+    second: {fileID: -2813467912831258332, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: CorcholataSt
-    second: {fileID: -2813467912831258332, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+      name: RefrescoSt
+    second: {fileID: -8499701361930146817, guid: 00dc4a5c891905446a104edf6568a7f1, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -5,6 +5,7 @@ public class SelectableItem : MonoBehaviour
 {
     public string itemName;
     public int price;
+
     private void OnMouseDown()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -15,7 +16,12 @@ public class SelectableItem : MonoBehaviour
         }
 
         float dist = Vector3.Distance(transform.position, playerObj.transform.position);
-        CartManager.Instance.AddItem(this);
+
+        if (CartManager.Instance != null)
+        {
+            CartManager.Instance.AddItem(this);
+        }
+
         Destroy(gameObject);
     }
 }
