@@ -1,29 +1,29 @@
 Using pre-set license
 Built from '6000.0/release' branch; Version is '6000.0.44f1 (101c91f3a8fb) revision 1055889'; Using compiler version '193933523'; Build Type 'Release'
-OS: 'Windows 11  (10.0.26100) 64bit CoreSingleLanguage' Language: 'vi' Physical Memory: 7926 MB
+OS: 'Windows 11  (10.0.22631) 64bit CoreSingleLanguage' Language: 'vi' Physical Memory: 7896 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
 
 COMMAND LINE ARGUMENTS:
-C:\Program Files\Unity\Hub\Editor\6000.0.44f1\Editor\Unity.exe
+D:\game\6000.0.44f1\Editor\Unity.exe
 -adb2
 -batchMode
 -noUpm
 -name
 AssetImportWorker6
 -projectPath
-C:/Users/lekha/OneDrive/Documents/URAPoem/URA
+D:/game/URA
 -logFile
 Logs/AssetImportWorker6.log
 -srvPort
-50538
+53486
 -job-worker-count
-3
+7
 -background-job-worker-count
 8
 -gc-helper-count
 1
-Successfully changed project path to: C:/Users/lekha/OneDrive/Documents/URAPoem/URA
-C:/Users/lekha/OneDrive/Documents/URAPoem/URA
+Successfully changed project path to: D:/game/URA
+D:/game/URA
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
     "memorysetup-bucket-allocator-granularity=16"
     "memorysetup-bucket-allocator-bucket-count=8"
@@ -59,13 +59,13 @@ C:/Users/lekha/OneDrive/Documents/URAPoem/URA
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [30220]  Target information:
+Player connection [20700]  Target information:
 
-Player connection [30220]  * "[IP] 192.168.101.31 [Port] 0 [Flags] 2 [Guid] 2047820744 [EditorId] 2047820744 [Version] 1048832 [Id] WindowsEditor(7,khanhpear) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [20700]  * "[IP] 192.168.1.138 [Port] 0 [Flags] 2 [Guid] 2913835673 [EditorId] 2913835673 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-I8RA7AQE) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [30220] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [30220] Host joined alternative multi-casting on [225.0.0.222:34997]...
-JobSystem: Creating JobQueue using job-worker-count value 3
+Player connection [20700] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [20700] Host joined alternative multi-casting on [225.0.0.222:34997]...
+JobSystem: Creating JobQueue using job-worker-count value 7
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
@@ -76,62 +76,62 @@ Library Redirect Path: Library/
 [Physics::Module] SDK Version: 4.1.2
 [Physics::Module] Integration Version: 1.0.0
 [Physics::Module] Threading Mode: Multi-Threaded
-Refreshing native plugins compatible for Editor in 5.29 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 341.40 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.44f1 (101c91f3a8fb)
-[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.44f1/Editor/Data/Resources/UnitySubsystems
-[Subsystems] Discovering subsystems at path C:/Users/lekha/OneDrive/Documents/URAPoem/URA/Assets
+[Subsystems] Discovering subsystems at path D:/game/6000.0.44f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/game/URA/Assets
 GfxDevice: creating device client; kGfxThreadingModeNonThreaded
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
-    Renderer: NVIDIA GeForce MX350 (ID=0x1c94)
+    Renderer: NVIDIA GeForce RTX 3050 Laptop GPU (ID=0x25a2)
     Vendor:   NVIDIA
-    VRAM:     1964 MB
-    Driver:   32.0.15.6641
+    VRAM:     3991 MB
+    Driver:   30.0.15.1274
 Initialize mono
-Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.44f1/Editor/Data/Managed'
-Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.44f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
-Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.44f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56804
+Mono path[0] = 'D:/game/6000.0.44f1/Editor/Data/Managed'
+Mono path[1] = 'D:/game/6000.0.44f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'D:/game/6000.0.44f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56300
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
-Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.44f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.44f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
-Registered in 0.008506 seconds.
-- Loaded All Assemblies, in  1.626 seconds
+Register platform support module: D:/game/6000.0.44f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Register platform support module: D:/game/6000.0.44f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Registered in 0.885657 seconds.
+- Loaded All Assemblies, in 20.401 seconds
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 388 ms
+Android Extension - Scanning For ADB Devices 646 ms
 Native extension for WindowsStandalone target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.101 seconds
-Domain Reload Profiling: 2723ms
-	BeginReloadAssembly (1016ms)
+- Finished resetting the current domain, in  1.024 seconds
+Domain Reload Profiling: 21425ms
+	BeginReloadAssembly (15438ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (6ms)
-	RebuildCommonClasses (58ms)
-	RebuildNativeTypeToScriptingClass (21ms)
-	initialDomainReloadingComplete (105ms)
-	LoadAllAssembliesAndSetupDomain (422ms)
-		LoadAssemblies (999ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (1083ms)
+	RebuildNativeTypeToScriptingClass (11ms)
+	initialDomainReloadingComplete (939ms)
+	LoadAllAssembliesAndSetupDomain (2930ms)
+		LoadAssemblies (15451ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (415ms)
-			TypeCache.Refresh (412ms)
-				TypeCache.ScanAssembly (383ms)
+		AnalyzeDomain (2913ms)
+			TypeCache.Refresh (2912ms)
+				TypeCache.ScanAssembly (2379ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (1102ms)
+	FinalizeReload (1025ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1009ms)
+		SetupLoadedEditorAssemblies (992ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (642ms)
+			InitializePlatformSupportModulesInManaged (723ms)
 			SetLoadedEditorAssemblies (4ms)
-			BeforeProcessingInitializeOnLoad (93ms)
-			ProcessInitializeOnLoadAttributes (166ms)
-			ProcessInitializeOnLoadMethodAttributes (103ms)
+			BeforeProcessingInitializeOnLoad (70ms)
+			ProcessInitializeOnLoadAttributes (130ms)
+			ProcessInitializeOnLoadMethodAttributes (65ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -140,218 +140,178 @@ Domain Reload Profiling: 2723ms
 Worker process is ready to serve import requests
 Import Worker Mode flag is 0x00
 Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.065 seconds
-Refreshing native plugins compatible for Editor in 2.85 ms, found 3 plugins.
+- Loaded All Assemblies, in 10.620 seconds
+Refreshing native plugins compatible for Editor in 0.31 ms, found 3 plugins.
 Native extension for Android target not found
 Native extension for WindowsStandalone target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.036 seconds
-Domain Reload Profiling: 2089ms
-	BeginReloadAssembly (237ms)
+- Finished resetting the current domain, in  0.687 seconds
+Domain Reload Profiling: 11307ms
+	BeginReloadAssembly (227ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (6ms)
+		DisableScriptedObjects (7ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (34ms)
-	RebuildCommonClasses (71ms)
-	RebuildNativeTypeToScriptingClass (17ms)
-	initialDomainReloadingComplete (41ms)
-	LoadAllAssembliesAndSetupDomain (686ms)
-		LoadAssemblies (580ms)
+		CreateAndSetChildDomain (46ms)
+	RebuildCommonClasses (42ms)
+	RebuildNativeTypeToScriptingClass (11ms)
+	initialDomainReloadingComplete (64ms)
+	LoadAllAssembliesAndSetupDomain (10275ms)
+		LoadAssemblies (8985ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (262ms)
-			TypeCache.Refresh (218ms)
-				TypeCache.ScanAssembly (193ms)
-			BuildScriptInfoCaches (34ms)
-			ResolveRequiredComponents (5ms)
-	FinalizeReload (1036ms)
+		AnalyzeDomain (1424ms)
+			TypeCache.Refresh (1371ms)
+				TypeCache.ScanAssembly (1261ms)
+			BuildScriptInfoCaches (41ms)
+			ResolveRequiredComponents (6ms)
+	FinalizeReload (688ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (906ms)
+		SetupLoadedEditorAssemblies (573ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (16ms)
+			InitializePlatformSupportModulesInManaged (12ms)
 			SetLoadedEditorAssemblies (5ms)
-			BeforeProcessingInitializeOnLoad (111ms)
-			ProcessInitializeOnLoadAttributes (739ms)
-			ProcessInitializeOnLoadMethodAttributes (28ms)
-			AfterProcessingInitializeOnLoad (6ms)
+			BeforeProcessingInitializeOnLoad (64ms)
+			ProcessInitializeOnLoadAttributes (468ms)
+			ProcessInitializeOnLoadMethodAttributes (22ms)
+			AfterProcessingInitializeOnLoad (1ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (8ms)
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
-Refreshing native plugins compatible for Editor in 1.67 ms, found 3 plugins.
+		AwakeInstancesAfterBackupRestoration (9ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
+Refreshing native plugins compatible for Editor in 0.71 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 22 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 3347 unused Assets / (1.8 MB). Loaded Objects now: 3850.
-Memory consumption went from 86.2 MB to 84.4 MB.
-Total: 10.020800 ms (FindLiveObjects: 1.027400 ms CreateObjectMapping: 0.284000 ms MarkObjects: 6.178200 ms  DeleteObjects: 2.529400 ms)
+Unloading 3347 unused Assets / (1.2 MB). Loaded Objects now: 3850.
+Memory consumption went from 86.7 MB to 85.5 MB.
+Total: 9.756500 ms (FindLiveObjects: 1.038100 ms CreateObjectMapping: 0.509700 ms MarkObjects: 6.064200 ms  DeleteObjects: 2.142400 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 1177532.978863 seconds.
-  path: Assets/Prefabs/Products/sodas.fbx
-  artifactKey: Guid(b8e26e80d7277db419ec0feb995a48e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/sodas.fbx using Guid(b8e26e80d7277db419ec0feb995a48e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '62d05db69da2b3c8b9c3565ac57b2459') in 2.7629622 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 108
-
-========================================================================
-Received Import Request.
-  Time since last request: 776.339992 seconds.
-  path: Assets/Prefabs/Products/Material3_10.prefab
-  artifactKey: Guid(bf04e61ecb873ee41b373f9d35af7499) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/Material3_10.prefab using Guid(bf04e61ecb873ee41b373f9d35af7499) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'ccfb8075883e90446eed4ff152788ea0') in 0.1395933 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
-
-========================================================================
-Received Import Request.
-  Time since last request: 24.191818 seconds.
-  path: Assets/Prefabs/Products/Material3_10.prefab
-  artifactKey: Guid(bf04e61ecb873ee41b373f9d35af7499) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/Material3_10.prefab using Guid(bf04e61ecb873ee41b373f9d35af7499) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b97abfcfe9d9cba771243cd5b0a93dd0') in 0.040315 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
-
-========================================================================
-Received Import Request.
-  Time since last request: 40.126470 seconds.
-  path: Assets/Prefabs/Products/Material3_10.prefab
-  artifactKey: Guid(bf04e61ecb873ee41b373f9d35af7499) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/Material3_10.prefab using Guid(bf04e61ecb873ee41b373f9d35af7499) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a0370471e3700ca2ed1c7152070d96ba') in 0.0471746 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 11
-
-========================================================================
-Received Import Request.
-  Time since last request: 35.903696 seconds.
-  path: Assets/Prefabs/Products/Material3.prefab
-  artifactKey: Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/Material3.prefab using Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5a38e88fc219b0c89447e14004f2acf2') in 0.0398226 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 9
-
-========================================================================
-Received Import Request.
-  Time since last request: 15.763365 seconds.
-  path: Assets/Prefabs/Products/Material3.prefab
-  artifactKey: Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/Material3.prefab using Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '12b53971dc0ffad352c4c94e7cb66097') in 0.0331371 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 9
-
-========================================================================
-Received Import Request.
-  Time since last request: 17.714549 seconds.
-  path: Assets/Prefabs/Products/Material3.prefab
-  artifactKey: Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/Material3.prefab using Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '98edb066bea5eb909b9beaa3ba33d345') in 0.0334273 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 9
-
-========================================================================
-Received Import Request.
-  Time since last request: 146.772448 seconds.
-  path: Assets/Prefabs/Products/Material3.prefab
-  artifactKey: Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/Material3.prefab using Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f1a493dbef592eea235b2e77fc65a345') in 0.0611011 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 9
-
-========================================================================
-Received Import Request.
-  Time since last request: 89.092476 seconds.
-  path: Assets/Prefabs/Products/Material3.prefab
-  artifactKey: Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/Material3.prefab using Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '406dbcb6935e6ce4a29be9c5d106cea8') in 0.1304237 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 9
-
-========================================================================
-Received Import Request.
-  Time since last request: 17.540449 seconds.
-  path: Assets/Prefabs/Products/Material3.prefab
-  artifactKey: Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/Material3.prefab using Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f125c3fa69bc9e1ee39e55c9805316f1') in 0.0466892 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 9
-
-========================================================================
-Received Import Request.
-  Time since last request: 7.389868 seconds.
-  path: Assets/Prefabs/Products/Material3.prefab
-  artifactKey: Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/Material3.prefab using Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '306becd7315c489d1b6dae8767751f89') in 0.0499691 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 9
-
-========================================================================
-Received Import Request.
-  Time since last request: 7.006173 seconds.
-  path: Assets/Prefabs/Products/Material3.prefab
-  artifactKey: Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/Material3.prefab using Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '3e161bbbfa5b855d71714121b37f3113') in 0.041291 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 9
-
-========================================================================
-Received Import Request.
-  Time since last request: 25.252110 seconds.
-  path: Assets/Prefabs/Products/Heineken.prefab
-  artifactKey: Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/Heineken.prefab using Guid(c690b37e800dcd84f898b40a3f2fdb51) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e386b6bf0459a6bf7958b19d04052d13') in 0.0457209 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 9
-
-========================================================================
-Received Import Request.
-  Time since last request: 156.585031 seconds.
-  path: Assets/Prefabs/Products/soda-pack/Materials/1be4a2160cfaea732ee19e65aed1dfa3_baseColor.mat
-  artifactKey: Guid(e52f4a892cde59740b00c73bb8a380ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/soda-pack/Materials/1be4a2160cfaea732ee19e65aed1dfa3_baseColor.mat using Guid(e52f4a892cde59740b00c73bb8a380ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f874a5e5c6cf2ccaa391dfb7e3bfebef') in 0.2962039 seconds
+  Time since last request: 14037.195926 seconds.
+  path: Assets/Textures/ChatGPT Image 16_26_59 27 thg 8, 2025.png
+  artifactKey: Guid(d800b32bc6e15fa4b91394c973745f9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Textures/ChatGPT Image 16_26_59 27 thg 8, 2025.png using Guid(d800b32bc6e15fa4b91394c973745f9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '40f32f5d7edf7cf0a6529faba63d05c5') in 0.167787 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000224 seconds.
-  path: Assets/Prefabs/Products/soda-pack/Materials/heineken_pilsener_24_blik_33cl_1_baseColor.mat
-  artifactKey: Guid(bcd15dea91985a14483d4d4ad31e7e53) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/soda-pack/Materials/heineken_pilsener_24_blik_33cl_1_baseColor.mat using Guid(bcd15dea91985a14483d4d4ad31e7e53) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e8a8a31dc63bb1d58ac536f4e09e4f99') in 0.0541696 seconds
+  Time since last request: 9.524154 seconds.
+  path: Assets/Textures/Coca-Cola.png
+  artifactKey: Guid(d800b32bc6e15fa4b91394c973745f9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Textures/Coca-Cola.png using Guid(d800b32bc6e15fa4b91394c973745f9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd50ee66fe78c958527812570038cbd56') in 0.0308926 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000134 seconds.
-  path: Assets/Prefabs/Products/soda-pack/Materials/a-w-root-beer-soda_baseColor.mat
-  artifactKey: Guid(c395f4bf31c881043bb6af56ccc52d97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/soda-pack/Materials/a-w-root-beer-soda_baseColor.mat using Guid(c395f4bf31c881043bb6af56ccc52d97) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '39e799219dd7b8035b8af88e07853763') in 0.0956909 seconds
+  Time since last request: 52.815083 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3254560065130.jpeg
+  artifactKey: Guid(498b0de9cc843204cb9a531694f6b998) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3254560065130.jpeg using Guid(498b0de9cc843204cb9a531694f6b998) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '007ade02093a916f0099e5b88890cad6') in 0.0269036 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.003341 seconds.
-  path: Assets/Prefabs/Products/soda-pack/Materials/1614830794_61FF1168-ED33-4FFA-ACBB-CC7A3D800DEE_baseColor.mat
-  artifactKey: Guid(d4a9e0a564b61dc479204848644f4ee6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/soda-pack/Materials/1614830794_61FF1168-ED33-4FFA-ACBB-CC7A3D800DEE_baseColor.mat using Guid(d4a9e0a564b61dc479204848644f4ee6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '68195ef2e8bbc2db9faf68ef27d2c675') in 0.0844821 seconds
+  Time since last request: 0.000150 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3254560601895.jpeg
+  artifactKey: Guid(bf6d71a6546e5d146968ebd6ac95e8bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3254560601895.jpeg using Guid(bf6d71a6546e5d146968ebd6ac95e8bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c1dfb650a0710f40069644d57b068a86') in 0.0086501 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000033 seconds.
-  path: Assets/Prefabs/Products/soda-pack/Materials/U7dda968891b94de790e0b4bbe6ba0083J_baseColor.mat
-  artifactKey: Guid(383ac475b11f0d64c81b253dc42511e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/soda-pack/Materials/U7dda968891b94de790e0b4bbe6ba0083J_baseColor.mat using Guid(383ac475b11f0d64c81b253dc42511e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a62decdd034063fd34b7f74fbd22d109') in 0.0824125 seconds
+  Time since last request: 0.000129 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3276535922101.jpeg
+  artifactKey: Guid(99734010cb6aa1948a5d5121f98b643d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3276535922101.jpeg using Guid(99734010cb6aa1948a5d5121f98b643d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'edcf66407b5cab08f0e06deb9a8cddd6') in 0.0223588 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000030 seconds.
-  path: Assets/Prefabs/Products/soda-pack/Materials/U4d1c74f4234b4a8588550eef991a64f35_baseColor.mat
-  artifactKey: Guid(8dfb85fbf32a4c14b87fc6f0472d56bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/soda-pack/Materials/U4d1c74f4234b4a8588550eef991a64f35_baseColor.mat using Guid(8dfb85fbf32a4c14b87fc6f0472d56bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '16a58fc03292c39dc7323051a97d5b72') in 0.0802114 seconds
+  Time since last request: 0.017202 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3596710194148.jpeg
+  artifactKey: Guid(4c8cba3cebed07c48930bb3730967d50) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3596710194148.jpeg using Guid(4c8cba3cebed07c48930bb3730967d50) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '3e170f733e059e7a17c8c33e2d026bb2') in 0.0411913 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000066 seconds.
-  path: Assets/Prefabs/Products/soda-pack/Materials/aluminum-easy-open-end-500x500_baseColor.mat
-  artifactKey: Guid(9f2219bc594d83e4aa8c75959eca8643) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/soda-pack/Materials/aluminum-easy-open-end-500x500_baseColor.mat using Guid(9f2219bc594d83e4aa8c75959eca8643) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2dacf9ac1fe22e66426883e1d4e26de8') in 0.0873628 seconds
+  Time since last request: 0.000049 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3333160001028.jpeg
+  artifactKey: Guid(d31d1f0f98c573e4c8bcc19e8893930e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3333160001028.jpeg using Guid(d31d1f0f98c573e4c8bcc19e8893930e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'af9588f4e7237d13867f349977fe684a') in 0.0256815 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000030 seconds.
-  path: Assets/Prefabs/Products/soda-pack/Materials/sprite_baseColor.mat
-  artifactKey: Guid(a28e68f1add69d34086c0ce6c7242c08) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/soda-pack/Materials/sprite_baseColor.mat using Guid(a28e68f1add69d34086c0ce6c7242c08) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e8bca349dbe0dccd0dd418c72ec2bc2d') in 0.0795152 seconds
+  Time since last request: 0.000039 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3596710346936.jpeg
+  artifactKey: Guid(73072c03e6c245f49b98d55dcafe3f43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3596710346936.jpeg using Guid(73072c03e6c245f49b98d55dcafe3f43) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '62ab6a28734622e44c646dab62ab37bf') in 0.0271865 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000072 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3596710347001.jpeg
+  artifactKey: Guid(d7e36a227867a614ca15e9956075339d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3596710347001.jpeg using Guid(d7e36a227867a614ca15e9956075339d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '3c78f5f0d4c50dd714563d09c7ed8ac8') in 0.0469775 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000107 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3596710753468.jpeg
+  artifactKey: Guid(06fab21934a478b46bc888416e307467) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3596710753468.jpeg using Guid(06fab21934a478b46bc888416e307467) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '85b377963e4af1c232185e93a69faceb') in 0.053888 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000083 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3596710743445.jpeg
+  artifactKey: Guid(6d47ca78afc121b43852a5532a4aeb5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3596710743445.jpeg using Guid(6d47ca78afc121b43852a5532a4aeb5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5c602d3dda750992ecd9b5101dd68a5e') in 0.0996339 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000101 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3596710090105.jpeg
+  artifactKey: Guid(00d5497cbb0b8ef4d959db97101fad0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3596710090105.jpeg using Guid(00d5497cbb0b8ef4d959db97101fad0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a3428334be0a315c2f64a79ff57a0f1c') in 0.070581 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000082 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3596710310210.jpeg
+  artifactKey: Guid(efb887269da8d2248957735f310584d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3596710310210.jpeg using Guid(efb887269da8d2248957735f310584d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '0c76cbcb240cf1c2d27e31e292070f33') in 0.0612318 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000083 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3596710207824.jpeg
+  artifactKey: Guid(256065ae7647e144aaf4ffce8fa8392c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3596710207824.jpeg using Guid(256065ae7647e144aaf4ffce8fa8392c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '416393edac3fc091f414d64c76ec87c7') in 0.0632195 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000075 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_9501006000021.jpeg
+  artifactKey: Guid(7c832ca61cfa75e4db21fd222799e0f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_9501006000021.jpeg using Guid(7c832ca61cfa75e4db21fd222799e0f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e70198d54ca431efda988f58ed8d50e3') in 0.047265 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000087 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3596710211388.jpeg
+  artifactKey: Guid(2b3c7f4847102bb4a8c72dbbc628642e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3596710211388.jpeg using Guid(2b3c7f4847102bb4a8c72dbbc628642e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '25a8e271e4939176027b7d0e57f3aeab') in 0.0452624 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 Editor requested this worker to shutdown with reason: Scaling down because of idle timeout

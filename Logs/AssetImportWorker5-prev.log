@@ -1,29 +1,29 @@
 Using pre-set license
 Built from '6000.0/release' branch; Version is '6000.0.44f1 (101c91f3a8fb) revision 1055889'; Using compiler version '193933523'; Build Type 'Release'
-OS: 'Windows 11  (10.0.26100) 64bit CoreSingleLanguage' Language: 'vi' Physical Memory: 7926 MB
+OS: 'Windows 11  (10.0.22631) 64bit CoreSingleLanguage' Language: 'vi' Physical Memory: 7896 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
 
 COMMAND LINE ARGUMENTS:
-C:\Program Files\Unity\Hub\Editor\6000.0.44f1\Editor\Unity.exe
+D:\game\6000.0.44f1\Editor\Unity.exe
 -adb2
 -batchMode
 -noUpm
 -name
 AssetImportWorker5
 -projectPath
-C:/Users/lekha/OneDrive/Documents/URAPoem/URA
+D:/game/URA
 -logFile
 Logs/AssetImportWorker5.log
 -srvPort
-50538
+53486
 -job-worker-count
-3
+7
 -background-job-worker-count
 8
 -gc-helper-count
 1
-Successfully changed project path to: C:/Users/lekha/OneDrive/Documents/URAPoem/URA
-C:/Users/lekha/OneDrive/Documents/URAPoem/URA
+Successfully changed project path to: D:/game/URA
+D:/game/URA
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
     "memorysetup-bucket-allocator-granularity=16"
     "memorysetup-bucket-allocator-bucket-count=8"
@@ -59,13 +59,13 @@ C:/Users/lekha/OneDrive/Documents/URAPoem/URA
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [17120]  Target information:
+Player connection [30256]  Target information:
 
-Player connection [17120]  * "[IP] 192.168.101.31 [Port] 0 [Flags] 2 [Guid] 1726032148 [EditorId] 1726032148 [Version] 1048832 [Id] WindowsEditor(7,khanhpear) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [30256]  * "[IP] 192.168.1.138 [Port] 0 [Flags] 2 [Guid] 2678766637 [EditorId] 2678766637 [Version] 1048832 [Id] WindowsEditor(7,LAPTOP-I8RA7AQE) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [17120] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [17120] Host joined alternative multi-casting on [225.0.0.222:34997]...
-JobSystem: Creating JobQueue using job-worker-count value 3
+Player connection [30256] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [30256] Host joined alternative multi-casting on [225.0.0.222:34997]...
+JobSystem: Creating JobQueue using job-worker-count value 7
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
@@ -76,62 +76,62 @@ Library Redirect Path: Library/
 [Physics::Module] SDK Version: 4.1.2
 [Physics::Module] Integration Version: 1.0.0
 [Physics::Module] Threading Mode: Multi-Threaded
-Refreshing native plugins compatible for Editor in 6.99 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 2.28 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.44f1 (101c91f3a8fb)
-[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.44f1/Editor/Data/Resources/UnitySubsystems
-[Subsystems] Discovering subsystems at path C:/Users/lekha/OneDrive/Documents/URAPoem/URA/Assets
+[Subsystems] Discovering subsystems at path D:/game/6000.0.44f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/game/URA/Assets
 GfxDevice: creating device client; kGfxThreadingModeNonThreaded
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
-    Renderer: NVIDIA GeForce MX350 (ID=0x1c94)
+    Renderer: NVIDIA GeForce RTX 3050 Laptop GPU (ID=0x25a2)
     Vendor:   NVIDIA
-    VRAM:     1964 MB
-    Driver:   32.0.15.6641
+    VRAM:     3991 MB
+    Driver:   30.0.15.1274
 Initialize mono
-Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.44f1/Editor/Data/Managed'
-Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.44f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
-Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.44f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56792
+Mono path[0] = 'D:/game/6000.0.44f1/Editor/Data/Managed'
+Mono path[1] = 'D:/game/6000.0.44f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'D:/game/6000.0.44f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56068
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
-Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.44f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.44f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
-Registered in 0.019541 seconds.
-- Loaded All Assemblies, in  0.875 seconds
+Register platform support module: D:/game/6000.0.44f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Register platform support module: D:/game/6000.0.44f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Registered in 0.007028 seconds.
+- Loaded All Assemblies, in  0.460 seconds
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 451 ms
+Android Extension - Scanning For ADB Devices 371 ms
 Native extension for WindowsStandalone target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.955 seconds
-Domain Reload Profiling: 1825ms
-	BeginReloadAssembly (337ms)
+- Finished resetting the current domain, in  1.080 seconds
+Domain Reload Profiling: 1539ms
+	BeginReloadAssembly (153ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (106ms)
-	RebuildNativeTypeToScriptingClass (26ms)
-	initialDomainReloadingComplete (143ms)
-	LoadAllAssembliesAndSetupDomain (258ms)
-		LoadAssemblies (341ms)
+	RebuildCommonClasses (36ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (52ms)
+	LoadAllAssembliesAndSetupDomain (208ms)
+		LoadAssemblies (154ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (245ms)
-			TypeCache.Refresh (242ms)
-				TypeCache.ScanAssembly (220ms)
+		AnalyzeDomain (203ms)
+			TypeCache.Refresh (201ms)
+				TypeCache.ScanAssembly (181ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (955ms)
+	FinalizeReload (1080ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (907ms)
+		SetupLoadedEditorAssemblies (1033ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (571ms)
-			SetLoadedEditorAssemblies (5ms)
-			BeforeProcessingInitializeOnLoad (71ms)
-			ProcessInitializeOnLoadAttributes (181ms)
-			ProcessInitializeOnLoadMethodAttributes (80ms)
+			InitializePlatformSupportModulesInManaged (532ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (97ms)
+			ProcessInitializeOnLoadAttributes (317ms)
+			ProcessInitializeOnLoadMethodAttributes (82ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -140,66 +140,114 @@ Domain Reload Profiling: 1825ms
 Worker process is ready to serve import requests
 Import Worker Mode flag is 0x00
 Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.355 seconds
-Refreshing native plugins compatible for Editor in 2.30 ms, found 3 plugins.
+- Loaded All Assemblies, in  0.733 seconds
+Refreshing native plugins compatible for Editor in 0.45 ms, found 3 plugins.
 Native extension for Android target not found
 Native extension for WindowsStandalone target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.429 seconds
-Domain Reload Profiling: 2777ms
-	BeginReloadAssembly (277ms)
+- Finished resetting the current domain, in  0.768 seconds
+Domain Reload Profiling: 1501ms
+	BeginReloadAssembly (158ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (7ms)
+		DisableScriptedObjects (4ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (44ms)
-	RebuildCommonClasses (56ms)
-	RebuildNativeTypeToScriptingClass (22ms)
-	initialDomainReloadingComplete (60ms)
-	LoadAllAssembliesAndSetupDomain (933ms)
-		LoadAssemblies (706ms)
+		CreateAndSetChildDomain (32ms)
+	RebuildCommonClasses (33ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (30ms)
+	LoadAllAssembliesAndSetupDomain (502ms)
+		LoadAssemblies (412ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (405ms)
-			TypeCache.Refresh (322ms)
-				TypeCache.ScanAssembly (292ms)
-			BuildScriptInfoCaches (65ms)
-			ResolveRequiredComponents (11ms)
-	FinalizeReload (1429ms)
+		AnalyzeDomain (182ms)
+			TypeCache.Refresh (148ms)
+				TypeCache.ScanAssembly (130ms)
+			BuildScriptInfoCaches (26ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (768ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1238ms)
+		SetupLoadedEditorAssemblies (668ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (26ms)
-			SetLoadedEditorAssemblies (7ms)
-			BeforeProcessingInitializeOnLoad (303ms)
-			ProcessInitializeOnLoadAttributes (861ms)
-			ProcessInitializeOnLoadMethodAttributes (31ms)
-			AfterProcessingInitializeOnLoad (10ms)
+			InitializePlatformSupportModulesInManaged (10ms)
+			SetLoadedEditorAssemblies (5ms)
+			BeforeProcessingInitializeOnLoad (71ms)
+			ProcessInitializeOnLoadAttributes (561ms)
+			ProcessInitializeOnLoadMethodAttributes (20ms)
+			AfterProcessingInitializeOnLoad (1ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (9ms)
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
-Refreshing native plugins compatible for Editor in 1.54 ms, found 3 plugins.
+		AwakeInstancesAfterBackupRestoration (5ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.02 seconds
+Refreshing native plugins compatible for Editor in 0.86 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 22 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 3347 unused Assets / (1.2 MB). Loaded Objects now: 3850.
-Memory consumption went from 86.1 MB to 84.9 MB.
-Total: 12.775900 ms (FindLiveObjects: 1.388000 ms CreateObjectMapping: 0.511600 ms MarkObjects: 8.675700 ms  DeleteObjects: 2.198200 ms)
+Unloading 3347 unused Assets / (1.1 MB). Loaded Objects now: 3850.
+Memory consumption went from 86.7 MB to 85.6 MB.
+Total: 9.205300 ms (FindLiveObjects: 1.229800 ms CreateObjectMapping: 0.217500 ms MarkObjects: 6.129800 ms  DeleteObjects: 1.625800 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 1175937.045044 seconds.
-  path: Assets/Prefabs/Products/soda-pack/textures/1be4a2160cfaea732ee19e65aed1dfa3_baseColor.jpeg
-  artifactKey: Guid(4633229eac6086e479699dbdb6339c05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/soda-pack/textures/1be4a2160cfaea732ee19e65aed1dfa3_baseColor.jpeg using Guid(4633229eac6086e479699dbdb6339c05) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f3cf0bc34891b218a73d00a77a232771') in 2.6946467 seconds
+  Time since last request: 13754.953375 seconds.
+  path: Assets/Prefabs/supermarket/textures/texture_3.png
+  artifactKey: Guid(8e1f6bb0b6184ce4e8fc423b5c5f02b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/texture_3.png using Guid(8e1f6bb0b6184ce4e8fc423b5c5f02b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b6f863943f5844d549edc56fcb3ec071') in 0.0866378 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000970 seconds.
-  path: Assets/Prefabs/Products/soda-pack/textures/a-w-root-beer-soda_baseColor.jpeg
-  artifactKey: Guid(82091ab477a36fa4d830d554955926fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Products/soda-pack/textures/a-w-root-beer-soda_baseColor.jpeg using Guid(82091ab477a36fa4d830d554955926fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '76049b3a1d7f54350bf25b8229296ef8') in 0.0881892 seconds
+  Time since last request: 0.396275 seconds.
+  path: Assets/Prefabs/supermarket/textures/texture_4.png
+  artifactKey: Guid(36a1712e6ba9c0748b002bb9150dc584) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/texture_4.png using Guid(36a1712e6ba9c0748b002bb9150dc584) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c020303c65b5802bfe77fb987e15eb1c') in 0.0239973 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.004307 seconds.
+  path: Assets/Prefabs/supermarket/textures/texture_7.png
+  artifactKey: Guid(4f716470397284a499cc15a3491706ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/texture_7.png using Guid(4f716470397284a499cc15a3491706ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'fef5ecb8b4f7bf1bf76ffceb9c1d0b4c') in 0.02297 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000317 seconds.
+  path: Assets/Prefabs/supermarket/textures/Translucent_Glass_Block_Dark.jpeg
+  artifactKey: Guid(7206f70a16b0ec04ca930faf609a7b25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Translucent_Glass_Block_Dark.jpeg using Guid(7206f70a16b0ec04ca930faf609a7b25) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '24e42178f97d55ea159eb802bdbca10f') in 0.0243769 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000159 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3254560020962.jpeg
+  artifactKey: Guid(e2591b2923975934094f891414bb235f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3254560020962.jpeg using Guid(e2591b2923975934094f891414bb235f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a5ba13e2317fc6d8e7a6b786969f91fb') in 0.0176552 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000168 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3254560028579.jpeg
+  artifactKey: Guid(d1513408e747e0e419f076e6da0803b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3254560028579.jpeg using Guid(d1513408e747e0e419f076e6da0803b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '59892979d052e83f02a2c3b5cbb4c7be') in 0.0219272 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000064 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3083680085304.jpeg
+  artifactKey: Guid(d78fdf7db9511624a9333336665045e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3083680085304.jpeg using Guid(d78fdf7db9511624a9333336665045e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '799ee45b83616c5cf61dd5de3673d309') in 0.0254894 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Prefabs/supermarket/textures/Z0_3254560025424.jpeg
+  artifactKey: Guid(66ef5b42712d2dc41bf11126988ae114) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/supermarket/textures/Z0_3254560025424.jpeg using Guid(66ef5b42712d2dc41bf11126988ae114) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a3dffa2e5124df0e4d10d4bf8fcaebee') in 0.0248475 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
