@@ -408,6 +408,7 @@
 "Assets/Scripts/CameraLook.cs"
 "Assets/Scripts/CartManager.cs"
 "Assets/Scripts/FixedTouchField.cs"
+"Assets/Scripts/ListitemController/ListController.cs"
 "Assets/Scripts/PlayerMove.cs"
 "Assets/Scripts/SelectableItem.cs"
 "Assets/Scripts/TouchController.cs"

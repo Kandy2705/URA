@@ -5,6 +5,7 @@ public class SelectableItem : MonoBehaviour
 {
     public string itemName;
     public int price;
+    
 
     private void OnMouseDown()
     {
