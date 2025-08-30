@@ -27,6 +27,8 @@ public class CartManager : MonoBehaviour
     public TMP_Text cartText;
     public TMP_Text totalText;
 
+    [SerializeField] private GameObject itemsContainer;
+
     private void Awake()
     {
         if (Instance == null)
@@ -49,7 +51,7 @@ public class CartManager : MonoBehaviour
         {
             cart[key] = new CartEntry(item.itemName, item.price);
         }
-
+        ItemQuantityUpdate(item.itemName);
         UpdateUI();
         Debug.Log($"Đã thêm {item.itemName} (SL={cart[key].quantity}) vào giỏ!");
     }
@@ -67,5 +69,42 @@ public class CartManager : MonoBehaviour
         }
 
         totalText.text = $"Tổng: {total}₫";
+    }
+
+    public void ItemQuantityUpdate(string itemName)
+    {
+        foreach (Transform item in itemsContainer.transform)
+        {
+            
+            TMP_Text nameText = item.Find("Name")?.GetComponent<TMP_Text>();
+            TMP_Text quantityText = item.Find("Quantity")?.GetComponent<TMP_Text>();
+
+            if (nameText == null || quantityText == null)
+                continue;
+                
+            Debug.Log($"nameText: {nameText.text}, itemName: {itemName}");
+            if (nameText.text == itemName)
+            {
+                Debug.Log("đúng Item name rồi hehehe");
+
+                int currentQty = int.Parse(quantityText.text);
+
+                if (currentQty > 0)
+                {
+                    currentQty--;
+                    quantityText.text = currentQty.ToString();
+
+                    Debug.Log($"Đã lấy {itemName}, còn lại: {currentQty}");
+                }
+                else
+                {
+                    Debug.Log($"{itemName} đã đủ số lượng!");
+                }
+
+                return;
+            }
+        }
+
+        Debug.Log($"{itemName} không có trong danh sách cần mua.");
     }
 }
