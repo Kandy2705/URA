@@ -15,12 +15,16 @@ public class GrabableObject : MonoBehaviour
     {
         this.objectGrabPointTransform = grabPointTransform;
         this.objectRigidbody.useGravity = false;
+        this.objectRigidbody.isKinematic = true;
+        this.objectRigidbody.linearDamping = 5f;
     }
 
     public void Drop()
     {
         this.objectGrabPointTransform = null;
         this.objectRigidbody.useGravity = true;
+        this.objectRigidbody.isKinematic = false;
+        this.objectRigidbody.linearDamping = 0f;
     }
 
     public void FixedUpdate()

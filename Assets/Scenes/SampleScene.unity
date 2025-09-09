@@ -2292,6 +2292,10 @@ PrefabInstance:
       value: apple_green (5)
       objectReference: {fileID: 0}
     - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_Drag
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_Mass
       value: 0.0000001
       objectReference: {fileID: 0}
@@ -4647,6 +4651,10 @@ PrefabInstance:
       value: apple_green (2)
       objectReference: {fileID: 0}
     - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_Drag
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_Mass
       value: 0.0000001
       objectReference: {fileID: 0}
@@ -5125,6 +5133,10 @@ PrefabInstance:
     - target: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_Name
       value: apple_green (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_Drag
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_Mass
@@ -6764,6 +6776,10 @@ PrefabInstance:
     - target: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_Name
       value: apple_green (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_Drag
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_Mass
@@ -9848,6 +9864,10 @@ PrefabInstance:
     - target: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_Name
       value: apple_green (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_Drag
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_Mass
@@ -18361,6 +18381,10 @@ PrefabInstance:
       value: apple_green (7)
       objectReference: {fileID: 0}
     - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_Drag
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_Mass
       value: 0.0000001
       objectReference: {fileID: 0}
@@ -19841,6 +19865,10 @@ PrefabInstance:
     - target: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_Name
       value: apple_green (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_Drag
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_Mass
@@ -24638,6 +24666,10 @@ PrefabInstance:
       value: apple_green
       objectReference: {fileID: 0}
     - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_Drag
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_Mass
       value: 0.0000001
       objectReference: {fileID: 0}
@@ -28795,6 +28827,10 @@ PrefabInstance:
     - target: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_Name
       value: apple_green (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_Drag
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7454256422307608250, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_Mass
