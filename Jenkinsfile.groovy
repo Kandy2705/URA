@@ -19,14 +19,12 @@ pipeline{
     stages{
         stage('Checkout') {
             steps {
-                deleteDir() // xóa sạch workspace
-                checkout([$class: 'GitSCM',
-                branches: [[name: '*/main']],
-                userRemoteConfigs: [[url: 'https://github.com/Kandy2705/URA']],
-                extensions: [[$class: 'CleanBeforeCheckout'], [$class: 'PruneStaleBranch']]
-                ])
+                git branch: 'main',
+                    url: 'git@github.com:Kandy2705/URA.git',   // dùng SSH URL
+                    credentialsId: 'SHA256:HvLZ5nlO9kJIw7HdP7M7Cn2xy4Fmkj0ghhhxiKdBw6M'                // ID của SSH private key trong Jenkins
             }
         }
+
 
         stage('Build Windows'){
             when{expression{BUILD_WINDOWS == 'true'}}
