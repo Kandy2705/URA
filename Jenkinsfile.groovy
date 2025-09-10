@@ -15,6 +15,17 @@ pipeline{
     }
 
     stages{
+        stage('Checkout') {
+            steps {
+                deleteDir() // xóa sạch workspace
+                checkout([$class: 'GitSCM',
+                branches: [[name: '*/main']],
+                userRemoteConfigs: [[url: 'https://github.com/Kandy2705/URA']],
+                extensions: [[$class: 'CleanBeforeCheckout'], [$class: 'PruneStaleBranch']]
+                ])
+            }
+        }
+
         stage('Build Windows'){
             when{expression{BUILD_WINDOWS == 'true'}}
             steps{
