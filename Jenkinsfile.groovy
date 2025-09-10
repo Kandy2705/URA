@@ -22,7 +22,7 @@ pipeline{
                 deleteDir()
                 git branch: 'main',
                     url: 'git@github.com:Kandy2705/URA.git',
-                    credentialsId: 'github-ssh-ura'   // ID credential bạn vừa tạo
+                    credentialsId: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA5goVind9YNLU0X7tUfIQS8ba1HRmcc+eZZr9Pn+9Vg tuduong05042003@gmail.com'   // ID credential bạn vừa tạo
             }
         }
 
