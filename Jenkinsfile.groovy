@@ -19,11 +19,13 @@ pipeline{
     stages{
         stage('Checkout') {
             steps {
+                deleteDir()
                 git branch: 'main',
-                    url: 'git@github.com:Kandy2705/URA.git',   // dùng SSH URL
-                    credentialsId: 'SHA256:HvLZ5nlO9kJIw7HdP7M7Cn2xy4Fmkj0ghhhxiKdBw6M'                // ID của SSH private key trong Jenkins
+                    url: 'git@github.com:Kandy2705/URA.git',
+                    credentialsId: 'github-ssh-ura'   // ID credential bạn vừa tạo
             }
         }
+
 
 
         stage('Build Windows'){
