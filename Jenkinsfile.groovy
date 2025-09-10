@@ -17,6 +17,15 @@ pipeline{
     options { skipDefaultCheckout(true) }
 
     stages{
+        stage('SSH self-test') {
+            steps {
+                sshagent(credentials: ['github-ssh-ura']) {
+                bat 'ssh -V'
+                bat 'ssh -o StrictHostKeyChecking=accept-new -T git@github.com'
+                }
+            }
+        }
+
         stage('Checkout') {
             steps {
                 deleteDir()
