@@ -48,4 +48,13 @@ pipeline{
             }
         }
     }
+    
+    post{
+        always{
+            archiveArtifacts artifacts: "${PROJECT_NAME}/Builds/**", allowEmptyArchive: true
+        }
+        failure{
+            echo 'Build failed!'
+        }
+    }
 }
