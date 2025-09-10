@@ -1,5 +1,5 @@
 def PROJECT_NAME = "URA"
-def CUSTOME_WORKSPACE = "C:\\Project\\${PROJECT_NAME}"
+def CUSTOME_WORKSPACE = "C:\\Jenkins\\Unity_Projects\\${PROJECT_NAME}"
 def UNITY_VERSION = "6000.0.44f1"
 def UNITY_INSTALLATION = "C:\\Program Files\\Unity\\Hub\\Editor\\${UNITY_VERSION}\\Editor"
 pipeline{
@@ -13,6 +13,8 @@ pipeline{
             customWorkspace "${CUSTOME_WORKSPACE}"
         }
     }
+
+    options { skipDefaultCheckout(true) }
 
     stages{
         stage('Checkout') {
