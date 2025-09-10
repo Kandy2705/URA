@@ -4,7 +4,7 @@ def UNITY_VERSION = "6000.0.44f1"
 def UNITY_INSTALLATION = "C:\\Program Files\\Unity\\Hub\\Editor\\${UNITY_VERSION}\\Editor"
 pipeline{
     environment{
-        PROJECT_PATH = "${CUSTOME_WORKSPACE}\\${PROJECT_NAME}"
+        PROJECT_PATH = "${CUSTOME_WORKSPACE}"
     }
 
     agent{
