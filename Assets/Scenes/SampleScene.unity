@@ -11564,6 +11564,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -8330926626512407990, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -8098802744336350861, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -11611,6 +11615,10 @@ PrefabInstance:
     - target: {fileID: -7275390216652639677, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
       propertyPath: m_LocalPosition.z
       value: 15.7464
+      objectReference: {fileID: 0}
+    - target: {fileID: -7006506228348182270, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -6824387550750193943, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11664,6 +11672,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.54
       objectReference: {fileID: 0}
+    - target: {fileID: -5873633914147875279, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -5751949428428801006, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
       propertyPath: m_LocalScale.y
       value: 2.7732182
@@ -11683,6 +11695,10 @@ PrefabInstance:
     - target: {fileID: -5477749408508380018, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
       propertyPath: m_LocalPosition.z
       value: 3.1206
+      objectReference: {fileID: 0}
+    - target: {fileID: -5372754335523077783, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -5240504606640589677, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
       propertyPath: m_Mesh
@@ -11828,7 +11844,15 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2058887827087596707, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2157858096542870891, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355981285543042709, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
       propertyPath: m_Lightmapping
       value: 2
       objectReference: {fileID: 0}
@@ -11976,6 +12000,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6482898361876501006, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6824746026288583490, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -12016,6 +12044,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 1110233775959259594, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+    - target: {fileID: 8758408322907601331, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9165736883761117376, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
       propertyPath: m_LocalScale.x
       value: 1324.962
@@ -15097,23 +15129,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53dd733b09de2413b83b3edd2cbe3b67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  limitSeconds: 20
-  timerText: {fileID: 1040625615}
+  limitSeconds: 240
+  timerText: {fileID: 0}
   onTimeUp:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1034488224}
-        m_TargetAssemblyTypeName: GameOverHandler, Assembly-CSharp
-        m_MethodName: OnTimeUp
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: OnTimeUp()
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1034488224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19833,6 +19853,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1315454483}
   m_CullTransparentMesh: 1
+--- !u!1 &1322182726
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1322182728}
+  - component: {fileID: 1322182727}
+  m_Layer: 0
+  m_Name: DataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1322182727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322182726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84eaed8bed8e8054b865259fe396539d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 963194228}
+  targets:
+  - {fileID: 431177911}
+  - {fileID: 958906982}
+  - {fileID: 482208856}
+  interactionRange: 5
+--- !u!4 &1322182728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322182726}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15.171858, y: 1.9146593, z: 4.3358955}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1323532679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31314,3 +31384,4 @@ SceneRoots:
   - {fileID: 248356869}
   - {fileID: 898398388}
   - {fileID: 1034488225}
+  - {fileID: 1322182728}
