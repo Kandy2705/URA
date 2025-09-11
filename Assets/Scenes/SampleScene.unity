@@ -1592,6 +1592,39 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -451261308956532957, guid: c414c6cba0f2d2c448185d988da5c23d, type: 3}
+--- !u!114 &171028893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171028884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f32cd547aa38a346ad7fce7343830ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &171028894
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171028884}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.6260006, y: 0.22816111, z: 1.2860004}
+  m_Center: {x: 0.000000103351795, y: 0.35491234, z: -3.1315318e-13}
 --- !u!1 &173960435
 GameObject:
   m_ObjectHideFlags: 0
@@ -2420,6 +2453,10 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1315475286309107876, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2009398833688933354, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.01
@@ -2499,6 +2536,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
       insertIndex: 2
       addedObject: {fileID: 1788036499}
+    - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1788036505}
   m_SourcePrefab: {fileID: 100100000, guid: abbf234617205844db11a1e767893e4f, type: 3}
 --- !u!4 &205548802 stripped
 Transform:
@@ -3187,11 +3227,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de73b20d60f5c7459c6e86841372d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cartText: {fileID: 1410867701}
-  totalText: {fileID: 271834526}
-  correctCountText: {fileID: 0}
-  predefinedItems: []
-  itemsContainer: {fileID: 1357814202}
+  billText: {fileID: 1410867701}
+  paidTotalText: {fileID: 271834526}
 --- !u!4 &248356869
 Transform:
   m_ObjectHideFlags: 0
@@ -4781,6 +4818,10 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1315475286309107876, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2009398833688933354, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.01
@@ -4860,6 +4901,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
       insertIndex: 2
       addedObject: {fileID: 722788193}
+    - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 722788199}
   m_SourcePrefab: {fileID: 100100000, guid: abbf234617205844db11a1e767893e4f, type: 3}
 --- !u!4 &374221133 stripped
 Transform:
@@ -5291,6 +5335,10 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1315475286309107876, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2009398833688933354, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.01
@@ -5370,6 +5418,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
       insertIndex: 2
       addedObject: {fileID: 1751387470}
+    - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1751387476}
   m_SourcePrefab: {fileID: 100100000, guid: abbf234617205844db11a1e767893e4f, type: 3}
 --- !u!4 &407584011 stripped
 Transform:
@@ -6934,6 +6985,10 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1315475286309107876, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2009398833688933354, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.01
@@ -7013,6 +7068,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
       insertIndex: 2
       addedObject: {fileID: 1718587011}
+    - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1718587017}
   m_SourcePrefab: {fileID: 100100000, guid: abbf234617205844db11a1e767893e4f, type: 3}
 --- !u!4 &538846485 stripped
 Transform:
@@ -9141,6 +9199,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "T\xE1o xanh"
   price: 12000
+--- !u!114 &722788199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722788190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f32cd547aa38a346ad7fce7343830ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &734645966
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10048,6 +10118,10 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1315475286309107876, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2009398833688933354, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.01
@@ -10127,6 +10201,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
       insertIndex: 2
       addedObject: {fileID: 2131118695}
+    - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 2131118701}
   m_SourcePrefab: {fileID: 100100000, guid: abbf234617205844db11a1e767893e4f, type: 3}
 --- !u!4 &776984995 stripped
 Transform:
@@ -18570,6 +18647,10 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1315475286309107876, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2009398833688933354, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.01
@@ -18649,6 +18730,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
       insertIndex: 2
       addedObject: {fileID: 1927648588}
+    - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1927648594}
   m_SourcePrefab: {fileID: 100100000, guid: abbf234617205844db11a1e767893e4f, type: 3}
 --- !u!4 &1236045203 stripped
 Transform:
@@ -20057,6 +20141,10 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1315475286309107876, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2009398833688933354, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.01
@@ -20136,6 +20224,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
       insertIndex: 2
       addedObject: {fileID: 1302504178}
+    - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1302504184}
   m_SourcePrefab: {fileID: 100100000, guid: abbf234617205844db11a1e767893e4f, type: 3}
 --- !u!4 &1302504175 stripped
 Transform:
@@ -20156,6 +20247,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "T\xE1o xanh"
   price: 12000
+--- !u!114 &1302504184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584385500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f32cd547aa38a346ad7fce7343830ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1315454483
 GameObject:
   m_ObjectHideFlags: 0
@@ -24841,11 +24944,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -3788006779446369280, guid: c414c6cba0f2d2c448185d988da5c23d, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 171028893}
+    - targetCorrespondingSourceObject: {fileID: -3788006779446369280, guid: c414c6cba0f2d2c448185d988da5c23d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 171028889}
     - targetCorrespondingSourceObject: {fileID: -3788006779446369280, guid: c414c6cba0f2d2c448185d988da5c23d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 171028888}
+    - targetCorrespondingSourceObject: {fileID: -3788006779446369280, guid: c414c6cba0f2d2c448185d988da5c23d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 171028894}
   m_SourcePrefab: {fileID: 100100000, guid: c414c6cba0f2d2c448185d988da5c23d, type: 3}
 --- !u!1001 &1616249863
 PrefabInstance:
@@ -24929,6 +25038,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 431177911}
     m_Modifications:
+    - target: {fileID: 1315475286309107876, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2009398833688933354, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.01
@@ -25008,6 +25121,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
       insertIndex: 2
       addedObject: {fileID: 2084865301}
+    - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 2084865307}
   m_SourcePrefab: {fileID: 100100000, guid: abbf234617205844db11a1e767893e4f, type: 3}
 --- !u!4 &1624209110 stripped
 Transform:
@@ -26915,6 +27031,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "T\xE1o xanh"
   price: 12000
+--- !u!114 &1718587017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718587008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f32cd547aa38a346ad7fce7343830ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1726358322 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2580249621097652999, guid: 2f120549ced5a7240a1b5f0bb5ce2254, type: 3}
@@ -27142,6 +27270,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "T\xE1o xanh"
   price: 12000
+--- !u!114 &1751387476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751387467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f32cd547aa38a346ad7fce7343830ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1768376668 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5731033002757011461, guid: f52b0a4b6b774914f9bc62d5eec653a5, type: 3}
@@ -27290,6 +27430,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "T\xE1o xanh"
   price: 12000
+--- !u!114 &1788036505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788036496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f32cd547aa38a346ad7fce7343830ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1790500679 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8165500598811766687, guid: 2851bdb646102b54ab18a381c30a0cf5, type: 3}
@@ -28772,6 +28924,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "T\xE1o xanh"
   price: 12000
+--- !u!114 &1927648594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927648585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f32cd547aa38a346ad7fce7343830ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1928473853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29161,6 +29325,10 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1315475286309107876, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2009398833688933354, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.01
@@ -29240,6 +29408,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
       insertIndex: 2
       addedObject: {fileID: 1934241018}
+    - targetCorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1934241024}
   m_SourcePrefab: {fileID: 100100000, guid: abbf234617205844db11a1e767893e4f, type: 3}
 --- !u!4 &1934241015 stripped
 Transform:
@@ -29260,6 +29431,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "T\xE1o xanh"
   price: 12000
+--- !u!114 &1934241024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805613700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f32cd547aa38a346ad7fce7343830ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1956500057
 GameObject:
   m_ObjectHideFlags: 0
@@ -30821,6 +31004,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "T\xE1o xanh"
   price: 12000
+--- !u!114 &2084865307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084865298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f32cd547aa38a346ad7fce7343830ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2086902543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31292,6 +31487,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "T\xE1o xanh"
   price: 12000
+--- !u!114 &2131118701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131118692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f32cd547aa38a346ad7fce7343830ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2131947614
 PrefabInstance:
   m_ObjectHideFlags: 0
