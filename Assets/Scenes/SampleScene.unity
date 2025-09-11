@@ -22238,7 +22238,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1932703672}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ListController, Assembly-CSharp
         m_MethodName: ToggleList
         m_Mode: 1
@@ -27135,8 +27135,6 @@ GameObject:
   - component: {fileID: 1932703675}
   - component: {fileID: 1932703674}
   - component: {fileID: 1932703673}
-  - component: {fileID: 1932703672}
-  - component: {fileID: 1932703676}
   m_Layer: 5
   m_Name: ListItem
   m_TagString: Untagged
@@ -27144,37 +27142,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1932703672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1932703671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93f783fb04c35024a93645453906e2df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  listItemPrefab: {fileID: 1932703671}
-  availablePrefabs:
-  - {fileID: 7928218173533933786, guid: 776f1177798d17849a882e993df97974, type: 3}
-  - {fileID: 7928218173533933786, guid: bded834933cf7384bb15835f8f8bd94f, type: 3}
-  - {fileID: 7928218173533933786, guid: 01b1778c122f88640a20a8399fa22273, type: 3}
-  - {fileID: 7928218173533933786, guid: a1bae9bea778d44449a1a25cf2c72ef1, type: 3}
-  - {fileID: 236857628776557926, guid: 0e544f61879423c479f2fbc6fd239bf1, type: 3}
-  - {fileID: 7928218173533933786, guid: a36ce008eb2efb645be8188996a4ef6e, type: 3}
-  - {fileID: 6856021664560394239, guid: 49537e0ece19dd74198a9cdc5e40580d, type: 3}
-  - {fileID: 7928218173533933786, guid: bc49738b448fcf247992d19e4e62da07, type: 3}
-  - {fileID: 7928218173533933786, guid: 7820c4509afa1914d82ffbc1f48ba8ba, type: 3}
-  - {fileID: 7928218173533933786, guid: 4d167cd8c6903994e9147d0d4e2f509b, type: 3}
-  - {fileID: 5699433328212957464, guid: 96a271a80bf7a3c4cbbdc775e6f9ede3, type: 3}
-  - {fileID: 7928218173533933786, guid: 7a5a3f36f6a6dfe42bfbda16a50887fc, type: 3}
-  - {fileID: 7928218173533933786, guid: 4af2936e2f6b83341b587d56197408c4, type: 3}
-  - {fileID: 7928218173533933786, guid: 3d3eccd5f5628584ab213ac790b4d165, type: 3}
-  - {fileID: 7928218173533933786, guid: f3ba1b015110d31459d677fc896f7e92, type: 3}
-  - {fileID: 2757006321740363870, guid: 43dc60078cfd5b546979ce81618bc3e8, type: 3}
-  - {fileID: 7928218173533933786, guid: 4d6c7a5b3633a664882584eb782536ae, type: 3}
 --- !u!114 &1932703673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27230,18 +27197,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -26}
   m_SizeDelta: {x: 959.4702, y: 771.53}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1932703676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1932703671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8bf595b1c79c314ebadb4f0931f9598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1932871018
 PrefabInstance:
   m_ObjectHideFlags: 0
