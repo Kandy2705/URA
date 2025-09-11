@@ -34,7 +34,7 @@ pipeline{
 
 
         stage('Build Windows'){
-            when{expression{BUILD_WINDOWS == 'true'}}
+            when { expression { return params.BUILD_WINDOWS } }
             steps{
                 script{
                     withEnv(["UNITY_PATH=${UNITY_INSTALLATION}"]){
@@ -47,7 +47,7 @@ pipeline{
         }
 
         stage('Deploy Windows'){
-            when{expression{DEPLOY_WINDOWS == 'true'}}
+            when { expression { return params.DEPLOY_WINDOWS } }
             steps{
                 echo 'Deploy Windows'
             }
