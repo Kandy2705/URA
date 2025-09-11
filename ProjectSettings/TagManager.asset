@@ -9,6 +9,7 @@ TagManager:
   - Water
   - Noodles
   - Fish
+  - Map Unseen
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
+  - Map Unseen
   - 
   - 
   - 
