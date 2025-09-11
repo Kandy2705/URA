@@ -27,6 +27,11 @@ public class CartManager : MonoBehaviour
     public TMP_Text cartText;
     public TMP_Text totalText;
 
+    public TMP_Text correctCountText; // Add a TMP_Text in the inspector for this
+
+    [Header("Predefined Items")]
+    public List<string> predefinedItems = new List<string>(); // Set this in the inspector
+
     [SerializeField] private GameObject itemsContainer;
 
     private void Awake()
@@ -69,6 +74,18 @@ public class CartManager : MonoBehaviour
         }
 
         totalText.text = $"Tổng: {total}₫";
+
+        // Count correctly selected items
+        int correctCount = 0;
+        foreach (var item in predefinedItems)
+        {
+            if (cart.ContainsKey(item) && cart[item].quantity > 0)
+            {
+                correctCount++;
+            }
+        }
+        if (correctCountText != null)
+            correctCountText.text = $"Correctly selected: {correctCount}/{predefinedItems.Count}";
     }
 
     public void ItemQuantityUpdate(string itemName)
