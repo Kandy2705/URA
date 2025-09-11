@@ -22238,7 +22238,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1932703676}
         m_TargetAssemblyTypeName: ListController, Assembly-CSharp
         m_MethodName: ToggleList
         m_Mode: 1
@@ -27136,6 +27136,7 @@ GameObject:
   - component: {fileID: 1932703674}
   - component: {fileID: 1932703673}
   - component: {fileID: 1932703676}
+  - component: {fileID: 1932703677}
   m_Layer: 5
   m_Name: ListItem
   m_TagString: Untagged
@@ -27187,8 +27188,8 @@ RectTransform:
   m_GameObject: {fileID: 1932703671}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1357814203}
   m_Father: {fileID: 1365226520}
@@ -27229,6 +27230,29 @@ MonoBehaviour:
   - {fileID: 7928218173533933786, guid: f3ba1b015110d31459d677fc896f7e92, type: 3}
   - {fileID: 2757006321740363870, guid: 43dc60078cfd5b546979ce81618bc3e8, type: 3}
   - {fileID: 7928218173533933786, guid: 4d6c7a5b3633a664882584eb782536ae, type: 3}
+  anim: {fileID: 1932703677}
+--- !u!95 &1932703677
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932703671}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b4c0a36a52778dc4a80b1c98941abe16, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1932871018
 PrefabInstance:
   m_ObjectHideFlags: 0
