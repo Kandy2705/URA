@@ -6,8 +6,10 @@ public class ListController : MonoBehaviour
 {
     [SerializeField] private GameObject listItemPrefab;
     [SerializeField] private List<GameObject> availablePrefabs;
-    private bool isVisible;
+    private bool isVisible = true;
+    [SerializeField] private Animator anim;
     private int spawnCount = 0;
+    private float timer = 0f;  
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,13 +23,24 @@ public class ListController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
 
+        if (timer >= 10f && isVisible)
+        {
+            ToggleList();
+            timer = 0f; // Reset the timer
+        }
     }
 
     public void ToggleList()
     {
         isVisible = !isVisible;
-        listItemPrefab.gameObject.SetActive(isVisible);
+        if (isVisible)
+        {
+            anim.Play("listOpen");
+        }
+        else anim.Play("listClose");
+        //listItemPrefab.gameObject.SetActive(isVisible);
     }
 
     public void SpawnItemInList()
