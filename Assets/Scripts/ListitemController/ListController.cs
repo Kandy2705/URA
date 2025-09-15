@@ -6,6 +6,7 @@ public class ListController : MonoBehaviour
 {
     [SerializeField] private GameObject listItemPrefab;
     [SerializeField] private List<GameObject> availablePrefabs;
+    [SerializeField] private List<GameObject> choicedItems;
     private bool isVisible = true;
     [SerializeField] private Animator anim;
     private int spawnCount = 0;
@@ -51,12 +52,13 @@ public class ListController : MonoBehaviour
             return;
         }
 
-        int randomIndex = Random.Range(0, availablePrefabs.Count);
-        int randomQuantity = Random.Range(1, 10);
+        int randomIndex = UnityEngine.Random.Range(0, availablePrefabs.Count);
+        int randomQuantity = UnityEngine.Random.Range(1, 10);
 
         GameObject randomPrefab = availablePrefabs[randomIndex];
 
         GameObject spawnedItem = Instantiate(randomPrefab, listItemPrefab.transform);
+        choicedItems.Add(randomPrefab);
 
         spawnedItem.transform.localPosition = new Vector3(0f, 20f + spawnCount * -25f, 0f);
         spawnedItem.transform.localRotation = Quaternion.identity;
