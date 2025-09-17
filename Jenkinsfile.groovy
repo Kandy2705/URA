@@ -3,6 +3,10 @@ def CUSTOME_WORKSPACE = "C:\\Jenkins\\Unity_Projects\\${PROJECT_NAME}"
 def UNITY_VERSION = "6000.0.44f1"
 def UNITY_INSTALLATION = "C:\\Program Files\\Unity\\Hub\\Editor\\${UNITY_VERSION}\\Editor"
 pipeline{
+      parameters {
+        booleanParam(name: 'BUILD_WINDOWS',  defaultValue: true,  description: 'Build Windows')
+        booleanParam(name: 'DEPLOY_WINDOWS', defaultValue: false, description: 'Deploy Windows')
+    }
     environment{
         PROJECT_PATH = "${CUSTOME_WORKSPACE}"
     }
@@ -30,7 +34,7 @@ pipeline{
 
 
         stage('Build Windows'){
-            when{expression{BUILD_WINDOWS == 'true'}}
+            when { expression { return params.BUILD_WINDOWS } }
             steps{
                 script{
                     withEnv(["UNITY_PATH=${UNITY_INSTALLATION}"]){
@@ -43,7 +47,7 @@ pipeline{
         }
 
         stage('Deploy Windows'){
-            when{expression{DEPLOY_WINDOWS == 'true'}}
+            when { expression { return params.DEPLOY_WINDOWS } }
             steps{
                 echo 'Deploy Windows'
             }
