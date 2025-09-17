@@ -7,20 +7,28 @@
       "RelativeMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\datamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|d:\\capstone_project\\virtual_mall\\ura\\assets\\scripts\\gametimer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|D:\\Capstone_project\\Virtual_Mall\\URA\\assets\\scripts\\gametimer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gametimer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|D:\\Capstone_project\\Virtual_Mall\\URA\\assets\\scripts\\playermove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playermove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|D:\\Capstone_project\\Virtual_Mall\\URA\\assets\\scripts\\cartmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\cartmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|d:\\capstone_project\\virtual_mall\\ura\\assets\\scripts\\selectableitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|D:\\Capstone_project\\Virtual_Mall\\URA\\assets\\scripts\\selectableitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\selectableitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|D:\\Capstone_project\\Virtual_Mall\\URA\\assets\\scripts\\listitemcontroller\\listcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\listitemcontroller\\listcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|D:\\Capstone_project\\Virtual_Mall\\URA\\assets\\scripts\\cameralook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\cameralook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|D:\\Capstone_project\\Virtual_Mall\\URA\\assets\\scripts\\playermove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playermove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|D:\\Capstone_project\\Virtual_Mall\\URA\\assets\\scripts\\touchcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|D:\\Capstone_project\\Virtual_Mall\\URA\\assets\\scripts\\fixedtouchfield.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\fixedtouchfield.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|D:\\Capstone_project\\Virtual_Mall\\URA\\assets\\scripts\\cameralook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{357F69E1-DDB3-EDBF-ED08-97773130408F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\cameralook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,8 +46,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ListController.cs",
+              "DocumentMoniker": "D:\\Capstone_project\\Virtual_Mall\\URA\\Assets\\Scripts\\ListitemController\\ListController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ListitemController\\ListController.cs",
+              "ToolTip": "D:\\Capstone_project\\Virtual_Mall\\URA\\Assets\\Scripts\\ListitemController\\ListController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ListitemController\\ListController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-11T06:03:54.803Z"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -52,10 +68,9 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\GameTimer.cs",
               "ToolTip": "D:\\Capstone_project\\Virtual_Mall\\URA\\Assets\\Scripts\\GameTimer.cs",
               "RelativeToolTip": "Assets\\Scripts\\GameTimer.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAmwEcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAYwEAAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-10T09:57:47.89Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-10T09:57:47.89Z"
             },
             {
               "$type": "Document",
@@ -65,40 +80,38 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\DataManager.cs",
               "ToolTip": "D:\\Capstone_project\\Virtual_Mall\\URA\\Assets\\Scripts\\DataManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\DataManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAAAEsAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-10T08:01:28.561Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "SelectableItem.cs",
               "DocumentMoniker": "D:\\Capstone_project\\Virtual_Mall\\URA\\Assets\\Scripts\\SelectableItem.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\SelectableItem.cs",
               "ToolTip": "D:\\Capstone_project\\Virtual_Mall\\URA\\Assets\\Scripts\\SelectableItem.cs",
               "RelativeToolTip": "Assets\\Scripts\\SelectableItem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-30T20:06:05.54Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-30T20:06:05.54Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "CartManager.cs",
               "DocumentMoniker": "D:\\Capstone_project\\Virtual_Mall\\URA\\Assets\\Scripts\\CartManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CartManager.cs",
               "ToolTip": "D:\\Capstone_project\\Virtual_Mall\\URA\\Assets\\Scripts\\CartManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\CartManager.cs",
-              "ViewState": "AgIAAFIAAAAAAAAAAAAwwCkAAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAACgAAAAAAAAAAAAkwCwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-30T20:08:12.57Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-30T20:08:12.57Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "TouchController.cs",
               "DocumentMoniker": "D:\\Capstone_project\\Virtual_Mall\\URA\\Assets\\Scripts\\TouchController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\TouchController.cs",
@@ -106,12 +119,11 @@
               "RelativeToolTip": "Assets\\Scripts\\TouchController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-30T19:12:17.323Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-30T19:12:17.323Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "FixedTouchField.cs",
               "DocumentMoniker": "D:\\Capstone_project\\Virtual_Mall\\URA\\Assets\\Scripts\\FixedTouchField.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\FixedTouchField.cs",
@@ -123,7 +135,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 5,
               "Title": "CameraLook.cs",
               "DocumentMoniker": "D:\\Capstone_project\\Virtual_Mall\\URA\\Assets\\Scripts\\CameraLook.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CameraLook.cs",
@@ -135,7 +147,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "PlayerMove.cs",
               "DocumentMoniker": "D:\\Capstone_project\\Virtual_Mall\\URA\\Assets\\Scripts\\PlayerMove.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerMove.cs",
@@ -143,8 +155,7 @@
               "RelativeToolTip": "Assets\\Scripts\\PlayerMove.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-30T18:47:57.036Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-30T18:47:57.036Z"
             }
           ]
         }

@@ -62,6 +62,7 @@ public class GameTimer : MonoBehaviour
     {
         isRunning = false;
         timeLeft = 0;
+        DataManager.Instance.Report();
         UpdateUI();
 
         Debug.Log("Hết giờ");

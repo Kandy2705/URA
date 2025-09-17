@@ -43,6 +43,9 @@ public class CartManager : MonoBehaviour
     {
         string key = item.itemName;
 
+        Debug.Log("Here");
+        DataManager.Instance.updateTime(key);
+
         if (cart.ContainsKey(key))
         {
             cart[key].quantity++;
