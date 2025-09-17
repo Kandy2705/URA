@@ -36,16 +36,7 @@ public class CartManager : MonoBehaviour
 
     public void CheckoutItem(SelectableItem item)
     {
-<<<<<<< HEAD
-        string key = item.itemName;
-
-        Debug.Log("Here");
-        DataManager.Instance.updateTime(key);
-
-        if (cart.ContainsKey(key))
-=======
         if (bill.ContainsKey(item.itemName))
->>>>>>> f26885d9aa89b9f8502d4db60d05dc7dbe414eae
         {
             bill[item.itemName].quantity++;
         }
