@@ -12064,11 +12064,7 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-<<<<<<< HEAD
-    - target: {fileID: 6482898361876501006, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
-=======
     - target: {fileID: 5934638390993991914, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
->>>>>>> f26885d9aa89b9f8502d4db60d05dc7dbe414eae
       propertyPath: m_Lightmapping
       value: 2
       objectReference: {fileID: 0}
@@ -15202,11 +15198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53dd733b09de2413b83b3edd2cbe3b67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  limitSeconds: 30
-=======
   limitSeconds: 300
->>>>>>> f26885d9aa89b9f8502d4db60d05dc7dbe414eae
   timerText: {fileID: 1040625615}
   onTimeUp:
     m_PersistentCalls:
@@ -19985,7 +19977,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f32cd547aa38a346ad7fce7343830ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -20128,8 +20119,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-=======
->>>>>>> f26885d9aa89b9f8502d4db60d05dc7dbe414eae
 --- !u!1001 &1323532679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20948,12 +20937,8 @@ RectTransform:
   - {fileID: 271834528}
   - {fileID: 1518448186}
   - {fileID: 1040625614}
-<<<<<<< HEAD
   - {fileID: 458401169}
   - {fileID: 353139961}
-=======
-  - {fileID: 1932703675}
->>>>>>> f26885d9aa89b9f8502d4db60d05dc7dbe414eae
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -23327,11 +23312,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-<<<<<<< HEAD
-  m_AnchoredPosition: {x: -23, y: -93.99994}
-=======
   m_AnchoredPosition: {x: -41.003, y: -133}
->>>>>>> f26885d9aa89b9f8502d4db60d05dc7dbe414eae
   m_SizeDelta: {x: 160, y: 42.56369}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1518448187
@@ -31757,10 +31738,7 @@ SceneRoots:
   - {fileID: 1832491926}
   - {fileID: 898398388}
   - {fileID: 1034488225}
-<<<<<<< HEAD
-  - {fileID: 1322182728}
-=======
   - {fileID: 248356869}
   - {fileID: 1560181509}
   - {fileID: 1212792015}
->>>>>>> f26885d9aa89b9f8502d4db60d05dc7dbe414eae
+
