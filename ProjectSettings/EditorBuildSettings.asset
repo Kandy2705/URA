@@ -6,7 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  m_configObjects: {}
+    path: Assets/Samples/XR Interaction Toolkit/3.0.8/Starter Assets/DemoScene.unity
+    guid: 319dafa5c80f29f428dc1e0d03f04177
+  m_configObjects:
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 9e8e038a435e9e94ba91aedde91f1a30, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 40c4b8b367faade4aa353a740fd3b234, type: 2}
   m_UseUCBPForAssetBundles: 0
