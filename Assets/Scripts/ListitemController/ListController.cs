@@ -8,7 +8,7 @@ public class ListController : MonoBehaviour
     [SerializeField] private List<GameObject> availablePrefabs;
     [SerializeField] private List<GameObject> choicedItems;
     private bool isVisible = true;
-    [SerializeField] private Animator anim;
+    //[SerializeField] private Animator anim;
     private int spawnCount = 0;
     private float timer = 0f;  
 
@@ -28,21 +28,21 @@ public class ListController : MonoBehaviour
 
         if (timer >= 10f && isVisible)
         {
-            ToggleList();
+            //ToggleList();
             timer = 0f; // Reset the timer
         }
     }
 
-    public void ToggleList()
-    {
-        isVisible = !isVisible;
-        if (isVisible)
-        {
-            anim.Play("listOpen");
-        }
-        else anim.Play("listClose");
-        //listItemPrefab.gameObject.SetActive(isVisible);
-    }
+    //public void ToggleList()
+    //{
+    //    isVisible = !isVisible;
+    //    if (isVisible)
+    //    {
+    //        anim.Play("listOpen");
+    //    }
+    //    else anim.Play("listClose");
+    //    //listItemPrefab.gameObject.SetActive(isVisible);
+    //}
 
     public void SpawnItemInList()
     {
