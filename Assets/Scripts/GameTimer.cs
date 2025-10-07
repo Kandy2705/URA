@@ -4,6 +4,9 @@ using UnityEngine.Events;
 
 public class GameTimer : MonoBehaviour
 {
+    [Header("Game Timer UI")]
+    [SerializeField]
+    private Timer[] timers;
     [Header("Timer Settings")]
     public float limitSeconds = 240f; 
 
@@ -15,11 +18,23 @@ public class GameTimer : MonoBehaviour
 
     private float timeLeft;
     private bool isRunning = false;
+    private int seconds;
+    private int minutes;
+    private int hours;
+
+    void Awake()
+    {
+        (hours, minutes, seconds) = TimeUtils.SecondsToHMS(limitSeconds);
+        foreach (Timer timer in timers) timer.startAtRuntime = false;
+        foreach (Timer timer in timers) UIStartTime(timer);
+    }
 
     void Start()
     {
         StartTimer();
+        foreach (Timer timer in timers) {if(timer) timer.StartTimer();}
     }
+
 
     void Update()
     {
@@ -37,6 +52,13 @@ public class GameTimer : MonoBehaviour
         }
     }
 
+    public void UIStartTime(Timer timerObject)
+    {
+        timerObject.seconds = seconds;
+        timerObject.minutes = minutes;
+        timerObject.hours = hours;
+    }
+        
     public void StartTimer()
     {
         timeLeft = limitSeconds;
