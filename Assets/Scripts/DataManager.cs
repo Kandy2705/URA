@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using System.IO;
 
 public class DataManager : MonoBehaviour
 {
@@ -96,6 +97,36 @@ public class DataManager : MonoBehaviour
         product_times[product] = (int)elapsed;
     }
 
+    public void ExportCSV()
+    {
+        string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+        string fileName = $"report_{timestamp}.csv";
+        string dirPath = Path.Combine(Application.dataPath, "Scripts/Data");
+        if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
+
+
+        string path = Path.Combine(dirPath, fileName);
+         using (StreamWriter writer = new StreamWriter(path, false))
+    {
+        writer.WriteLine("Category,Count");
+        writer.WriteLine($"Fruits,{num_visit_fruits}");
+        writer.WriteLine($"Drinks,{num_visit_drinks}");
+        writer.WriteLine($"Snacks,{num_visit_snacks}");
+        writer.WriteLine();
+
+        writer.WriteLine("Booth Order");
+        writer.WriteLine(string.Join(" -> ", booths_priority));
+        writer.WriteLine();
+
+        writer.WriteLine("Product,Time(s)");
+        foreach (var kvp in product_times)
+        {
+            writer.WriteLine($"{kvp.Key},{kvp.Value}");
+        }
+    }
+
+    }
+
     public void Report()
     {
         // Update UI text
@@ -114,6 +145,8 @@ public class DataManager : MonoBehaviour
 
         // Show the stats panel
         EnableStatsPanel();
+        ExportCSV();
+
     }
 
     public void EnableStatsPanel()
@@ -123,4 +156,6 @@ public class DataManager : MonoBehaviour
         if (statsPanel2 != null)
             statsPanel2.SetActive(true);
     }
+
+    
 }
