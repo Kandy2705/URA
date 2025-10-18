@@ -20,8 +20,7 @@ public class DataManager : MonoBehaviour
     public Transform player;          // Player transform
     public Transform[] targets;       // Assign 3 targets in the Inspector
     public float interactionRange = 10f;
-    public GameObject statsPanel1; // Drag your StatsPanel UI element here
-    public GameObject statsPanel2; // Drag your StatsPanel UI element here
+    public GameObject boardData;
 
     public TMP_Text statsText1;   // Drag your StatsText UI element here
     public TMP_Text statsText2;
@@ -40,10 +39,8 @@ public class DataManager : MonoBehaviour
     {
         isInside = new bool[targets.Length];
 
-        if (statsPanel1 != null)
-            statsPanel1.SetActive(false);
-        if (statsPanel2 != null)
-            statsPanel2.SetActive(false);
+        if (boardData != null)
+            boardData.SetActive(false);
     }
 
     private void Update()
@@ -100,16 +97,16 @@ public class DataManager : MonoBehaviour
     {
         // Update UI text
         statsText1.text =
-            "🍎 Fruits visits: " + num_visit_fruits + "\n" +
-            "🥤 Drinks visits: " + num_visit_drinks + "\n" +
-            "🍫 Snacks visits: " + num_visit_snacks + "\n\n" +
-            "Booth order: " + string.Join(" → ", booths_priority) + "\n";
+            "Số lần ghé quầy trái cây: " + num_visit_fruits + "\n" +
+            "Số lần ghé quầy nước uống: " + num_visit_drinks + "\n" +
+            "Số lần ghé quầy bánh kẹo: " + num_visit_snacks + "\n" +
+            "Thứ tự ghé các quầy: " + string.Join(" → ", booths_priority) + "\n";
 
-        statsText2.text = "\n⏱️ Product times:\n";
+        statsText2.text = "\n Thời điểm lấy sản phẩm:\n";
 
         foreach (var kvp in product_times)
         {
-            statsText2.text += $"{kvp.Key} taken at {kvp.Value:F2}s\n";
+            statsText2.text += $"{kvp.Key}: {kvp.Value:F2}s\n";
         }
 
         // Show the stats panel
@@ -118,9 +115,7 @@ public class DataManager : MonoBehaviour
 
     public void EnableStatsPanel()
     {
-        if (statsPanel1 != null)
-            statsPanel1.SetActive(true);
-        if (statsPanel2 != null)
-            statsPanel2.SetActive(true);
+        if (boardData != null)
+            boardData.SetActive(true);
     }
 }

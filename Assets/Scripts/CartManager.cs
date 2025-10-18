@@ -45,6 +45,11 @@ public class CartManager : MonoBehaviour
             bill[item.itemName] = new BillEntry(item.itemName, item.price, 1);
         }
 
+        if (DataManager.Instance != null)
+        {
+            DataManager.Instance.updateTime(item.itemName);
+        }
+
         totalPaid += item.price;
 
         UpdateBillUI();
