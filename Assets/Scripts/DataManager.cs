@@ -111,17 +111,17 @@ public class DataManager : MonoBehaviour
         string path = Path.Combine(dirPath, fileName);
          using (StreamWriter writer = new StreamWriter(path, false))
     {
-        writer.WriteLine("Category,Count");
-        writer.WriteLine($"Fruits,{num_visit_fruits}");
-        writer.WriteLine($"Drinks,{num_visit_drinks}");
-        writer.WriteLine($"Snacks,{num_visit_snacks}");
+        writer.WriteLine("Số lần ghé quầy,Số lần");
+        writer.WriteLine($"Trái cây,{num_visit_fruits}");
+        writer.WriteLine($"Đồ uống,{num_visit_drinks}");
+        writer.WriteLine($"Bánh kẹo,{num_visit_snacks}");
         writer.WriteLine();
 
-        writer.WriteLine("Booth Order");
+        writer.WriteLine("Thứ tự ghé thăm các quầy");
         writer.WriteLine(string.Join(" -> ", booths_priority));
         writer.WriteLine();
 
-        writer.WriteLine("Product,Time(s)");
+        writer.WriteLine("Vật phẩm,Thời gian(s)");
         foreach (var kvp in product_times)
         {
             writer.WriteLine($"{kvp.Key},{kvp.Value}");
