@@ -17,6 +17,12 @@ public class DataManager : MonoBehaviour
         }
         else Destroy(gameObject);
     }
+    private List<CompareResult> compareResults = new List<CompareResult>();
+
+    public void AddCompareResult(CompareResult result)
+    {
+        compareResults.Add(result);
+    }
 
     public Transform player;          // Player transform
     public Transform[] targets;       // Assign 3 targets in the Inspector
@@ -94,7 +100,7 @@ public class DataManager : MonoBehaviour
         product_times[product] = (int)elapsed;
     }
 
-    public void ExportCSV()
+    public void ExportCSV(List<CompareResult> compareResults)
     {
         string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
         string fileName = $"report_{timestamp}.csv";
@@ -120,6 +126,11 @@ public class DataManager : MonoBehaviour
         {
             writer.WriteLine($"{kvp.Key},{kvp.Value}");
         }
+        // writer.WriteLine("Tên sản phẩm,Số lượng thực,Số lượng chuẩn,Trạng thái");
+        // foreach (var r in compareResults)
+        // {
+        //     writer.WriteLine($"{r.itemName},{r.currentQuantity},{r.expectedQuantity},{r.status}");
+        // }
     }
 
     }
@@ -142,8 +153,7 @@ public class DataManager : MonoBehaviour
 
         // Show the stats panel
         EnableStatsPanel();
-        ExportCSV();
-
+        ExportCSV(compareResults);
     }
 
     public void EnableStatsPanel()
