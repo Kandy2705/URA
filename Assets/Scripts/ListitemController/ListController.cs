@@ -6,19 +6,20 @@ public class ListController : MonoBehaviour
 {
     [SerializeField] private GameObject listItemPrefab;
     [SerializeField] private List<GameObject> availablePrefabs;
-    [SerializeField] private List<GameObject> choicedItems;
+    public List<GameObject> choicedItems;
     private bool isVisible = true;
     //[SerializeField] private Animator anim;
     private int spawnCount = 0;
-    private float timer = 0f;  
+    private float timer = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         for (int i = 0; i < 5; i++)
         {
             SpawnItemInList();
         }
+        Debug.Log("Số lượng phần tử trong listController sau khi chạy xong: " + choicedItems.Count);
     }
 
     // Update is called once per frame
@@ -52,13 +53,14 @@ public class ListController : MonoBehaviour
             return;
         }
 
+
         int randomIndex = UnityEngine.Random.Range(0, availablePrefabs.Count);
         int randomQuantity = UnityEngine.Random.Range(1, 10);
 
         GameObject randomPrefab = availablePrefabs[randomIndex];
 
         GameObject spawnedItem = Instantiate(randomPrefab, listItemPrefab.transform);
-        choicedItems.Add(randomPrefab);
+        choicedItems.Add(spawnedItem);
 
         spawnedItem.transform.localPosition = new Vector3(0f, 20f + spawnCount * -25f, 0f);
         spawnedItem.transform.localRotation = Quaternion.identity;
@@ -71,4 +73,11 @@ public class ListController : MonoBehaviour
         spawnCount++;
         availablePrefabs.RemoveAt(randomIndex);
     }
+
+    public void ShowList()
+    {
+        listItemPrefab.SetActive(true);
+        Debug.Log("List is shown!");
+    }
+
 }
