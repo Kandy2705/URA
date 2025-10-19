@@ -20,9 +20,12 @@ public class BillEntry
 public class CartManager : MonoBehaviour
 {
     public static CartManager Instance { get; private set; }
-
-    private Dictionary<string, BillEntry> bill = new Dictionary<string, BillEntry>();
+    public Dictionary<string, BillEntry> bill = new Dictionary<string, BillEntry>();
+    public delegate void BillChangedHandler(BillEntry entry, bool isNew);
+    public event BillChangedHandler OnBillChanged;
+    // public List<BillEntry> billList = new List<BillEntry>();
     private int totalPaid = 0;
+    public bool isNew;
 
     [Header("UI Thanh toán")]
     public TMP_Text billText;
@@ -36,14 +39,22 @@ public class CartManager : MonoBehaviour
 
     public void CheckoutItem(SelectableItem item)
     {
+        isNew = false;
+        BillEntry entry;
         if (bill.ContainsKey(item.itemName))
         {
             bill[item.itemName].quantity++;
+            OnBillChanged?.Invoke(bill[item.itemName], isNew);
         }
         else
         {
-            bill[item.itemName] = new BillEntry(item.itemName, item.price, 1);
+            entry = new BillEntry(item.itemName, item.price, 1);
+            bill[item.itemName] = entry;
+            isNew = true;
+            OnBillChanged?.Invoke(entry, isNew);
         }
+
+        Debug.Log($"Checked out: {item.itemName}, Price: {item.price}, Quantity: {bill[item.itemName].quantity}");
 
         if (DataManager.Instance != null)
         {
