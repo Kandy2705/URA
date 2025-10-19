@@ -6576,7 +6576,6 @@ GameObject:
   - component: {fileID: 259534823}
   - component: {fileID: 259534822}
   - component: {fileID: 259534821}
-  - component: {fileID: 259534825}
   m_Layer: 0
   m_Name: Board Canvas
   m_TagString: Untagged
@@ -6690,24 +6689,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &259534825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 259534819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5ef7273a8e92d945a00e4894f31d6f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  listController: {fileID: 1113950825}
-  cartManager: {fileID: 1987290805}
-  dataContainer: {fileID: 0}
-  obtainProductContainer: {fileID: 1702625027}
-  wrongProductContainer: {fileID: 2144530966}
-  compareResults: []
 --- !u!1001 &265909266
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11577,7 +11558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8e1259923e818a04293fc091bd5c750c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -49558,6 +49539,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1987290804}
   - component: {fileID: 1987290805}
+  - component: {fileID: 1987290806}
   m_Layer: 0
   m_Name: CartManager
   m_TagString: Untagged
@@ -49595,6 +49577,24 @@ MonoBehaviour:
   isNew: 0
   billText: {fileID: 1748016655}
   paidTotalText: {fileID: 2017518299}
+--- !u!114 &1987290806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987290803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5ef7273a8e92d945a00e4894f31d6f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listController: {fileID: 1113950825}
+  cartManager: {fileID: 1987290805}
+  dataContainer: {fileID: 6530172943102710422, guid: d95ccfb93aee58342b63c0b519e2ec28, type: 3}
+  obtainProductContainer: {fileID: 1702625027}
+  wrongProductContainer: {fileID: 2144530966}
+  compareResults: []
 --- !u!1001 &1996900468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50821,7 +50821,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2092440963
 Transform:
   m_ObjectHideFlags: 0

@@ -126,11 +126,11 @@ public class DataManager : MonoBehaviour
         {
             writer.WriteLine($"{kvp.Key},{kvp.Value}");
         }
-        // writer.WriteLine("Tên sản phẩm,Số lượng thực,Số lượng chuẩn,Trạng thái");
-        // foreach (var r in compareResults)
-        // {
-        //     writer.WriteLine($"{r.itemName},{r.currentQuantity},{r.expectedQuantity},{r.status}");
-        // }
+        writer.WriteLine("Tên sản phẩm,Số lượng thực,Số lượng chuẩn,Trạng thái");
+        foreach (var r in compareResults)
+        {
+            writer.WriteLine($"{r.itemName},{r.currentQuantity},{r.expectedQuantity},{r.status}");
+        }
     }
 
     }
@@ -156,7 +156,7 @@ public class DataManager : MonoBehaviour
         ExportCSV(compareResults);
     }
 
-    public void EnableStatsPanel()
+    public void EnableStatsPanel()s
     {
         if (boardData != null)
             boardData.SetActive(true);
