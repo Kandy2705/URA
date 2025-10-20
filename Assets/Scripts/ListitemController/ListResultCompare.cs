@@ -17,18 +17,29 @@ public class ListResultCompare : MonoBehaviour
     void Start()
     {
         if (listController == null)
-    {
-        listController = FindObjectOfType<ListController>();
-        if (listController == null)
         {
-            Debug.LogError("Không tìm thấy ListController trong scene!");
-            return;
-        }    
-        Debug.Log($"ListResultCompare: Loaded {choicedItems?.Count ?? 0} choicedItems");
+            listController = FindObjectOfType<ListController>();
+            if (listController == null)
+            {
+                Debug.LogError("Không tìm thấy ListController trong scene!");
+                return;
+            }    
+            Debug.Log($"ListResultCompare: Loaded {choicedItems?.Count ?? 0} choicedItems");
 
-    }
+        }
 
-    choicedItems = listController.choicedItems;
+        choicedItems = listController.choicedItems;
+
+        string quantityText;
+        foreach(GameObject item in choicedItems)
+        {
+            quantityText = "0";
+            string itemName = item.transform.Find("Name").GetComponent<TMPro.TMP_Text>().text;
+            int itemQuantity = int.Parse(item.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
+            BillEntry entry = new BillEntry(itemName, itemQuantity);
+            CompareData(entry, 0, itemQuantity, ref quantityText);
+            CreateNewInstantData(entry, obtainProductContainer, ref quantityText);
+        }
     }
 
     void OnEnable()
@@ -90,6 +101,8 @@ public class ListResultCompare : MonoBehaviour
         Transform parentContainer;
 
         string addItem = entry.itemName;
+        int currentQuantity = entry.quantity;
+
         GameObject matchedItem = choicedItems.Find(item =>
             item.transform.Find("Name").GetComponent<TMPro.TMP_Text>().text == addItem
         );
@@ -100,24 +113,35 @@ public class ListResultCompare : MonoBehaviour
             if (matchedItem)
             {
                 parentContainer = obtainProductContainer;
-                Debug.Log($"Found matching item in choicedItems: {addItem}");
-                Debug.Log("Số sản phẩm hiện tại là: " + entry.quantity);
+                // Debug.Log($"Found matching item in choicedItems: {addItem}");
+                // Debug.Log("Số sản phẩm hiện tại là: " + entry.quantity);
+
+                // int choiceQuantity = int.Parse(matchedItem.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
+                // CompareData(entry, entry.quantity, choiceQuantity, ref quantityText);
 
                 int choiceQuantity = int.Parse(matchedItem.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
-                CompareData(entry, entry.quantity, choiceQuantity, ref quantityText);
+                CompareData(entry, currentQuantity, choiceQuantity, ref quantityText);
+                
+                for (int i = 0; i < parentContainer.childCount; i++)
+                {
+                    Transform child = parentContainer.GetChild(i);
+                    if (child.Find("Name").GetComponent<TMPro.TMP_Text>().text == entry.itemName)
+                    {
+                        child.Find("Quantity").GetComponent<TMPro.TMP_Text>().text = quantityText;
+                        break;
+                    }
+                }
             }
             else
             {
                 parentContainer = wrongProductContainer;
                 Debug.LogWarning($"No matching item found in choicedItems for: {addItem}");
                 CompareData(entry, entry.quantity, 0, ref quantityText);
-
+                CreateNewInstantData(entry, parentContainer, ref quantityText);
             }
-            CreateNewInstantData(entry, parentContainer, ref quantityText);
         }
         else
         {
-            int currentQuantity = entry.quantity;
             string quantityText = currentQuantity.ToString();
 
             if (matchedItem)
