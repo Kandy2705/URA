@@ -110,6 +110,8 @@ public class ListResultCompare : MonoBehaviour
             {
                 parentContainer = wrongProductContainer;
                 Debug.LogWarning($"No matching item found in choicedItems for: {addItem}");
+                CompareData(entry, entry.quantity, 0, ref quantityText);
+
             }
             CreateNewInstantData(entry, parentContainer, ref quantityText);
         }
@@ -130,6 +132,8 @@ public class ListResultCompare : MonoBehaviour
             {
                 parentContainer = wrongProductContainer;
                 Debug.LogWarning($"No matching item found in choicedItems for: {addItem}");
+                CompareData(entry, entry.quantity, 0, ref quantityText);
+
             }
             
             // Cập nhật UI
