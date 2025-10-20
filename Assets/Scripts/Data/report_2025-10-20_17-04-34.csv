@@ -1,0 +1,26 @@
+Số lần ghé quầy,Số lần
+Trái cây,7
+Đồ uống,0
+Bánh kẹo,0
+
+Thứ tự ghé thăm các quầy
+Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits
+
+Vật phẩm,Thời gian(s)
+Táo xanh,9
+Nho,17
+Cà chua,24
+Tên sản phẩm,Số lượng thực,Số lượng chuẩn,Trạng thái
+Chuối xanh,0,4,0 (Thiếu 4)
+Nho,0,6,0 (Thiếu 6)
+Cà chua,0,5,0 (Thiếu 5)
+Giấy vệ sinh,0,1,0 (Thiếu 1)
+Coca cola chai
+,0,7,0 (Thiếu 7)
+Táo xanh,1,0,1 (Dư 1)
+Táo xanh,2,0,2 (Dư 2)
+Nho,1,6,1 (Thiếu 5)
+Nho,2,6,2 (Thiếu 4)
+Cà chua,1,5,1 (Thiếu 4)
+Cà chua,2,5,2 (Thiếu 3)
+Cà chua,3,5,3 (Thiếu 2)

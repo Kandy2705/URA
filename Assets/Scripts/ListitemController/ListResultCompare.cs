@@ -72,10 +72,9 @@ public class ListResultCompare : MonoBehaviour
             int surplus = currentQuantity - IndexQuantity;
             quantityText += $" (Dư {surplus})";
         }
-        CompareResult result = new CompareResult(entry.itemName, currentQuantity, IndexQuantity, quantityText);
+        CompareResult result = new CompareResult(entry.itemName, currentQuantity, IndexQuantity, quantityText, entry.price);
         compareResults.Add(result);
         DataManager.Instance.AddCompareResult(result);
-
     }
 
     public void CreateNewInstantData(BillEntry entry, Transform parentContainer, ref string quantityText)
@@ -171,7 +170,7 @@ public class ListResultCompare : MonoBehaviour
                 }
             }
         }
-        DataManager.Instance.ExportCSV(compareResults);
+        // DataManager.Instance.ExportCSV(compareResults);
 
     }
 }

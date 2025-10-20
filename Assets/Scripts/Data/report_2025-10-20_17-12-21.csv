@@ -1,0 +1,25 @@
+Số lần ghé quầy,Số lần
+Trái cây,7
+Đồ uống,0
+Bánh kẹo,0
+
+Thứ tự ghé thăm các quầy
+Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits
+
+Vật phẩm,Thời gian(s)
+Táo xanh,25
+Nho,19
+Tên sản phẩm,Số lượng thực,Số lượng chuẩn,Trạng thái, Giá
+Nước suối,0,8,0 (Thiếu 8), 8
+Bắp cải,0,5,0 (Thiếu 5), 5
+Mật ong,0,6,0 (Thiếu 6), 6
+Giấy vệ sinh,0,8,0 (Thiếu 8), 8
+Coca cola chai
+,0,2,0 (Thiếu 2), 2
+Táo xanh,1,0,1 (Dư 1), 12000
+Táo xanh,2,0,2 (Dư 2), 12000
+Nho,1,0,1 (Dư 1), 25000
+Nho,2,0,2 (Dư 2), 25000
+Táo xanh,3,0,3 (Dư 3), 12000
+Tổng
+86029

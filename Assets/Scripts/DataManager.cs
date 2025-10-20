@@ -126,11 +126,20 @@ public class DataManager : MonoBehaviour
         {
             writer.WriteLine($"{kvp.Key},{kvp.Value}");
         }
-        writer.WriteLine("Tên sản phẩm,Số lượng thực,Số lượng chuẩn,Trạng thái");
+        writer.WriteLine("Tên sản phẩm,Thứ tự lấy,Số lượng chuẩn,Trạng thái, Giá");
+        int totalPrice = 0;
         foreach (var r in compareResults)
-        {
-            writer.WriteLine($"{r.itemName},{r.currentQuantity},{r.expectedQuantity},{r.status}");
+        {   
+            int p = r.price;
+            if (p < 1000) {
+                p = 0;
+            }
+            writer.WriteLine($"{r.itemName},{r.currentQuantity},{r.expectedQuantity},{r.status}, {p}");
+            totalPrice += p;
         }
+
+        writer.WriteLine("Tổng");
+        writer.WriteLine($"{totalPrice}");
     }
 
     }

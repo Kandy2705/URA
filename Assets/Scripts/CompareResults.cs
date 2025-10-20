@@ -7,12 +7,13 @@ public struct CompareResult
     public int currentQuantity;
     public int expectedQuantity;
     public string status;
-
-    public CompareResult(string name, int current, int expected, string s)
+    public int price;
+    public CompareResult(string name, int current, int expected, string s, int p)
     {
         itemName = name;
         currentQuantity = current;
         expectedQuantity = expected;
         status = s;
+        price =p;
     }
 }
