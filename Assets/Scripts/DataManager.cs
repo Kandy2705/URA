@@ -156,7 +156,7 @@ public class DataManager : MonoBehaviour
         ExportCSV(compareResults);
     }
 
-    public void EnableStatsPanel()s
+    public void EnableStatsPanel()
     {
         if (boardData != null)
             boardData.SetActive(true);
