@@ -1,0 +1,23 @@
+Số lần ghé quầy,Số lần
+Trái cây,4
+Đồ uống,1
+Bánh kẹo,2
+
+Thứ tự ghé thăm các quầy
+Fruits -> Snacks -> Fruits -> Snacks -> Fruits -> Drinks -> Fruits
+
+Vật phẩm,Thời gian(s)
+Bắp cải,27
+Giấy vệ sinh,59
+Nước suối,92
+Tên sản phẩm,Thứ tự lấy,Số lượng chuẩn,Trạng thái, Giá
+Chuối xanh,0,3,0 (Thiếu 3), 0
+Bắp cải,0,6,0 (Thiếu 6), 0
+Táo xanh,0,7,0 (Thiếu 7), 0
+Nước suối,0,4,0 (Thiếu 4), 0
+Đồ ăn đóng hộp,0,6,0 (Thiếu 6), 0
+Bắp cải,1,6,1 (Thiếu 5), 18000
+Giấy vệ sinh,1,0,1 (Dư 1), 6000
+Nước suối,1,4,1 (Thiếu 3), 5000
+Tổng
+29000

@@ -1,0 +1,22 @@
+Số lần ghé quầy,Số lần
+Trái cây,4
+Đồ uống,0
+Bánh kẹo,0
+
+Thứ tự ghé thăm các quầy
+Fruits -> Fruits -> Fruits -> Fruits
+
+Vật phẩm,Thời gian(s)
+Nho,20
+Cà chua,24
+Tên sản phẩm,Thứ tự lấy,Số lượng chuẩn,Trạng thái, Giá
+Chai tương
+,0,5,0 (Thiếu 5), 0
+Giấy vệ sinh,0,5,0 (Thiếu 5), 0
+Cà chua,0,9,0 (Thiếu 9), 0
+Chuối xanh,0,2,0 (Thiếu 2), 0
+Đồ ăn đóng hộp,0,8,0 (Thiếu 8), 0
+Nho,1,0,1 (Dư 1), 25000
+Cà chua,1,9,1 (Thiếu 8), 5000
+Tổng
+30000
