@@ -25,6 +25,7 @@ public class CartManager : MonoBehaviour
     public event BillChangedHandler OnBillChanged;
     // public List<BillEntry> billList = new List<BillEntry>();
     private int totalPaid = 0;
+    public int TotalPaid {get{return totalPaid;}}
     public bool isNew;
 
     [Header("UI Thanh toán")]

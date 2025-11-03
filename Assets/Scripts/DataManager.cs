@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using System.IO;
 
 public class DataManager : MonoBehaviour
 {
@@ -15,6 +16,12 @@ public class DataManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         else Destroy(gameObject);
+    }
+    private List<CompareResult> compareResults = new List<CompareResult>();
+
+    public void AddCompareResult(CompareResult result)
+    {
+        compareResults.Add(result);
     }
 
     public Transform player;          // Player transform
@@ -93,6 +100,50 @@ public class DataManager : MonoBehaviour
         product_times[product] = (int)elapsed;
     }
 
+    public void ExportCSV(List<CompareResult> compareResults)
+    {
+        string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+        string fileName = $"report_{timestamp}.csv";
+        string dirPath = Path.Combine(Application.dataPath, "Scripts/Data");
+        if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
+
+
+        string path = Path.Combine(dirPath, fileName);
+         using (StreamWriter writer = new StreamWriter(path, false))
+    {
+        writer.WriteLine("Số lần ghé quầy,Số lần");
+        writer.WriteLine($"Trái cây,{num_visit_fruits}");
+        writer.WriteLine($"Đồ uống,{num_visit_drinks}");
+        writer.WriteLine($"Bánh kẹo,{num_visit_snacks}");
+        writer.WriteLine();
+
+        writer.WriteLine("Thứ tự ghé thăm các quầy");
+        writer.WriteLine(string.Join(" -> ", booths_priority));
+        writer.WriteLine();
+
+        writer.WriteLine("Vật phẩm,Thời gian(s)");
+        foreach (var kvp in product_times)
+        {
+            writer.WriteLine($"{kvp.Key},{kvp.Value}");
+        }
+        writer.WriteLine("Tên sản phẩm,Thứ tự lấy,Số lượng chuẩn,Trạng thái, Giá");
+        int totalPrice = 0;
+        foreach (var r in compareResults)
+        {   
+            int p = r.price;
+            if (p < 1000) {
+                p = 0;
+            }
+            writer.WriteLine($"{r.itemName},{r.currentQuantity},{r.expectedQuantity},{r.status}, {p}");
+            totalPrice += p;
+        }
+
+        writer.WriteLine("Tổng");
+        writer.WriteLine($"{totalPrice}");
+    }
+
+    }
+
     public void Report()
     {
         // Update UI text
@@ -111,6 +162,7 @@ public class DataManager : MonoBehaviour
 
         // Show the stats panel
         EnableStatsPanel();
+        ExportCSV(compareResults);
     }
 
     public void EnableStatsPanel()
@@ -118,4 +170,6 @@ public class DataManager : MonoBehaviour
         if (boardData != null)
             boardData.SetActive(true);
     }
+
+    
 }

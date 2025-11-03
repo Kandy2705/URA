@@ -2,25 +2,51 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class ListResultCompare : MonoBehaviour
-{
+{   
     public ListController listController;
     public CartManager cartManager;
     [SerializeField] private GameObject dataContainer;
     [SerializeField] private Transform obtainProductContainer; 
     [SerializeField] private Transform wrongProductContainer;
+    
     private List<GameObject> choicedItems;
     private float itemHeight = 5f;   
     private float startY = 10f;      
+    public List<CompareResult> compareResults = new List<CompareResult>();
 
     void Start()
     {
+        if (listController == null)
+        {
+            listController = FindObjectOfType<ListController>();
+            if (listController == null)
+            {
+                Debug.LogError("Không tìm thấy ListController trong scene!");
+                return;
+            }    
+            Debug.Log($"ListResultCompare: Loaded {choicedItems?.Count ?? 0} choicedItems");
+
+        }
+
         choicedItems = listController.choicedItems;
+
+        string quantityText;
+        foreach(GameObject item in choicedItems)
+        {
+            quantityText = "0";
+            string itemName = item.transform.Find("Name").GetComponent<TMPro.TMP_Text>().text;
+            int itemQuantity = int.Parse(item.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
+            BillEntry entry = new BillEntry(itemName, itemQuantity);
+            CompareData(entry, 0, itemQuantity, ref quantityText);
+            CreateNewInstantData(entry, obtainProductContainer, ref quantityText);
+        }
     }
 
     void OnEnable()
     {
         Debug.Log("ListResultCompare: OnEnable được gọi, đăng ký event");
         cartManager.OnBillChanged += HandleBillChanged;
+
     }
 
     void OnDisable()
@@ -28,8 +54,10 @@ public class ListResultCompare : MonoBehaviour
         cartManager.OnBillChanged -= HandleBillChanged;
     }
 
-    public void CompareData(int currentQuantity, int IndexQuantity, ref string quantityText)
+    public void CompareData(BillEntry entry, int currentQuantity, int IndexQuantity, ref string quantityText)
     {
+        Debug.Log($"CompareData() called for {entry.itemName}: {currentQuantity}/{IndexQuantity}");
+
         if (currentQuantity < IndexQuantity)
         {
             int shortage = IndexQuantity - currentQuantity;
@@ -44,6 +72,9 @@ public class ListResultCompare : MonoBehaviour
             int surplus = currentQuantity - IndexQuantity;
             quantityText += $" (Dư {surplus})";
         }
+        CompareResult result = new CompareResult(entry.itemName, currentQuantity, IndexQuantity, quantityText, entry.price);
+        compareResults.Add(result);
+        DataManager.Instance.AddCompareResult(result);
     }
 
     public void CreateNewInstantData(BillEntry entry, Transform parentContainer, ref string quantityText)
@@ -69,6 +100,8 @@ public class ListResultCompare : MonoBehaviour
         Transform parentContainer;
 
         string addItem = entry.itemName;
+        int currentQuantity = entry.quantity;
+
         GameObject matchedItem = choicedItems.Find(item =>
             item.transform.Find("Name").GetComponent<TMPro.TMP_Text>().text == addItem
         );
@@ -79,22 +112,35 @@ public class ListResultCompare : MonoBehaviour
             if (matchedItem)
             {
                 parentContainer = obtainProductContainer;
-                Debug.Log($"Found matching item in choicedItems: {addItem}");
-                Debug.Log("Số sản phẩm hiện tại là: " + entry.quantity);
+                // Debug.Log($"Found matching item in choicedItems: {addItem}");
+                // Debug.Log("Số sản phẩm hiện tại là: " + entry.quantity);
+
+                // int choiceQuantity = int.Parse(matchedItem.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
+                // CompareData(entry, entry.quantity, choiceQuantity, ref quantityText);
 
                 int choiceQuantity = int.Parse(matchedItem.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
-                CompareData(entry.quantity, choiceQuantity, ref quantityText);
+                CompareData(entry, currentQuantity, choiceQuantity, ref quantityText);
+                
+                for (int i = 0; i < parentContainer.childCount; i++)
+                {
+                    Transform child = parentContainer.GetChild(i);
+                    if (child.Find("Name").GetComponent<TMPro.TMP_Text>().text == entry.itemName)
+                    {
+                        child.Find("Quantity").GetComponent<TMPro.TMP_Text>().text = quantityText;
+                        break;
+                    }
+                }
             }
             else
             {
                 parentContainer = wrongProductContainer;
                 Debug.LogWarning($"No matching item found in choicedItems for: {addItem}");
+                CompareData(entry, entry.quantity, 0, ref quantityText);
+                CreateNewInstantData(entry, parentContainer, ref quantityText);
             }
-            CreateNewInstantData(entry, parentContainer, ref quantityText);
         }
         else
         {
-            int currentQuantity = entry.quantity;
             string quantityText = currentQuantity.ToString();
 
             if (matchedItem)
@@ -103,12 +149,14 @@ public class ListResultCompare : MonoBehaviour
                 Debug.Log($"Found matching item in choicedItems: {addItem}");
                 Debug.Log("Số sản phẩm hiện tại là: " + entry.quantity);
                 int choiceQuantity = int.Parse(matchedItem.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
-                CompareData(currentQuantity, choiceQuantity, ref quantityText);
+                CompareData(entry ,currentQuantity, choiceQuantity, ref quantityText);
             }
             else
             {
                 parentContainer = wrongProductContainer;
                 Debug.LogWarning($"No matching item found in choicedItems for: {addItem}");
+                CompareData(entry, entry.quantity, 0, ref quantityText);
+
             }
             
             // Cập nhật UI
@@ -122,6 +170,7 @@ public class ListResultCompare : MonoBehaviour
                 }
             }
         }
+        // DataManager.Instance.ExportCSV(compareResults);
 
     }
 }
