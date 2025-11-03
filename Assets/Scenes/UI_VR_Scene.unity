@@ -4401,6 +4401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de73b20d60f5c7459c6e86841372d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isNew: 0
   billText: {fileID: 1410867701}
   paidTotalText: {fileID: 271834526}
 --- !u!4 &248356869
@@ -28190,8 +28191,7 @@ MonoBehaviour:
   - {fileID: 482208856}
   - {fileID: 898398389}
   interactionRange: 6
-  statsPanel1: {fileID: 458401168}
-  statsPanel2: {fileID: 353139960}
+  boardData: {fileID: 0}
   statsText1: {fileID: 1487033224}
   statsText2: {fileID: 1799754631}
 --- !u!4 &1322182728

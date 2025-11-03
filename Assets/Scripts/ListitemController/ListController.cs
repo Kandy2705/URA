@@ -1,51 +1,50 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 
 public class ListController : MonoBehaviour
 {
-    [SerializeField] private GameObject listItemPrefab;
+    [Header("UI")]
+    [SerializeField] private GameObject listContainer; // Content hoặc Panel
+
+    [Header("Data")]
     [SerializeField] private List<GameObject> availablePrefabs;
-    public List<GameObject> choicedItems;
-    private bool isVisible = true;
-    //[SerializeField] private Animator anim;
+
+    [SerializeField] public List<GameObject> choicedItems;
+
+    [Header("Config")]
+    [SerializeField] private int spawnOnStart = 5;
+    [SerializeField] private float showDuration = 10f;
+
     private int spawnCount = 0;
-    private float timer = 0f;
+    private Coroutine currentRoutine;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    private void Start()
     {
-        for (int i = 0; i < 5; i++)
-        {
-            SpawnItemInList();
-        }
-        Debug.Log("Số lượng phần tử trong listController sau khi chạy xong: " + choicedItems.Count);
+        for (int i = 0; i < spawnOnStart; i++) SpawnItemInList();
+        ShowList();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ShowList()
     {
-        timer += Time.deltaTime;
-
-        if (timer >= 10f && isVisible)
+        if (currentRoutine != null)
         {
-            //ToggleList();
-            timer = 0f; // Reset the timer
+            return;
         }
+        currentRoutine = StartCoroutine(ShowThenHide());
     }
 
-    //public void ToggleList()
-    //{
-    //    isVisible = !isVisible;
-    //    if (isVisible)
-    //    {
-    //        anim.Play("listOpen");
-    //    }
-    //    else anim.Play("listClose");
-    //    //listItemPrefab.gameObject.SetActive(isVisible);
-    //}
 
-    public void SpawnItemInList()
+    private IEnumerator ShowThenHide()
+    {
+        listContainer.SetActive(true);
+        yield return new WaitForSeconds(showDuration);
+        listContainer.SetActive(false);
+        currentRoutine = null;
+    }
+
+    private void SpawnItemInList()
     {
         if (availablePrefabs.Count == 0)
         {
@@ -53,31 +52,21 @@ public class ListController : MonoBehaviour
             return;
         }
 
-
-        int randomIndex = UnityEngine.Random.Range(0, availablePrefabs.Count);
-        int randomQuantity = UnityEngine.Random.Range(1, 10);
+        int randomIndex    = Random.Range(0, availablePrefabs.Count);
+        int randomQuantity = Random.Range(1, 10);
 
         GameObject randomPrefab = availablePrefabs[randomIndex];
+        GameObject spawnedItem  = Instantiate(randomPrefab, listContainer.transform);
 
-        GameObject spawnedItem = Instantiate(randomPrefab, listItemPrefab.transform);
         choicedItems.Add(spawnedItem);
 
         spawnedItem.transform.localPosition = new Vector3(0f, 20f + spawnCount * -25f, 0f);
         spawnedItem.transform.localRotation = Quaternion.identity;
 
-        TextMeshProUGUI quantityText = spawnedItem.transform.Find("Quantity").GetComponent<TextMeshProUGUI>();
-        if (quantityText != null)
-        {
-            quantityText.text = randomQuantity.ToString();
-        }
+        var quantityText = spawnedItem.transform.Find("Quantity")?.GetComponent<TextMeshProUGUI>();
+        if (quantityText != null) quantityText.text = randomQuantity.ToString();
+
         spawnCount++;
         availablePrefabs.RemoveAt(randomIndex);
     }
-
-    public void ShowList()
-    {
-        listItemPrefab.SetActive(true);
-        Debug.Log("List is shown!");
-    }
-
 }
