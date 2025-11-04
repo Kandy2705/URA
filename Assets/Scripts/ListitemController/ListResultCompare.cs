@@ -55,27 +55,33 @@ public class ListResultCompare : MonoBehaviour
     }
 
     public void CompareData(BillEntry entry, int currentQuantity, int IndexQuantity, ref string quantityText)
-    {
-        Debug.Log($"CompareData() called for {entry.itemName}: {currentQuantity}/{IndexQuantity}");
+{
+    Debug.Log($"CompareData() called for {entry.itemName}: {currentQuantity}/{IndexQuantity}");
 
-        if (currentQuantity < IndexQuantity)
-        {
-            int shortage = IndexQuantity - currentQuantity;
-            quantityText += $" (Thiếu {shortage})";
-        }
-        else if (currentQuantity == IndexQuantity)
-        {
-            quantityText += " (Đủ)";
-        }
-        else
-        {
-            int surplus = currentQuantity - IndexQuantity;
-            quantityText += $" (Dư {surplus})";
-        }
-        CompareResult result = new CompareResult(entry.itemName, currentQuantity, IndexQuantity, quantityText, entry.price);
-        compareResults.Add(result);
-        DataManager.Instance.AddCompareResult(result);
+    string status;
+    if (currentQuantity < IndexQuantity)
+    {
+        int shortage = IndexQuantity - currentQuantity;
+        status = $"Thiếu {shortage}";
+        quantityText = $"{currentQuantity} (Thiếu {shortage})";
     }
+    else if (currentQuantity == IndexQuantity)
+    {
+        status = "Đủ";
+        quantityText = $"{currentQuantity} (Đủ)";
+    }
+    else
+    {
+        int surplus = currentQuantity - IndexQuantity;
+        status = $"Dư {surplus}";
+        quantityText = $"{currentQuantity} (Dư {surplus})";
+    }
+
+    CompareResult result = new CompareResult(entry.itemName, currentQuantity, IndexQuantity, status, entry.price);
+    compareResults.Add(result);
+    DataManager.Instance.AddCompareResult(result);
+}
+
 
     public void CreateNewInstantData(BillEntry entry, Transform parentContainer, ref string quantityText)
     {

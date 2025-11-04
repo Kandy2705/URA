@@ -100,7 +100,7 @@ public class DataManager : MonoBehaviour
         product_times[product] = (int)elapsed;
     }
 
-    public void ExportCSV(List<CompareResult> compareResults)
+  public void ExportCSV(List<CompareResult> compareResults)
 {
     string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
     string fileName = $"report_{timestamp}.csv";
@@ -125,23 +125,54 @@ public class DataManager : MonoBehaviour
         {
             writer.WriteLine($"{kvp.Key},{kvp.Value}");
         }
+        writer.WriteLine();
 
-        writer.WriteLine("Product Name,Picked Quantity,Expected Quantity,Status,Price");
-        int totalPrice = 0;
+        writer.WriteLine("Product Name,Total Count,Unit Price,Status,Subtotal");
+
+        Dictionary<string, (int count, int unitPrice, string status)> itemSummary =
+            new Dictionary<string, (int, int, string)>();
+
         foreach (var r in compareResults)
-        {   
-            int p = r.price;
-            if (p < 1000) {
-                p = 0;
+        {
+            int unitPrice = (r.price < 1000) ? 0 : r.price;
+            if (itemSummary.ContainsKey(r.itemName))
+            {
+                var existing = itemSummary[r.itemName];
+                int newCount = existing.count + 1;
+                itemSummary[r.itemName] = (newCount, unitPrice, r.status);
             }
-            writer.WriteLine($"{r.itemName},{r.currentQuantity},{r.expectedQuantity},{r.status},{p}");
-            totalPrice += p;
+            else
+            {
+                itemSummary[r.itemName] = (1, unitPrice, r.status);
+            }
         }
 
-        writer.WriteLine("Total");
-        writer.WriteLine($"{totalPrice}");
+        int grandTotalItems = 0;
+        long grandTotalPrice = 0;
+
+        foreach (var kvp in itemSummary)
+        {
+            string name = kvp.Key;
+            int count = kvp.Value.count;
+            int unitPrice = kvp.Value.unitPrice;
+            string status = kvp.Value.status;
+            long subtotal = (long)unitPrice * count; 
+
+            writer.WriteLine($"{name},{count},{unitPrice},{status},{subtotal}");
+
+            grandTotalItems += count;
+            grandTotalPrice += subtotal;
+        }
+
+        writer.WriteLine();
+        writer.WriteLine("Total Items," + grandTotalItems);
+        writer.WriteLine("Total Price," + grandTotalPrice);
     }
 }
+
+
+
+
 
 
     public void Report()
