@@ -2,21 +2,6 @@
 using UnityEngine;
 using TMPro;
 
-[System.Serializable]
-public class BillEntry
-{
-    public string itemName;
-    public int price;
-    public int quantity;
-
-    public BillEntry(string itemName, int price, int quantity = 1)
-    {
-        this.itemName = itemName;
-        this.price = price;
-        this.quantity = quantity;
-    }
-}
-
 public class CartManager : MonoBehaviour
 {
     public static CartManager Instance { get; private set; }
