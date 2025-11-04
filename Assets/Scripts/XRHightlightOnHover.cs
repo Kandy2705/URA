@@ -1,80 +1,126 @@
-using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 [RequireComponent(typeof(UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable))]
 public class XRHighlightOnHover : MonoBehaviour
 {
     [Header("Highlight Settings")]
-    public MeshRenderer targetRenderer;          // Renderer muốn sáng (kéo thả vào)
-    public Material highlightMat;                // Material sáng
-    private Material originalMat;                // Lưu lại material gốc
+    [Tooltip("Danh sách MeshRenderer muốn sáng. Nếu để trống, tự động lấy tất cả children.")]
+    public List<MeshRenderer> targetRenderers = new List<MeshRenderer>();
+
+    [Tooltip("Material có Emission (Standard Shader, bật Emission Color)")]
+    public Material highlightMat;
+
+    private List<Material> originalMats = new List<Material>();
+    private List<Material> matInstances = new List<Material>();
+    private Coroutine pulseRoutine;
+    private UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable interactable;
 
     private void Start()
     {
-        // Nếu chưa gán thủ công, tự tìm renderer trong con có tên "Sphere"
-        if (targetRenderer == null)
+        if (targetRenderers == null || targetRenderers.Count == 0)
         {
-            targetRenderer = GetComponentsInChildren<MeshRenderer>()
-                .FirstOrDefault(r => r.gameObject.name.Contains("Sphere"));
+            targetRenderers = GetComponentsInChildren<MeshRenderer>(true).ToList();
+            Debug.Log($"[XRHighlightOnHover] Auto-detected {targetRenderers.Count} MeshRenderers in {gameObject.name}");
         }
 
-        if (targetRenderer != null)
+        if (targetRenderers.Count == 0)
         {
-            originalMat = targetRenderer.material;
-            Debug.Log("✅ Target Renderer: " + targetRenderer.gameObject.name);
-        }
-        else
-        {
-            Debug.LogWarning("⚠️ Không tìm thấy MeshRenderer cho highlight trong " + gameObject.name);
+            Debug.LogWarning($"Không tìm thấy MeshRenderer nào trong {gameObject.name}");
+            return;
         }
 
-        // Đăng ký sự kiện hover
-        var interactable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable>();
+        originalMats.Clear();
+        foreach (var r in targetRenderers)
+        {
+            if (r != null)
+                originalMats.Add(r.material);
+        }
+
+        interactable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable>();
         interactable.hoverEntered.AddListener(OnHoverEnter);
         interactable.hoverExited.AddListener(OnHoverExit);
     }
 
     private void OnDestroy()
     {
-        var interactable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable>();
+        if (interactable == null) return;
         interactable.hoverEntered.RemoveListener(OnHoverEnter);
         interactable.hoverExited.RemoveListener(OnHoverExit);
     }
 
     private void OnHoverEnter(HoverEnterEventArgs args)
     {
-        Debug.Log("Hover Enter: " + gameObject.name);
-        ApplyHighlight(true);
+        StartHighlight();
     }
 
     private void OnHoverExit(HoverExitEventArgs args)
     {
-        Debug.Log("Hover Exit: " + gameObject.name);
-        ApplyHighlight(false);
+        StopHighlight();
     }
 
-    private void ApplyHighlight(bool active)
+
+    private void StartHighlight()
     {
-        if (targetRenderer == null) return;
+        if (targetRenderers.Count == 0 || highlightMat == null) return;
 
-        if (active)
+        matInstances.Clear();
+
+        foreach (var r in targetRenderers)
         {
-            // Tạo instance vật liệu mới để tránh thay đổi global
-            Material matInstance = new Material(highlightMat);
-            matInstance.EnableKeyword("_EMISSION");
-            matInstance.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
-            matInstance.SetColor("_EmissionColor", Color.yellow * 5f);
+            if (r == null) continue;
 
-            targetRenderer.material = matInstance;  // dùng material, không sharedMaterial
-            DynamicGI.SetEmissive(targetRenderer, Color.yellow * 5f);
-            DynamicGI.UpdateEnvironment();
+            var mat = new Material(highlightMat);
+            mat.EnableKeyword("_EMISSION");
+            mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+            mat.SetColor("_EmissionColor", Color.yellow * 3f);
+
+            r.material = mat;
+            matInstances.Add(mat);
         }
-        else
+
+        if (pulseRoutine != null)
+            StopCoroutine(pulseRoutine);
+
+        pulseRoutine = StartCoroutine(PulseEmission());
+    }
+
+    private void StopHighlight()
+    {
+        if (pulseRoutine != null)
         {
-            targetRenderer.material = originalMat;
-            DynamicGI.SetEmissive(targetRenderer, Color.black);
-            DynamicGI.UpdateEnvironment();
+            StopCoroutine(pulseRoutine);
+            pulseRoutine = null;
+        }
+
+        for (int i = 0; i < targetRenderers.Count; i++)
+        {
+            if (targetRenderers[i] != null && i < originalMats.Count)
+                targetRenderers[i].material = originalMats[i];
+        }
+    }
+
+    private IEnumerator PulseEmission()
+    {
+        float speed = 2f;
+        Color baseColor = Color.yellow * 2f;
+        Color brightColor = Color.yellow * 6f;
+
+        while (true)
+        {
+            float t = Mathf.PingPong(Time.time * speed, 1f);
+            Color glow = Color.Lerp(baseColor, brightColor, t);
+
+            foreach (var mat in matInstances)
+            {
+                if (mat != null)
+                    mat.SetColor("_EmissionColor", glow);
+            }
+
+            yield return null;
         }
     }
 }
