@@ -101,32 +101,32 @@ public class DataManager : MonoBehaviour
     }
 
     public void ExportCSV(List<CompareResult> compareResults)
-    {
-        string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-        string fileName = $"report_{timestamp}.csv";
-        string dirPath = Path.Combine(Application.dataPath, "Scripts/Data");
-        if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
+{
+    string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+    string fileName = $"report_{timestamp}.csv";
+    string dirPath = Path.Combine(Application.dataPath, "Scripts/Data");
+    if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
 
-
-        string path = Path.Combine(dirPath, fileName);
-         using (StreamWriter writer = new StreamWriter(path, false))
+    string path = Path.Combine(dirPath, fileName);
+    using (StreamWriter writer = new StreamWriter(path, false))
     {
-        writer.WriteLine("Số lần ghé quầy,Số lần");
-        writer.WriteLine($"Trái cây,{num_visit_fruits}");
-        writer.WriteLine($"Đồ uống,{num_visit_drinks}");
-        writer.WriteLine($"Bánh kẹo,{num_visit_snacks}");
+        writer.WriteLine("Booth Type,Visit Count");
+        writer.WriteLine($"Fruits,{num_visit_fruits}");
+        writer.WriteLine($"Drinks,{num_visit_drinks}");
+        writer.WriteLine($"Snacks,{num_visit_snacks}");
         writer.WriteLine();
 
-        writer.WriteLine("Thứ tự ghé thăm các quầy");
+        writer.WriteLine("Visit Order of Booths");
         writer.WriteLine(string.Join(" -> ", booths_priority));
         writer.WriteLine();
 
-        writer.WriteLine("Vật phẩm,Thời gian(s)");
+        writer.WriteLine("Product,Time (s)");
         foreach (var kvp in product_times)
         {
             writer.WriteLine($"{kvp.Key},{kvp.Value}");
         }
-        writer.WriteLine("Tên sản phẩm,Thứ tự lấy,Số lượng chuẩn,Trạng thái, Giá");
+
+        writer.WriteLine("Product Name,Picked Quantity,Expected Quantity,Status,Price");
         int totalPrice = 0;
         foreach (var r in compareResults)
         {   
@@ -134,15 +134,15 @@ public class DataManager : MonoBehaviour
             if (p < 1000) {
                 p = 0;
             }
-            writer.WriteLine($"{r.itemName},{r.currentQuantity},{r.expectedQuantity},{r.status}, {p}");
+            writer.WriteLine($"{r.itemName},{r.currentQuantity},{r.expectedQuantity},{r.status},{p}");
             totalPrice += p;
         }
 
-        writer.WriteLine("Tổng");
+        writer.WriteLine("Total");
         writer.WriteLine($"{totalPrice}");
     }
+}
 
-    }
 
     public void Report()
     {

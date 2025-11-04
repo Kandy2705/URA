@@ -1,0 +1,35 @@
+Booth Type,Visit Count
+Fruits,11
+Drinks,0
+Snacks,1
+
+Visit Order of Booths
+Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Snacks
+
+Product,Time (s)
+Nho,46
+Táo xanh,61
+Cà chua,25
+Bắp cải,88
+Cà rốt,36
+Chuối vàng,42
+Kem,78
+Product Name,Picked Quantity,Expected Quantity,Status,Price
+Nho,1,0,1 (Dư 1),25000
+Nho,2,0,2 (Dư 2),25000
+Táo xanh,1,0,1 (Dư 1),12000
+Cà chua,1,0,1 (Dư 1),5000
+Bắp cải,1,0,1 (Dư 1),18000
+Cà rốt,1,0,1 (Dư 1),6000
+Chuối vàng,1,0,1 (Dư 1),4000
+Nho,3,0,3 (Dư 3),25000
+Táo xanh,2,0,2 (Dư 2),12000
+Bắp cải,2,0,2 (Dư 2),18000
+Bắp cải,3,0,3 (Dư 3),18000
+Táo xanh,3,0,3 (Dư 3),12000
+Kem,1,0,1 (Dư 1),20000
+Bắp cải,4,0,4 (Dư 4),18000
+Bắp cải,5,0,5 (Dư 5),18000
+Bắp cải,6,0,6 (Dư 6),18000
+Total
+254000
