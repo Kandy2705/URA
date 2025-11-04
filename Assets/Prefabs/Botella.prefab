@@ -83,6 +83,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e632431c5a5b57448f1f3c648569e43, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6178941945368989465}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e632431c5a5b57448f1f3c648569e43, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2912415989969840418}
   m_SourcePrefab: {fileID: 100100000, guid: 7e632431c5a5b57448f1f3c648569e43, type: 3}
 --- !u!1 &19512413917152039 stripped
 GameObject:
@@ -199,10 +202,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2912415989969840418}
+        m_TargetAssemblyTypeName: PokeObjects, Assembly-CSharp
+        m_MethodName: OnPokeStart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2912415989969840418}
+        m_TargetAssemblyTypeName: PokeObjects, Assembly-CSharp
+        m_MethodName: OnPokeEnd
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstFocusEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -297,3 +324,15 @@ MonoBehaviour:
   m_MinimumScaleRatio: 0.25
   m_MaximumScaleRatio: 2
   m_ScaleMultiplier: 0.25
+--- !u!114 &2912415989969840418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19512413917152039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9abb89d3a20de6e4eb1087c5cfa40c4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

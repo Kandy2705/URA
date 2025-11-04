@@ -11,11 +11,13 @@ GameObject:
   - component: {fileID: 1424161296537849453}
   - component: {fileID: 8597092280218962273}
   - component: {fileID: 2981396334344823692}
+  - component: {fileID: 7572831260374363767}
   - component: {fileID: 3360625999397891875}
   - component: {fileID: -6080676054918734526}
   - component: {fileID: 4882715212157544958}
   - component: {fileID: 1486440159053096050}
   - component: {fileID: 2933794317708142226}
+  - component: {fileID: 4137312041990819570}
   m_Layer: 0
   m_Name: bottle1_water
   m_TagString: Untagged
@@ -91,6 +93,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7572831260374363767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4103672370777542020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8553019bc6449394196431f36290b92d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: "N\u01B0\u1EDBc su\u1ED1i"
+  price: 5000
 --- !u!114 &3360625999397891875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,10 +217,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4137312041990819570}
+        m_TargetAssemblyTypeName: PokeObjects, Assembly-CSharp
+        m_MethodName: OnPokeStart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4137312041990819570}
+        m_TargetAssemblyTypeName: PokeObjects, Assembly-CSharp
+        m_MethodName: OnPokeEnd
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstFocusEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -299,3 +339,15 @@ MonoBehaviour:
   m_MinimumScaleRatio: 0.25
   m_MaximumScaleRatio: 2
   m_ScaleMultiplier: 0.25
+--- !u!114 &4137312041990819570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4103672370777542020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9abb89d3a20de6e4eb1087c5cfa40c4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

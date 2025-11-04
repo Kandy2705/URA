@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 678d057c7307ab344844f49aac75d2d5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1376
+      value: 0.2324
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 678d057c7307ab344844f49aac75d2d5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -83,6 +83,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 678d057c7307ab344844f49aac75d2d5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4276101803898722860}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 678d057c7307ab344844f49aac75d2d5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -2664851369234945514}
   m_SourcePrefab: {fileID: 100100000, guid: 678d057c7307ab344844f49aac75d2d5, type: 3}
 --- !u!1 &6635184506285418308 stripped
 GameObject:
@@ -199,10 +202,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -2664851369234945514}
+        m_TargetAssemblyTypeName: PokeObjects, Assembly-CSharp
+        m_MethodName: OnPokeStart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -2664851369234945514}
+        m_TargetAssemblyTypeName: PokeObjects, Assembly-CSharp
+        m_MethodName: OnPokeEnd
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstFocusEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -286,7 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0a1302d0d134fa8a2a5b3bf4aec3c20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PermittedDisplacementAxes: 7
+  m_PermittedDisplacementAxes: -1
   m_ConstrainedAxisDisplacementMode: 1
   m_TwoHandedRotationMode: 1
   m_AllowOneHandedScaling: 1
@@ -297,3 +324,15 @@ MonoBehaviour:
   m_MinimumScaleRatio: 0.25
   m_MaximumScaleRatio: 2
   m_ScaleMultiplier: 0.25
+--- !u!114 &-2664851369234945514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6635184506285418308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9abb89d3a20de6e4eb1087c5cfa40c4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
