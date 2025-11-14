@@ -1,10 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using TMPro;
 
 public class PokeManager : MonoBehaviour
 {
+    [SerializeField] private TMP_Text itemNameText;
+    [SerializeField] private GameObject NotificationPanel;
+    [SerializeField] private Transform UserCameraTransform;
+    [SerializeField] private CanvasGroup notificationCanvasGroup;
+    public float DisplayDistance = 0.5f;
     public static PokeManager Instance { get; private set; }
+    private const float DISPLAY_DURATION = 3f;
+    private const float ANIMATION_TIME = 0.2f;
     public Dictionary<string, BillEntry> inventory = new Dictionary<string, BillEntry>();
 
     [Header("Debug View (Read-only)")]
@@ -49,12 +57,13 @@ public class PokeManager : MonoBehaviour
             DataManager.Instance.updateTime(item.itemName);
         }
 
+        itemNameText.text = item.itemName;
+        DisplayNotificationPanel();
         UpdateInventoryView();
         UpdateTotalsAndUI();
 
         Debug.Log($"Poked: {item.itemName}, Price: {item.price}, Quantity: {inventory[item.itemName].quantity}");
     }
-
 
 
     private void UpdateInventoryView()
@@ -115,4 +124,53 @@ public class PokeManager : MonoBehaviour
             inventoryText.text = $"Số lượng: {totalItemCount}";
         }
     }
+
+    private void DisplayNotificationPanel()
+    {
+        if (NotificationPanel == null || UserCameraTransform == null)
+        {
+            Debug.LogError("Chưa gán NotificationPanel hoặc UserCameraTransform!");
+            return;
+        }
+        Debug.Log("Hiển thị ra bản Panel thông báo");
+        StopAllCoroutines(); 
+        NotificationPanel.SetActive(true);
+        Vector3 newPosition = UserCameraTransform.position + UserCameraTransform.forward * DisplayDistance;
+        NotificationPanel.transform.position = newPosition;
+        NotificationPanel.transform.rotation = Quaternion.LookRotation(
+            NotificationPanel.transform.position - UserCameraTransform.position
+        );
+
+        StartCoroutine(ShowAndHidePanelSequence());
+    }
+    
+    private IEnumerator ShowAndHidePanelSequence()
+    {
+        yield return StartCoroutine(FadePanel(1f, ANIMATION_TIME)); // Fade đến Alpha = 1
+
+        yield return new WaitForSeconds(DISPLAY_DURATION);
+
+        yield return StartCoroutine(FadePanel(0f, ANIMATION_TIME)); // Fade đến Alpha = 0
+        NotificationPanel.SetActive(false);
+    }
+
+    private IEnumerator FadePanel(float targetAlpha, float duration)
+    {
+        float startAlpha = notificationCanvasGroup.alpha;
+        float startTime = Time.time;
+        
+        while (Time.time < startTime + duration)
+        {
+            float t = (Time.time - startTime) / duration;
+            
+            
+            notificationCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
+            
+            yield return null;
+        }
+        
+        notificationCanvasGroup.alpha = targetAlpha;
+    }
 }
+
+
