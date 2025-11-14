@@ -1,0 +1,20 @@
+Booth Type,Visit Count
+Fruits,0
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+
+
+Product,Time (s)
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Nho,4,25000,Thiếu 5,100000
+Cà rốt,2,6000,Thiếu 4,12000
+Bắp cải,5,18000,Đủ,90000
+Coca cola chai
+,1,0,Thiếu 7,0
+Nước suối,1,0,Thiếu 5,0
+
+Total Items,13
+Total Price,202000

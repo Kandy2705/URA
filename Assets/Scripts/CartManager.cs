@@ -2,31 +2,16 @@
 using UnityEngine;
 using TMPro;
 
-[System.Serializable]
-public class BillEntry
-{
-    public string itemName;
-    public int price;
-    public int quantity;
-
-    public BillEntry(string itemName, int price, int quantity = 1)
-    {
-        this.itemName = itemName;
-        this.price = price;
-        this.quantity = quantity;
-    }
-}
-
 public class CartManager : MonoBehaviour
 {
     public static CartManager Instance { get; private set; }
     public Dictionary<string, BillEntry> bill = new Dictionary<string, BillEntry>();
     public delegate void BillChangedHandler(BillEntry entry, bool isNew);
     public event BillChangedHandler OnBillChanged;
-    // public List<BillEntry> billList = new List<BillEntry>();
+
     private int totalPaid = 0;
-    public int TotalPaid {get{return totalPaid;}}
-    public bool isNew;
+    public int TotalPaid { get { return totalPaid; } }
+    public bool isNew; 
 
     [Header("UI Thanh toán")]
     public TMP_Text billText;
@@ -36,47 +21,68 @@ public class CartManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-    }
-
-    public void CheckoutItem(SelectableItem item)
-    {
-        isNew = false;
-        BillEntry entry;
-        if (bill.ContainsKey(item.itemName))
-        {
-            bill[item.itemName].quantity++;
-            OnBillChanged?.Invoke(bill[item.itemName], isNew);
-        }
-        else
-        {
-            entry = new BillEntry(item.itemName, item.price, 1);
-            bill[item.itemName] = entry;
-            isNew = true;
-            OnBillChanged?.Invoke(entry, isNew);
-        }
-
-        Debug.Log($"Checked out: {item.itemName}, Price: {item.price}, Quantity: {bill[item.itemName].quantity}");
-
-        if (DataManager.Instance != null)
-        {
-            DataManager.Instance.updateTime(item.itemName);
-        }
-
-        totalPaid += item.price;
 
         UpdateBillUI();
-        //Debug.Log($"Thanh toán {item.itemName} với giá {item.price}₫ (SL={bill[item.itemName].quantity})");
     }
+    public void ProcessCheckout()
+    {
+        if (PokeManager.Instance == null)
+        {
+            Debug.LogError("Không tìm thấy PokeManager!");
+            return;
+        }
+
+        var shoppingCart = PokeManager.Instance.inventory;
+
+        if (shoppingCart.Count == 0)
+        {
+            Debug.Log("Giỏ hàng rỗng, không có gì để thanh toán.");
+            return;
+        }
+
+        Debug.Log($"Đang chuyển {shoppingCart.Count} loại item từ giỏ hàng sang quầy thanh toán...");
+
+        foreach (var itemEntry in shoppingCart.Values)
+        {
+            if (bill.ContainsKey(itemEntry.itemName))
+            {
+                bill[itemEntry.itemName].quantity += itemEntry.quantity;
+            }
+            else
+            {
+                bill.Add(itemEntry.itemName, new BillEntry(itemEntry.itemName, itemEntry.price, itemEntry.quantity));
+            }
+        }
+
+        UpdateBillUI();
+        PokeManager.Instance.ClearCart();
+    }
+
 
     private void UpdateBillUI()
     {
-        billText.text = "Giỏ hàng:\n";
-        foreach (var entry in bill.Values)
+        totalPaid = 0;
+
+        Debug.Log($"[CartManager] Cập nhật hóa đơn... Có {bill.Count} loại mặt hàng.");
+
+        if (billText != null)
         {
-            int subTotal = entry.price * entry.quantity;
-            billText.text += $"{entry.itemName} x{entry.quantity} = {subTotal}₫\n";
+            billText.text = "Hóa đơn:\n";
+            foreach (var entry in bill.Values)
+            {
+                int subTotal = entry.price * entry.quantity;
+                billText.text += $"{entry.itemName} x{entry.quantity} = {subTotal}₫\n";
+
+                totalPaid += subTotal;
+                Debug.Log($"[CartManager] - {entry.itemName}: SL={entry.quantity}, Giá={entry.price}");
+            }
         }
 
-        paidTotalText.text = $"Tổng: {totalPaid}₫";
+        if (paidTotalText != null)
+        {
+            paidTotalText.text = $"Tổng: {totalPaid}₫";
+        }
+
+        Debug.Log($"[CartManager] Tổng tiền hóa đơn: {totalPaid}₫");
     }
 }

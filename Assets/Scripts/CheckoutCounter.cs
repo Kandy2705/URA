@@ -4,15 +4,11 @@ public class CheckoutCounter : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        SelectableItem item = other.GetComponent<SelectableItem>();
-
-        if (item != null)
+        if (other.CompareTag("Player"))
         {
-            CartManager.Instance.CheckoutItem(item);
+            Debug.Log("Player đã vào quầy, kích hoạt thanh toán!");
 
-            Destroy(other.gameObject);
-
-            Debug.Log($"[{item.itemName}] đã được thanh toán!");
+            CartManager.Instance.ProcessCheckout();
         }
     }
 }

@@ -89,6 +89,11 @@ public class GameTimer : MonoBehaviour
 
         Debug.Log("Hết giờ");
 
+        if (CartManager.Instance != null)
+        {
+            CartManager.Instance.ProcessCheckout();
+        }
+
         onTimeUp?.Invoke();
     }
 }

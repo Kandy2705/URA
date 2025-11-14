@@ -1,0 +1,21 @@
+Booth Type,Visit Count
+Fruits,0
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+
+
+Product,Time (s)
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Chai tương
+,1,0,Thiếu 9,0
+Táo xanh,1,0,Thiếu 6,0
+Nước trái cây,1,0,Thiếu 1,0
+Cà rốt,1,0,Thiếu 8,0
+Chai rượu
+,1,0,Thiếu 1,0
+
+Total Items,5
+Total Price,0

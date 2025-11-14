@@ -40,10 +40,11 @@ public class DataManager : MonoBehaviour
     private List<string> booths_priority = new List<string>();
 
     private float startTime;
-    Dictionary<string, int> product_times = new Dictionary<string, int>();
+    Dictionary<string, float> product_times = new Dictionary<string, float>();
 
     private void Start()
     {
+        startTime = Time.time;
         isInside = new bool[targets.Length];
 
         if (boardData != null)
@@ -97,52 +98,83 @@ public class DataManager : MonoBehaviour
     public void updateTime(string product)
     {
         float elapsed = Time.time - startTime;
-        product_times[product] = (int)elapsed;
+        product_times[product] = elapsed;
     }
 
-    public void ExportCSV(List<CompareResult> compareResults)
-    {
-        string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-        string fileName = $"report_{timestamp}.csv";
-        string dirPath = Path.Combine(Application.dataPath, "Scripts/Data");
-        if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
+  public void ExportCSV(List<CompareResult> compareResults)
+{
+    string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+    string fileName = $"report_{timestamp}.csv";
+    string dirPath = Path.Combine(Application.dataPath, "Scripts/Data");
+    if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
 
-
-        string path = Path.Combine(dirPath, fileName);
-         using (StreamWriter writer = new StreamWriter(path, false))
+    string path = Path.Combine(dirPath, fileName);
+    using (StreamWriter writer = new StreamWriter(path, false))
     {
-        writer.WriteLine("Số lần ghé quầy,Số lần");
-        writer.WriteLine($"Trái cây,{num_visit_fruits}");
-        writer.WriteLine($"Đồ uống,{num_visit_drinks}");
-        writer.WriteLine($"Bánh kẹo,{num_visit_snacks}");
+        writer.WriteLine("Booth Type,Visit Count");
+        writer.WriteLine($"Fruits,{num_visit_fruits}");
+        writer.WriteLine($"Drinks,{num_visit_drinks}");
+        writer.WriteLine($"Snacks,{num_visit_snacks}");
         writer.WriteLine();
 
-        writer.WriteLine("Thứ tự ghé thăm các quầy");
+        writer.WriteLine("Visit Order of Booths");
         writer.WriteLine(string.Join(" -> ", booths_priority));
         writer.WriteLine();
 
-        writer.WriteLine("Vật phẩm,Thời gian(s)");
+        writer.WriteLine("Product,Time (s)");
         foreach (var kvp in product_times)
         {
             writer.WriteLine($"{kvp.Key},{kvp.Value}");
         }
-        writer.WriteLine("Tên sản phẩm,Thứ tự lấy,Số lượng chuẩn,Trạng thái, Giá");
-        int totalPrice = 0;
+        writer.WriteLine();
+
+        writer.WriteLine("Product Name,Total Count,Unit Price,Status,Subtotal");
+
+        Dictionary<string, (int count, int unitPrice, string status)> itemSummary =
+            new Dictionary<string, (int, int, string)>();
+
         foreach (var r in compareResults)
-        {   
-            int p = r.price;
-            if (p < 1000) {
-                p = 0;
+        {
+            int unitPrice = (r.price < 1000) ? 0 : r.price;
+            if (itemSummary.ContainsKey(r.itemName))
+            {
+                var existing = itemSummary[r.itemName];
+                int newCount = existing.count + 1;
+                itemSummary[r.itemName] = (newCount, unitPrice, r.status);
             }
-            writer.WriteLine($"{r.itemName},{r.currentQuantity},{r.expectedQuantity},{r.status}, {p}");
-            totalPrice += p;
+            else
+            {
+                itemSummary[r.itemName] = (1, unitPrice, r.status);
+            }
         }
 
-        writer.WriteLine("Tổng");
-        writer.WriteLine($"{totalPrice}");
-    }
+        int grandTotalItems = 0;
+        long grandTotalPrice = 0;
 
+        foreach (var kvp in itemSummary)
+        {
+            string name = kvp.Key;
+            int count = kvp.Value.count;
+            int unitPrice = kvp.Value.unitPrice;
+            string status = kvp.Value.status;
+            long subtotal = (long)unitPrice * count; 
+
+            writer.WriteLine($"{name},{count},{unitPrice},{status},{subtotal}");
+
+            grandTotalItems += count;
+            grandTotalPrice += subtotal;
+        }
+
+        writer.WriteLine();
+        writer.WriteLine("Total Items," + grandTotalItems);
+        writer.WriteLine("Total Price," + grandTotalPrice);
     }
+}
+
+
+
+
+
 
     public void Report()
     {

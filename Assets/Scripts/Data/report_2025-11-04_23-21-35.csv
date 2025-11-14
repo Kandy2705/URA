@@ -1,0 +1,24 @@
+Booth Type,Visit Count
+Fruits,16
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits
+
+Product,Time (s)
+Táo xanh,53
+Nho,27
+Cà chua,21
+Bắp cải,48
+Cà rốt,44
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Táo xanh,6,12000,Dư 6,72000
+Nho,2,25000,Dư 2,50000
+Cà chua,2,5000,Dư 2,10000
+Bắp cải,4,18000,Dư 4,72000
+Cà rốt,2,6000,Dư 2,12000
+
+Total Items,16
+Total Price,216000

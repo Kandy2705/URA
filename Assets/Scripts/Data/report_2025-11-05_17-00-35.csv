@@ -1,0 +1,20 @@
+Booth Type,Visit Count
+Fruits,0
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+
+
+Product,Time (s)
+Cà rốt,14,34888
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Cà chua,1,0,Thiếu 8,0
+Kẹo socola,1,0,Thiếu 8,0
+Cà rốt,5,6000,Dư 3,30000
+Hộp sữa,1,0,Thiếu 7,0
+Mật ong,1,0,Thiếu 2,0
+
+Total Items,9
+Total Price,30000

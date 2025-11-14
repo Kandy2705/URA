@@ -1,0 +1,19 @@
+Booth Type,Visit Count
+Fruits,0
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+
+
+Product,Time (s)
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Bắp cải,1,0,Thiếu 7,0
+Hộp sữa,1,0,Thiếu 2,0
+Chuối xanh,1,0,Thiếu 1,0
+Đồ ăn đóng hộp,1,0,Thiếu 2,0
+Cà rốt,1,0,Thiếu 7,0
+
+Total Items,5
+Total Price,0
