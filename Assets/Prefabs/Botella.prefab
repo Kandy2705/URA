@@ -22,11 +22,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7e632431c5a5b57448f1f3c648569e43, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0529
+      value: -0.015499952
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7e632431c5a5b57448f1f3c648569e43, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.3253
+      value: 0.22950001
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7e632431c5a5b57448f1f3c648569e43, type: 3}
       propertyPath: m_LocalPosition.z
@@ -80,9 +80,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e632431c5a5b57448f1f3c648569e43, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7150856313651310853}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e632431c5a5b57448f1f3c648569e43, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6178941945368989465}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e632431c5a5b57448f1f3c648569e43, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2912415989969840418}
@@ -159,7 +156,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 1
 --- !u!114 &7150856313651310853
 MonoBehaviour:
@@ -307,29 +304,6 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 0
---- !u!114 &6178941945368989465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19512413917152039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0a1302d0d134fa8a2a5b3bf4aec3c20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PermittedDisplacementAxes: -1
-  m_ConstrainedAxisDisplacementMode: 1
-  m_TwoHandedRotationMode: 1
-  m_AllowOneHandedScaling: 1
-  m_AllowTwoHandedScaling: 0
-  m_OneHandedScaleSpeed: 0.5
-  m_ThresholdMoveRatioForScale: 0.05
-  m_ClampScaling: 1
-  m_MinimumScaleRatio: 0.25
-  m_MaximumScaleRatio: 2
-  m_ScaleMultiplier: 0.25
 --- !u!114 &2912415989969840418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,7 +330,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &5340205766057295895
 MonoBehaviour:
   m_ObjectHideFlags: 0

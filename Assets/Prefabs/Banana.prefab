@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1922faa967875d5408fcd6048351a339, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.1054
+      value: -0.1216
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1922faa967875d5408fcd6048351a339, type: 3}
       propertyPath: m_LocalPosition.y
@@ -191,7 +191,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 1
 --- !u!114 &2450886440704570858
 MonoBehaviour:
@@ -353,4 +353,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: 675812ff8c0921f439d2f37cc484a638, type: 2}
-  interactable: {fileID: 0}

@@ -1,0 +1,27 @@
+Booth Type,Visit Count
+Fruits,1
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+Fruits
+
+Product,Time (s)
+Nho,34,9951
+Cà chua,39,98272
+Táo xanh,42,35457
+Chuối vàng,79,50593
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Giấy vệ sinh,1,0,Thiếu 5,0
+Hộp sữa,1,0,Thiếu 6,0
+Cà rốt,1,0,Thiếu 9,0
+Bắp cải,1,0,Thiếu 3,0
+Chuối xanh,1,0,Thiếu 3,0
+Nho,4,25000,Dư 4,100000
+Cà chua,2,5000,Dư 2,10000
+Táo xanh,2,12000,Dư 2,24000
+Chuối vàng,3,4000,Dư 3,12000
+
+Total Items,16
+Total Price,146000

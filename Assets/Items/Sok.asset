@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce6bd46f4600fc54cad26772ee5f6d32, type: 3}
   m_Name: Sok
   m_EditorClassIdentifier: 
-  itemName: "N\u01B0\u1EDBc \xE9p"
+  itemName: "N\u01B0\u1EDBc tr\xE1i c\xE2y"
   itemIcon: {fileID: 21300000, guid: e9e4d89f7c2384544b77ba0069a99bea, type: 3}

@@ -1,0 +1,23 @@
+Booth Type,Visit Count
+Fruits,1
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+Fruits
+
+Product,Time (s)
+Nho,71,77164
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Kem
+,1,0,Thiếu 1,0
+Mật ong,1,0,Thiếu 2,0
+Táo xanh,1,0,Thiếu 3,0
+Nước trái cây,1,0,Thiếu 3,0
+Chai rượu
+,1,0,Thiếu 9,0
+Nho,3,25000,Dư 3,75000
+
+Total Items,8
+Total Price,75000

@@ -232,7 +232,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &750419648067128404
 MonoBehaviour:
@@ -418,4 +418,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
