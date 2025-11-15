@@ -1,0 +1,51 @@
+Booth Type,Visit Count
+Fruits,2
+Drinks,2
+Snacks,1
+
+Visit Order of Booths
+Fruits -> Fruits -> Drinks -> Drinks -> Snacks
+
+Product,Time (s)
+Nho,7,883871
+Bắp cải,9,451356
+Cà rốt,11,31044
+Chuối vàng,15,32551
+Nước suối,34,84272
+Hộp sữa,30,62318
+Chai rượu,36,89704
+Kem,39,25404
+Chai Coca Cola,42,8809
+Nước trái cây,44,62303
+Mật ong,54,97184
+Đồ ăn đóng hộp,56,14716
+Kẹo socola,57,35645
+Trứng,58,4332
+Giấy vệ sinh,59,44761
+Nước tương,78,50224
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Cà chua,1,0,Thiếu 6,0
+Nho,3,25000,Thiếu 2,75000
+Táo xanh,1,0,Thiếu 8,0
+Chuối xanh,1,0,Thiếu 3,0
+Chai rượu
+,1,0,Thiếu 3,0
+Bắp cải,2,18000,Dư 2,36000
+Cà rốt,2,6000,Dư 2,12000
+Chuối vàng,1,4000,Dư 1,4000
+Nước suối,2,5000,Dư 2,10000
+Hộp sữa,2,8000,Dư 2,16000
+Chai rượu,1,150000,Dư 1,150000
+Kem,1,20000,Dư 1,20000
+Chai Coca Cola,1,12000,Dư 1,12000
+Nước trái cây,1,15000,Dư 1,15000
+Mật ong,1,60000,Dư 1,60000
+Đồ ăn đóng hộp,1,25000,Dư 1,25000
+Kẹo socola,1,12000,Dư 1,12000
+Trứng,1,20000,Dư 1,20000
+Giấy vệ sinh,1,6000,Dư 1,6000
+Nước tương,1,20000,Dư 1,20000
+
+Total Items,26
+Total Price,493000

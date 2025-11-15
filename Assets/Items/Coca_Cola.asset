@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce6bd46f4600fc54cad26772ee5f6d32, type: 3}
   m_Name: Coca_Cola
   m_EditorClassIdentifier: 
-  itemName: Coca Cola
+  itemName: Chai Coca Cola
   itemIcon: {fileID: 21300000, guid: 22cd28da3a6e8e84e812966d717b1913, type: 3}
