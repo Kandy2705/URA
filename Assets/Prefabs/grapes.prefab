@@ -146,7 +146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 50acec0defaa824488ea9a003e531260, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0301
+      value: -0.0374
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 50acec0defaa824488ea9a003e531260, type: 3}
       propertyPath: m_LocalPosition.y
@@ -465,15 +465,15 @@ MonoBehaviour:
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
-  m_TrackPosition: 1
+  m_TrackPosition: 0
   m_SmoothPosition: 0
   m_SmoothPositionAmount: 8
   m_TightenPosition: 0.1
-  m_TrackRotation: 1
+  m_TrackRotation: 0
   m_SmoothRotation: 0
   m_SmoothRotationAmount: 8
   m_TightenRotation: 0.1
-  m_TrackScale: 1
+  m_TrackScale: 0
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
   m_TightenScale: 0.1

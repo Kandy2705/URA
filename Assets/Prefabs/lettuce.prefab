@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3121c5a9d13134d459e0f17cd463aaa1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.056
+      value: -0.0665
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3121c5a9d13134d459e0f17cd463aaa1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.03753
+      value: 0.03258
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3121c5a9d13134d459e0f17cd463aaa1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0138
+      value: 0.0012
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3121c5a9d13134d459e0f17cd463aaa1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -97,9 +97,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3121c5a9d13134d459e0f17cd463aaa1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9198733118760893041}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3121c5a9d13134d459e0f17cd463aaa1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2882940107774603186}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3121c5a9d13134d459e0f17cd463aaa1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6462110509413938920}
@@ -456,15 +453,15 @@ MonoBehaviour:
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
-  m_TrackPosition: 1
+  m_TrackPosition: 0
   m_SmoothPosition: 0
   m_SmoothPositionAmount: 8
   m_TightenPosition: 0.1
-  m_TrackRotation: 1
+  m_TrackRotation: 0
   m_SmoothRotation: 0
   m_SmoothRotationAmount: 8
   m_TightenRotation: 0.1
-  m_TrackScale: 1
+  m_TrackScale: 0
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
   m_TightenScale: 0.1
@@ -493,29 +490,6 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 0
---- !u!114 &2882940107774603186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7099570622646343375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0a1302d0d134fa8a2a5b3bf4aec3c20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PermittedDisplacementAxes: -1
-  m_ConstrainedAxisDisplacementMode: 1
-  m_TwoHandedRotationMode: 1
-  m_AllowOneHandedScaling: 1
-  m_AllowTwoHandedScaling: 0
-  m_OneHandedScaleSpeed: 0.5
-  m_ThresholdMoveRatioForScale: 0.05
-  m_ClampScaling: 1
-  m_MinimumScaleRatio: 0.25
-  m_MaximumScaleRatio: 2
-  m_ScaleMultiplier: 0.25
 --- !u!114 &6462110509413938920
 MonoBehaviour:
   m_ObjectHideFlags: 0

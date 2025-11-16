@@ -22,11 +22,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3dcfc2f9da5747c4197641c45d5b7d01, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.1921
+      value: -0.22899999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3dcfc2f9da5747c4197641c45d5b7d01, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2143
+      value: 0.31260002
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3dcfc2f9da5747c4197641c45d5b7d01, type: 3}
       propertyPath: m_LocalPosition.z
@@ -270,15 +270,15 @@ MonoBehaviour:
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
-  m_TrackPosition: 1
+  m_TrackPosition: 0
   m_SmoothPosition: 0
   m_SmoothPositionAmount: 8
   m_TightenPosition: 0.1
-  m_TrackRotation: 1
+  m_TrackRotation: 0
   m_SmoothRotation: 0
   m_SmoothRotationAmount: 8
   m_TightenRotation: 0.1
-  m_TrackScale: 1
+  m_TrackScale: 0
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
   m_TightenScale: 0.1
