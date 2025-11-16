@@ -22,11 +22,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ef6e84985431b3443bf525c1245fa461, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0261
+      value: -0.0501
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ef6e84985431b3443bf525c1245fa461, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.20559998
+      value: 0.3034
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ef6e84985431b3443bf525c1245fa461, type: 3}
       propertyPath: m_LocalPosition.z
@@ -92,6 +92,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef6e84985431b3443bf525c1245fa461, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8521954796364062963}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef6e84985431b3443bf525c1245fa461, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6490913391099894856}
   m_SourcePrefab: {fileID: 100100000, guid: ef6e84985431b3443bf525c1245fa461, type: 3}
 --- !u!1 &6234871857450261149 stripped
 GameObject:
@@ -270,15 +273,15 @@ MonoBehaviour:
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
-  m_TrackPosition: 1
+  m_TrackPosition: 0
   m_SmoothPosition: 0
   m_SmoothPositionAmount: 8
   m_TightenPosition: 0.1
-  m_TrackRotation: 1
+  m_TrackRotation: 0
   m_SmoothRotation: 0
   m_SmoothRotationAmount: 8
   m_TightenRotation: 0.1
-  m_TrackScale: 1
+  m_TrackScale: 0
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
   m_TightenScale: 0.1
@@ -355,6 +358,20 @@ MonoBehaviour:
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
 --- !u!114 &8521954796364062963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6234871857450261149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64031f4e5af7e48619ca843878e8bee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderers: []
+  highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
+--- !u!114 &6490913391099894856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
