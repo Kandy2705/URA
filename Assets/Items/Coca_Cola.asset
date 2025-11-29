@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Coca_Cola
   m_EditorClassIdentifier: 
   itemName: Chai Coca Cola
-  itemIcon: {fileID: 21300000, guid: 22cd28da3a6e8e84e812966d717b1913, type: 3}
+  itemIcon: {fileID: 21300000, guid: 70556828f62177e4792e3010026377df, type: 3}
