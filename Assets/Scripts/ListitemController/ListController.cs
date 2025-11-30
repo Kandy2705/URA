@@ -16,22 +16,29 @@ public class ListController : MonoBehaviour
     [Header("Config")]
     [SerializeField] private int spawnOnStart = 5;
     [SerializeField] private float showDuration = 10f;
+    
+    [Header("Limit")]
+    [SerializeField] private int limit = 2;
+    private int currentLimit;
 
     private int spawnCount = 0;
     private Coroutine currentRoutine;
 
     private void Start()
     {
+        currentLimit = 0;
         for (int i = 0; i < spawnOnStart; i++) SpawnItemInList();
         ShowList();
     }
 
     public void ShowList()
     {
-        if (currentRoutine != null)
+        if (currentRoutine != null || currentLimit == limit)
         {
             return;
         }
+
+        currentLimit++;
         currentRoutine = StartCoroutine(ShowThenHide());
     }
 
