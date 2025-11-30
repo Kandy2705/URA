@@ -35465,8 +35465,8 @@ MonoBehaviour:
   showDuration: 10
   notificationCanvas: {fileID: 281647689}
   notificationText: {fileID: 281647690}
-  minDelay: 30
-  maxDelay: 90
+  minDelay: 1
+  maxDelay: 10
 --- !u!114 &1825740877
 MonoBehaviour:
   m_ObjectHideFlags: 0
