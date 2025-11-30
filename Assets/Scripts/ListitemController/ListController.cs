@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ListController : MonoBehaviour
 {
@@ -16,22 +17,31 @@ public class ListController : MonoBehaviour
     [Header("Config")]
     [SerializeField] private int spawnOnStart = 5;
     [SerializeField] private float showDuration = 10f;
+    
+    [Header("Limit")]
+    [SerializeField] private int limit = 2;
+    private int currentLimit;
 
     private int spawnCount = 0;
     private Coroutine currentRoutine;
+    private string currentScene;
 
     private void Start()
     {
+        currentLimit = -1;
+        currentScene = SceneManager.GetActiveScene().name;
         for (int i = 0; i < spawnOnStart; i++) SpawnItemInList();
         ShowList();
     }
 
     public void ShowList()
     {
-        if (currentRoutine != null)
+        if (currentRoutine != null || (currentLimit == limit && currentScene == "Scene-level-2"))
         {
             return;
         }
+
+        currentLimit++;
         currentRoutine = StartCoroutine(ShowThenHide());
     }
 
