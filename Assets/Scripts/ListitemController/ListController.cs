@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class ListController : MonoBehaviour
@@ -10,6 +11,10 @@ public class ListController : MonoBehaviour
 
     [Header("Data")]
     [SerializeField] private List<GameObject> availablePrefabs;
+
+    [Header("Limit")]
+    [SerializeField] private int limit = 2;
+    private int currentLimit;
 
     [SerializeField] public List<GameObject> choicedItems;
 
@@ -24,6 +29,8 @@ public class ListController : MonoBehaviour
 
     private bool hasTriggeredRandomChange = false;
 
+    private string currentScene;
+
     [SerializeField] private float minDelay = 30f;
     [SerializeField] private float maxDelay = 90f;
 
@@ -32,6 +39,8 @@ public class ListController : MonoBehaviour
 
     private void Start()
     {
+        currentLimit = -1;
+        currentScene = SceneManager.GetActiveScene().name;
         for (int i = 0; i < spawnOnStart; i++) SpawnItemInList();
         ShowList();
 
@@ -48,10 +57,12 @@ public class ListController : MonoBehaviour
 
     public void ShowList()
     {
-        if (currentRoutine != null)
+
+        if (currentRoutine != null || (currentLimit == limit && currentScene == "Scene-level-2"))
         {
             return;
         }
+        currentLimit++;
         currentRoutine = StartCoroutine(ShowThenHide());
     }
 
