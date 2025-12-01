@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: dc2e285d617e34f97a27d44af1214739, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.453
+      value: -9.934
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dc2e285d617e34f97a27d44af1214739, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dc2e285d617e34f97a27d44af1214739, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.506
+      value: 14.3359995
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dc2e285d617e34f97a27d44af1214739, type: 3}
       propertyPath: m_LocalRotation.w
@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dc2e285d617e34f97a27d44af1214739, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dc2e285d617e34f97a27d44af1214739, type: 3}
       propertyPath: m_LocalRotation.y
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7269858914010822785}
         m_TargetAssemblyTypeName: PokeObjects, Assembly-CSharp
         m_MethodName: OnPokeStart
         m_Mode: 0
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7269858914010822785}
         m_TargetAssemblyTypeName: PokeObjects, Assembly-CSharp
         m_MethodName: OnPokeEnd
         m_Mode: 0

@@ -1,0 +1,31 @@
+Booth Type,Visit Count
+Fruits,0
+Drinks,2
+Snacks,0
+
+Visit Order of Booths
+Drinks -> Drinks
+
+Product,Time (s)
+Nước suối,20,34556
+Nắp nồi,56,84959
+Chảo,62,82667
+Gà tây,74,36989
+Đùi gà,104,3678
+Sườn heo,105,1965
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Nước trái cây,1,0,Thiếu 2,0
+Nước suối,5,5000,Dư 4,25000
+Kem
+,1,0,Thiếu 5,0
+Hộp sữa,1,0,Thiếu 3,0
+Mật ong,1,0,Thiếu 7,0
+Nắp nồi,1,28000,Dư 1,28000
+Chảo,2,39000,Dư 2,78000
+Gà tây,1,36000,Dư 1,36000
+Đùi gà,1,12000,Dư 1,12000
+Sườn heo,1,30000,Dư 1,30000
+
+Total Items,15
+Total Price,209000

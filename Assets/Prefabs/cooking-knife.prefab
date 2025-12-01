@@ -30,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: da1d207b1872d4b8a895732c80e19d26, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.12545
+      value: 13.95545
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: da1d207b1872d4b8a895732c80e19d26, type: 3}
       propertyPath: m_LocalRotation.w
@@ -38,7 +38,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: da1d207b1872d4b8a895732c80e19d26, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: da1d207b1872d4b8a895732c80e19d26, type: 3}
       propertyPath: m_LocalRotation.y
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5581075783705783736}
         m_TargetAssemblyTypeName: PokeObjects, Assembly-CSharp
         m_MethodName: OnPokeStart
         m_Mode: 0
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5581075783705783736}
         m_TargetAssemblyTypeName: PokeObjects, Assembly-CSharp
         m_MethodName: OnPokeEnd
         m_Mode: 0
