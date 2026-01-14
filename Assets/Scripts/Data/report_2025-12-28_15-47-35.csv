@@ -1,0 +1,37 @@
+Booth Type,Visit Count
+Fruits,1
+Drinks,4
+Snacks,0
+
+Visit Order of Booths
+Drinks -> Drinks -> Drinks -> Drinks -> Fruits
+
+Product,Time (s)
+Kem,103,6794
+Chai Coca Cola,105,7734
+Cà rốt,111,125
+Bắp cải,111,8136
+Nho,118,2917
+Táo xanh,117,9567
+Cà chua,116,5978
+Chuối vàng,136,4017
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Cà chua,3,5000,Dư 1,15000
+Hộp sữa,1,0,Thiếu 9,0
+Kem
+,1,0,Thiếu 2,0
+Chai rượu
+,1,0,Thiếu 2,0
+Chai tương
+,1,0,Thiếu 8,0
+Kem,2,20000,Dư 2,40000
+Chai Coca Cola,4,12000,Dư 4,48000
+Cà rốt,1,6000,Dư 1,6000
+Bắp cải,1,18000,Dư 1,18000
+Nho,3,25000,Dư 3,75000
+Táo xanh,3,12000,Dư 3,36000
+Chuối vàng,4,4000,Dư 4,16000
+
+Total Items,25
+Total Price,254000

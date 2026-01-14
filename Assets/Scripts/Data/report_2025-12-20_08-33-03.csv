@@ -1,0 +1,26 @@
+Booth Type,Visit Count
+Fruits,4
+Drinks,5
+Snacks,1
+
+Visit Order of Booths
+Fruits -> Fruits -> Drinks -> Drinks -> Drinks -> Drinks -> Drinks -> Snacks -> Fruits -> Fruits
+
+Product,Time (s)
+Nho,67,59115
+Kem,221,4209
+Chuối vàng,277,345
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Kem
+,1,0,Thiếu 9,0
+Chuối xanh,1,0,Thiếu 5,0
+Nước suối,1,0,Thiếu 1,0
+Táo xanh,1,0,Thiếu 8,0
+Cà chua,1,0,Thiếu 4,0
+Nho,2,25000,Đủ,50000
+Kem,1,20000,Dư 1,20000
+Chuối vàng,5,4000,Dư 5,20000
+
+Total Items,13
+Total Price,90000
