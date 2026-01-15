@@ -200,7 +200,7 @@ public class DataManager : MonoBehaviour
     public void EnableStatsPanel()
     {
         if (boardData != null)
-            boardData.SetActive(true);
+            boardData.SetActive(false);
     }
 
     
