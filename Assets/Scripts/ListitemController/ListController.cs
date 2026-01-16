@@ -189,6 +189,9 @@ public class ListController : MonoBehaviour
         notificationCanvas.SetActive(false);
     }
 
-
+    public int GetClickNumber()
+    {
+        return currentLimit;
+    }
 
 }

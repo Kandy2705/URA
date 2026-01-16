@@ -203,5 +203,14 @@ public class DataManager : MonoBehaviour
             boardData.SetActive(false);
     }
 
-    
+
+    int click_num = 0;
+    public void Demo()
+    {
+        GameObject target = GameObject.Find("list");
+        if(target == null) return;
+        ListController listCtrlr = targetObject.GetComponent<ListController>();
+        if(listCtrlr == null) return;
+        click_num = listCtrlr.GetClickNumber();
+    }
 }
