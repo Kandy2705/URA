@@ -1,0 +1,47 @@
+Booth Type,Visit Count
+Fruits,1
+Drinks,2
+Snacks,2
+
+Visit Order of Booths
+Snacks -> Drinks -> Drinks -> Fruits -> Snacks
+
+Product,Time (s)
+Giấy vệ sinh,33,82826
+Chúc chích,38,23507
+Gà tây,40,04406
+Cá,42,18124
+Đùi gà,44,14976
+Sườn heo,48,61171
+Thịt xay,50,53495
+Nắp nồi,77,79992
+Nồi,79,31796
+Chảo,88,47581
+Chảo gang,90,03166
+Mật ong,141,2097
+Nước tương,172,9511
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Kem
+,1,0,Thiếu 2,0
+Chai rượu
+,1,0,Thiếu 8,0
+Chai tương
+,1,0,Thiếu 7,0
+Mật ong,9,60000,Đủ,540000
+Nước suối,1,0,Thiếu 2,0
+Giấy vệ sinh,3,6000,Dư 2,18000
+Chúc chích,1,12000,Dư 1,12000
+Gà tây,2,36000,Dư 2,72000
+Cá,1,10000,Dư 1,10000
+Đùi gà,1,12000,Dư 1,12000
+Sườn heo,1,30000,Dư 1,30000
+Thịt xay,1,8000,Dư 1,8000
+Nắp nồi,1,28000,Dư 1,28000
+Nồi,1,48000,Dư 1,48000
+Chảo,1,39000,Dư 1,39000
+Chảo gang,1,44000,Dư 1,44000
+Nước tương,7,20000,Dư 7,140000
+
+Total Items,34
+Total Price,1001000
