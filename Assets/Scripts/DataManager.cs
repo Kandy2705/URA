@@ -168,6 +168,27 @@ public class DataManager : MonoBehaviour
         writer.WriteLine();
         writer.WriteLine("Total Items," + grandTotalItems);
         writer.WriteLine("Total Price," + grandTotalPrice);
+
+
+        int click_num = -1;
+        GameObject target = GameObject.Find("Supermarket/Notice_Board/UI Sample/Scroll UI Sample");
+        if (target == null)
+        {
+            Debug.Log("KHÔNG TÌM THẤY GameObject Scroll UI Sample");
+        }
+        else
+        {
+            ListController listCtrlr = target.GetComponent<ListController>();
+            if (listCtrlr == null)
+            {
+                Debug.Log("KHÔNG TÌM THẤY Component của Object");
+            }
+            else
+            {
+                click_num = listCtrlr.GetClickNumber();
+            }
+        }
+        writer.WriteLine("Show list ," + click_num.ToString() + " time" + (click_num <= 1 ? "" : "s"));
     }
 }
 
@@ -201,16 +222,5 @@ public class DataManager : MonoBehaviour
     {
         if (boardData != null)
             boardData.SetActive(false);
-    }
-
-
-    int click_num = 0;
-    public void Demo()
-    {
-        GameObject target = GameObject.Find("list");
-        if(target == null) return;
-        ListController listCtrlr = targetObject.GetComponent<ListController>();
-        if(listCtrlr == null) return;
-        click_num = listCtrlr.GetClickNumber();
     }
 }
