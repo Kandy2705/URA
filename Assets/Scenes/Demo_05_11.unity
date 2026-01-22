@@ -219,7 +219,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1430673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,7 +345,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &11751032 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6635184506285418308, guid: 3e19d18c09c0fbd46b6279ddda0490fa, type: 3}
@@ -371,7 +369,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!4 &17602109 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 520041274079275570, guid: 2851bdb646102b54ab18a381c30a0cf5, type: 3}
@@ -504,7 +501,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &23740920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,7 +539,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &26603483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1085,7 +1080,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &39030517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1124,7 +1118,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &47635408
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,9 +1211,14 @@ MonoBehaviour:
   - {fileID: 7928218173533933786, guid: f3ba1b015110d31459d677fc896f7e92, type: 3}
   - {fileID: 2757006321740363870, guid: 43dc60078cfd5b546979ce81618bc3e8, type: 3}
   - {fileID: 7928218173533933786, guid: 4d6c7a5b3633a664882584eb782536ae, type: 3}
+  limit: 2
   choicedItems: []
   spawnOnStart: 5
   showDuration: 10
+  notificationCanvas: {fileID: 0}
+  notificationText: {fileID: 0}
+  minDelay: 30
+  maxDelay: 90
 --- !u!114 &47635412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1395,7 +1393,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &54504729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1434,7 +1431,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &61097878
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1774,7 +1770,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &76254591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2920,7 +2915,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &94829520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3163,7 +3157,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &111333151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3202,7 +3195,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &111952949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3241,7 +3233,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &113245046 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 19512413917152039, guid: 81d249e507294d741858fb7216679ec4, type: 3}
@@ -3266,7 +3257,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &122358886
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3665,7 +3655,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &139407058 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2129929732172800472, guid: f08a4f8cd29edd940a8f696ff2a3649f, type: 3}
@@ -3690,7 +3679,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &139407068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3729,7 +3717,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &140069790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3768,7 +3755,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &142110035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4148,7 +4134,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &169359235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4824,7 +4809,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &180739676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4978,7 +4962,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &197085544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5127,7 +5110,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: 675812ff8c0921f439d2f37cc484a638, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &207610750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5348,7 +5330,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: 675812ff8c0921f439d2f37cc484a638, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &219537501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5569,7 +5550,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &219601957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5782,7 +5762,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &230562319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5993,7 +5972,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &240356761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6105,7 +6083,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &253288817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6144,7 +6121,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: 675812ff8c0921f439d2f37cc484a638, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &254894960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6714,7 +6690,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &266892640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6934,7 +6909,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &270512353 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4251379877773828399, guid: 9e1a3a232c7c5904e945b1ccd570133a, type: 3}
@@ -6959,7 +6933,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &271570184
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7099,7 +7072,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &274073111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7310,7 +7282,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &286609040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7349,7 +7320,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &288335056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7764,7 +7734,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &299608367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7808,7 +7777,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: 675812ff8c0921f439d2f37cc484a638, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &302254076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8029,7 +7997,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &311730789
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8162,7 +8129,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &315327954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8201,7 +8167,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &316030546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8240,7 +8205,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &316660633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8968,7 +8932,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &358322557
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9108,7 +9071,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &360753162
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9460,7 +9422,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &373769581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9499,7 +9460,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &375220107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9695,7 +9655,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &388358903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9807,7 +9766,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &390721748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9846,7 +9804,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &391846605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10089,7 +10046,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &403018419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10248,7 +10204,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &413549730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10287,7 +10242,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &418332013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10679,7 +10633,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &436211133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10718,7 +10671,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &436983354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11217,7 +11169,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &460608558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11791,6 +11742,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52454a8f105bf5c4f917a51e504563aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemNameText: {fileID: 0}
+  NotificationPanel: {fileID: 0}
+  UserCameraTransform: {fileID: 0}
+  notificationCanvasGroup: {fileID: 0}
+  DisplayDistance: 0.5
   inventoryView: []
   isNew: 0
   inventoryText: {fileID: 1748016655}
@@ -11819,7 +11775,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &467418849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12066,7 +12021,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &481958108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12338,7 +12292,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &491361858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13672,7 +13625,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &572769658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14604,7 +14556,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &634964467 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2129929732172800472, guid: f08a4f8cd29edd940a8f696ff2a3649f, type: 3}
@@ -14629,7 +14580,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &634964477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14879,7 +14829,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &650729775
 GameObject:
   m_ObjectHideFlags: 0
@@ -15063,7 +15012,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &659881953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15102,7 +15050,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &668219632 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2580249621097652999, guid: 2f120549ced5a7240a1b5f0bb5ce2254, type: 3}
@@ -15127,7 +15074,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &668219635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15166,7 +15112,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  interactable: {fileID: 0}
 --- !u!4 &676759995 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2920092203941905339, guid: 8368cd8d2fddf5a43a794964b3eef2ee, type: 3}
@@ -15284,7 +15229,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &685286950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15629,7 +15573,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!4 &697171759 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4253691920656007706, guid: 4d40f3bd6652f4484a1ffe2a42e59ff8, type: 3}
@@ -15954,7 +15897,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &710453714 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2129929732172800472, guid: f08a4f8cd29edd940a8f696ff2a3649f, type: 3}
@@ -15979,7 +15921,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &710453724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16121,7 +16062,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &717765121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16740,7 +16680,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &738909330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17004,7 +16943,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &754015125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17043,7 +16981,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: 675812ff8c0921f439d2f37cc484a638, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &755253674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17264,7 +17201,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &756730460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18340,7 +18276,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &779648854
 GameObject:
   m_ObjectHideFlags: 0
@@ -18813,7 +18748,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &805511130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19385,7 +19319,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &813772454 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2129929732172800472, guid: f08a4f8cd29edd940a8f696ff2a3649f, type: 3}
@@ -19410,7 +19343,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &813772464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19449,7 +19381,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &814052172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20159,7 +20090,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &839516124 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6635184506285418308, guid: 3e19d18c09c0fbd46b6279ddda0490fa, type: 3}
@@ -20184,7 +20114,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &841037810
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20301,7 +20230,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &851625695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20437,7 +20365,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &871273522
 GameObject:
   m_ObjectHideFlags: 0
@@ -20632,7 +20559,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: 675812ff8c0921f439d2f37cc484a638, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &872756674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21139,7 +21065,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &887017404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21281,7 +21206,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &894311742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21325,7 +21249,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &905803788 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6234871857450261149, guid: b55019da759a1b249bd9d2865df54c4b, type: 3}
@@ -21350,7 +21273,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &906626653
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21786,7 +21708,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &928343291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22117,7 +22038,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &938808705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22601,7 +22521,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &962806270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22821,7 +22740,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &967796917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23054,7 +22972,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &968308699
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23487,7 +23404,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &984621349 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5731033002757011461, guid: f52b0a4b6b774914f9bc62d5eec653a5, type: 3}
@@ -23512,7 +23428,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &984621352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23556,7 +23471,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &985725668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23845,7 +23759,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &990503739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23985,7 +23898,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!4 &1000287357 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2466928069431630040, guid: f1f1dd19ffb27c74f9a1f7e0e9a1f409, type: 3}
@@ -24196,7 +24108,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1008905779 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4103672370777542020, guid: 465053c7e3a8f0b4e9fd2a994ff5c208, type: 3}
@@ -24221,7 +24132,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1008905789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24260,7 +24170,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  interactable: {fileID: 0}
 --- !u!4 &1012606843 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2009398833688933354, guid: abbf234617205844db11a1e767893e4f, type: 3}
@@ -25522,7 +25431,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1060472888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25994,7 +25902,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1076950034
 GameObject:
   m_ObjectHideFlags: 0
@@ -26054,7 +25961,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1086779632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26240,7 +26146,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1090013728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26384,7 +26289,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1108128809 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 19512413917152039, guid: 81d249e507294d741858fb7216679ec4, type: 3}
@@ -26409,7 +26313,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1109829315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26683,7 +26586,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1118673842 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6635184506285418308, guid: 3e19d18c09c0fbd46b6279ddda0490fa, type: 3}
@@ -26708,7 +26610,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1123301480 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4355291191733541402, guid: 9aaf52fce2e472c428b3649bcc1d719a, type: 3}
@@ -26733,7 +26634,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1123301490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26772,7 +26672,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1123894729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26914,7 +26813,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1126923171
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27451,7 +27349,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1141277410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28287,7 +28184,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1150721156
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28404,7 +28300,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1157469821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28449,7 +28344,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1157801408
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29028,7 +28922,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1204034340
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29319,7 +29212,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1207232824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29458,7 +29350,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1228607180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29580,7 +29471,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1236319166
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29763,7 +29653,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1246557721
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30094,7 +29983,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1254949177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30133,7 +30021,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1257722944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30441,7 +30328,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!4 &1289746972 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 520041274079275570, guid: 2851bdb646102b54ab18a381c30a0cf5, type: 3}
@@ -30572,7 +30458,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1298506560 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4103672370777542020, guid: 465053c7e3a8f0b4e9fd2a994ff5c208, type: 3}
@@ -30597,7 +30482,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1298506570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32324,7 +32208,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1316483151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32824,7 +32707,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1332821118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33135,7 +33017,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1337201067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33294,7 +33175,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1351719227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33603,7 +33483,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1358899498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33778,7 +33657,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1362500187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33817,7 +33695,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1367042445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34230,7 +34107,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1389369054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34480,7 +34356,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1404364221 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6635184506285418308, guid: 3e19d18c09c0fbd46b6279ddda0490fa, type: 3}
@@ -34505,7 +34380,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1408235040
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34627,7 +34501,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1413301608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34947,7 +34820,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1426493021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35270,7 +35142,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: 675812ff8c0921f439d2f37cc484a638, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1440293416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35698,7 +35569,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1443145022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36424,7 +36294,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1460306853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36468,7 +36337,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1464464444
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36899,7 +36767,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1472054119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37418,7 +37285,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1490647825
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37749,7 +37615,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1507217614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37788,7 +37653,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1510188844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38062,7 +37926,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: 675812ff8c0921f439d2f37cc484a638, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1524582467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38288,7 +38151,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1525723261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38521,7 +38383,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1539197067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38661,7 +38522,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1542172097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38700,7 +38560,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1547280715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39163,7 +39022,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1557058069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39295,7 +39153,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: 675812ff8c0921f439d2f37cc484a638, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1584493184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39516,7 +39373,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: 675812ff8c0921f439d2f37cc484a638, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1588798772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39742,7 +39598,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1597523970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39781,7 +39636,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1597727190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39885,7 +39739,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1606402512
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40011,7 +39864,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1614958722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40358,7 +40210,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1630188472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40556,7 +40407,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1643127241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40689,7 +40539,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1648334172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40789,7 +40638,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1650105400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40828,7 +40676,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1650768332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41286,7 +41133,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1664196277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41660,7 +41506,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1676137501 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4008468578534030988, guid: dee06e22df2c81248a24f2cca32d1dc3, type: 3}
@@ -41685,7 +41530,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1676137511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41827,7 +41671,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1681048592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42299,7 +42142,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1695787525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42426,7 +42268,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1702625026
 GameObject:
   m_ObjectHideFlags: 0
@@ -42486,7 +42327,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1702650451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42525,7 +42365,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1705743912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42780,7 +42619,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1724580533
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42920,7 +42758,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1726515085 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2750236993837222570, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
@@ -42945,7 +42782,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1730624778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43073,7 +42909,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1731912525 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6635184506285418308, guid: 3e19d18c09c0fbd46b6279ddda0490fa, type: 3}
@@ -43098,7 +42933,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1740474494 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 19512413917152039, guid: 81d249e507294d741858fb7216679ec4, type: 3}
@@ -43123,7 +42957,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1747648456 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
@@ -43148,7 +42981,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1747648459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43504,7 +43336,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1752448490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43543,7 +43374,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!4 &1757144228 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 520041274079275570, guid: 2851bdb646102b54ab18a381c30a0cf5, type: 3}
@@ -43573,7 +43403,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1757915479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43612,7 +43441,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1778103047
 GameObject:
   m_ObjectHideFlags: 0
@@ -45310,7 +45138,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1790413321 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6234871857450261149, guid: b55019da759a1b249bd9d2865df54c4b, type: 3}
@@ -45335,7 +45162,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1795972368
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45754,7 +45580,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1798195328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45793,7 +45618,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1799285714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45902,7 +45726,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1812828516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45941,7 +45764,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1818360573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47037,9 +46859,14 @@ MonoBehaviour:
   - {fileID: 7928218173533933786, guid: f3ba1b015110d31459d677fc896f7e92, type: 3}
   - {fileID: 2757006321740363870, guid: 43dc60078cfd5b546979ce81618bc3e8, type: 3}
   - {fileID: 7928218173533933786, guid: 4d6c7a5b3633a664882584eb782536ae, type: 3}
+  limit: 2
   choicedItems: []
   spawnOnStart: 5
   showDuration: 10
+  notificationCanvas: {fileID: 0}
+  notificationText: {fileID: 0}
+  minDelay: 1
+  maxDelay: 10
 --- !u!114 &1825740877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47129,7 +46956,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: 675812ff8c0921f439d2f37cc484a638, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1828228488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47350,7 +47176,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1833135947
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47432,7 +47257,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1836723142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47670,7 +47494,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1855821393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48214,7 +48037,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: 675812ff8c0921f439d2f37cc484a638, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1881952824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48582,7 +48404,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1882421341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48861,7 +48682,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1892275457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49100,7 +48920,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1906691426
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49411,7 +49230,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1913434863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49526,7 +49344,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!4 &1915640396 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2466928069431630040, guid: f1f1dd19ffb27c74f9a1f7e0e9a1f409, type: 3}
@@ -49556,7 +49373,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1918583447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50402,7 +50218,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1941555104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50436,7 +50251,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &1942227046
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51145,7 +50959,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!224 &1966033803 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4015128326712939851, guid: fd28f23af44f73f4a95e33435872ad15, type: 3}
@@ -51175,7 +50988,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1970116887 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4771479405953594038, guid: abbf234617205844db11a1e767893e4f, type: 3}
@@ -51200,7 +51012,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1970116890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51528,7 +51339,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1979543643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51842,7 +51652,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &1992536689 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5731033002757011461, guid: f52b0a4b6b774914f9bc62d5eec653a5, type: 3}
@@ -51867,7 +51676,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1992536692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51998,7 +51806,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1995423465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52113,7 +51920,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &1999362599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52304,7 +52110,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &2004971784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52517,7 +52322,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &2031507756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52634,7 +52438,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &2034044457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52673,7 +52476,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &2035086018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52893,7 +52695,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &2038776607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53128,7 +52929,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1 &2055970854
 GameObject:
   m_ObjectHideFlags: 0
@@ -53956,7 +53756,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!224 &2081892415 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 781630661673262082, guid: c24a7635b5761984d81cf6c4aac26e0d, type: 3}
@@ -53986,7 +53785,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &2083149422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54582,7 +54380,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!1001 &2100517417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54842,7 +54639,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &2106379566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54881,7 +54677,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRenderers: []
   highlightMat: {fileID: 2100000, guid: ea732426ae1d84ba1ac8d57ea5933477, type: 2}
-  interactable: {fileID: 0}
 --- !u!114 &2124202803
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -26,8 +26,7 @@ public class ListController : MonoBehaviour
     [SerializeField] private GameObject notificationCanvas;
     [SerializeField] private TextMeshProUGUI notificationText;
 
-
-    private bool hasTriggeredRandomChange = false;
+    [SerializeField] private bool hasTriggeredRandomChange;
 
     private string currentScene;
 
@@ -162,11 +161,11 @@ public class ListController : MonoBehaviour
 
         yield return new WaitForSeconds(waitTime);
 
-        if (!hasTriggeredRandomChange)
+        if (hasTriggeredRandomChange)
         {
         
             string msg = ReplaceRandomItemWithUniquePrefab();
-            hasTriggeredRandomChange = true;
+            hasTriggeredRandomChange = false;
 
             Debug.Log(msg);
 
