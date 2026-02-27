@@ -153,7 +153,7 @@ public class DataManager : MonoBehaviour
 
         foreach (var kvp in itemSummary)
         {
-            string name = kvp.Key;
+            string name = kvp.Key.TrimEnd('\n');
             int count = kvp.Value.count;
             int unitPrice = kvp.Value.unitPrice;
             string status = kvp.Value.status;
@@ -171,7 +171,7 @@ public class DataManager : MonoBehaviour
 
 
         int click_num = -1;
-        GameObject target = GameObject.Find("Supermarket/Notice_Board/UI Sample/Scroll UI Sample");
+        GameObject target = GameObject.Find("Supermarket/UI Sample/Scroll UI Sample");
         if (target == null)
         {
             Debug.Log("KHÔNG TÌM THẤY GameObject Scroll UI Sample");
