@@ -931,6 +931,7 @@ MonoBehaviour:
   showDuration: 10
   notificationCanvas: {fileID: 0}
   notificationText: {fileID: 0}
+  hasTriggeredRandomChange: 0
   minDelay: 30
   maxDelay: 90
 --- !u!114 &47635412
@@ -34983,6 +34984,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5849765080480587857, guid: fd28f23af44f73f4a95e33435872ad15, type: 3}
+      propertyPath: m_TagString
+      value: List Control
+      objectReference: {fileID: 0}
     - target: {fileID: 5849765080480587862, guid: fd28f23af44f73f4a95e33435872ad15, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.5
@@ -35225,6 +35230,7 @@ MonoBehaviour:
   showDuration: 10
   notificationCanvas: {fileID: 0}
   notificationText: {fileID: 0}
+  hasTriggeredRandomChange: 0
   minDelay: 30
   maxDelay: 90
 --- !u!114 &1825740877

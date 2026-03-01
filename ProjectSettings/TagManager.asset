@@ -10,6 +10,7 @@ TagManager:
   - Noodles
   - Fish
   - Map Unseen
+  - List Control
   layers:
   - Default
   - TransparentFX
