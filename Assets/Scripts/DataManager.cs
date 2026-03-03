@@ -130,36 +130,26 @@ public class DataManager : MonoBehaviour
 
         writer.WriteLine("Product Name,Total Count,Unit Price,Status,Subtotal");
 
-        Dictionary<string, (int count, int unitPrice, string status)> itemSummary =
-            new Dictionary<string, (int, int, string)>();
+        Dictionary<string, CompareResult> finalResults =
+            new Dictionary<string, CompareResult>();
 
         foreach (var r in compareResults)
         {
-            int unitPrice = (r.price < 1000) ? 0 : r.price;
-            if (itemSummary.ContainsKey(r.itemName))
-            {
-                var existing = itemSummary[r.itemName];
-                int newCount = existing.count + 1;
-                itemSummary[r.itemName] = (newCount, unitPrice, r.status);
-            }
-            else
-            {
-                itemSummary[r.itemName] = (1, unitPrice, r.status);
-            }
+            finalResults[r.itemName] = r;
         }
 
         int grandTotalItems = 0;
         long grandTotalPrice = 0;
 
-        foreach (var kvp in itemSummary)
+        foreach (var kvp in finalResults)
         {
-            string name = kvp.Key;
-            int count = kvp.Value.count;
-            int unitPrice = kvp.Value.unitPrice;
-            string status = kvp.Value.status;
-            long subtotal = (long)unitPrice * count; 
+            CompareResult r = kvp.Value;
 
-            writer.WriteLine($"{name},{count},{unitPrice},{status},{subtotal}");
+            int count = r.currentQuantity;
+            int unitPrice = r.price;
+            long subtotal = (long)count * unitPrice;
+
+            writer.WriteLine($"{r.itemName},{count},{unitPrice},{r.status},{subtotal}");
 
             grandTotalItems += count;
             grandTotalPrice += subtotal;

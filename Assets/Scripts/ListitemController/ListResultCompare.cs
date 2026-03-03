@@ -35,7 +35,7 @@ public class ListResultCompare : MonoBehaviour
             quantityText = "0";
             string itemName = item.transform.Find("Name").GetComponent<TMPro.TMP_Text>().text;
             int itemQuantity = int.Parse(item.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
-            BillEntry entry = new BillEntry(itemName, itemQuantity);
+            BillEntry entry = new BillEntry(itemName, 0, itemQuantity);
             CompareData(entry, 0, itemQuantity, ref quantityText);
             CreateNewInstantData(entry, obtainProductContainer, ref quantityText);
         }
