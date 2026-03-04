@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public class ListResultCompare : MonoBehaviour
@@ -6,12 +7,15 @@ public class ListResultCompare : MonoBehaviour
     public ListController listController;
     [SerializeField] private GameObject dataContainer;
     [SerializeField] private Transform obtainProductContainer; 
-    [SerializeField] private Transform wrongProductContainer;
-    
+    [SerializeField] private Transform wrongProductContainer; 
+
+    [SerializeField] private GameTimer gameTimer;
     private List<GameObject> choicedItems;
     private float itemHeight = 5f;   
     private float startY = 10f;      
     public List<CompareResult> compareResults = new List<CompareResult>();
+
+    public Action LoadCSV;
 
     void Start()
     {
@@ -24,14 +28,29 @@ public class ListResultCompare : MonoBehaviour
                 return;
             }    
             Debug.Log($"ListResultCompare: Loaded {choicedItems?.Count ?? 0} choicedItems");
-
         }
+        LoadCSV += LoadCompareResult;
+    }
 
+    void Update()
+    {
+        if (!gameTimer.isRunning)
+        {
+
+            LoadCSV?.Invoke();
+        }
+    }
+
+    private void LoadCompareResult()
+    {
+        Debug.Log("Dữ liệu đang được chạy");
         choicedItems = listController.choicedItems;
 
         string quantityText;
+
         foreach(GameObject item in choicedItems)
         {
+            Debug.Log("Processing item: " + item.name);
             quantityText = "0";
             string itemName = item.transform.Find("Name").GetComponent<TMPro.TMP_Text>().text;
             int itemQuantity = int.Parse(item.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
@@ -39,6 +58,9 @@ public class ListResultCompare : MonoBehaviour
             CompareData(entry, 0, itemQuantity, ref quantityText);
             CreateNewInstantData(entry, obtainProductContainer, ref quantityText);
         }
+        DataManager.Instance.Report();
+        LoadCSV -= LoadCompareResult;
+        Debug.Log("Đã chạy xong hàm Load các compare data");
     }
 
     void OnEnable()
