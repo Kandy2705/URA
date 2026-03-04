@@ -14,7 +14,7 @@ public class ListController : MonoBehaviour
 
     [Header("Limit")]
     [SerializeField] private int limit = 2;
-    private int currentLimit;
+    [SerializeField] private int currentLimit = 0;
 
     [SerializeField] public List<GameObject> choicedItems;
 
@@ -38,11 +38,11 @@ public class ListController : MonoBehaviour
 
     private void Start()
     {
-        currentLimit = -1;
+        
         currentScene = SceneManager.GetActiveScene().name;
         for (int i = 0; i < spawnOnStart; i++) SpawnItemInList();
         ShowList();
-
+        currentLimit = 0;
         StartCoroutine(RandomChangeCoroutine());
     }
 
