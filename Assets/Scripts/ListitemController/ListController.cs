@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using TMPro;
+
 
 public class ListController : MonoBehaviour
 {
@@ -26,7 +28,7 @@ public class ListController : MonoBehaviour
     [SerializeField] private GameObject notificationCanvas;
     [SerializeField] private TextMeshProUGUI notificationText;
 
-    [SerializeField] private bool hasTriggeredRandomChange;
+    public bool hasTriggeredRandomChange = true;
 
     private string currentScene;
 
@@ -35,6 +37,8 @@ public class ListController : MonoBehaviour
 
     private int spawnCount = 0;
     private Coroutine currentRoutine;
+
+    public event Action<string, GameObject> OnListChanged;
 
     private void Start()
     {
@@ -46,13 +50,13 @@ public class ListController : MonoBehaviour
         StartCoroutine(RandomChangeCoroutine());
     }
 
-    // private void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.L))
-    //     {
-    //          ReplaceRandomItemWithUniquePrefab();
-    //     }
-    // }
+    private void Update()
+    {
+        // if (Input.GetKeyDown(KeyCode.L))
+        // {
+        //      ReplaceRandomItemWithUniquePrefab();
+        // }
+    }
 
     public void ShowList()
     {
@@ -82,8 +86,8 @@ public class ListController : MonoBehaviour
             return;
         }
 
-        int randomIndex    = Random.Range(0, availablePrefabs.Count);
-        int randomQuantity = Random.Range(1, 10);
+        int randomIndex    = UnityEngine.Random.Range(0, availablePrefabs.Count);
+        int randomQuantity = UnityEngine.Random.Range(1, 10);
 
         GameObject randomPrefab = availablePrefabs[randomIndex];
         GameObject spawnedItem  = Instantiate(randomPrefab, listContainer.transform);
@@ -104,12 +108,13 @@ public class ListController : MonoBehaviour
     {
         if (choicedItems.Count == 0)
         {
+            Debug.Log("Không có item nào để thay đổi!");
             return "Không có item nào để thay đổi!";
-            
         }
 
         if (availablePrefabs.Count == 0)
         {
+            Debug.Log("Không có prefab nào trong availablePrefabs!");
             return "Không có prefab nào trong availablePrefabs!";
         }
 
@@ -130,44 +135,50 @@ public class ListController : MonoBehaviour
             }
         }
        
-        //Chọn 1 item ngẫu nhiên trong 5 item
-        int randomItemIndex = Random.Range(0, choicedItems.Count);
+        int randomItemIndex = UnityEngine.Random.Range(0, choicedItems.Count);
         GameObject targetItem = choicedItems[randomItemIndex];
+
+        GameObject oldPrefab = targetItem;
 
         var oldNameText = targetItem.transform.Find("Name")?.GetComponent<TextMeshProUGUI>();
         string oldName = oldNameText != null ? oldNameText.text : targetItem.name;
 
-        GameObject newPrefab = validPrefabs[Random.Range(0, validPrefabs.Count)];
+        GameObject newPrefab = validPrefabs[UnityEngine.Random.Range(0, validPrefabs.Count)];
         targetItem.name = newPrefab.name;
 
         var nameText = targetItem.transform.Find("Name")?.GetComponent<TextMeshProUGUI>();
         if (nameText != null)
             nameText.text = newPrefab.name;
-
         
-        int newQuantity = Random.Range(1, 10);
+        int newQuantity = UnityEngine.Random.Range(1, 10);
         var quantityText = targetItem.transform.Find("Quantity")?.GetComponent<TextMeshProUGUI>();
         if (quantityText != null)
             quantityText.text = newQuantity.ToString();
 
+        //ListResultCompare.compareResultListUpdated = true;   
+
         Debug.Log($"Đã đổi {oldName} → {newPrefab.name} (x{newQuantity})");
+
+        OnListChanged?.Invoke(oldName, newPrefab);
+
         return $"Đã đổi {oldName} → {newPrefab.name} (x{newQuantity})";
     }
 
+
     private IEnumerator RandomChangeCoroutine()
     {
-        float waitTime = Random.Range(minDelay, maxDelay);
+        float waitTime = UnityEngine.Random.Range(minDelay, maxDelay);
         Debug.Log($"Sự kiện đổi item sẽ xảy ra trong {waitTime} giây...");
 
         yield return new WaitForSeconds(waitTime);
 
+
         if (hasTriggeredRandomChange)
         {
-        
+            
             string msg = ReplaceRandomItemWithUniquePrefab();
-            hasTriggeredRandomChange = false;
 
-            Debug.Log(msg);
+            hasTriggeredRandomChange = false;
 
             // 🌟 Gọi thông báo UI
             ShowNotification(msg, 3f);

@@ -163,7 +163,6 @@ public class PokeManager : MonoBehaviour
         {
             float t = (Time.time - startTime) / duration;
             
-            
             notificationCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
             
             yield return null;

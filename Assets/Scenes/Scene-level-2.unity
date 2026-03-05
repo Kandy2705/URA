@@ -936,6 +936,7 @@ MonoBehaviour:
   - {fileID: 2757006321740363870, guid: 43dc60078cfd5b546979ce81618bc3e8, type: 3}
   - {fileID: 7928218173533933786, guid: 4d6c7a5b3633a664882584eb782536ae, type: 3}
   limit: 2
+  currentLimit: 0
   choicedItems: []
   spawnOnStart: 5
   showDuration: 10
@@ -20782,11 +20783,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timers:
   - {fileID: 1006241557}
-  limitSeconds: 190
+  limitSeconds: 20
   timerText: {fileID: 2070714957}
   onTimeUp:
     m_PersistentCalls:
       m_Calls: []
+  isRunning: 0
 --- !u!114 &946661623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42496,6 +42498,7 @@ MonoBehaviour:
   - {fileID: 2757006321740363870, guid: 43dc60078cfd5b546979ce81618bc3e8, type: 3}
   - {fileID: 7928218173533933786, guid: 4d6c7a5b3633a664882584eb782536ae, type: 3}
   limit: 2
+  currentLimit: 0
   choicedItems: []
   spawnOnStart: 8
   showDuration: 10
@@ -46184,7 +46187,9 @@ MonoBehaviour:
   dataContainer: {fileID: 6530172943102710422, guid: d95ccfb93aee58342b63c0b519e2ec28, type: 3}
   obtainProductContainer: {fileID: 1702625027}
   wrongProductContainer: {fileID: 2144530966}
+  gameTimer: {fileID: 946661622}
   compareResults: []
+  loadStart: 1
 --- !u!4 &1991155222 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5575336185825919382, guid: add93e8bf91d3448fa9dce6031a6a608, type: 3}
