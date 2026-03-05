@@ -195,6 +195,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
+      objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
       value: 0.5
@@ -2342,6 +2346,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 594878532}
     m_Modifications:
+    - target: {fileID: -3030127525972349692, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
+      propertyPath: itemName
+      value: "Chai t\u01B0\u01A1ng"
+      objectReference: {fileID: 0}
     - target: {fileID: 1058049622156651196, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.04726527
@@ -8757,6 +8765,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
+      objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
       value: 0.5
@@ -9349,6 +9361,10 @@ PrefabInstance:
     - target: {fileID: 796717960244648349, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
       objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
@@ -10498,6 +10514,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 594878532}
     m_Modifications:
+    - target: {fileID: -3030127525972349692, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
+      propertyPath: itemName
+      value: "Chai t\u01B0\u01A1ng"
+      objectReference: {fileID: 0}
     - target: {fileID: 1058049622156651196, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.04726527
@@ -10708,6 +10728,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 594878532}
     m_Modifications:
+    - target: {fileID: -3030127525972349692, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
+      propertyPath: itemName
+      value: "Chai t\u01B0\u01A1ng"
+      objectReference: {fileID: 0}
     - target: {fileID: 1058049622156651196, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.04726527
@@ -10972,6 +10996,10 @@ PrefabInstance:
     - target: {fileID: 796717960244648349, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
       objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
@@ -11797,6 +11825,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 594878532}
     m_Modifications:
+    - target: {fileID: -3030127525972349692, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
+      propertyPath: itemName
+      value: "Chai t\u01B0\u01A1ng"
+      objectReference: {fileID: 0}
     - target: {fileID: 1058049622156651196, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.04726527
@@ -12839,6 +12871,10 @@ PrefabInstance:
     - target: {fileID: 796717960244648349, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
       objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
@@ -14551,6 +14587,10 @@ PrefabInstance:
     - target: {fileID: 796717960244648349, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
       objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
@@ -18418,6 +18458,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
+      objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
       value: 0.5
@@ -21789,6 +21833,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 594878532}
     m_Modifications:
+    - target: {fileID: -3030127525972349692, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
+      propertyPath: itemName
+      value: "Chai t\u01B0\u01A1ng"
+      objectReference: {fileID: 0}
     - target: {fileID: 1058049622156651196, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.8109542
@@ -23944,6 +23992,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 594878532}
     m_Modifications:
+    - target: {fileID: -3030127525972349692, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
+      propertyPath: itemName
+      value: "Chai t\u01B0\u01A1ng"
+      objectReference: {fileID: 0}
     - target: {fileID: 1058049622156651196, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.04726527
@@ -24637,6 +24689,10 @@ PrefabInstance:
     - target: {fileID: 796717960244648349, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
       objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
@@ -27760,6 +27816,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29794,6 +29854,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30106,6 +30170,10 @@ PrefabInstance:
     - target: {fileID: 796717960244648349, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
       objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
@@ -31697,7 +31765,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: itemName
-      value: Coca Cola Chai
+      value: Coca cola chai
       objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
@@ -31957,6 +32025,10 @@ PrefabInstance:
     - target: {fileID: 796717960244648349, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
       objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
@@ -33348,6 +33420,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -34401,6 +34477,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -34838,6 +34918,10 @@ PrefabInstance:
     - target: {fileID: 796717960244648349, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
       objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
@@ -35296,6 +35380,10 @@ PrefabInstance:
     - target: {fileID: 796717960244648349, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
       objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
@@ -37541,6 +37629,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
+      objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
       value: 0.5
@@ -37986,6 +38078,10 @@ PrefabInstance:
     - target: {fileID: 796717960244648349, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
       objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
@@ -39553,6 +39649,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 1110233775959259594, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+    - target: {fileID: 7694816581017465084, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7719213870688731145, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
       propertyPath: m_Lightmapping
       value: 2
@@ -42259,6 +42359,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5849765080480587857, guid: fd28f23af44f73f4a95e33435872ad15, type: 3}
+      propertyPath: m_TagString
+      value: List Control
+      objectReference: {fileID: 0}
     - target: {fileID: 5849765080480587862, guid: fd28f23af44f73f4a95e33435872ad15, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.5
@@ -44947,6 +45051,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 594878532}
     m_Modifications:
+    - target: {fileID: -3030127525972349692, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
+      propertyPath: itemName
+      value: "Chai t\u01B0\u01A1ng"
+      objectReference: {fileID: 0}
     - target: {fileID: 1058049622156651196, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.04726527
@@ -47360,6 +47468,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
+      objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
       value: 0.5
@@ -47444,6 +47556,10 @@ PrefabInstance:
     - target: {fileID: 796717960244648349, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086032273707344320, guid: 81d249e507294d741858fb7216679ec4, type: 3}
+      propertyPath: itemName
+      value: Coca cola chai
       objectReference: {fileID: 0}
     - target: {fileID: 2914676286551026722, guid: 81d249e507294d741858fb7216679ec4, type: 3}
       propertyPath: m_Drag
@@ -47951,6 +48067,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 594878532}
     m_Modifications:
+    - target: {fileID: -3030127525972349692, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
+      propertyPath: itemName
+      value: "Chai t\u01B0\u01A1ng"
+      objectReference: {fileID: 0}
     - target: {fileID: 1058049622156651196, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.8109542

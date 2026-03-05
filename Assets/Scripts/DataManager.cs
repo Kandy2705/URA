@@ -161,7 +161,7 @@ public class DataManager : MonoBehaviour
 
 
         int click_num = -1;
-        GameObject target = GameObject.Find("Supermarket/Notice_Board/UI Sample/Scroll UI Sample");
+        GameObject target = GameObject.FindWithTag("List Control");
         if (target == null)
         {
             Debug.Log("KHÔNG TÌM THẤY GameObject Scroll UI Sample");
