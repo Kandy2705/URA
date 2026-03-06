@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce6bd46f4600fc54cad26772ee5f6d32, type: 3}
   m_Name: Banana
   m_EditorClassIdentifier: 
-  itemName: "Chu\u1ED1i"
+  itemName: "Chu\u1ED1i v\xE0ng"
   itemIcon: {fileID: 21300000, guid: 3d01fd75e44a1e04397eb958ae575b55, type: 3}

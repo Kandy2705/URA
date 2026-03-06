@@ -173,7 +173,8 @@ public class ListResultCompare : MonoBehaviour
         }
         else
         {
-            if(loadStart) compareResults.Add(newResult);
+            // if(loadStart) compareResults.Add(newResult);
+            compareResults.Add(newResult);
         }
     }
    
@@ -196,7 +197,7 @@ public class ListResultCompare : MonoBehaviour
 
     void HandleBillChanged(BillEntry entry, bool isNew)
     {
-        Debug.Log("Bill has been updated: " + entry.itemName + ", Quantity: " + entry.quantity);
+        //Debug.Log("Bill has been updated: " + entry.itemName + ", Quantity: " + entry.quantity);
         Transform parentContainer;
 
         string addItem = entry.itemName;

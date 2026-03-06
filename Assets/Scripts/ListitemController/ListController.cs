@@ -66,6 +66,7 @@ public class ListController : MonoBehaviour
             return;
         }
         currentLimit++;
+        Debug.Log("Show list " + currentLimit + " lần");
         currentRoutine = StartCoroutine(ShowThenHide());
     }
 

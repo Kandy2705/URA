@@ -42,6 +42,8 @@ public class DataManager : MonoBehaviour
     private float startTime;
     Dictionary<string, float> product_times = new Dictionary<string, float>();
 
+    [SerializeField] GameObject target;
+
     private void Start()
     {
         startTime = Time.time;
@@ -161,24 +163,25 @@ public class DataManager : MonoBehaviour
 
 
         int click_num = -1;
-        GameObject target = GameObject.Find("Supermarket/Notice_Board/UI Sample/Scroll UI Sample");
+        // GameObject target = GameObject.Find("Supermarket/Notice_Board/UI Sample/Scroll UI Sample");
+    
         if (target == null)
-        {
-            Debug.Log("KHÔNG TÌM THẤY GameObject Scroll UI Sample");
-        }
-        else
-        {
-            ListController listCtrlr = target.GetComponent<ListController>();
-            if (listCtrlr == null)
             {
-                Debug.Log("KHÔNG TÌM THẤY Component của Object");
+                Debug.Log("KHÔNG TÌM THẤY GameObject Scroll UI Sample");
             }
             else
             {
-                click_num = listCtrlr.GetClickNumber();
+                ListController listCtrlr = target.GetComponent<ListController>();
+                if (listCtrlr == null)
+                {
+                    Debug.Log("KHÔNG TÌM THẤY Component của Object");
+                }
+                else
+                {
+                    click_num = listCtrlr.GetClickNumber();
+                }
             }
-        }
-        writer.WriteLine("Show list ," + click_num.ToString() + " time" + (click_num <= 1 ? "" : "s"));
+        writer.WriteLine("Show list ," + click_num + " time" + (click_num <= 1 ? "" : "s"));
     }
 }
 
