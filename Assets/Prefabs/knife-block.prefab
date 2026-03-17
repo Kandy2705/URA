@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b9eea5c3fb484dd8b6dfb8500868343, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -24.786
+      value: -24.444
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b9eea5c3fb484dd8b6dfb8500868343, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.25
+      value: 0.903
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b9eea5c3fb484dd8b6dfb8500868343, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.948094
+      value: 14.875
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b9eea5c3fb484dd8b6dfb8500868343, type: 3}
       propertyPath: m_LocalRotation.w
@@ -38,7 +38,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b9eea5c3fb484dd8b6dfb8500868343, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b9eea5c3fb484dd8b6dfb8500868343, type: 3}
       propertyPath: m_LocalRotation.y
@@ -46,7 +46,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b9eea5c3fb484dd8b6dfb8500868343, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b9eea5c3fb484dd8b6dfb8500868343, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 4b9eea5c3fb484dd8b6dfb8500868343, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -6538903991835684241, guid: f957c134de097438aaeab0887beb7f33, type: 3}
     - target: {fileID: 919132149155446097, guid: 4b9eea5c3fb484dd8b6dfb8500868343, type: 3}
       propertyPath: m_Name
       value: knife-block
@@ -129,8 +133,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8553019bc6449394196431f36290b92d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: "K\u1EC7 \u0111\u1EC3 dao"
-  price: 18000
+  itemName: "Gi\xE1 c\u1EAFm dao"
+  price: 13000
 --- !u!54 &7366254170362928448
 Rigidbody:
   m_ObjectHideFlags: 0
