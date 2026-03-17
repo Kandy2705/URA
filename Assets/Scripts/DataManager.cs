@@ -42,6 +42,8 @@ public class DataManager : MonoBehaviour
     private float startTime;
     Dictionary<string, float> product_times = new Dictionary<string, float>();
 
+    [SerializeField] GameObject target;
+
     private void Start()
     {
         startTime = Time.time;
@@ -130,36 +132,26 @@ public class DataManager : MonoBehaviour
 
         writer.WriteLine("Product Name,Total Count,Unit Price,Status,Subtotal");
 
-        Dictionary<string, (int count, int unitPrice, string status)> itemSummary =
-            new Dictionary<string, (int, int, string)>();
+        Dictionary<string, CompareResult> finalResults =
+            new Dictionary<string, CompareResult>();
 
         foreach (var r in compareResults)
         {
-            int unitPrice = (r.price < 1000) ? 0 : r.price;
-            if (itemSummary.ContainsKey(r.itemName))
-            {
-                var existing = itemSummary[r.itemName];
-                int newCount = existing.count + 1;
-                itemSummary[r.itemName] = (newCount, unitPrice, r.status);
-            }
-            else
-            {
-                itemSummary[r.itemName] = (1, unitPrice, r.status);
-            }
+            finalResults[r.itemName] = r;
         }
 
         int grandTotalItems = 0;
         long grandTotalPrice = 0;
 
-        foreach (var kvp in itemSummary)
+        foreach (var kvp in finalResults)
         {
-            string name = kvp.Key;
-            int count = kvp.Value.count;
-            int unitPrice = kvp.Value.unitPrice;
-            string status = kvp.Value.status;
-            long subtotal = (long)unitPrice * count; 
+            CompareResult r = kvp.Value;
 
-            writer.WriteLine($"{name},{count},{unitPrice},{status},{subtotal}");
+            int count = r.currentQuantity;
+            int unitPrice = r.price;
+            long subtotal = (long)count * unitPrice;
+
+            writer.WriteLine($"{r.itemName},{count},{unitPrice},{r.status},{subtotal}");
 
             grandTotalItems += count;
             grandTotalPrice += subtotal;
@@ -168,6 +160,28 @@ public class DataManager : MonoBehaviour
         writer.WriteLine();
         writer.WriteLine("Total Items," + grandTotalItems);
         writer.WriteLine("Total Price," + grandTotalPrice);
+
+
+        int click_num = -1;
+        // GameObject target = GameObject.Find("Supermarket/Notice_Board/UI Sample/Scroll UI Sample");
+    
+        if (target == null)
+            {
+                Debug.Log("KHÔNG TÌM THẤY GameObject Scroll UI Sample");
+            }
+            else
+            {
+                ListController listCtrlr = target.GetComponent<ListController>();
+                if (listCtrlr == null)
+                {
+                    Debug.Log("KHÔNG TÌM THẤY Component của Object");
+                }
+                else
+                {
+                    click_num = listCtrlr.GetClickNumber();
+                }
+            }
+        writer.WriteLine("Show list ," + click_num + " time" + (click_num <= 1 ? "" : "s"));
     }
 }
 
@@ -200,8 +214,6 @@ public class DataManager : MonoBehaviour
     public void EnableStatsPanel()
     {
         if (boardData != null)
-            boardData.SetActive(true);
+            boardData.SetActive(false);
     }
-
-    
 }

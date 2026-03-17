@@ -1,0 +1,11 @@
+Model Information:
+* title:	Meat and cheese pack
+* source:	https://sketchfab.com/3d-models/meat-and-cheese-pack-a4b022df089d4be58f3461a04a808ec8
+* author:	Pasha (https://sketchfab.com/Pasha-)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Meat and cheese pack" (https://sketchfab.com/3d-models/meat-and-cheese-pack-a4b022df089d4be58f3461a04a808ec8) by Pasha (https://sketchfab.com/Pasha-) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

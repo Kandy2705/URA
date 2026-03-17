@@ -1,0 +1,21 @@
+Booth Type,Visit Count
+Fruits,0
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+
+
+Product,Time (s)
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Hộp sữa,1,0,Thiếu 7,0
+Kem
+,1,0,Thiếu 7,0
+Nho,1,0,Thiếu 9,0
+Coca cola chai
+,1,0,Thiếu 3,0
+Táo xanh,1,0,Thiếu 9,0
+
+Total Items,5
+Total Price,0

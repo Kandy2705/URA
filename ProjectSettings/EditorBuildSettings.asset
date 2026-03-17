@@ -8,6 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Samples/XR Interaction Toolkit/3.0.8/Starter Assets/DemoScene.unity
     guid: 319dafa5c80f29f428dc1e0d03f04177
+  - enabled: 1
+    path: Assets/Scenes/Demo_18_11.unity
+    guid: 6084f25af04c9a24b9c479db25abd3da
+  - enabled: 1
+    path: Assets/Scenes/Scene-level-2.unity
+    guid: 86a3c92e8a4c18f41bc349478e739183
+  - enabled: 1
+    path: Assets/Scenes/Dress_Game.unity
+    guid: adbfef4c5ad208746b8ccac084571322
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 9e8e038a435e9e94ba91aedde91f1a30, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 40c4b8b367faade4aa353a740fd3b234, type: 2}
