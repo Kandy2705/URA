@@ -48,44 +48,6 @@ public class ListResultCompare : MonoBehaviour
         loadStart = false;
     }
 
-    private void ProcessItem(GameObject item, ref string quantityText)
-    {
-        Debug.Log("Processing item: " + item.name);
-        quantityText = "0";
-        string itemName = item.transform.Find("Name").GetComponent<TMPro.TMP_Text>().text;
-        int itemQuantity = int.Parse(item.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
-        BillEntry entry = new BillEntry(itemName, 0, itemQuantity);
-        CompareData(entry, 0, itemQuantity, ref quantityText);
-        CreateNewInstantData(entry, obtainProductContainer, ref quantityText);
-    }
-
-    public void HandleListChanged(string oldName, GameObject newData)
-    {
-        BillEntry entry = null;
-        if (CartManager.Instance.bill.ContainsKey(newData.name))
-        {
-            entry = CartManager.Instance.bill[newData.name];
-        }
-        else
-        {
-            entry = new BillEntry(newData.name, 0, int.Parse(newData.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text));
-        }
-
-        int index = compareResults.FindIndex(r => r.itemName == oldName);
-        Debug.Log($"GIá trị index hiện tại là {index} cho item: {oldName}");
-
-        int itemQuantity = int.Parse(newData.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
-
-        string quantityText = "0";
-
-        string status = StatusChange(entry.quantity, itemQuantity, ref quantityText);
-
-        CompareResult newResult = new CompareResult(entry.itemName, entry.quantity, itemQuantity, status, entry.price);
-        compareResults[index] = newResult;
-
-        Debug.Log("Dữ liệu của compare list đã được thay đổi !");
-    }
-
     void Update()
     {
         if (!gameTimer.isRunning)
@@ -94,12 +56,55 @@ public class ListResultCompare : MonoBehaviour
         }
     }
 
+    private void ProcessItem(GameObject item, ref string quantityText)
+    {
+        Debug.Log("Processing item: " + item.name);
+        quantityText = "0";
+        string itemName = item.transform.Find("Name").GetComponent<TMPro.TMP_Text>().text;
+        int itemQuantity = int.Parse(item.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
+        BillEntry entry = new BillEntry(itemName, 0, itemQuantity);
+
+        
+        CompareData(entry, 0, itemQuantity, ref quantityText);
+        CreateNewInstantData(entry, obtainProductContainer, ref quantityText);
+    }
+
+    public void HandleListChanged(string oldName, GameObject newData, int newQuantity)
+    {
+        BillEntry entry = null;
+        if (CartManager.Instance.bill.ContainsKey(newData.name))
+        {
+            Debug.Log("Vao if la an lon");
+            entry = CartManager.Instance.bill[newData.name];
+        }
+        else
+        {
+            Debug.Log("Vao else la an cac");
+            entry = new BillEntry(newData.name, 0, 0);
+            Debug.Log($"Số lượng mới của vật phẩm là {entry.quantity}");
+        }
+
+        int index = compareResults.FindIndex(r => r.itemName == oldName);
+        Debug.Log($"GIá trị index hiện tại là {index} cho item: {oldName}");
+
+
+        string quantityText = "0";
+
+        string status = StatusChange(entry.quantity, newQuantity, ref quantityText);
+
+        CompareResult newResult = new CompareResult(entry.itemName, entry.quantity, newQuantity, status, entry.price, true);
+        compareResults[index] = newResult;
+
+        Debug.Log("Dữ liệu của compare list đã được thay đổi !");
+    }
+
     private void LoadCompareResult()
     {
         Debug.Log("Dữ liệu đang được chạy");
 
         foreach(CompareResult result in compareResults)
         {
+            if(result.required == false && result.currentQuantity == 0) break;
             DataManager.Instance.AddCompareResult(result);
         }
     
@@ -163,19 +168,30 @@ public class ListResultCompare : MonoBehaviour
 
     private void HandleCompareResultList(string itemName, int currentQuantity, int indexQuantity, string status, int price)
     {
-        CompareResult newResult = new CompareResult(itemName, currentQuantity, indexQuantity, status, price);
 
         int existingIndex = compareResults.FindIndex(r => r.itemName == itemName);
 
-        if (existingIndex != -1)
+        if (loadStart)
         {
-            compareResults[existingIndex] = newResult;
+            CompareResult newResult = new CompareResult(itemName, currentQuantity, indexQuantity, status, price, true);
+            compareResults.Add(newResult);
         }
         else
         {
-            // if(loadStart) compareResults.Add(newResult);
-            compareResults.Add(newResult);
+            if (existingIndex != -1)
+            {
+                bool lastRequireStatus = compareResults[existingIndex].required;
+                CompareResult newResult = new CompareResult(itemName, currentQuantity, indexQuantity, status, price, lastRequireStatus);
+                compareResults[existingIndex] = newResult;
+            }
+            else
+            {
+                CompareResult newResult = new CompareResult(itemName, currentQuantity, indexQuantity, status, price, false);
+                compareResults.Add(newResult);
+            }
         }
+
+        
     }
    
     public void CreateNewInstantData(BillEntry entry, Transform parentContainer, ref string quantityText)

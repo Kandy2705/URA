@@ -9,7 +9,7 @@ using TMPro;
 public class ListController : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] private GameObject listContainer; // Content hoặc Panel
+    [SerializeField] private GameObject listContainer; 
 
     [Header("Data")]
     [SerializeField] private List<GameObject> availablePrefabs;
@@ -38,7 +38,7 @@ public class ListController : MonoBehaviour
     private int spawnCount = 0;
     private Coroutine currentRoutine;
 
-    public event Action<string, GameObject> OnListChanged;
+    public event Action<string, GameObject, int> OnListChanged;
 
     private void Start()
     {
@@ -160,7 +160,7 @@ public class ListController : MonoBehaviour
 
         Debug.Log($"Đã đổi {oldName} → {newPrefab.name} (x{newQuantity})");
 
-        OnListChanged?.Invoke(oldName, newPrefab);
+        OnListChanged?.Invoke(oldName, newPrefab, newQuantity);
 
         return $"Đã đổi {oldName} → {newPrefab.name} (x{newQuantity})";
     }
