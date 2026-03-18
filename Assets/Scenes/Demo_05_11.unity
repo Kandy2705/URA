@@ -1212,11 +1212,13 @@ MonoBehaviour:
   - {fileID: 2757006321740363870, guid: 43dc60078cfd5b546979ce81618bc3e8, type: 3}
   - {fileID: 7928218173533933786, guid: 4d6c7a5b3633a664882584eb782536ae, type: 3}
   limit: 2
+  currentLimit: 0
   choicedItems: []
   spawnOnStart: 5
   showDuration: 10
   notificationCanvas: {fileID: 0}
   notificationText: {fileID: 0}
+  hasTriggeredRandomChange: 1
   minDelay: 30
   maxDelay: 90
 --- !u!114 &47635412
@@ -15793,6 +15795,7 @@ MonoBehaviour:
   boardData: {fileID: 2092440962}
   statsText1: {fileID: 179357836}
   statsText2: {fileID: 1882192286}
+  target: {fileID: 0}
 --- !u!1001 &706384116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22219,6 +22222,7 @@ MonoBehaviour:
   onTimeUp:
     m_PersistentCalls:
       m_Calls: []
+  isRunning: 0
 --- !u!114 &946661623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46860,11 +46864,13 @@ MonoBehaviour:
   - {fileID: 2757006321740363870, guid: 43dc60078cfd5b546979ce81618bc3e8, type: 3}
   - {fileID: 7928218173533933786, guid: 4d6c7a5b3633a664882584eb782536ae, type: 3}
   limit: 2
+  currentLimit: 0
   choicedItems: []
   spawnOnStart: 5
   showDuration: 10
   notificationCanvas: {fileID: 0}
   notificationText: {fileID: 0}
+  hasTriggeredRandomChange: 1
   minDelay: 1
   maxDelay: 10
 --- !u!114 &1825740877
@@ -51627,7 +51633,9 @@ MonoBehaviour:
   dataContainer: {fileID: 6530172943102710422, guid: d95ccfb93aee58342b63c0b519e2ec28, type: 3}
   obtainProductContainer: {fileID: 1702625027}
   wrongProductContainer: {fileID: 2144530966}
+  gameTimer: {fileID: 946661622}
   compareResults: []
+  loadStart: 1
 --- !u!1 &1990507137 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4251379877773828399, guid: 9e1a3a232c7c5904e945b1ccd570133a, type: 3}
