@@ -30,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eece8df7db23644d3b7c8d3e37775598, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.492
+      value: 14.322
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eece8df7db23644d3b7c8d3e37775598, type: 3}
       propertyPath: m_LocalRotation.w
@@ -38,7 +38,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eece8df7db23644d3b7c8d3e37775598, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eece8df7db23644d3b7c8d3e37775598, type: 3}
       propertyPath: m_LocalRotation.y
@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: eece8df7db23644d3b7c8d3e37775598, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -6538903991835684241, guid: fcfdd7950dd6648a3a5b8fea738023a5, type: 3}
     - target: {fileID: 919132149155446097, guid: eece8df7db23644d3b7c8d3e37775598, type: 3}
       propertyPath: m_Name
       value: glass-wine
@@ -86,6 +90,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: eece8df7db23644d3b7c8d3e37775598, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2944895417781969748}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: eece8df7db23644d3b7c8d3e37775598, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3387569038840431437}
   m_SourcePrefab: {fileID: 100100000, guid: eece8df7db23644d3b7c8d3e37775598, type: 3}
 --- !u!1 &3576900881090219036 stripped
 GameObject:
@@ -327,3 +334,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "Ly r\u01B0\u1EE3u"
   price: 12000
+--- !u!114 &3387569038840431437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3576900881090219036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f32cd547aa38a346ad7fce7343830ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
