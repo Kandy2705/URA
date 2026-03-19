@@ -47,7 +47,7 @@ public class ListController : MonoBehaviour
         for (int i = 0; i < spawnOnStart; i++) SpawnItemInList();
         ShowList();
         currentLimit = 0;
-        if(currentScene != "Demo_05_11") StartCoroutine(RandomChangeCoroutine());
+        if(currentScene != "Demo_18_11") StartCoroutine(RandomChangeCoroutine());
     }
 
     private void Update()
