@@ -11,7 +11,7 @@ public class GameTimer : MonoBehaviour
     [Header("Timer Settings")]
     public float limitSeconds = 240f; 
 
-
+    public GameObject paymentUI;
 
     [Header("UI")]
     public TMP_Text timerText; 
@@ -30,6 +30,7 @@ public class GameTimer : MonoBehaviour
         (hours, minutes, seconds) = TimeUtils.SecondsToHMS(limitSeconds);
         foreach (Timer timer in timers) timer.startAtRuntime = false;
         foreach (Timer timer in timers) UIStartTime(timer);
+        paymentUI.SetActive(false);
     }
 
     void Start()
@@ -132,6 +133,7 @@ public class GameTimer : MonoBehaviour
         UpdateUI();
 
         Debug.Log("Hết giờ");
+        paymentUI.SetActive(true);
 
         if (CartManager.Instance != null)
         {

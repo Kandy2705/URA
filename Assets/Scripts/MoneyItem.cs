@@ -38,6 +38,7 @@ public class MoneyItem : MonoBehaviour
         if (int.TryParse(gameObject.name, out moneyValue))
         {
             Debug.Log("Đã chọn tờ tiền có mệnh giá: " + moneyValue + " VND");
+            PaymentManager.Instance.AddMoney(moneyValue);
         }
         else
         {
