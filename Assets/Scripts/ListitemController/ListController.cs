@@ -186,7 +186,6 @@ public class ListController : MonoBehaviour
         }
     }
 
-
     private void ShowNotification(string message, float duration = 3f)
     {
         notificationText.text = message;
