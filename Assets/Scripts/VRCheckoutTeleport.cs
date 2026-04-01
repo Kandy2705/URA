@@ -40,11 +40,16 @@ public class VRCheckoutTeleport : MonoBehaviour
         if (characterController != null)
             characterController.enabled = false;
 
-        xrOrigin.position = checkoutAnchor.position;
+        // Tính offset từ rig tới camera
+        Vector3 rigToCameraOffset = mainCamera.position - xrOrigin.position;
+
+        // Di chuyển rig sao cho camera world position trùng anchor
+        xrOrigin.position = checkoutAnchor.position - rigToCameraOffset;
 
         if (lockAfterTeleport)
             LockPlayer();
 
+        // Nếu bạn vẫn muốn ép local rotation của camera
         mainCamera.localRotation = Quaternion.Euler(checkoutCameraEuler);
     }
 
