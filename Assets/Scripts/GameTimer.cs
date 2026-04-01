@@ -83,7 +83,7 @@ public class GameTimer : MonoBehaviour
         bool hasLevel2 = level2Scene.IsValid() && level2Scene.isLoaded;
         bool hasDress = dressScene.IsValid() && dressScene.isLoaded;
 
-        if ((hasDemo || hasLevel2) && !hasDress)
+        if ((hasDemo) && !hasDress)
         {
             const string dressName = "Dress_Game";
 
