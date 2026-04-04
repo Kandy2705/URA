@@ -177,6 +177,7 @@ public class ListController : MonoBehaviour
         if (hasTriggeredRandomChange)
         {
             
+            ItemsManager.DiscountRandomItem();
             string msg = ReplaceRandomItemWithUniquePrefab();
 
             hasTriggeredRandomChange = false;

@@ -7,6 +7,13 @@ public class SelectableItem : MonoBehaviour
     public int price;
     
 
+    void Start() {
+        ItemsManager.RegisterSelectableItem(this);
+    }
+
+    void OnDestroy() {
+        ItemsManager.UnregisterSelectableItem(this);
+    }
     // private void OnMouseDown()
     // {
     //     GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
