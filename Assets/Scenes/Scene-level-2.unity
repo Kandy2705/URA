@@ -16355,7 +16355,7 @@ MonoBehaviour:
   xrOrigin: {fileID: 2109809155}
   mainCamera: {fileID: 1796420131}
   checkoutAnchor: {fileID: 1763324417}
-  paymentUiToHide: {fileID: 0}
+  paymentUiToHide: {fileID: 1081175119}
   movementScripts:
   - {fileID: 0}
   turnScripts: []
@@ -37648,7 +37648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3494ce77339ab4dd9a4c9584b999d33c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.03
+      value: -11.18
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3494ce77339ab4dd9a4c9584b999d33c, type: 3}
       propertyPath: m_LocalPosition.y
