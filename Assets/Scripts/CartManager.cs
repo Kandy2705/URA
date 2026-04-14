@@ -58,7 +58,6 @@ public class CartManager : MonoBehaviour
         PokeManager.Instance.ClearCart();
     }
 
-
     private void UpdateBillUI()
     {
         totalPaid = 0;
