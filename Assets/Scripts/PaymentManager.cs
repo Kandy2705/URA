@@ -58,6 +58,7 @@ public class PaymentManager : MonoBehaviour
 
     public void ResetMoney()
     {
+        Debug.Log("Nút reset đã được ấn");
         currentAmount = 0;
         UpdateUI();
     }
@@ -71,23 +72,13 @@ public class PaymentManager : MonoBehaviour
             currentAmountText.text = currentAmount.ToString("N0");
     }
 
-    private void OnEnable()
+    public void UpdatePaymentUI()
     {
-        UpdatePaymentUI();
-    }
-
-    private void OnDisable()
-    {
-        // Chú ý: Bạn có thể xóa luôn GameTimer.OnTimeUpPaymentTriggered
-        // ở bên file GameTimer.cs cho code sạch sẽ.
-    }
-
-    private void UpdatePaymentUI()
-    {
+        Debug.Log("PaymentManager: Cập nhật UI thanh toán...");
         if (CartManager.Instance != null)
         {
-            Debug.Log("Update Payment UI: Lấy requiredAmount từ CartManager.TotalPaid");    
             requiredAmount = CartManager.Instance.TotalPaid; 
+            Debug.Log($"Update Payment UI: requiredAmount = {requiredAmount}");
             UpdateUI(); 
         }
     }

@@ -213,7 +213,8 @@ public class ListResultCompare : MonoBehaviour
 
     void HandleBillChanged(BillEntry entry, bool isNew)
     {
-        //Debug.Log("Bill has been updated: " + entry.itemName + ", Quantity: " + entry.quantity);
+        if (entry == null) return; 
+        
         Transform parentContainer;
 
         string addItem = entry.itemName;

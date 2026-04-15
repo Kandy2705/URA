@@ -132,7 +132,6 @@ public class GameTimer : MonoBehaviour
     {
         isRunning = false;
         timeLeft = 0;
-        //DataManager.Instance.Report();
         UpdateUI();
 
         Debug.Log("Hết giờ");
@@ -143,7 +142,10 @@ public class GameTimer : MonoBehaviour
             CartManager.Instance.ProcessCheckout();
         }
 
-        // OnTimeUpPaymentTriggered?.Invoke();
+        if (PaymentManager.Instance != null)
+        {
+            PaymentManager.Instance.UpdatePaymentUI();
+        }
         onTimeUp?.Invoke();
     }
 }
