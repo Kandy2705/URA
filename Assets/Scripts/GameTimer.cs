@@ -1,4 +1,5 @@
 using TMPro;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -24,6 +25,8 @@ public class GameTimer : MonoBehaviour
     private int seconds;
     private int minutes;
     private int hours;
+
+    // public static event Action OnTimeUpPaymentTriggered;
 
     void Awake()
     {
@@ -140,6 +143,7 @@ public class GameTimer : MonoBehaviour
             CartManager.Instance.ProcessCheckout();
         }
 
+        // OnTimeUpPaymentTriggered?.Invoke();
         onTimeUp?.Invoke();
     }
 }

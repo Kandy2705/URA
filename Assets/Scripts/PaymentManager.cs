@@ -14,7 +14,7 @@ public class PaymentManager : MonoBehaviour
     };
 
     [Header("Dữ liệu thanh toán")]
-    public int requiredAmount = 200000;
+    public int requiredAmount = 0;
     private int currentAmount = 0;
 
     [Header("Liên kết UI")]
@@ -40,6 +40,9 @@ public class PaymentManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
+        if (requiredAmountText != null)
+            requiredAmountText.text = requiredAmount.ToString("N0");
     }
 
     private void Start()
@@ -66,6 +69,27 @@ public class PaymentManager : MonoBehaviour
 
         if (currentAmountText != null)
             currentAmountText.text = currentAmount.ToString("N0");
+    }
+
+    private void OnEnable()
+    {
+        UpdatePaymentUI();
+    }
+
+    private void OnDisable()
+    {
+        // Chú ý: Bạn có thể xóa luôn GameTimer.OnTimeUpPaymentTriggered
+        // ở bên file GameTimer.cs cho code sạch sẽ.
+    }
+
+    private void UpdatePaymentUI()
+    {
+        if (CartManager.Instance != null)
+        {
+            Debug.Log("Update Payment UI: Lấy requiredAmount từ CartManager.TotalPaid");    
+            requiredAmount = CartManager.Instance.TotalPaid; 
+            UpdateUI(); 
+        }
     }
 
     public void ConfirmPayment()

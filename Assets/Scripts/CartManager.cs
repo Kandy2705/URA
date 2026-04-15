@@ -26,6 +26,7 @@ public class CartManager : MonoBehaviour
     }
     public void ProcessCheckout()
     {
+
         if (PokeManager.Instance == null)
         {
             Debug.LogError("Không tìm thấy PokeManager!");
@@ -55,6 +56,7 @@ public class CartManager : MonoBehaviour
         }
 
         UpdateBillUI();
+
         PokeManager.Instance.ClearCart();
     }
 
