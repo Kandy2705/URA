@@ -6,6 +6,7 @@ public class VRCheckoutTeleport : MonoBehaviour
     public Transform xrOrigin;
     public Transform mainCamera;
     public Transform checkoutAnchor;
+    public GameObject paymentUiToHide;
 
     [Header("Optional disable scripts")]
     public Behaviour[] movementScripts;
@@ -33,6 +34,11 @@ public class VRCheckoutTeleport : MonoBehaviour
             return;
         }
 
+        int checkoutAmount = PrepareCheckoutAmount();
+
+        if (paymentUiToHide != null)
+            paymentUiToHide.SetActive(false);
+
         savedPosition = xrOrigin.position;
         savedRigRotation = xrOrigin.rotation;
         savedCameraLocalRotation = mainCamera.localRotation;
@@ -51,6 +57,23 @@ public class VRCheckoutTeleport : MonoBehaviour
 
         // Nếu bạn vẫn muốn ép local rotation của camera
         mainCamera.localRotation = Quaternion.Euler(checkoutCameraEuler);
+
+        if (PaymentManager.Instance != null)
+        {
+            PaymentManager.Instance.SetRequiredAmount(checkoutAmount);
+            PaymentManager.Instance.PlayCashierIntro();
+        }
+    }
+
+    private int PrepareCheckoutAmount()
+    {
+        if (CartManager.Instance == null)
+        {
+            return 0;
+        }
+
+        CartManager.Instance.ProcessCheckout();
+        return CartManager.Instance.TotalPaid;
     }
 
     public void LockPlayer()
