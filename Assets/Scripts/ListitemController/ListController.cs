@@ -28,7 +28,11 @@ public class ListController : MonoBehaviour
     [SerializeField] private GameObject notificationCanvas;
     [SerializeField] private TextMeshProUGUI notificationText;
 
+    public GameObject NotificationCanvas => notificationCanvas;
+    public TextMeshProUGUI NotificationText => notificationText;
+
     public bool hasTriggeredRandomChange = true;
+    public bool HasPendingRandomChange => hasTriggeredRandomChange;
 
     private string currentScene;
 
@@ -37,8 +41,13 @@ public class ListController : MonoBehaviour
 
     private int spawnCount = 0;
     private Coroutine currentRoutine;
+    private string lastReplacedOldName;
+    private string lastReplacedNewName;
+    private int lastReplacedQuantity;
 
     public event Action<string, GameObject, int> OnListChanged;
+    public event Action<int> OnListShown;
+    public event Action<string, string, int, string> OnRandomListChange;
 
     private void Start()
     {
@@ -67,6 +76,7 @@ public class ListController : MonoBehaviour
         }
         currentLimit++;
         Debug.Log("Show list " + currentLimit + " lần");
+        OnListShown?.Invoke(currentLimit);
         currentRoutine = StartCoroutine(ShowThenHide());
     }
 
@@ -158,6 +168,10 @@ public class ListController : MonoBehaviour
 
         //ListResultCompare.compareResultListUpdated = true;   
 
+        lastReplacedOldName = oldName;
+        lastReplacedNewName = newPrefab.name;
+        lastReplacedQuantity = newQuantity;
+
         Debug.Log($"Đã đổi {oldName} → {newPrefab.name} (x{newQuantity})");
 
         OnListChanged?.Invoke(oldName, newPrefab, newQuantity);
@@ -177,10 +191,11 @@ public class ListController : MonoBehaviour
         if (hasTriggeredRandomChange)
         {
             
-            ItemsManager.DiscountRandomItem();
+            string discountInfo = ItemsManager.DiscountRandomItem();
             string msg = ReplaceRandomItemWithUniquePrefab();
 
             hasTriggeredRandomChange = false;
+            OnRandomListChange?.Invoke(lastReplacedOldName, lastReplacedNewName, lastReplacedQuantity, discountInfo);
 
             // 🌟 Gọi thông báo UI
             ShowNotification(msg, 3f);

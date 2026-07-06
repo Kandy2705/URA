@@ -1,0 +1,23 @@
+Booth Type,Visit Count
+Fruits,3
+Drinks,2
+Snacks,1
+
+Visit Order of Booths
+Fruits -> Drinks -> Drinks -> Snacks -> Fruits -> Fruits
+
+Product,Time (s)
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Sườn heo,0,0,Thiếu 6,0
+Hủ tiêu,0,0,Thiếu 6,0
+Chảo gang,0,0,Thiếu 7,0
+Ly,0,0,Thiếu 3,0
+Chúc chích,0,0,Thiếu 8,0
+Cá,0,0,Thiếu 5,0
+Ly rượu,0,0,Thiếu 2,0
+Nước tương,0,0,Thiếu 3,0
+
+Total Items,0
+Total Price,0
+Show list ,1 time

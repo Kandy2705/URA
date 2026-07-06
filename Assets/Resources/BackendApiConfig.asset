@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1b2c3d4e5f6478890a1b2c3d4e5f601, type: 3}
+  m_Name: BackendApiConfig
+  m_EditorClassIdentifier: Assembly-CSharp::BackendApiConfig
+  baseUrl: https://vr-supermarket-ai-service-cqcybyc4fahxf5fp.southeastasia-01.azurewebsites.net
+  generateDialoguePath: /api/v1/dialogue/generate_refactored
+  loginPath: /auth/login
+  helloPath: /dialogue/hello
+  sendBearerToken: 0
+  bearerToken: 
+  timeoutSeconds: 30
+  minimumSendIntervalSeconds: 4
+  voiceChatMinimumIntervalSeconds: 2
+  logApiSkips: 1
+  fallbackDialogue: "Xin l\u1ED7i, t\u00F4i ch\u01B0a th\u1EC3 ph\u1EA3n h\u1ED3i l\u00FAc n\u00E0y. B\u1EA1n h\u00E3y ti\u1EBFp t\u1EE5c th\u1EED nh\u00E9."
+  fallbackAction: Anim_Greet

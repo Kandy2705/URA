@@ -1,5 +1,4 @@
-﻿using UnityEditor.Experimental.GraphView;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using System.IO;
@@ -7,7 +6,7 @@ using System.IO;
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance { get; private set; }
-    
+
     private void Awake()
     {
         if (Instance == null)
@@ -103,69 +102,69 @@ public class DataManager : MonoBehaviour
         product_times[product] = elapsed;
     }
 
-  public void ExportCSV(List<CompareResult> compareResults)
-{
-    string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-    string fileName = $"report_{timestamp}.csv";
-    string dirPath = Path.Combine(Application.dataPath, "Scripts/Data");
-    if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
-
-    string path = Path.Combine(dirPath, fileName);
-    using (StreamWriter writer = new StreamWriter(path, false))
+    public void ExportCSV(List<CompareResult> compareResults)
     {
-        writer.WriteLine("Booth Type,Visit Count");
-        writer.WriteLine($"Fruits,{num_visit_fruits}");
-        writer.WriteLine($"Drinks,{num_visit_drinks}");
-        writer.WriteLine($"Snacks,{num_visit_snacks}");
-        writer.WriteLine();
+        string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+        string fileName = $"report_{timestamp}.csv";
+        string dirPath = Path.Combine(Application.dataPath, "Scripts/Data");
+        if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
 
-        writer.WriteLine("Visit Order of Booths");
-        writer.WriteLine(string.Join(" -> ", booths_priority));
-        writer.WriteLine();
-
-        writer.WriteLine("Product,Time (s)");
-        foreach (var kvp in product_times)
+        string path = Path.Combine(dirPath, fileName);
+        using (StreamWriter writer = new StreamWriter(path, false))
         {
-            writer.WriteLine($"{kvp.Key},{kvp.Value}");
-        }
-        writer.WriteLine();
+            writer.WriteLine("Booth Type,Visit Count");
+            writer.WriteLine($"Fruits,{num_visit_fruits}");
+            writer.WriteLine($"Drinks,{num_visit_drinks}");
+            writer.WriteLine($"Snacks,{num_visit_snacks}");
+            writer.WriteLine();
 
-        writer.WriteLine("Product Name,Total Count,Unit Price,Status,Subtotal");
+            writer.WriteLine("Visit Order of Booths");
+            writer.WriteLine(string.Join(" -> ", booths_priority));
+            writer.WriteLine();
 
-        Dictionary<string, CompareResult> finalResults =
-            new Dictionary<string, CompareResult>();
+            writer.WriteLine("Product,Time (s)");
+            foreach (var kvp in product_times)
+            {
+                writer.WriteLine($"{kvp.Key},{kvp.Value}");
+            }
+            writer.WriteLine();
 
-        foreach (var r in compareResults)
-        {
-            finalResults[r.itemName] = r;
-        }
+            writer.WriteLine("Product Name,Total Count,Unit Price,Status,Subtotal");
 
-        int grandTotalItems = 0;
-        long grandTotalPrice = 0;
+            Dictionary<string, CompareResult> finalResults =
+                new Dictionary<string, CompareResult>();
 
-        foreach (var kvp in finalResults)
-        {
-            CompareResult r = kvp.Value;
+            foreach (var r in compareResults)
+            {
+                finalResults[r.itemName] = r;
+            }
 
-            int count = r.currentQuantity;
-            int unitPrice = r.price;
-            long subtotal = (long)count * unitPrice;
+            int grandTotalItems = 0;
+            long grandTotalPrice = 0;
 
-            writer.WriteLine($"{r.itemName},{count},{unitPrice},{r.status},{subtotal}");
+            foreach (var kvp in finalResults)
+            {
+                CompareResult r = kvp.Value;
 
-            grandTotalItems += count;
-            grandTotalPrice += subtotal;
-        }
+                int count = r.currentQuantity;
+                int unitPrice = r.price;
+                long subtotal = (long)count * unitPrice;
 
-        writer.WriteLine();
-        writer.WriteLine("Total Items," + grandTotalItems);
-        writer.WriteLine("Total Price," + grandTotalPrice);
+                writer.WriteLine($"{r.itemName},{count},{unitPrice},{r.status},{subtotal}");
+
+                grandTotalItems += count;
+                grandTotalPrice += subtotal;
+            }
+
+            writer.WriteLine();
+            writer.WriteLine("Total Items," + grandTotalItems);
+            writer.WriteLine("Total Price," + grandTotalPrice);
 
 
-        int click_num = -1;
-        // GameObject target = GameObject.Find("Supermarket/Notice_Board/UI Sample/Scroll UI Sample");
-    
-        if (target == null)
+            int click_num = -1;
+            // GameObject target = GameObject.Find("Supermarket/Notice_Board/UI Sample/Scroll UI Sample");
+
+            if (target == null)
             {
                 Debug.Log("KHÔNG TÌM THẤY GameObject Scroll UI Sample");
             }
@@ -181,9 +180,9 @@ public class DataManager : MonoBehaviour
                     click_num = listCtrlr.GetClickNumber();
                 }
             }
-        writer.WriteLine("Show list ," + click_num + " time" + (click_num <= 1 ? "" : "s"));
+            writer.WriteLine("Show list ," + click_num + " time" + (click_num <= 1 ? "" : "s"));
+        }
     }
-}
 
 
 
