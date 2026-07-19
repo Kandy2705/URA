@@ -18,6 +18,25 @@ public static class MllmEventCodes
     public const string Lvl2NpcDistraction = "lvl2_npc_distraction";
     public const string Lvl2TimeUpAnnouncement = "lvl2_time_up_announcement";
     public const string Lvl2CheckoutCheck = "lvl2_checkout_check";
+
+    // Level 3 (AL-SERVICE Postman)
+    public const string Lvl3MapIntro = "lvl3_map_intro";
+    public const string Lvl3RulesExplanation = "lvl3_rules_explanation";
+    public const string Lvl3ReadShoppingList = "lvl3_read_shopping_list";
+    public const string Lvl3PrioritySetup = "lvl3_priority_setup";
+    public const string Lvl3HiddenTaskSetup = "lvl3_hidden_task_setup";
+    public const string Lvl3OutOfStockWarning = "lvl3_out_of_stock_warning";
+    public const string Lvl3ParallelTaskTrigger = "lvl3_parallel_task_trigger";
+    public const string Lvl3ShiftingOrder = "lvl3_shifting_order";
+    public const string Lvl3FlashSaleDistraction = "lvl3_flash_sale_distraction";
+    public const string Lvl3NpcDistraction = "lvl3_npc_distraction";
+    public const string Lvl3TimeUpAnnouncement = "lvl3_time_up_announcement";
+    public const string Lvl3CheckoutCheck = "lvl3_checkout_check";
+    public const string Lvl3SubjectiveInterview = "lvl3_subjective_interview";
+
+    // Support
+    public const string StrategySupportTrigger = "strategy_support_trigger";
+    public const string EmotionalEncouragementTrigger = "emotional_encouragement_trigger";
 }
 
 public static class MllmGamePhases

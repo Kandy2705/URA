@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+/// <summary>
+/// Request body POST /api/v1/dialogue/generate_refactored — khớp AL-SERVICE Postman.
+/// context_data field names: map_layout, current_shopping_list, time_rules, ui_rules,
+/// priorities, caller_info, prospective_memory_task, out_of_stock_list, shifting_task,
+/// discount_items, solicitor_npcs, decision_rule, hidden_task_results, ...
+/// </summary>
 [Serializable]
 public class MllmGenerateDialogueRequest
 {
@@ -35,6 +41,9 @@ public class MllmContentData
     public JObject context_data;
 }
 
+/// <summary>
+/// Response generate_refactored — Unity bắt buộc có result; action/dialogue dùng để NPC nói + anim.
+/// </summary>
 [Serializable]
 public class MllmGenerateDialogueResponse
 {
@@ -67,6 +76,7 @@ public class MllmAgentResult
     public Dictionary<string, string> dialogue_map;
 }
 
+/// <summary>Response POST /auth/login</summary>
 [Serializable]
 public class MllmTokenResponse
 {

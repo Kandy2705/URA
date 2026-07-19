@@ -19,7 +19,7 @@ public class MllmDialogueTestHarness : MonoBehaviour
     [SerializeField] private string testEventDetails = "Bệnh nhân vừa bước vào siêu thị";
     [TextArea(3, 8)]
     [SerializeField] private string testContextJson =
-        "{\n  \"map_layout\": [\n    { \"zone_name\": \"Quầy rau củ\", \"relative_position\": \"Bên tay trái\" }\n  ]\n}";
+        "{\n  \"map_layout\": [\n    { \"zone_name\": \"Quầy rau củ\", \"relative_position\": \"Bên tay trái\" },\n    { \"zone_name\": \"Quầy thịt cá\", \"relative_position\": \"Phía trước mặt\" }\n  ]\n}";
 
     [Header("Auth test (optional, không lưu vào code)")]
     [SerializeField] private string testUsername = "";

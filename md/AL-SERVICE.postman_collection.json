@@ -1,0 +1,1397 @@
+{
+  "info": {
+    "_postman_id": "29d8da3f-98a0-4267-96dc-c59b9a591a41",
+    "name": "AL-SERVICE",
+    "description": "URA VR Supermarket AI Service — request/response aligned với Unity client (`MllmDtos`, `MllmDialogueRequestFactory`, `MllmEventCodes`).\n\n**Request generate_refactored**\n```json\n{\n  \"citizen_id\": \"string\",\n  \"level\": 1|2|3,\n  \"game_phase\": \"PRE_GAME\"|\"IN_GAME\"|\"POST_GAME\",\n  \"content\": {\n    \"event_code\": \"string\",\n    \"event_details\": \"string\",\n    \"context_data\": {}\n  },\n  \"image_base64\": null\n}\n```\n\n**Response generate_refactored (Unity parse bắt buộc)**\n```json\n{\n  \"appointment_uid\": \"string\",\n  \"result\": {\n    \"reasoning\": \"string\",\n    \"action\": \"Anim_Greet|Anim_PointForward|Anim_PointUI|Anim_Explain|Anim_Alert|Anim_ShakeHead|Anim_NPCOffer|Audio_PhoneCall|Audio_Broadcast\",\n    \"dialogue\": \"string\",\n    \"dialogue_map\": { \"NPC_ID\": \"dialogue text\" }\n  },\n  \"latency_seconds\": 0.0,\n  \"model_latency_seconds\": 0.0\n}\n```\n\n**Login response**\n```json\n{\n  \"access_token\": \"string\",\n  \"token_type\": \"bearer\",\n  \"expires_in\": 3600,\n  \"username\": \"string\"\n}\n```\n\nNotes:\n- Unity dùng `shopping_list` (không phải `current_shopping_list`).\n- `dialogue_map` ưu tiên hơn `dialogue` nếu có entries.\n- Auth token lưu vào `accessToken` sau login.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "18233602",
+    "_collection_link": "https://go.postman.co/collection/18233602-29d8da3f-98a0-4267-96dc-c59b9a591a41?source=collection_link"
+  },
+  "variable": [
+    {
+      "key": "host",
+      "value": "https://vr-supermarket-ai-service-cqcybyc4fahxf5fp.southeastasia-01.azurewebsites.net"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "citizen_id",
+      "value": "0123456789012"
+    }
+  ],
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.access_token) {",
+                  "    pm.collectionVariables.set('accessToken', jsonData.access_token);",
+                  "    pm.environment.set('accessToken', jsonData.access_token);",
+                  "    // backward-compat với collection cũ dùng admintoken",
+                  "    pm.environment.set('admintoken', jsonData.access_token);",
+                  "}",
+                  "pm.test('Login returns access_token', function () {",
+                  "    pm.expect(jsonData).to.have.property('access_token');",
+                  "    pm.expect(jsonData.access_token).to.be.a('string').and.not.empty;",
+                  "});",
+                  "pm.test('Login response fields', function () {",
+                  "    pm.expect(jsonData).to.have.property('token_type');",
+                  "    pm.expect(jsonData).to.have.property('expires_in');",
+                  "    pm.expect(jsonData).to.have.property('username');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "thanh",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "28072002Thanh@",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{host}}/auth/login",
+              "host": ["{{host}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "OAuth2 password form. Unity: MllmAuthClient → MllmTokenResponse."
+          },
+          "response": [
+            {
+              "name": "Login success (expected shape)",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    { "key": "username", "value": "thanh", "type": "text" },
+                    { "key": "password", "value": "28072002Thanh@", "type": "text" }
+                  ]
+                },
+                "url": {
+                  "raw": "{{host}}/auth/login",
+                  "host": ["{{host}}"],
+                  "path": ["auth", "login"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "body": "{\n  \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n  \"token_type\": \"bearer\",\n  \"expires_in\": 3600,\n  \"username\": \"thanh\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "hello",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{host}}/dialogue/hello",
+              "host": ["{{host}}"],
+              "path": ["dialogue", "hello"]
+            },
+            "description": "Health check. Unity: BackendApiConfig.helloPath = /dialogue/hello"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Level1",
+      "item": [
+        {
+          "name": "lvl1_map_intro",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "pm.test('Has appointment_uid', function () { pm.expect(json).to.have.property('appointment_uid'); });",
+                  "pm.test('Has result with dialogue + action', function () {",
+                  "    pm.expect(json).to.have.property('result');",
+                  "    pm.expect(json.result).to.have.property('dialogue');",
+                  "    pm.expect(json.result).to.have.property('action');",
+                  "    pm.expect(json.result).to.have.property('reasoning');",
+                  "});",
+                  "pm.test('Has latency fields', function () {",
+                  "    pm.expect(json).to.have.property('latency_seconds');",
+                  "    pm.expect(json).to.have.property('model_latency_seconds');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 1,\n  \"game_phase\": \"PRE_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl1_map_intro\",\n    \"event_details\": \"Bệnh nhân vừa bước vào siêu thị\",\n    \"context_data\": {\n      \"map_layout\": [\n        {\n          \"zone_name\": \"Quầy rau củ\",\n          \"relative_position\": \"Bên tay trái\"\n        },\n        {\n          \"zone_name\": \"Quầy thịt cá\",\n          \"relative_position\": \"Phía trước mặt\"\n        },\n        {\n          \"zone_name\": \"Quầy thanh toán\",\n          \"relative_position\": \"Góc bên phải gần cửa\"\n        }\n      ]\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Unity: BuildMapIntro / map_layout[{zone_name, relative_position}]. Expected action gợi ý: Anim_Greet | Anim_PointForward."
+          },
+          "response": [
+            {
+              "name": "Expected Unity-compatible response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{}" },
+                "url": {
+                  "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+                  "host": ["{{host}}"],
+                  "path": ["api", "v1", "dialogue", "generate_refactored"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_001\",\n  \"result\": {\n    \"reasoning\": \"Bệnh nhân mới vào map level 1, cần chào và chỉ hướng các khu vực.\",\n    \"action\": \"Anim_PointForward\",\n    \"dialogue\": \"Chào cô/chú! Siêu thị có quầy rau củ bên tay trái, quầy thịt cá phía trước, quầy thanh toán góc bên phải gần cửa.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.85,\n  \"model_latency_seconds\": 1.42\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl1_rules_explanation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "pm.test('Has result.dialogue and result.action', function () {",
+                  "    pm.expect(json.result).to.have.property('dialogue');",
+                  "    pm.expect(json.result).to.have.property('action');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 1,\n  \"game_phase\": \"PRE_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl1_rules_explanation\",\n    \"event_details\": \"Giải thích luật chơi và thời gian cho bệnh nhân\",\n    \"context_data\": {\n      \"scene_name\": \"Scene-level-1\",\n      \"time_rules\": {\n        \"limit_seconds\": 300,\n        \"is_strict_timer\": false\n      },\n      \"ui_rules\": {\n        \"list_hidden\": true,\n        \"can_reopen_list\": true,\n        \"max_reopen_times\": 3\n      },\n      \"physical_task\": {\n        \"target_object\": \"chai nước suối mẫu\",\n        \"location\": \"trên chiếc bàn ngay trước mặt\"\n      }\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Unity factory tối thiểu gửi scene_name; Postman bổ sung time_rules/ui_rules cho backend. Expected action: Anim_Explain."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_001\",\n  \"result\": {\n    \"reasoning\": \"Giải thích luật level 1: thời gian linh hoạt, được mở lại danh sách.\",\n    \"action\": \"Anim_Explain\",\n    \"dialogue\": \"Cô/chú có khoảng 5 phút. Danh sách mua sắm có thể mở lại tối đa 3 lần. Trước khi bắt đầu, hãy nhặt chai nước suối mẫu trên bàn.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.5,\n  \"model_latency_seconds\": 1.1\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl1_read_shopping_list",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "pm.test('Has result.dialogue and result.action', function () {",
+                  "    pm.expect(json.result).to.have.property('dialogue');",
+                  "    pm.expect(json.result).to.have.property('action');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 1,\n  \"game_phase\": \"PRE_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl1_read_shopping_list\",\n    \"event_details\": \"Hiển thị bảng danh sách đồ cần mua\",\n    \"context_data\": {\n      \"shopping_list\": [\n        {\n          \"item_name\": \"Bó rau muống\",\n          \"quantity\": \"1\"\n        },\n        {\n          \"item_name\": \"Sữa tươi hộp giấy\",\n          \"quantity\": \"2\"\n        },\n        {\n          \"item_name\": \"Thịt heo xay\",\n          \"quantity\": \"1\"\n        }\n      ],\n      \"list_view_count\": 0,\n      \"total_items_target\": 3,\n      \"total_budget_vnd\": 100000\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Unity: shopping_list[{item_name, quantity}], list_view_count. KHÔNG dùng current_shopping_list. Expected action: Anim_PointUI (mở list)."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_001\",\n  \"result\": {\n    \"reasoning\": \"Đọc danh sách mua sắm và chỉ vào UI list.\",\n    \"action\": \"Anim_PointUI\",\n    \"dialogue\": \"Danh sách hôm nay gồm: 1 bó rau muống, 2 hộp sữa tươi, và 1 khay thịt heo xay. Ngân sách khoảng 100.000 đồng.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.6,\n  \"model_latency_seconds\": 1.2\n}"
+            }
+          ]
+        },
+        {
+          "name": "voice_chat_trigger",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "pm.test('Has result.dialogue and result.action', function () {",
+                  "    pm.expect(json.result).to.have.property('dialogue');",
+                  "    pm.expect(json.result).to.have.property('action');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 1,\n  \"game_phase\": \"IN_GAME\",\n  \"content\": {\n    \"event_code\": \"voice_chat_trigger\",\n    \"event_details\": \"Cháu ơi cô đau mắt quá\",\n    \"context_data\": {}\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Free-form voice input từ bệnh nhân. event_details = transcript. Expected action: Anim_Explain | Anim_Greet."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_001\",\n  \"result\": {\n    \"reasoning\": \"Bệnh nhân than đau mắt, cần động viên và gợi ý nghỉ ngắn.\",\n    \"action\": \"Anim_Explain\",\n    \"dialogue\": \"Cô nghỉ một chút nhé. Mình có thể đi chậm lại và đọc lại danh sách khi cần.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.4,\n  \"model_latency_seconds\": 1.0\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "level2",
+      "item": [
+        {
+          "name": "lvl2_map_intro",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "pm.test('Has result', function () { pm.expect(json).to.have.property('result'); pm.expect(json.result).to.have.property('dialogue'); pm.expect(json.result).to.have.property('action'); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 2,\n  \"game_phase\": \"PRE_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl2_map_intro\",\n    \"event_details\": \"Giới thiệu bản đồ các khu vực để bệnh nhân định hình lộ trình di chuyển tối ưu.\",\n    \"context_data\": {\n      \"map_layout\": [\n        { \"zone_name\": \"Quầy trái cây\", \"relative_position\": \"Khu A\" },\n        { \"zone_name\": \"Quầy nước uống\", \"relative_position\": \"Khu B\" },\n        { \"zone_name\": \"Quầy bánh kẹo\", \"relative_position\": \"Khu C\" }\n      ]\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Unity Level2MllmDialogueBridge default zones. Expected action: Anim_PointForward."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_002\",\n  \"result\": {\n    \"reasoning\": \"Intro map level 2 với 3 khu chính.\",\n    \"action\": \"Anim_PointForward\",\n    \"dialogue\": \"Siêu thị hôm nay có Quầy trái cây (Khu A), Quầy nước uống (Khu B) và Quầy bánh kẹo (Khu C). Hãy lập lộ trình hợp lý nhé.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.7,\n  \"model_latency_seconds\": 1.3\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl2_rules_explanation",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 2,\n  \"game_phase\": \"PRE_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl2_rules_explanation\",\n    \"event_details\": \"Phổ biến luật chơi. Nhấn mạnh số lần được phép mở danh sách và thời gian mỗi lần.\",\n    \"context_data\": {\n      \"scene_name\": \"Scene-level-2\",\n      \"time_rules\": {\n        \"limit_seconds\": 480,\n        \"is_strict_timer\": true\n      },\n      \"ui_rules\": {\n        \"display_duration_per_open_seconds\": 32,\n        \"list_hidden\": true,\n        \"can_reopen_list\": true,\n        \"max_reopen_times\": 2\n      }\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Expected action: Anim_Explain."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_002\",\n  \"result\": {\n    \"reasoning\": \"Luật level 2 khắt khe hơn: timer strict, mở list giới hạn.\",\n    \"action\": \"Anim_Explain\",\n    \"dialogue\": \"Thời gian 8 phút và tính điểm nghiêm. Danh sách chỉ được mở lại 2 lần, mỗi lần hiện khoảng 32 giây.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.5,\n  \"model_latency_seconds\": 1.1\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl2_read_shopping_list",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 2,\n  \"game_phase\": \"IN_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl2_read_shopping_list\",\n    \"event_details\": \"NPC đọc danh sách mua sắm cho bệnh nhân\",\n    \"context_data\": {\n      \"shopping_list\": [\n        { \"item_name\": \"Thịt bò\", \"quantity\": \"1\" },\n        { \"item_name\": \"Cá diêu hồng\", \"quantity\": \"1\" },\n        { \"item_name\": \"Rau muống\", \"quantity\": \"2\" },\n        { \"item_name\": \"Nước mắm\", \"quantity\": \"1\" },\n        { \"item_name\": \"Dầu ăn\", \"quantity\": \"1\" },\n        { \"item_name\": \"Gạo\", \"quantity\": \"1\" },\n        { \"item_name\": \"Bia\", \"quantity\": \"1\" },\n        { \"item_name\": \"Khăn giấy\", \"quantity\": \"1\" }\n      ],\n      \"list_view_count\": 1,\n      \"total_items_target\": 8,\n      \"total_budget_vnd\": 1000000,\n      \"list_rules\": {\n        \"is_dynamic\": true,\n        \"possible_mid_game_changes\": true\n      }\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Unity field: shopping_list + list_view_count. Expected action: Anim_PointUI."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_002\",\n  \"result\": {\n    \"reasoning\": \"Đọc list 8 món, nhắc list có thể đổi giữa chừng.\",\n    \"action\": \"Anim_PointUI\",\n    \"dialogue\": \"Danh sách có 8 món. Lưu ý: giữa chừng có thể có thay đổi hoặc khuyến mãi, hãy theo dõi kỹ.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.8,\n  \"model_latency_seconds\": 1.4\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl2_priority_setup",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 2,\n  \"game_phase\": \"PRE_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl2_priority_setup\",\n    \"event_details\": \"Thiết lập thứ tự ưu tiên ghé các quầy\",\n    \"context_data\": {\n      \"booth_priority\": [\n        { \"booth_name\": \"Quầy trái cây\", \"priority_index\": 1 },\n        { \"booth_name\": \"Quầy nước uống\", \"priority_index\": 2 },\n        { \"booth_name\": \"Quầy bánh kẹo\", \"priority_index\": 3 }\n      ],\n      \"interaction_range\": 10,\n      \"priorities\": [\n        {\n          \"trigger_condition\": \"Có nhiều sự lựa chọn giảm giá\",\n          \"required_action\": \"Chọn món giảm sâu nhất\",\n          \"allow_time_delay\": true\n        }\n      ]\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Unity: booth_priority[{booth_name, priority_index}], interaction_range. Expected action: Anim_Explain."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_002\",\n  \"result\": {\n    \"reasoning\": \"Gợi ý thứ tự ghé quầy.\",\n    \"action\": \"Anim_Explain\",\n    \"dialogue\": \"Nên ghé Quầy trái cây trước, sau đó Quầy nước uống, rồi Quầy bánh kẹo. Nếu thấy giảm giá, chọn mức giảm sâu nhất.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.4,\n  \"model_latency_seconds\": 1.0\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl2_hidden_task_setup",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 2,\n  \"game_phase\": \"PRE_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl2_hidden_task_setup\",\n    \"event_details\": \"NPC giới thiệu nhiệm vụ ẩn Level 2\",\n    \"context_data\": {\n      \"shopping_list\": [\n        { \"item_name\": \"Thịt bò\", \"quantity\": \"1\" },\n        { \"item_name\": \"Sữa tươi\", \"quantity\": \"1\" }\n      ],\n      \"list_view_count\": 0,\n      \"hidden_task_hint\": \"Bệnh nhân cần hoàn thành nhiệm vụ ẩn trong phiên mua sắm\",\n      \"caller_info\": {\n        \"relation\": \"Con gái\",\n        \"name\": \"Lan\"\n      },\n      \"prospective_memory_task\": {\n        \"trigger_zone\": \"Đồ gia dụng\",\n        \"target_item\": \"Sữa tươi\",\n        \"quantity\": 1,\n        \"unit\": \"hộp\",\n        \"condition\": \"Giảm giá 25%\"\n      }\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Unity: shopping_list + hidden_task_hint. Expected action: Audio_PhoneCall | Anim_Explain."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_002\",\n  \"result\": {\n    \"reasoning\": \"Giao nhiệm vụ ẩn prospective memory qua lời nhắn người thân.\",\n    \"action\": \"Audio_PhoneCall\",\n    \"dialogue\": \"Con gái Lan nhắn: nếu đi ngang khu đồ gia dụng và thấy sữa tươi giảm 25% thì nhớ mua giúp 1 hộp nhé.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.6,\n  \"model_latency_seconds\": 1.2\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl2_out_of_stock_warning",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 2,\n  \"game_phase\": \"PRE_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl2_out_of_stock_warning\",\n    \"event_details\": \"Dặn dò quy tắc thay thế sản phẩm dự phòng khi hết hàng.\",\n    \"context_data\": {\n      \"out_of_stock_list\": [\n        {\n          \"item_name\": \"Thịt bò\",\n          \"acceptable_substitutes\": [\"Thịt heo\", \"Thịt gà\"]\n        }\n      ]\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Expected action: Anim_Alert."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_002\",\n  \"result\": {\n    \"reasoning\": \"Cảnh báo hết hàng và gợi ý thay thế.\",\n    \"action\": \"Anim_Alert\",\n    \"dialogue\": \"Nếu hết thịt bò, có thể thay bằng thịt heo hoặc thịt gà nhé.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.3,\n  \"model_latency_seconds\": 0.9\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl2_shifting_order",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 2,\n  \"game_phase\": \"IN_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl2_shifting_order\",\n    \"event_details\": \"Danh sách đổi từ Nước mắm sang Xì dầu\",\n    \"context_data\": {\n      \"old_item\": \"Nước mắm\",\n      \"new_item\": \"Xì dầu\",\n      \"new_quantity\": 1,\n      \"caller_info\": {\n        \"relation\": \"Con gái\",\n        \"name\": \"Lan\"\n      },\n      \"shifting_task\": {\n        \"old_item\": \"Nước mắm\",\n        \"new_item\": \"Xì dầu\",\n        \"reason\": \"Ở nhà phát hiện vẫn còn 2 chai nước mắm chưa dùng\"\n      }\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Unity gửi flat: old_item, new_item, new_quantity. Expected action: Audio_PhoneCall | Anim_Alert."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_002\",\n  \"result\": {\n    \"reasoning\": \"Người thân gọi đổi món giữa chừng.\",\n    \"action\": \"Audio_PhoneCall\",\n    \"dialogue\": \"Lan gọi: thôi khỏi mua nước mắm, mua xì dầu giúp mẹ nhé vì nhà vẫn còn 2 chai.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.5,\n  \"model_latency_seconds\": 1.1\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl2_flash_sale_distraction",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 2,\n  \"game_phase\": \"IN_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl2_flash_sale_distraction\",\n    \"event_details\": \"Sự kiện flash sale / giảm giá làm thay đổi danh sách\",\n    \"context_data\": {\n      \"old_item\": \"Bánh quy\",\n      \"new_item\": \"Bánh quy bơ\",\n      \"new_quantity\": 1,\n      \"discount_info\": \"Giảm 20% nếu quay lại sau 5 phút\",\n      \"discount_items\": [\n        {\n          \"item_name\": \"Bánh quy bơ\",\n          \"offers\": [\n            { \"discount_percentage\": 10, \"condition_instruction\": \"Mua ngay bây giờ\" },\n            { \"discount_percentage\": 20, \"condition_instruction\": \"Quay lại mua sau 5 phút\" }\n          ]\n        }\n      ]\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Unity: old_item, new_item, new_quantity, discount_info. Expected action: Audio_Broadcast | Anim_Alert."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_002\",\n  \"result\": {\n    \"reasoning\": \"Flash sale distraction — test inhibition.\",\n    \"action\": \"Audio_Broadcast\",\n    \"dialogue\": \"Thông báo: bánh quy bơ giảm 10% nếu mua ngay, hoặc 20% nếu quay lại sau 5 phút. Hãy cân nhắc kế hoạch mua sắm.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.4,\n  \"model_latency_seconds\": 1.0\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl2_npc_distraction",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 2,\n  \"game_phase\": \"IN_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl2_npc_distraction\",\n    \"event_details\": \"Kích hoạt hội thoại cho các NPC tiếp thị tại quầy.\",\n    \"context_data\": {\n      \"solicitor_npcs\": [\n        {\n          \"npc_id\": \"STAFF_01\",\n          \"offered_item\": \"Sầu riêng Ri6\",\n          \"selling_point\": \"Mới về, cơm vàng hạt lép\",\n          \"promotion\": \"Giảm ngay 20%\"\n        },\n        {\n          \"npc_id\": \"STAFF_02\",\n          \"offered_item\": \"Bia nhập khẩu\",\n          \"selling_point\": \"Vừa ướp lạnh xong\",\n          \"promotion\": \"Mua 1 lốc tặng 1 ly thủy tinh\"\n        },\n        {\n          \"npc_id\": \"STAFF_03\",\n          \"offered_item\": \"Tôm hùm xanh\",\n          \"selling_point\": \"Tôm còn bơi, bao tươi sống\",\n          \"promotion\": \"Tặng kèm sốt chấm\"\n        }\n      ]\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Có thể trả dialogue_map keyed by npc_id. Expected action: Anim_NPCOffer."
+          },
+          "response": [
+            {
+              "name": "Expected response (dialogue_map multi-NPC)",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_002\",\n  \"result\": {\n    \"reasoning\": \"Nhiều NPC chào mời — dùng dialogue_map theo npc_id.\",\n    \"action\": \"Anim_NPCOffer\",\n    \"dialogue\": \"Có vài quầy đang mời nếm thử, nhớ bám danh sách nhé.\",\n    \"dialogue_map\": {\n      \"STAFF_01\": \"Sầu riêng Ri6 mới về, giảm 20% ạ!\",\n      \"STAFF_02\": \"Bia nhập khẩu lạnh tan, mua 1 lốc tặng ly thủy tinh!\",\n      \"STAFF_03\": \"Tôm hùm xanh tươi sống, tặng kèm sốt chấm!\"\n    }\n  },\n  \"latency_seconds\": 2.1,\n  \"model_latency_seconds\": 1.7\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl2_time_up_announcement",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 2,\n  \"game_phase\": \"POST_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl2_time_up_announcement\",\n    \"event_details\": \"Hết thời gian mua sắm\",\n    \"context_data\": {\n      \"limit_seconds\": 480,\n      \"decision_rule\": {\n        \"available_options\": [\n          {\n            \"option_code\": \"continue_shopping\",\n            \"description\": \"Tiếp tục tìm mua (bị phạt điểm thời gian)\"\n          },\n          {\n            \"option_code\": \"stop_and_checkout\",\n            \"description\": \"Ra thanh toán ngay (chấp nhận bỏ món)\"\n          }\n        ]\n      }\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Unity: limit_seconds. Expected action: Anim_Alert | Audio_Broadcast."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_002\",\n  \"result\": {\n    \"reasoning\": \"Hết giờ — thông báo khách quan.\",\n    \"action\": \"Anim_Alert\",\n    \"dialogue\": \"Hết thời gian rồi. Cô/chú có thể ra thanh toán ngay, hoặc tiếp tục mua thêm nhưng sẽ bị trừ điểm thời gian.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.2,\n  \"model_latency_seconds\": 0.8\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl2_checkout_check",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 2,\n  \"game_phase\": \"POST_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl2_checkout_check\",\n    \"event_details\": \"Kiểm tra giỏ hàng trước khi thanh toán\",\n    \"context_data\": {\n      \"total_paid\": 450000,\n      \"bill_item_count\": 6,\n      \"hidden_task_results\": [\n        {\n          \"target_item\": \"Sữa tươi\",\n          \"is_collected\": true,\n          \"consequence_if_missed\": \"Mấy đứa nhỏ ở nhà\"\n        }\n      ]\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Unity: total_paid, bill_item_count. Expected action: Anim_Greet | Anim_Explain."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_002\",\n  \"result\": {\n    \"reasoning\": \"Checkout: đã mua 6 món, nhiệm vụ ẩn sữa tươi hoàn thành.\",\n    \"action\": \"Anim_Greet\",\n    \"dialogue\": \"Giỏ hàng có 6 món, tổng khoảng 450.000 đồng. Rất tốt, cô/chú còn nhớ mua sữa tươi cho các cháu nữa.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.5,\n  \"model_latency_seconds\": 1.1\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "level3",
+      "item": [
+        {
+          "name": "lvl3_map_intro",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 3,\n  \"game_phase\": \"PRE_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl3_map_intro\",\n    \"event_details\": \"Giới thiệu bản đồ level 3 — không gian lớn hơn, nhiều khu vực hơn.\",\n    \"context_data\": {\n      \"map_layout\": [\n        { \"zone_name\": \"Rau củ quả\", \"relative_position\": \"Khu số 1\" },\n        { \"zone_name\": \"Đồ uống\", \"relative_position\": \"Khu số 2\" },\n        { \"zone_name\": \"Đồ khô\", \"relative_position\": \"Khu số 3\" },\n        { \"zone_name\": \"Đồ tươi sống\", \"relative_position\": \"Khu số 4\" },\n        { \"zone_name\": \"Đồ gia dụng\", \"relative_position\": \"Khu số 5\" },\n        { \"zone_name\": \"Quầy thanh toán\", \"relative_position\": \"Khu số 6\" }\n      ]\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "level=3, event_code=lvl3_map_intro. Expected action: Anim_PointForward."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_003\",\n  \"result\": {\n    \"reasoning\": \"Intro map 6 khu level 3.\",\n    \"action\": \"Anim_PointForward\",\n    \"dialogue\": \"Level 3 có 6 khu: rau củ, đồ uống, đồ khô, tươi sống, gia dụng và quầy thanh toán. Hãy lên kế hoạch di chuyển.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.6,\n  \"model_latency_seconds\": 1.2\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl3_rules_explanation",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 3,\n  \"game_phase\": \"PRE_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl3_rules_explanation\",\n    \"event_details\": \"Luật chơi khắt khe: Bảng danh sách không được mở lại.\",\n    \"context_data\": {\n      \"scene_name\": \"Scene-level-3\",\n      \"time_rules\": {\n        \"limit_seconds\": 600,\n        \"is_strict_timer\": true\n      },\n      \"ui_rules\": {\n        \"display_duration_per_open_seconds\": 32,\n        \"list_hidden\": true,\n        \"can_reopen_list\": false,\n        \"max_reopen_times\": 0\n      }\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Expected action: Anim_Explain."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_003\",\n  \"result\": {\n    \"reasoning\": \"Level 3: không mở lại list, timer 10 phút.\",\n    \"action\": \"Anim_Explain\",\n    \"dialogue\": \"Lần này danh sách chỉ xem một lần rồi ẩn hẳn. Cô/chú có 10 phút, hãy ghi nhớ kỹ trước khi bắt đầu.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.4,\n  \"model_latency_seconds\": 1.0\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl3_read_shopping_list",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 3,\n  \"game_phase\": \"PRE_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl3_read_shopping_list\",\n    \"event_details\": \"Đọc danh sách mua sắm level 3 — chỉ hiện một lần.\",\n    \"context_data\": {\n      \"shopping_list\": [\n        { \"item_name\": \"Cà chua\", \"quantity\": \"4\" },\n        { \"item_name\": \"Trứng gà\", \"quantity\": \"10\" },\n        { \"item_name\": \"Sữa chua\", \"quantity\": \"6\" },\n        { \"item_name\": \"Mì gói\", \"quantity\": \"5\" },\n        { \"item_name\": \"Thịt gà\", \"quantity\": \"1\" },\n        { \"item_name\": \"Cá thu\", \"quantity\": \"1\" },\n        { \"item_name\": \"Nước rửa chén\", \"quantity\": \"1\" },\n        { \"item_name\": \"Giấy vệ sinh\", \"quantity\": \"2\" },\n        { \"item_name\": \"Bánh mì\", \"quantity\": \"2\" },\n        { \"item_name\": \"Nước suối\", \"quantity\": \"6\" }\n      ],\n      \"list_view_count\": 0,\n      \"total_items_target\": 10,\n      \"total_budget_vnd\": 1500000,\n      \"list_rules\": {\n        \"is_dynamic\": true,\n        \"possible_mid_game_changes\": true,\n        \"can_reopen_list\": false\n      }\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Unity field shopping_list. Expected action: Anim_PointUI."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_003\",\n  \"result\": {\n    \"reasoning\": \"Đọc 10 món, nhấn mạnh chỉ xem 1 lần.\",\n    \"action\": \"Anim_PointUI\",\n    \"dialogue\": \"Đây là danh sách 10 món. Lần này không mở lại được, hãy nhìn kỹ rồi bắt đầu.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.9,\n  \"model_latency_seconds\": 1.5\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl3_priority_setup",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 3,\n  \"game_phase\": \"PRE_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl3_priority_setup\",\n    \"event_details\": \"Thiết lập ưu tiên mua sắm phức tạp hơn level 2.\",\n    \"context_data\": {\n      \"booth_priority\": [\n        { \"booth_name\": \"Đồ tươi sống\", \"priority_index\": 1 },\n        { \"booth_name\": \"Rau củ quả\", \"priority_index\": 2 },\n        { \"booth_name\": \"Đồ khô\", \"priority_index\": 3 },\n        { \"booth_name\": \"Đồ uống\", \"priority_index\": 4 },\n        { \"booth_name\": \"Đồ gia dụng\", \"priority_index\": 5 }\n      ],\n      \"interaction_range\": 10,\n      \"priorities\": [\n        {\n          \"trigger_condition\": \"Ngân sách sắp hết\",\n          \"required_action\": \"Bỏ món không thiết yếu trước\",\n          \"allow_time_delay\": false\n        },\n        {\n          \"trigger_condition\": \"Có flash sale\",\n          \"required_action\": \"Chỉ mua nếu món nằm trong danh sách\",\n          \"allow_time_delay\": true\n        }\n      ]\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Expected action: Anim_Explain."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_003\",\n  \"result\": {\n    \"reasoning\": \"Ưu tiên tươi sống trước, flash sale chỉ khi trong list.\",\n    \"action\": \"Anim_Explain\",\n    \"dialogue\": \"Nên lấy đồ tươi sống trước, rồi rau củ, đồ khô, đồ uống, cuối cùng gia dụng. Chỉ mua khuyến mãi nếu món đó có trong danh sách.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.5,\n  \"model_latency_seconds\": 1.1\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl3_hidden_task_setup",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 3,\n  \"game_phase\": \"PRE_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl3_hidden_task_setup\",\n    \"event_details\": \"Giao nhiệm vụ ẩn phức tạp (prospective memory) cho level 3.\",\n    \"context_data\": {\n      \"shopping_list\": [\n        { \"item_name\": \"Cà chua\", \"quantity\": \"4\" },\n        { \"item_name\": \"Nước rửa chén\", \"quantity\": \"1\" }\n      ],\n      \"list_view_count\": 0,\n      \"hidden_task_hint\": \"Nhớ mua thêm vitamin D khi đi qua quầy gia dụng nếu thấy giảm giá\",\n      \"caller_info\": {\n        \"relation\": \"Con trai\",\n        \"name\": \"Minh\"\n      },\n      \"prospective_memory_task\": {\n        \"trigger_zone\": \"Đồ gia dụng\",\n        \"target_item\": \"Vitamin D\",\n        \"quantity\": 1,\n        \"unit\": \"hộp\",\n        \"condition\": \"Giảm giá từ 15% trở lên\"\n      }\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Expected action: Audio_PhoneCall."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_003\",\n  \"result\": {\n    \"reasoning\": \"Prospective memory task qua lời nhắn con trai.\",\n    \"action\": \"Audio_PhoneCall\",\n    \"dialogue\": \"Minh nhắn: nếu đi ngang khu gia dụng và thấy Vitamin D giảm từ 15% thì mua giúp ba 1 hộp nhé.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.5,\n  \"model_latency_seconds\": 1.1\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl3_out_of_stock_warning",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 3,\n  \"game_phase\": \"PRE_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl3_out_of_stock_warning\",\n    \"event_details\": \"Cảnh báo hết hàng và quy tắc thay thế level 3.\",\n    \"context_data\": {\n      \"out_of_stock_list\": [\n        {\n          \"item_name\": \"Thịt gà\",\n          \"acceptable_substitutes\": [\"Thịt heo\", \"Đậu hũ\"]\n        },\n        {\n          \"item_name\": \"Cá thu\",\n          \"acceptable_substitutes\": [\"Cá basa\", \"Tôm\"]\n        }\n      ]\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Expected action: Anim_Alert."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_003\",\n  \"result\": {\n    \"reasoning\": \"Nhiều món có thể hết — nêu substitutes.\",\n    \"action\": \"Anim_Alert\",\n    \"dialogue\": \"Nếu hết thịt gà thì thay thịt heo hoặc đậu hũ. Hết cá thu thì thay cá basa hoặc tôm.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.3,\n  \"model_latency_seconds\": 0.9\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl3_parallel_task_trigger",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 3,\n  \"game_phase\": \"IN_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl3_parallel_task_trigger\",\n    \"event_details\": \"Kích hoạt nhiệm vụ song song khi bệnh nhân đang mua sắm.\",\n    \"context_data\": {\n      \"parallel_tasks\": [\n        {\n          \"task_id\": \"PT_01\",\n          \"description\": \"Trả lời điện thoại người thân trong 30 giây\",\n          \"time_limit_seconds\": 30,\n          \"priority\": \"high\"\n        },\n        {\n          \"task_id\": \"PT_02\",\n          \"description\": \"Nhặt giỏ hàng bị rơi gần quầy rau\",\n          \"time_limit_seconds\": 60,\n          \"priority\": \"medium\"\n        }\n      ],\n      \"current_zone\": \"Rau củ quả\"\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Dual-task / divided attention. Expected action: Anim_Alert | Audio_PhoneCall."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_003\",\n  \"result\": {\n    \"reasoning\": \"Song song: điện thoại + nhặt giỏ.\",\n    \"action\": \"Audio_PhoneCall\",\n    \"dialogue\": \"Có điện thoại gọi và có giỏ hàng gần quầy rau. Hãy xử lý việc quan trọng trước nhưng đừng quên danh sách mua sắm.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.6,\n  \"model_latency_seconds\": 1.2\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl3_shifting_order",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 3,\n  \"game_phase\": \"IN_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl3_shifting_order\",\n    \"event_details\": \"Danh sách đổi từ Mì gói sang Phở gói\",\n    \"context_data\": {\n      \"old_item\": \"Mì gói\",\n      \"new_item\": \"Phở gói\",\n      \"new_quantity\": 5,\n      \"caller_info\": {\n        \"relation\": \"Con trai\",\n        \"name\": \"Minh\"\n      },\n      \"shifting_task\": {\n        \"old_item\": \"Mì gói\",\n        \"new_item\": \"Phở gói\",\n        \"reason\": \"Nhà còn nhiều mì, cần phở thay thế\"\n      }\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Unity flat fields: old_item, new_item, new_quantity. Expected action: Audio_PhoneCall."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_003\",\n  \"result\": {\n    \"reasoning\": \"Đổi order mid-game.\",\n    \"action\": \"Audio_PhoneCall\",\n    \"dialogue\": \"Minh gọi: thôi đừng mua mì gói, mua 5 gói phở giúp ba nhé.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.4,\n  \"model_latency_seconds\": 1.0\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl3_flash_sale_distraction",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 3,\n  \"game_phase\": \"IN_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl3_flash_sale_distraction\",\n    \"event_details\": \"Flash sale distraction level 3\",\n    \"context_data\": {\n      \"old_item\": \"Bánh mì\",\n      \"new_item\": \"Bánh mì sandwich\",\n      \"new_quantity\": 2,\n      \"discount_info\": \"Giảm 30% trong 2 phút\",\n      \"discount_items\": [\n        {\n          \"item_name\": \"Bánh mì sandwich\",\n          \"offers\": [\n            { \"discount_percentage\": 30, \"condition_instruction\": \"Chỉ còn 2 phút\" },\n            { \"discount_percentage\": 5, \"condition_instruction\": \"Mua sau khi hết flash sale\" }\n          ]\n        }\n      ]\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Expected action: Audio_Broadcast | Anim_Alert."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_003\",\n  \"result\": {\n    \"reasoning\": \"Flash sale mạnh — test inhibition.\",\n    \"action\": \"Audio_Broadcast\",\n    \"dialogue\": \"Flash sale bánh mì sandwich giảm 30% chỉ còn 2 phút! Nhưng hãy kiểm tra xem có trong danh sách không trước khi vội mua.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.3,\n  \"model_latency_seconds\": 0.9\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl3_npc_distraction",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 3,\n  \"game_phase\": \"IN_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl3_npc_distraction\",\n    \"event_details\": \"NPC tiếp thị gây xao nhãng level 3.\",\n    \"context_data\": {\n      \"solicitor_npcs\": [\n        {\n          \"npc_id\": \"STAFF_01\",\n          \"offered_item\": \"Rượu vang\",\n          \"selling_point\": \"Nhập khẩu Pháp\",\n          \"promotion\": \"Mua 2 tặng 1\"\n        },\n        {\n          \"npc_id\": \"STAFF_02\",\n          \"offered_item\": \"Bánh trung thu\",\n          \"selling_point\": \"Mới nướng sáng nay\",\n          \"promotion\": \"Giảm 40%\"\n        }\n      ]\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Có thể trả dialogue_map theo npc_id. Expected action: Anim_NPCOffer."
+          },
+          "response": [
+            {
+              "name": "Expected response (dialogue_map)",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_003\",\n  \"result\": {\n    \"reasoning\": \"NPC distraction multi speaker.\",\n    \"action\": \"Anim_NPCOffer\",\n    \"dialogue\": \"Có nhân viên đang mời dùng thử. Cứ lịch sự từ chối nếu món không có trong danh sách.\",\n    \"dialogue_map\": {\n      \"STAFF_01\": \"Rượu vang Pháp mua 2 tặng 1 ạ!\",\n      \"STAFF_02\": \"Bánh trung thu mới nướng, giảm 40%!\"\n    }\n  },\n  \"latency_seconds\": 1.8,\n  \"model_latency_seconds\": 1.4\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl3_time_up_announcement",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 3,\n  \"game_phase\": \"POST_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl3_time_up_announcement\",\n    \"event_details\": \"Hết thời gian mua sắm level 3\",\n    \"context_data\": {\n      \"limit_seconds\": 600,\n      \"decision_rule\": {\n        \"available_options\": [\n          {\n            \"option_code\": \"continue_shopping\",\n            \"description\": \"Tiếp tục tìm mua (bị phạt điểm thời gian)\"\n          },\n          {\n            \"option_code\": \"stop_and_checkout\",\n            \"description\": \"Ra thanh toán ngay (chấp nhận bỏ món)\"\n          }\n        ]\n      }\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Expected action: Anim_Alert."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_003\",\n  \"result\": {\n    \"reasoning\": \"Time up level 3.\",\n    \"action\": \"Anim_Alert\",\n    \"dialogue\": \"Hết 10 phút rồi. Cô/chú có thể thanh toán ngay hoặc tiếp tục với điểm phạt thời gian.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.2,\n  \"model_latency_seconds\": 0.8\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl3_checkout_check",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 3,\n  \"game_phase\": \"POST_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl3_checkout_check\",\n    \"event_details\": \"Kiểm tra giỏ hàng và nhiệm vụ ẩn trước khi thanh toán\",\n    \"context_data\": {\n      \"total_paid\": 980000,\n      \"bill_item_count\": 9,\n      \"hidden_task_results\": [\n        {\n          \"target_item\": \"Vitamin D\",\n          \"is_collected\": false,\n          \"consequence_if_missed\": \"Bác sĩ dặn uống đều mỗi ngày\"\n        }\n      ]\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Unity: total_paid, bill_item_count. Expected action: Anim_Explain | Anim_ShakeHead nếu miss hidden task."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_003\",\n  \"result\": {\n    \"reasoning\": \"Checkout: 9 món nhưng miss Vitamin D.\",\n    \"action\": \"Anim_ShakeHead\",\n    \"dialogue\": \"Giỏ có 9 món, khoảng 980.000 đồng. Tuy nhiên cô/chú quên Vitamin D mà con Minh nhắc — lần sau nhớ nhé.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.5,\n  \"model_latency_seconds\": 1.1\n}"
+            }
+          ]
+        },
+        {
+          "name": "lvl3_subjective_interview",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 3,\n  \"game_phase\": \"POST_GAME\",\n  \"content\": {\n    \"event_code\": \"lvl3_subjective_interview\",\n    \"event_details\": \"Phỏng vấn chủ quan sau phiên chơi — thu thập cảm nhận bệnh nhân.\",\n    \"context_data\": {\n      \"session_summary\": {\n        \"items_collected\": 9,\n        \"items_target\": 10,\n        \"time_used_seconds\": 600,\n        \"budget_used_vnd\": 980000,\n        \"hidden_task_completed\": false\n      },\n      \"interview_prompts\": [\n        \"Cô/chú thấy phiên mua sắm hôm nay thế nào?\",\n        \"Phần nào khó nhất?\",\n        \"Có chỗ nào muốn được hỗ trợ thêm không?\"\n      ]\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Post-game subjective interview. Expected action: Anim_Greet | Anim_Explain."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_003\",\n  \"result\": {\n    \"reasoning\": \"Mở interview thân thiện sau phiên chơi.\",\n    \"action\": \"Anim_Greet\",\n    \"dialogue\": \"Cảm ơn cô/chú đã hoàn thành. Hôm nay mua được 9/10 món. Cô/chú thấy phần nào khó nhất, và có muốn mình hỗ trợ thêm chỗ nào không?\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.4,\n  \"model_latency_seconds\": 1.0\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "support",
+      "item": [
+        {
+          "name": "read_patient_history",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{host}}/history/{{citizen_id}}?level=2&start_date=2026-04-15&end_date=2026-04-16",
+              "host": ["{{host}}"],
+              "path": ["history", "{{citizen_id}}"],
+              "query": [
+                { "key": "level", "value": "2" },
+                { "key": "start_date", "value": "2026-04-15" },
+                { "key": "end_date", "value": "2026-04-16" }
+              ]
+            },
+            "description": "Lịch sử phiên chơi theo citizen_id (path param)."
+          },
+          "response": []
+        },
+        {
+          "name": "strategy_support_trigger",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 2,\n  \"game_phase\": \"IN_GAME\",\n  \"content\": {\n    \"event_code\": \"strategy_support_trigger\",\n    \"event_details\": \"Bệnh nhân đang lúng túng, cần gợi ý chiến lược mua sắm.\",\n    \"context_data\": {\n      \"shopping_list\": [\n        { \"item_name\": \"Thịt bò\", \"quantity\": \"1\" },\n        { \"item_name\": \"Rau muống\", \"quantity\": \"2\" },\n        { \"item_name\": \"Nước mắm\", \"quantity\": \"1\" }\n      ],\n      \"list_view_count\": 2,\n      \"items_collected\": [\"Rau muống\"],\n      \"current_zone\": \"Quầy nước uống\",\n      \"remaining_seconds\": 180,\n      \"struggle_signal\": \"standing_idle_too_long\"\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Support trigger — gợi ý chiến lược. Expected action: Anim_Explain | Anim_PointForward."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_002\",\n  \"result\": {\n    \"reasoning\": \"Bệnh nhân idle lâu — gợi ý bước tiếp theo.\",\n    \"action\": \"Anim_PointForward\",\n    \"dialogue\": \"Còn thịt bò và nước mắm. Thử đi khu tươi sống lấy thịt trước, rồi vòng qua đồ khô lấy nước mắm nhé.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.4,\n  \"model_latency_seconds\": 1.0\n}"
+            }
+          ]
+        },
+        {
+          "name": "emotional_encouragement_trigger",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{accessToken}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"citizen_id\": \"{{citizen_id}}\",\n  \"level\": 2,\n  \"game_phase\": \"IN_GAME\",\n  \"content\": {\n    \"event_code\": \"emotional_encouragement_trigger\",\n    \"event_details\": \"Bệnh nhân có dấu hiệu mệt mỏi / nản chí, cần động viên.\",\n    \"context_data\": {\n      \"emotion_signal\": \"fatigue\",\n      \"items_collected_count\": 3,\n      \"items_target_count\": 8,\n      \"remaining_seconds\": 120,\n      \"recent_user_utterance\": \"Mệt quá, không nhớ nổi nữa\"\n    }\n  },\n  \"image_base64\": null\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{host}}/api/v1/dialogue/generate_refactored",
+              "host": ["{{host}}"],
+              "path": ["api", "v1", "dialogue", "generate_refactored"]
+            },
+            "description": "Emotional support. Expected action: Anim_Greet | Anim_Explain."
+          },
+          "response": [
+            {
+              "name": "Expected response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"appointment_uid\": \"apt_demo_002\",\n  \"result\": {\n    \"reasoning\": \"Động viên, không tạo áp lực.\",\n    \"action\": \"Anim_Greet\",\n    \"dialogue\": \"Không sao đâu ạ. Cô/chú đã mua được 3 món rồi, làm rất tốt. Nghỉ một chút rồi mình lấy từ từ, không cần vội.\",\n    \"dialogue_map\": null\n  },\n  \"latency_seconds\": 1.3,\n  \"model_latency_seconds\": 0.9\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

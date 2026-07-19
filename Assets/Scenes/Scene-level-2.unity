@@ -22193,7 +22193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timers:
   - {fileID: 1006241557}
-  limitSeconds: 120
+  limitSeconds: 360
   paymentUI: {fileID: 350204408}
   timerText: {fileID: 2070714957}
   onTimeUp:
@@ -22919,7 +22919,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3284743035855046855, guid: baa17bc8d8dc40743a08c63f90b230d2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.00014592665
+      value: 0.0004735996
       objectReference: {fileID: 0}
     - target: {fileID: 3284743035855046855, guid: baa17bc8d8dc40743a08c63f90b230d2, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -34652,6 +34652,11 @@ MonoBehaviour:
   stoppingDistance: 2
   moveSpeed: 1.2
   rotationSpeed: 3
+--- !u!4 &1417658964 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9974ee25e9d94994e8de567b246ffbcd, type: 3}
+  m_PrefabInstance: {fileID: 1096481815}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1419882188
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54338,7 +54343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Level2MllmDialogueBridge
   apiConfig: {fileID: 11400000, guid: c9f5b2d43e6a1748b9c0d1e2f3a4b5c6, type: 2}
-  citizenIdOverride: 0123456789012
+  citizenIdOverride: 0987654321098
   runIntroSequenceOnStart: 1
   delayBeforeMapIntro: 1
   delayBetweenIntroSteps: 2
@@ -54352,14 +54357,14 @@ MonoBehaviour:
   - zoneName: "Qu\u1EA7y b\xE1nh k\u1EB9o"
     relativePosition: Khu C
   npcObjectName: NPC
-  npcTransformOverride: {fileID: 0}
+  npcTransformOverride: {fileID: 1417658964}
   ensureNpcActiveOnStart: 1
   orchestrator: {fileID: 0}
   sessionContext: {fileID: 0}
-  listController: {fileID: 0}
-  gameTimer: {fileID: 0}
-  dataManager: {fileID: 0}
-  cartManager: {fileID: 0}
+  listController: {fileID: 1825740876}
+  gameTimer: {fileID: 946661622}
+  dataManager: {fileID: 704792030}
+  cartManager: {fileID: 1987290805}
 --- !u!1001 &8136502170138022
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,7 +25,8 @@ public class Level2MllmDialogueBridge : MonoBehaviour
     [SerializeField] private bool triggerHiddenTaskSetup = true;
 
     [Header("Map zones (gửi backend nếu DataManager chưa có dữ liệu)")]
-    [SerializeField] private MapZoneInfo[] defaultMapZones =
+    [SerializeField]
+    private MapZoneInfo[] defaultMapZones =
     {
         new MapZoneInfo { zoneName = "Quầy trái cây", relativePosition = "Khu A" },
         new MapZoneInfo { zoneName = "Quầy nước uống", relativePosition = "Khu B" },
@@ -240,6 +240,7 @@ public class Level2MllmDialogueBridge : MonoBehaviour
 
         yield return RunIntroDialogueStep(RequestMapIntro, "map_intro");
         yield return RunIntroDialogueStep(RequestRulesExplanation, "rules_explanation");
+        yield return RunIntroDialogueStep(RequestOutOfStockWarning, "out_of_stock_warning");
 
         if (triggerPrioritySetup)
             yield return RunIntroDialogueStep(RequestPrioritySetup, "priority_setup");
@@ -338,7 +339,7 @@ public class Level2MllmDialogueBridge : MonoBehaviour
         if (_introRunning || _hasAnnouncedReadList || orchestrator == null)
             return;
 
-        RequestReadShoppingList($"NPC đọc danh sách mua sắm (lần xem #{viewCount})");
+        RequestReadShoppingList(null);
     }
 
     private void RequestReadShoppingList(string eventDetails = null)
@@ -362,17 +363,14 @@ public class Level2MllmDialogueBridge : MonoBehaviour
         if (listController != null && listController.HasPendingRandomChange)
             return;
 
-        JObject context = new JObject
-        {
-            ["old_item"] = oldName,
-            ["new_item"] = newPrefab != null ? newPrefab.name : string.Empty,
-            ["new_quantity"] = newQuantity
-        };
-
-        orchestrator.RequestDialogueFromSession(
-            MllmEventCodes.Lvl2ShiftingOrder,
-            $"Danh sách đổi từ {oldName} sang {(newPrefab != null ? newPrefab.name : "?")}",
-            context);
+        string newItemName = newPrefab != null ? newPrefab.name : string.Empty;
+        // Postman: caller_info + shifting_task{old_item, new_item, reason}
+        orchestrator.RequestDialogue(
+            MllmDialogueRequestFactory.BuildShiftingOrder(
+                sessionContext,
+                oldName,
+                newItemName,
+                $"Danh sách đổi từ {oldName} sang {newItemName} (x{newQuantity})"));
     }
 
     private void HandleRandomListChange(string oldName, string newName, int newQuantity, string discountInfo)
@@ -380,18 +378,12 @@ public class Level2MllmDialogueBridge : MonoBehaviour
         if (orchestrator == null)
             return;
 
-        JObject context = new JObject
-        {
-            ["old_item"] = oldName,
-            ["new_item"] = newName,
-            ["new_quantity"] = newQuantity,
-            ["discount_info"] = discountInfo ?? string.Empty
-        };
-
-        orchestrator.RequestDialogueFromSession(
-            MllmEventCodes.Lvl2FlashSaleDistraction,
-            "Sự kiện flash sale / giảm giá làm thay đổi danh sách",
-            context);
+        // Postman: discount_items[{item_name, offers[{discount_percentage, condition_instruction}]}]
+        orchestrator.RequestDialogue(
+            MllmDialogueRequestFactory.BuildFlashSaleDistraction(
+                sessionContext,
+                newName,
+                discountInfo));
     }
 
     private void HandleTimeUp()
@@ -453,7 +445,7 @@ public class Level2MllmDialogueBridge : MonoBehaviour
             return;
 
         orchestrator.RequestDialogue(
-            MllmDialogueRequestFactory.BuildRulesExplanation(sessionContext),
+            MllmDialogueRequestFactory.BuildRulesExplanation(sessionContext, gameTimer),
             onComplete);
     }
 
@@ -474,6 +466,16 @@ public class Level2MllmDialogueBridge : MonoBehaviour
 
         orchestrator.RequestDialogue(
             MllmDialogueRequestFactory.BuildLvl2HiddenTaskSetup(sessionContext, listController),
+            onComplete);
+    }
+
+    public void RequestOutOfStockWarning(Action<MllmApiCallResult> onComplete = null)
+    {
+        if (orchestrator == null)
+            return;
+
+        orchestrator.RequestDialogue(
+            MllmDialogueRequestFactory.BuildOutOfStockWarning(sessionContext),
             onComplete);
     }
 

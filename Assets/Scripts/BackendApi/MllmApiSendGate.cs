@@ -128,25 +128,34 @@ public class MllmApiSendGate
             copy["map_layout"] = simplifiedLayout;
         }
 
-        if (copy["shopping_list"] is JArray shoppingList)
-        {
-            JArray simplifiedList = new JArray();
-            foreach (JToken itemToken in shoppingList)
-            {
-                if (itemToken is not JObject item)
-                    continue;
-
-                simplifiedList.Add(new JObject
-                {
-                    ["item_name"] = item["item_name"]?.ToString() ?? string.Empty,
-                    ["quantity"] = item["quantity"]?.ToString() ?? string.Empty
-                });
-            }
-
-            copy["shopping_list"] = simplifiedList;
-        }
+        // Postman / backend: current_shopping_list (legacy alias shopping_list vẫn normalize)
+        NormalizeShoppingListArray(copy, "current_shopping_list");
+        NormalizeShoppingListArray(copy, "shopping_list");
 
         return copy;
+    }
+
+    private static void NormalizeShoppingListArray(JObject copy, string fieldName)
+    {
+        if (copy[fieldName] is not JArray shoppingList)
+            return;
+
+        JArray simplifiedList = new JArray();
+        foreach (JToken itemToken in shoppingList)
+        {
+            if (itemToken is not JObject item)
+                continue;
+
+            simplifiedList.Add(new JObject
+            {
+                ["item_name"] = item["item_name"]?.ToString() ?? string.Empty,
+                ["quantity"] = item["quantity"]?.ToString() ?? string.Empty,
+                ["unit"] = item["unit"]?.ToString() ?? string.Empty,
+                ["unit_price_vnd"] = item["unit_price_vnd"]?.ToString() ?? "0"
+            });
+        }
+
+        copy[fieldName] = simplifiedList;
     }
 
     private Evaluation Block(string reason)
