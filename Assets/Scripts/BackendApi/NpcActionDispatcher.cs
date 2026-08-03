@@ -1,9 +1,29 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class NpcActionDispatcher : MonoBehaviour
 {
+    private static readonly int IsMovingHash = Animator.StringToHash("isMoving");
+    private static readonly int IsPayingHash = Animator.StringToHash("isPaying");
+    private static readonly int AlertHash = Animator.StringToHash("Alert");
+    private static readonly int ShakeHeadHash = Animator.StringToHash("ShakeHead");
+    private static readonly int NpcOfferHash = Animator.StringToHash("NPCOffer");
+    private static readonly int GreetHash = Animator.StringToHash("Greet");
+    private static readonly int PointForwardHash = Animator.StringToHash("PointForward");
+    private static readonly int PointUIHash = Animator.StringToHash("PointUI");
+    private static readonly int ExplainHash = Animator.StringToHash("Explain");
+    private static readonly int PhoneCallHash = Animator.StringToHash("PhoneCall");
+    private static readonly int BroadcastHash = Animator.StringToHash("Broadcast");
+
+    private static readonly HashSet<int> AllActionTriggerHashes = new HashSet<int>
+    {
+        AlertHash, ShakeHeadHash, NpcOfferHash,
+        GreetHash, PointForwardHash, PointUIHash, ExplainHash,
+        PhoneCallHash, BroadcastHash
+    };
+
     [Serializable]
     public class ActionMapping
     {
@@ -93,20 +113,38 @@ public class NpcActionDispatcher : MonoBehaviour
 
     private void ApplyMapping(ActionMapping mapping, string actionCode)
     {
+        if (targetAnimator == null)
+        {
+            Debug.LogWarning($"[NpcActionDispatcher] targetAnimator null, skip '{actionCode}'.");
+            return;
+        }
+
+        if (targetAnimator.GetBool(IsPayingHash))
+        {
+            Debug.LogWarning($"[NpcActionDispatcher] NPC đang Paying — skip action '{actionCode}'.");
+            return;
+        }
+
         Debug.Log($"[NpcActionDispatcher] Dispatch '{actionCode}'");
 
-        if (targetAnimator != null)
+        if (!string.IsNullOrWhiteSpace(mapping.animatorTrigger))
         {
-            if (!string.IsNullOrWhiteSpace(mapping.animatorTrigger) && HasAnimatorTrigger(targetAnimator, mapping.animatorTrigger))
-                targetAnimator.SetTrigger(mapping.animatorTrigger);
-            else if (!string.IsNullOrWhiteSpace(mapping.animatorTrigger))
-                Debug.LogWarning($"[NpcActionDispatcher] Animator không có trigger '{mapping.animatorTrigger}'.");
-
-            if (!string.IsNullOrWhiteSpace(mapping.animatorBool) && HasAnimatorBool(targetAnimator, mapping.animatorBool))
+            if (HasAnimatorTrigger(targetAnimator, mapping.animatorTrigger))
             {
-                targetAnimator.SetBool(mapping.animatorBool, true);
-                StartCoroutine(ResetBoolAfterDelay(mapping.animatorBool, boolResetDelay));
+                ResetAllActionTriggers(targetAnimator);
+                int hash = Animator.StringToHash(mapping.animatorTrigger);
+                targetAnimator.SetTrigger(hash);
             }
+            else
+            {
+                Debug.LogWarning($"[NpcActionDispatcher] Animator không có trigger '{mapping.animatorTrigger}'.");
+            }
+        }
+
+        if (!string.IsNullOrWhiteSpace(mapping.animatorBool) && HasAnimatorBool(targetAnimator, mapping.animatorBool))
+        {
+            targetAnimator.SetBool(mapping.animatorBool, true);
+            StartCoroutine(ResetBoolAfterDelay(mapping.animatorBool, boolResetDelay));
         }
 
         if (mapping.audioClip != null && audioSource != null)
@@ -121,18 +159,45 @@ public class NpcActionDispatcher : MonoBehaviour
         if (targetAnimator == null)
             return;
 
+        if (targetAnimator.GetBool(IsPayingHash))
+        {
+            Debug.LogWarning($"[NpcActionDispatcher] NPC đang Paying — skip convention '{actionCode}'.");
+            return;
+        }
+
         if (actionCode.StartsWith("Anim_", StringComparison.OrdinalIgnoreCase))
         {
             string triggerName = actionCode.Substring("Anim_".Length);
             if (HasAnimatorTrigger(targetAnimator, triggerName))
             {
-                targetAnimator.SetTrigger(triggerName);
+                ResetAllActionTriggers(targetAnimator);
+                int hash = Animator.StringToHash(triggerName);
+                targetAnimator.SetTrigger(hash);
                 Debug.Log($"[NpcActionDispatcher] Convention trigger '{triggerName}'");
+            }
+            else
+            {
+                Debug.LogWarning($"[NpcActionDispatcher] Animator không có trigger '{triggerName}' (convention).");
             }
         }
         else if (actionCode.StartsWith("Audio_", StringComparison.OrdinalIgnoreCase))
         {
             Debug.Log($"[NpcActionDispatcher] Audio action '{actionCode}' — gán audioClip trong mapping nếu cần.");
+        }
+    }
+
+    private static void ResetAllActionTriggers(Animator animator)
+    {
+        foreach (int hash in AllActionTriggerHashes)
+        {
+            foreach (AnimatorControllerParameter p in animator.parameters)
+            {
+                if (p.type == AnimatorControllerParameterType.Trigger && p.nameHash == hash)
+                {
+                    animator.ResetTrigger(hash);
+                    break;
+                }
+            }
         }
     }
 
@@ -177,9 +242,10 @@ public class NpcActionDispatcher : MonoBehaviour
 
     private static bool HasAnimatorTrigger(Animator animator, string triggerName)
     {
+        int hash = Animator.StringToHash(triggerName);
         foreach (AnimatorControllerParameter parameter in animator.parameters)
         {
-            if (parameter.type == AnimatorControllerParameterType.Trigger && parameter.name == triggerName)
+            if (parameter.type == AnimatorControllerParameterType.Trigger && parameter.nameHash == hash)
                 return true;
         }
 
@@ -188,9 +254,10 @@ public class NpcActionDispatcher : MonoBehaviour
 
     private static bool HasAnimatorBool(Animator animator, string boolName)
     {
+        int hash = Animator.StringToHash(boolName);
         foreach (AnimatorControllerParameter parameter in animator.parameters)
         {
-            if (parameter.type == AnimatorControllerParameterType.Bool && parameter.name == boolName)
+            if (parameter.type == AnimatorControllerParameterType.Bool && parameter.nameHash == hash)
                 return true;
         }
 
