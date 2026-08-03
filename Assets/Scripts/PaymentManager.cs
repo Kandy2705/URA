@@ -36,6 +36,11 @@ public class PaymentManager : MonoBehaviour
     [SerializeField] private bool announceRequiredAmountWithTts = true;
     [SerializeField] private string amountAnnouncementTemplate = "Tổng tiền cần thanh toán là {0} đồng";
 
+    [Header("Payment result")]
+    [SerializeField] private bool announcePaymentResultWithTts = true;
+    [SerializeField] private string notEnoughMoneyMessage = "Số tiền cô đưa chưa đủ, cần thêm {0} đồng. Cảm ơn cô đã tham gia làm nhiệm vụ, chào và tạm biệt cô";
+    [SerializeField] private string enoughMoneyMessage = "Cảm ơn quý khách, tôi đã nhận được tiền, hẹn gặp lại quý khách";
+
     private bool isPlayingCashierIntro;
 
     private void Awake()
@@ -264,6 +269,11 @@ public class PaymentManager : MonoBehaviour
             yield return PlayAmountAnnouncement(targetAudioSource, requiredAmount);
         }
 
+        if (announcePaymentResultWithTts && targetAudioSource != null)
+        {
+            yield return PlayPaymentResultAnnouncement(targetAudioSource);
+        }
+
         isPlayingCashierIntro = false;
     }
 
@@ -406,6 +416,52 @@ public class PaymentManager : MonoBehaviour
             audioSource.Stop();
             audioSource.PlayOneShot(announcementClip);
             yield return new WaitForSeconds(announcementClip.length);
+        }
+    }
+
+    private IEnumerator PlayPaymentResultAnnouncement(AudioSource audioSource)
+    {
+        int missing = requiredAmount - currentAmount;
+        string announcement;
+        string amountWords = ConvertNumberToVietnameseWords(missing);
+
+        if (missing > 0)
+        {
+            announcement = string.Format(CultureInfo.InvariantCulture, notEnoughMoneyMessage, amountWords);
+        }
+        else
+        {
+            announcement = enoughMoneyMessage;
+        }
+
+        Debug.Log($"[PaymentManager] Kết quả thanh toán: {announcement}");
+
+        string requestUrl =
+            $"https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q={UnityWebRequest.EscapeURL(announcement)}";
+
+        using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(requestUrl, AudioType.MPEG))
+        {
+            request.timeout = 10;
+            request.SetRequestHeader("User-Agent", "Mozilla/5.0");
+
+            yield return request.SendWebRequest();
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogWarning($"Không thể tải audio thông báo thanh toán: {request.error}");
+                yield break;
+            }
+
+            AudioClip resultClip = DownloadHandlerAudioClip.GetContent(request);
+            if (resultClip == null)
+            {
+                Debug.LogWarning("Không tạo được AudioClip thông báo thanh toán.");
+                yield break;
+            }
+
+            audioSource.Stop();
+            audioSource.PlayOneShot(resultClip);
+            yield return new WaitForSeconds(resultClip.length);
         }
     }
 

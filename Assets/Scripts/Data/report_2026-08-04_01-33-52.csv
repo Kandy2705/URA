@@ -1,0 +1,27 @@
+Booth Type,Visit Count
+Fruits,1
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+Fruits
+
+Product,Time (s)
+Bắp cải,9.034112
+Nho,11.96694
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Nắp nồi,0,0,Thiếu 1,0
+Chảo,0,0,Thiếu 5,0
+Muỗng,0,0,Thiếu 9,0
+Ly rượu,0,0,Thiếu 8,0
+Nĩa,0,0,Thiếu 2,0
+Chúc chích,0,0,Thiếu 6,0
+Bát,0,0,Thiếu 9,0
+Dao trung bình,0,0,Thiếu 5,0
+Bắp cải,3,18000,Dư 3,54000
+Nho,7,25000,Dư 7,175000
+
+Total Items,10
+Total Price,229000
+Show list ,0 time

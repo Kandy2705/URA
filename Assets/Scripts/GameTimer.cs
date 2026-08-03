@@ -20,6 +20,10 @@ public class GameTimer : MonoBehaviour
     [Header("Events")]
     public UnityEvent onTimeUp; 
 
+    [Header("Checkout Flow On Time Up")]
+    [Tooltip("Khi hết giờ sẽ chạy luồng thanh toán giống nút thanh toán giỏ hàng (teleport tới PoiChargeMoney + khoá di chuyển + cashier intro).")]
+    [SerializeField] private VRCheckoutTeleport checkoutTeleport;
+
     private float timeLeft;
     public bool isRunning = false;
     private int seconds;
@@ -146,6 +150,19 @@ public class GameTimer : MonoBehaviour
         {
             PaymentManager.Instance.UpdatePaymentUI();
         }
+
+        if (checkoutTeleport == null)
+            checkoutTeleport = FindObjectOfType<VRCheckoutTeleport>();
+
+        if (checkoutTeleport != null)
+        {
+            checkoutTeleport.MoveToCheckout();
+        }
+        else
+        {
+            Debug.LogWarning("GameTimer: Không tìm thấy VRCheckoutTeleport — bỏ qua flow thanh toán khi hết giờ.");
+        }
+
         onTimeUp?.Invoke();
     }
 }
