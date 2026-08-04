@@ -1,0 +1,24 @@
+Booth Type,Visit Count
+Fruits,0
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+
+
+Product,Time (s)
+Kẹo socola,6.497879
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Chai Coca Cola,0,0,Thiếu 5,0
+Dĩa vuông,0,0,Thiếu 6,0
+Đùi gà,0,0,Thiếu 4,0
+Gà tây,0,0,Thiếu 2,0
+Nĩa,0,0,Thiếu 2,0
+Kẹo socola,3,12000,Dư 2,36000
+Cà chua,0,0,Thiếu 6,0
+Dao trung bình,0,0,Thiếu 6,0
+
+Total Items,3
+Total Price,36000
+Show list ,0 time

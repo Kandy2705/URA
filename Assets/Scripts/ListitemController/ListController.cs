@@ -1,20 +1,22 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+
 public class ListController : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] private GameObject listContainer; // Content hoặc Panel
+    [SerializeField] private GameObject listContainer; 
 
     [Header("Data")]
     [SerializeField] private List<GameObject> availablePrefabs;
 
     [Header("Limit")]
     [SerializeField] private int limit = 2;
-    private int currentLimit;
+    [SerializeField] private int currentLimit = 0;
 
     [SerializeField] public List<GameObject> choicedItems;
 
@@ -26,8 +28,11 @@ public class ListController : MonoBehaviour
     [SerializeField] private GameObject notificationCanvas;
     [SerializeField] private TextMeshProUGUI notificationText;
 
+    public GameObject NotificationCanvas => notificationCanvas;
+    public TextMeshProUGUI NotificationText => notificationText;
 
-    private bool hasTriggeredRandomChange = false;
+    public bool hasTriggeredRandomChange = true;
+    public bool HasPendingRandomChange => hasTriggeredRandomChange;
 
     private string currentScene;
 
@@ -36,24 +41,31 @@ public class ListController : MonoBehaviour
 
     private int spawnCount = 0;
     private Coroutine currentRoutine;
+    private string lastReplacedOldName;
+    private string lastReplacedNewName;
+    private int lastReplacedQuantity;
+
+    public event Action<string, GameObject, int> OnListChanged;
+    public event Action<int> OnListShown;
+    public event Action<string, string, int, string> OnRandomListChange;
 
     private void Start()
     {
-        currentLimit = -1;
+        
         currentScene = SceneManager.GetActiveScene().name;
         for (int i = 0; i < spawnOnStart; i++) SpawnItemInList();
         ShowList();
-
-        StartCoroutine(RandomChangeCoroutine());
+        currentLimit = 0;
+        if(currentScene != "Demo_18_11") StartCoroutine(RandomChangeCoroutine());
     }
 
-    // private void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.L))
-    //     {
-    //          ReplaceRandomItemWithUniquePrefab();
-    //     }
-    // }
+    private void Update()
+    {
+        // if (Input.GetKeyDown(KeyCode.L))
+        // {
+        //      ReplaceRandomItemWithUniquePrefab();
+        // }
+    }
 
     public void ShowList()
     {
@@ -63,6 +75,8 @@ public class ListController : MonoBehaviour
             return;
         }
         currentLimit++;
+        Debug.Log("Show list " + currentLimit + " lần");
+        OnListShown?.Invoke(currentLimit);
         currentRoutine = StartCoroutine(ShowThenHide());
     }
 
@@ -83,8 +97,8 @@ public class ListController : MonoBehaviour
             return;
         }
 
-        int randomIndex    = Random.Range(0, availablePrefabs.Count);
-        int randomQuantity = Random.Range(1, 10);
+        int randomIndex    = UnityEngine.Random.Range(0, availablePrefabs.Count);
+        int randomQuantity = UnityEngine.Random.Range(1, 10);
 
         GameObject randomPrefab = availablePrefabs[randomIndex];
         GameObject spawnedItem  = Instantiate(randomPrefab, listContainer.transform);
@@ -105,12 +119,13 @@ public class ListController : MonoBehaviour
     {
         if (choicedItems.Count == 0)
         {
+            Debug.Log("Không có item nào để thay đổi!");
             return "Không có item nào để thay đổi!";
-            
         }
 
         if (availablePrefabs.Count == 0)
         {
+            Debug.Log("Không có prefab nào trong availablePrefabs!");
             return "Không có prefab nào trong availablePrefabs!";
         }
 
@@ -131,50 +146,61 @@ public class ListController : MonoBehaviour
             }
         }
        
-        //Chọn 1 item ngẫu nhiên trong 5 item
-        int randomItemIndex = Random.Range(0, choicedItems.Count);
+        int randomItemIndex = UnityEngine.Random.Range(0, choicedItems.Count);
         GameObject targetItem = choicedItems[randomItemIndex];
+
+        GameObject oldPrefab = targetItem;
 
         var oldNameText = targetItem.transform.Find("Name")?.GetComponent<TextMeshProUGUI>();
         string oldName = oldNameText != null ? oldNameText.text : targetItem.name;
 
-        GameObject newPrefab = validPrefabs[Random.Range(0, validPrefabs.Count)];
+        GameObject newPrefab = validPrefabs[UnityEngine.Random.Range(0, validPrefabs.Count)];
         targetItem.name = newPrefab.name;
 
         var nameText = targetItem.transform.Find("Name")?.GetComponent<TextMeshProUGUI>();
         if (nameText != null)
             nameText.text = newPrefab.name;
-
         
-        int newQuantity = Random.Range(1, 10);
+        int newQuantity = UnityEngine.Random.Range(1, 10);
         var quantityText = targetItem.transform.Find("Quantity")?.GetComponent<TextMeshProUGUI>();
         if (quantityText != null)
             quantityText.text = newQuantity.ToString();
 
+        //ListResultCompare.compareResultListUpdated = true;   
+
+        lastReplacedOldName = oldName;
+        lastReplacedNewName = newPrefab.name;
+        lastReplacedQuantity = newQuantity;
+
         Debug.Log($"Đã đổi {oldName} → {newPrefab.name} (x{newQuantity})");
+
+        OnListChanged?.Invoke(oldName, newPrefab, newQuantity);
+
         return $"Đã đổi {oldName} → {newPrefab.name} (x{newQuantity})";
     }
 
+
     private IEnumerator RandomChangeCoroutine()
     {
-        float waitTime = Random.Range(minDelay, maxDelay);
+        float waitTime = UnityEngine.Random.Range(minDelay, maxDelay);
         Debug.Log($"Sự kiện đổi item sẽ xảy ra trong {waitTime} giây...");
 
         yield return new WaitForSeconds(waitTime);
 
-        if (!hasTriggeredRandomChange)
-        {
-        
-            string msg = ReplaceRandomItemWithUniquePrefab();
-            hasTriggeredRandomChange = true;
 
-            Debug.Log(msg);
+        if (hasTriggeredRandomChange)
+        {
+            
+            string discountInfo = ItemsManager.DiscountRandomItem();
+            string msg = ReplaceRandomItemWithUniquePrefab();
+
+            hasTriggeredRandomChange = false;
+            OnRandomListChange?.Invoke(lastReplacedOldName, lastReplacedNewName, lastReplacedQuantity, discountInfo);
 
             // 🌟 Gọi thông báo UI
             ShowNotification(msg, 3f);
         }
     }
-
 
     private void ShowNotification(string message, float duration = 3f)
     {
@@ -189,6 +215,9 @@ public class ListController : MonoBehaviour
         notificationCanvas.SetActive(false);
     }
 
-
+    public int GetClickNumber()
+    {
+        return currentLimit;
+    }
 
 }

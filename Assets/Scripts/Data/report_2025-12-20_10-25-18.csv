@@ -1,0 +1,26 @@
+Booth Type,Visit Count
+Fruits,17
+Drinks,3
+Snacks,3
+
+Visit Order of Booths
+Snacks -> Fruits -> Fruits -> Fruits -> Snacks -> Drinks -> Drinks -> Fruits -> Fruits -> Snacks -> Fruits -> Fruits -> Drinks -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits
+
+Product,Time (s)
+Cà rốt,487,6367
+Chai Coca Cola,340,8835
+Nước suối,513,7378
+Bắp cải,539,351
+Giấy vệ sinh,303,5376
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Coca cola chai
+,1,0,Thiếu 6,0
+Nước suối,4,5000,Đủ,20000
+Cà rốt,8,6000,Đủ,48000
+Bắp cải,5,18000,Đủ,90000
+Giấy vệ sinh,3,6000,Đủ,18000
+Chai Coca Cola,8,12000,Dư 6,96000
+
+Total Items,29
+Total Price,272000

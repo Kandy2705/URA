@@ -1,4 +1,5 @@
 using TMPro;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -11,23 +12,32 @@ public class GameTimer : MonoBehaviour
     [Header("Timer Settings")]
     public float limitSeconds = 240f; 
 
+    public GameObject paymentUI;
+
     [Header("UI")]
     public TMP_Text timerText; 
 
     [Header("Events")]
     public UnityEvent onTimeUp; 
 
+    [Header("Checkout Flow On Time Up")]
+    [Tooltip("Khi hết giờ sẽ chạy luồng thanh toán giống nút thanh toán giỏ hàng (teleport tới PoiChargeMoney + khoá di chuyển + cashier intro).")]
+    [SerializeField] private VRCheckoutTeleport checkoutTeleport;
+
     private float timeLeft;
-    private bool isRunning = false;
+    public bool isRunning = false;
     private int seconds;
     private int minutes;
     private int hours;
+
+    // public static event Action OnTimeUpPaymentTriggered;
 
     void Awake()
     {
         (hours, minutes, seconds) = TimeUtils.SecondsToHMS(limitSeconds);
         foreach (Timer timer in timers) timer.startAtRuntime = false;
         foreach (Timer timer in timers) UIStartTime(timer);
+        paymentUI.SetActive(false);
     }
 
     void Start()
@@ -70,7 +80,7 @@ public class GameTimer : MonoBehaviour
     public void StopTimer()
     {
         isRunning = false;
-        DataManager.Instance.Report();
+        //DataManager.Instance.Report();
 
         Scene demoScene = SceneManager.GetSceneByName("Demo_18_11");
         Scene level2Scene = SceneManager.GetSceneByName("Scene-level-2");
@@ -80,7 +90,7 @@ public class GameTimer : MonoBehaviour
         bool hasLevel2 = level2Scene.IsValid() && level2Scene.isLoaded;
         bool hasDress = dressScene.IsValid() && dressScene.isLoaded;
 
-        if ((hasDemo || hasLevel2) && !hasDress)
+        if ((hasDemo) && !hasDress)
         {
             const string dressName = "Dress_Game";
 
@@ -126,14 +136,31 @@ public class GameTimer : MonoBehaviour
     {
         isRunning = false;
         timeLeft = 0;
-        DataManager.Instance.Report();
         UpdateUI();
 
         Debug.Log("Hết giờ");
+        paymentUI.SetActive(true);
 
         if (CartManager.Instance != null)
         {
             CartManager.Instance.ProcessCheckout();
+        }
+
+        if (PaymentManager.Instance != null)
+        {
+            PaymentManager.Instance.UpdatePaymentUI();
+        }
+
+        if (checkoutTeleport == null)
+            checkoutTeleport = FindObjectOfType<VRCheckoutTeleport>();
+
+        if (checkoutTeleport != null)
+        {
+            checkoutTeleport.MoveToCheckout();
+        }
+        else
+        {
+            Debug.LogWarning("GameTimer: Không tìm thấy VRCheckoutTeleport — bỏ qua flow thanh toán khi hết giờ.");
         }
 
         onTimeUp?.Invoke();

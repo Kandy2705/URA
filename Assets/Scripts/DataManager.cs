@@ -1,5 +1,4 @@
-﻿using UnityEditor.Experimental.GraphView;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using System.IO;
@@ -7,7 +6,7 @@ using System.IO;
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance { get; private set; }
-    
+
     private void Awake()
     {
         if (Instance == null)
@@ -41,6 +40,8 @@ public class DataManager : MonoBehaviour
 
     private float startTime;
     Dictionary<string, float> product_times = new Dictionary<string, float>();
+
+    [SerializeField] GameObject target;
 
     private void Start()
     {
@@ -101,75 +102,87 @@ public class DataManager : MonoBehaviour
         product_times[product] = elapsed;
     }
 
-  public void ExportCSV(List<CompareResult> compareResults)
-{
-    string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-    string fileName = $"report_{timestamp}.csv";
-    string dirPath = Path.Combine(Application.dataPath, "Scripts/Data");
-    if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
-
-    string path = Path.Combine(dirPath, fileName);
-    using (StreamWriter writer = new StreamWriter(path, false))
+    public void ExportCSV(List<CompareResult> compareResults)
     {
-        writer.WriteLine("Booth Type,Visit Count");
-        writer.WriteLine($"Fruits,{num_visit_fruits}");
-        writer.WriteLine($"Drinks,{num_visit_drinks}");
-        writer.WriteLine($"Snacks,{num_visit_snacks}");
-        writer.WriteLine();
+        string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+        string fileName = $"report_{timestamp}.csv";
+        string dirPath = Path.Combine(Application.dataPath, "Scripts/Data");
+        if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
 
-        writer.WriteLine("Visit Order of Booths");
-        writer.WriteLine(string.Join(" -> ", booths_priority));
-        writer.WriteLine();
-
-        writer.WriteLine("Product,Time (s)");
-        foreach (var kvp in product_times)
+        string path = Path.Combine(dirPath, fileName);
+        using (StreamWriter writer = new StreamWriter(path, false))
         {
-            writer.WriteLine($"{kvp.Key},{kvp.Value}");
-        }
-        writer.WriteLine();
+            writer.WriteLine("Booth Type,Visit Count");
+            writer.WriteLine($"Fruits,{num_visit_fruits}");
+            writer.WriteLine($"Drinks,{num_visit_drinks}");
+            writer.WriteLine($"Snacks,{num_visit_snacks}");
+            writer.WriteLine();
 
-        writer.WriteLine("Product Name,Total Count,Unit Price,Status,Subtotal");
+            writer.WriteLine("Visit Order of Booths");
+            writer.WriteLine(string.Join(" -> ", booths_priority));
+            writer.WriteLine();
 
-        Dictionary<string, (int count, int unitPrice, string status)> itemSummary =
-            new Dictionary<string, (int, int, string)>();
-
-        foreach (var r in compareResults)
-        {
-            int unitPrice = (r.price < 1000) ? 0 : r.price;
-            if (itemSummary.ContainsKey(r.itemName))
+            writer.WriteLine("Product,Time (s)");
+            foreach (var kvp in product_times)
             {
-                var existing = itemSummary[r.itemName];
-                int newCount = existing.count + 1;
-                itemSummary[r.itemName] = (newCount, unitPrice, r.status);
+                writer.WriteLine($"{kvp.Key},{kvp.Value}");
+            }
+            writer.WriteLine();
+
+            writer.WriteLine("Product Name,Total Count,Unit Price,Status,Subtotal");
+
+            Dictionary<string, CompareResult> finalResults =
+                new Dictionary<string, CompareResult>();
+
+            foreach (var r in compareResults)
+            {
+                finalResults[r.itemName] = r;
+            }
+
+            int grandTotalItems = 0;
+            long grandTotalPrice = 0;
+
+            foreach (var kvp in finalResults)
+            {
+                CompareResult r = kvp.Value;
+
+                int count = r.currentQuantity;
+                int unitPrice = r.price;
+                long subtotal = (long)count * unitPrice;
+
+                writer.WriteLine($"{r.itemName},{count},{unitPrice},{r.status},{subtotal}");
+
+                grandTotalItems += count;
+                grandTotalPrice += subtotal;
+            }
+
+            writer.WriteLine();
+            writer.WriteLine("Total Items," + grandTotalItems);
+            writer.WriteLine("Total Price," + grandTotalPrice);
+
+
+            int click_num = -1;
+            // GameObject target = GameObject.Find("Supermarket/Notice_Board/UI Sample/Scroll UI Sample");
+
+            if (target == null)
+            {
+                Debug.Log("KHÔNG TÌM THẤY GameObject Scroll UI Sample");
             }
             else
             {
-                itemSummary[r.itemName] = (1, unitPrice, r.status);
+                ListController listCtrlr = target.GetComponent<ListController>();
+                if (listCtrlr == null)
+                {
+                    Debug.Log("KHÔNG TÌM THẤY Component của Object");
+                }
+                else
+                {
+                    click_num = listCtrlr.GetClickNumber();
+                }
             }
+            writer.WriteLine("Show list ," + click_num + " time" + (click_num <= 1 ? "" : "s"));
         }
-
-        int grandTotalItems = 0;
-        long grandTotalPrice = 0;
-
-        foreach (var kvp in itemSummary)
-        {
-            string name = kvp.Key;
-            int count = kvp.Value.count;
-            int unitPrice = kvp.Value.unitPrice;
-            string status = kvp.Value.status;
-            long subtotal = (long)unitPrice * count; 
-
-            writer.WriteLine($"{name},{count},{unitPrice},{status},{subtotal}");
-
-            grandTotalItems += count;
-            grandTotalPrice += subtotal;
-        }
-
-        writer.WriteLine();
-        writer.WriteLine("Total Items," + grandTotalItems);
-        writer.WriteLine("Total Price," + grandTotalPrice);
     }
-}
 
 
 
@@ -202,6 +215,4 @@ public class DataManager : MonoBehaviour
         if (boardData != null)
             boardData.SetActive(false);
     }
-
-    
 }

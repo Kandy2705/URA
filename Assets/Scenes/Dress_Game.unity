@@ -1357,6 +1357,7 @@ MonoBehaviour:
   boardData: {fileID: 0}
   statsText1: {fileID: 0}
   statsText2: {fileID: 0}
+  target: {fileID: 0}
 --- !u!1001 &724844677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2184,74 +2185,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &946661620
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 946661621}
-  - component: {fileID: 946661623}
-  - component: {fileID: 946661622}
-  m_Layer: 0
-  m_Name: TimeManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &946661621
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 946661620}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30.5, y: 10.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1878420325}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &946661622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 946661620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53dd733b09de2413b83b3edd2cbe3b67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timers:
-  - {fileID: 0}
-  limitSeconds: 190
-  timerText: {fileID: 0}
-  onTimeUp:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &946661623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 946661620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8752d62b4dfe745458255d0f4f6ef3fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMove: {fileID: 0}
-  cameraLook: {fileID: 0}
-  touchController: {fileID: 0}
-  shopPanel: {fileID: 0}
 --- !u!1001 &1142928198
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3256,7 +3189,7 @@ PrefabInstance:
     - target: {fileID: 4436940632021081988, guid: c24a7635b5761984d81cf6c4aac26e0d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 946661622}
+      objectReference: {fileID: 0}
     - target: {fileID: 4436940632021081988, guid: c24a7635b5761984d81cf6c4aac26e0d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -5303,7 +5236,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 946661621}
   - {fileID: 1987290804}
   - {fileID: 704792029}
   - {fileID: 2009510092}
@@ -5832,7 +5764,9 @@ MonoBehaviour:
   dataContainer: {fileID: 6530172943102710422, guid: d95ccfb93aee58342b63c0b519e2ec28, type: 3}
   obtainProductContainer: {fileID: 0}
   wrongProductContainer: {fileID: 0}
+  gameTimer: {fileID: 0}
   compareResults: []
+  loadStart: 1
 --- !u!1 &2009510091
 GameObject:
   m_ObjectHideFlags: 0

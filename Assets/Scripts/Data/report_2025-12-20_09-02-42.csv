@@ -1,0 +1,30 @@
+Booth Type,Visit Count
+Fruits,6
+Drinks,12
+Snacks,9
+
+Visit Order of Booths
+Snacks -> Fruits -> Drinks -> Drinks -> Drinks -> Fruits -> Fruits -> Fruits -> Drinks -> Drinks -> Drinks -> Snacks -> Drinks -> Fruits -> Snacks -> Snacks -> Snacks -> Fruits -> Drinks -> Drinks -> Drinks -> Drinks -> Drinks -> Snacks -> Snacks -> Snacks -> Snacks
+
+Product,Time (s)
+Táo xanh,217,8939
+Nho,322,7654
+Chai rượu,425,2371
+Nước trái cây,348,7946
+Đồ ăn đóng hộp,578,2705
+Nước tương,394,4072
+Mật ong,501,3351
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Đồ ăn đóng hộp,11,25000,Đủ,275000
+Táo xanh,15,12000,Thiếu 1,180000
+Nho,7,25000,Đủ,175000
+Mật ong,2,60000,Đủ,120000
+Chai rượu
+,1,0,Thiếu 9,0
+Chai rượu,9,150000,Dư 9,1350000
+Nước trái cây,2,15000,Đủ,30000
+Nước tương,6,20000,Đủ,120000
+
+Total Items,53
+Total Price,2250000

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public class ListResultCompare : MonoBehaviour
@@ -6,12 +7,18 @@ public class ListResultCompare : MonoBehaviour
     public ListController listController;
     [SerializeField] private GameObject dataContainer;
     [SerializeField] private Transform obtainProductContainer; 
-    [SerializeField] private Transform wrongProductContainer;
-    
+    [SerializeField] private Transform wrongProductContainer; 
+
+    [SerializeField] private GameTimer gameTimer;
     private List<GameObject> choicedItems;
     private float itemHeight = 5f;   
     private float startY = 10f;      
     public List<CompareResult> compareResults = new List<CompareResult>();
+
+    public bool loadStart = true;
+
+    public static bool compareResultListUpdated = false;
+    public Action LoadCSV;
 
     void Start()
     {
@@ -24,21 +31,86 @@ public class ListResultCompare : MonoBehaviour
                 return;
             }    
             Debug.Log($"ListResultCompare: Loaded {choicedItems?.Count ?? 0} choicedItems");
-
         }
+
+        listController.OnListChanged += HandleListChanged;
 
         choicedItems = listController.choicedItems;
 
-        string quantityText;
+        string quantityText = "";
+
         foreach(GameObject item in choicedItems)
         {
-            quantityText = "0";
-            string itemName = item.transform.Find("Name").GetComponent<TMPro.TMP_Text>().text;
-            int itemQuantity = int.Parse(item.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
-            BillEntry entry = new BillEntry(itemName, itemQuantity);
-            CompareData(entry, 0, itemQuantity, ref quantityText);
-            CreateNewInstantData(entry, obtainProductContainer, ref quantityText);
+            ProcessItem(item, ref quantityText);
         }
+
+        LoadCSV += LoadCompareResult;
+        loadStart = false;
+    }
+
+    void Update()
+    {
+        if (!gameTimer.isRunning)
+        {
+            LoadCSV?.Invoke();
+        }
+    }
+
+    private void ProcessItem(GameObject item, ref string quantityText)
+    {
+        Debug.Log("Processing item: " + item.name);
+        quantityText = "0";
+        string itemName = item.transform.Find("Name").GetComponent<TMPro.TMP_Text>().text;
+        int itemQuantity = int.Parse(item.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
+        BillEntry entry = new BillEntry(itemName, 0, itemQuantity);
+
+        
+        CompareData(entry, 0, itemQuantity, ref quantityText);
+        CreateNewInstantData(entry, obtainProductContainer, ref quantityText);
+    }
+
+    public void HandleListChanged(string oldName, GameObject newData, int newQuantity)
+    {
+        BillEntry entry = null;
+        if (CartManager.Instance.bill.ContainsKey(newData.name))
+        {
+            Debug.Log("Vao if la an lon");
+            entry = CartManager.Instance.bill[newData.name];
+        }
+        else
+        {
+            Debug.Log("Vao else la an cac");
+            entry = new BillEntry(newData.name, 0, 0);
+            Debug.Log($"Số lượng mới của vật phẩm là {entry.quantity}");
+        }
+
+        int index = compareResults.FindIndex(r => r.itemName == oldName);
+        Debug.Log($"GIá trị index hiện tại là {index} cho item: {oldName}");
+
+
+        string quantityText = "0";
+
+        string status = StatusChange(entry.quantity, newQuantity, ref quantityText);
+
+        CompareResult newResult = new CompareResult(entry.itemName, entry.quantity, newQuantity, status, entry.price, true);
+        compareResults[index] = newResult;
+
+        Debug.Log("Dữ liệu của compare list đã được thay đổi !");
+    }
+
+    private void LoadCompareResult()
+    {
+        Debug.Log("Dữ liệu đang được chạy");
+
+        foreach(CompareResult result in compareResults)
+        {
+            if(result.required == false && result.currentQuantity == 0) break;
+            DataManager.Instance.AddCompareResult(result);
+        }
+    
+        DataManager.Instance.Report();
+        LoadCSV -= LoadCompareResult;
+        Debug.Log("Đã chạy xong hàm Load các compare data");
     }
 
     void OnEnable()
@@ -52,7 +124,6 @@ public class ListResultCompare : MonoBehaviour
         {
             Debug.LogError("ListResultCompare không tìm thấy PokeManager!");
         }
-
     }
 
     void OnDisable()
@@ -67,7 +138,14 @@ public class ListResultCompare : MonoBehaviour
     {
         Debug.Log($"CompareData() called for {entry.itemName}: {currentQuantity}/{IndexQuantity}");
 
-        string status;
+        string status = StatusChange(currentQuantity, IndexQuantity, ref quantityText);
+
+        HandleCompareResultList(entry.itemName, currentQuantity, IndexQuantity, status, entry.price);
+    }
+
+    public string StatusChange(int currentQuantity, int IndexQuantity, ref string quantityText)
+    {
+        string status = "";
         if (currentQuantity < IndexQuantity)
         {
             int shortage = IndexQuantity - currentQuantity;
@@ -85,21 +163,37 @@ public class ListResultCompare : MonoBehaviour
             status = $"Dư {surplus}";
             quantityText = $"{currentQuantity} (Dư {surplus})";
         }
+        return status;
+    }
 
-        CompareResult newResult = new CompareResult(entry.itemName, currentQuantity, IndexQuantity, status, entry.price);
+    private void HandleCompareResultList(string itemName, int currentQuantity, int indexQuantity, string status, int price)
+    {
 
-        int existingIndex = compareResults.FindIndex(r => r.itemName == entry.itemName);
+        int existingIndex = compareResults.FindIndex(r => r.itemName == itemName);
 
-        if (existingIndex != -1)
+        if (loadStart)
         {
-            compareResults[existingIndex] = newResult;
+            CompareResult newResult = new CompareResult(itemName, currentQuantity, indexQuantity, status, price, true);
+            compareResults.Add(newResult);
         }
         else
         {
-            compareResults.Add(newResult);
+            if (existingIndex != -1)
+            {
+                bool lastRequireStatus = compareResults[existingIndex].required;
+                CompareResult newResult = new CompareResult(itemName, currentQuantity, indexQuantity, status, price, lastRequireStatus);
+                compareResults[existingIndex] = newResult;
+            }
+            else
+            {
+                CompareResult newResult = new CompareResult(itemName, currentQuantity, indexQuantity, status, price, false);
+                compareResults.Add(newResult);
+            }
         }
-        DataManager.Instance.AddCompareResult(newResult);
+
+        
     }
+   
     public void CreateNewInstantData(BillEntry entry, Transform parentContainer, ref string quantityText)
     {
         Debug.Log("Creating new instant data for: " + entry.itemName);
@@ -119,7 +213,8 @@ public class ListResultCompare : MonoBehaviour
 
     void HandleBillChanged(BillEntry entry, bool isNew)
     {
-        Debug.Log("Bill has been updated: " + entry.itemName + ", Quantity: " + entry.quantity);
+        if (entry == null) return; 
+        
         Transform parentContainer;
 
         string addItem = entry.itemName;

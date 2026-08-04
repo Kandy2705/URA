@@ -8,12 +8,14 @@ public struct CompareResult
     public int expectedQuantity;
     public string status;
     public int price;
-    public CompareResult(string name, int current, int expected, string s, int p)
+    public bool required;
+    public CompareResult(string name, int current, int expected, string s, int p, bool r)
     {
         itemName = name;
         currentQuantity = current;
         expectedQuantity = expected;
         status = s;
         price =p;
+        required = r;
     }
 }

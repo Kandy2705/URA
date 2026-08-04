@@ -1,0 +1,24 @@
+Booth Type,Visit Count
+Fruits,2
+Drinks,8
+Snacks,1
+
+Visit Order of Booths
+Fruits -> Drinks -> Drinks -> Drinks -> Drinks -> Drinks -> Drinks -> Drinks -> Drinks -> Snacks -> Fruits
+
+Product,Time (s)
+Đồ ăn đóng hộp,137,3606
+Bắp cải,178,3538
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Nho,1,0,Thiếu 6,0
+Kem
+,1,0,Thiếu 4,0
+Giấy vệ sinh,1,0,Thiếu 5,0
+Mật ong,1,0,Thiếu 4,0
+Nước suối,1,0,Thiếu 3,0
+Đồ ăn đóng hộp,1,25000,Dư 1,25000
+Bắp cải,1,18000,Dư 1,18000
+
+Total Items,7
+Total Price,43000

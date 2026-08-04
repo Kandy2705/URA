@@ -1,0 +1,25 @@
+Booth Type,Visit Count
+Fruits,0
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+
+
+Product,Time (s)
+Hộp sữa,7.822416
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Nho,0,0,Thiếu 7,0
+Đùi gà,0,0,Thiếu 9,0
+Bắp cải,0,0,Thiếu 2,0
+Thịt xay,0,0,Thiếu 7,0
+Kem,0,0,Thiếu 8,0
+Chảo gang,0,0,Thiếu 7,0
+Cây khuấy,0,0,Thiếu 3,0
+Chảo,0,0,Thiếu 5,0
+Hộp sữa,5,8000,Dư 5,40000
+
+Total Items,5
+Total Price,40000
+Show list ,0 time

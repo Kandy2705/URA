@@ -1,0 +1,30 @@
+Booth Type,Visit Count
+Fruits,9
+Drinks,7
+Snacks,5
+
+Visit Order of Booths
+Fruits -> Drinks -> Drinks -> Drinks -> Drinks -> Drinks -> Snacks -> Fruits -> Fruits -> Drinks -> Drinks -> Snacks -> Fruits -> Fruits -> Fruits -> Fruits -> Fruits -> Snacks -> Fruits -> Snacks -> Snacks
+
+Product,Time (s)
+Hộp sữa,103,0093
+Kẹo socola,547,0574
+Nước tương,167,2158
+Mật ong,218,9054
+Đồ ăn đóng hộp,237,4373
+Nho,338,6445
+Trứng,422,5501
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Hộp sữa,4,8000,Thiếu 7,32000
+Mật ong,2,60000,Thiếu 2,120000
+Chai tương
+,1,0,Thiếu 5,0
+Kẹo socola,6,12000,Dư 4,72000
+Đồ ăn đóng hộp,2,25000,Thiếu 4,50000
+Nước tương,1,20000,Dư 1,20000
+Nho,4,25000,Đủ,100000
+Trứng,2,20000,Đủ,40000
+
+Total Items,22
+Total Price,434000

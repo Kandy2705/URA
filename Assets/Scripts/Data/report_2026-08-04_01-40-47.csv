@@ -1,0 +1,25 @@
+Booth Type,Visit Count
+Fruits,1
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+Fruits
+
+Product,Time (s)
+Nho,8.04856
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Nồi,0,0,Thiếu 2,0
+Đùi gà,0,0,Thiếu 3,0
+Ly,0,0,Thiếu 6,0
+Sườn heo,0,0,Thiếu 2,0
+Thịt xay,0,0,Thiếu 6,0
+Chảo,0,0,Thiếu 1,0
+Cúp,0,0,Thiếu 4,0
+Dao trung bình,0,0,Thiếu 3,0
+Nho,6,25000,Dư 6,150000
+
+Total Items,6
+Total Price,150000
+Show list ,0 time

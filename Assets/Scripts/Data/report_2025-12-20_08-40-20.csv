@@ -1,0 +1,22 @@
+Booth Type,Visit Count
+Fruits,4
+Drinks,5
+Snacks,2
+
+Visit Order of Booths
+Drinks -> Drinks -> Drinks -> Drinks -> Fruits -> Drinks -> Snacks -> Fruits -> Fruits -> Fruits -> Snacks
+
+Product,Time (s)
+Mật ong,225,1641
+Kẹo socola,279,6066
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Cà rốt,1,0,Thiếu 4,0
+Coca cola chai
+,1,0,Thiếu 8,0
+Giấy vệ sinh,1,0,Thiếu 6,0
+Kẹo socola,9,12000,Đủ,108000
+Mật ong,10,60000,Đủ,600000
+
+Total Items,22
+Total Price,708000
