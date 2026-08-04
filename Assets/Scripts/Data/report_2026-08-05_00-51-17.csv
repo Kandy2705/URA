@@ -1,0 +1,46 @@
+Booth Type,Visit Count
+Fruits,1
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+Fruits
+
+Product,Time (s)
+Nho,51.95713
+Bắp cải,55.32092
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Kẹo socola,0,0,Thiếu 7,0
+Dĩa vuông,0,0,Thiếu 3,0
+Đùi gà,0,0,Thiếu 4,0
+Dao trung bình,0,0,Thiếu 2,0
+Kệ để dao,0,0,Thiếu 9,0
+Gà tây,0,0,Thiếu 3,0
+Bắp cải,2,18000,Đủ,36000
+Nồi,0,0,Thiếu 2,0
+Nho,4,16000,Dư 4,64000
+
+Total Items,6
+Total Price,100000
+
+Bill Item,Quantity,Unit Price,Subtotal
+Bắp cải,2,18000,36000
+Nho,4,16000,64000
+
+Payment Summary
+Required Amount,Paid Amount,Difference,Result,Note
+100000,140000,40000,OVERPAID,"Du 40,000 VND"
+
+Starting Wallet
+Denomination,Count,Subtotal
+100000,2,200000
+20000,2,40000
+10000,4,40000
+
+Submitted Bills
+Denomination,Count,Subtotal
+100000,1,100000
+20000,1,20000
+10000,2,20000
+Show list ,1 time

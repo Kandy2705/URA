@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using System.IO;
+using System.Linq;
 
 public class DataManager : MonoBehaviour
 {
@@ -17,10 +18,23 @@ public class DataManager : MonoBehaviour
         else Destroy(gameObject);
     }
     private List<CompareResult> compareResults = new List<CompareResult>();
+    private PaymentSummary paymentSummary;
 
     public void AddCompareResult(CompareResult result)
     {
         compareResults.Add(result);
+    }
+
+    public void SetCompareResults(IEnumerable<CompareResult> results)
+    {
+        compareResults = results != null
+            ? new List<CompareResult>(results)
+            : new List<CompareResult>();
+    }
+
+    public void SetPaymentSummary(PaymentSummary summary)
+    {
+        paymentSummary = summary;
     }
 
     public Transform player;          // Player transform
@@ -159,6 +173,50 @@ public class DataManager : MonoBehaviour
             writer.WriteLine();
             writer.WriteLine("Total Items," + grandTotalItems);
             writer.WriteLine("Total Price," + grandTotalPrice);
+            writer.WriteLine();
+
+            writer.WriteLine("Bill Item,Quantity,Unit Price,Subtotal");
+            if (CartManager.Instance != null && CartManager.Instance.bill != null)
+            {
+                foreach (BillEntry entry in CartManager.Instance.bill.Values.OrderBy(item => item.itemName))
+                {
+                    if (entry == null)
+                        continue;
+
+                    long subtotal = (long)entry.price * entry.quantity;
+                    writer.WriteLine($"{EscapeCsv(entry.itemName)},{entry.quantity},{entry.price},{subtotal}");
+                }
+            }
+
+            writer.WriteLine();
+            writer.WriteLine("Payment Summary");
+            writer.WriteLine("Required Amount,Paid Amount,Difference,Result,Note");
+            if (paymentSummary != null)
+            {
+                writer.WriteLine(
+                    $"{paymentSummary.requiredAmount},{paymentSummary.paidAmount},{paymentSummary.differenceAmount}," +
+                    $"{paymentSummary.resultCode},{EscapeCsv(paymentSummary.note)}");
+
+                writer.WriteLine();
+                writer.WriteLine("Starting Wallet");
+                writer.WriteLine("Denomination,Count,Subtotal");
+                foreach (WalletBillSnapshot snapshot in paymentSummary.startingWallet)
+                {
+                    writer.WriteLine($"{snapshot.denomination},{snapshot.count},{snapshot.subtotal}");
+                }
+
+                writer.WriteLine();
+                writer.WriteLine("Submitted Bills");
+                writer.WriteLine("Denomination,Count,Subtotal");
+                foreach (WalletBillSnapshot snapshot in paymentSummary.submittedBills)
+                {
+                    writer.WriteLine($"{snapshot.denomination},{snapshot.count},{snapshot.subtotal}");
+                }
+            }
+            else
+            {
+                writer.WriteLine("0,0,0,NOT_CAPTURED,Payment summary not available");
+            }
 
 
             int click_num = -1;
@@ -182,6 +240,16 @@ public class DataManager : MonoBehaviour
             }
             writer.WriteLine("Show list ," + click_num + " time" + (click_num <= 1 ? "" : "s"));
         }
+    }
+
+    private static string EscapeCsv(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+            return string.Empty;
+
+        bool needsQuotes = value.Contains(",") || value.Contains("\"") || value.Contains("\n");
+        string escaped = value.Replace("\"", "\"\"");
+        return needsQuotes ? $"\"{escaped}\"" : escaped;
     }
 
 

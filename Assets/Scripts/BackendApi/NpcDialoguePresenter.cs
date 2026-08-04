@@ -33,13 +33,26 @@ public class NpcDialoguePresenter : MonoBehaviour
     private Coroutine _displayRoutine;
     private GameObject _headBubbleRoot;
     private TMP_Text _headBubbleText;
+    private bool _isSpeaking;
+
+    public bool IsSpeaking => _isSpeaking;
 
     private void Awake()
     {
-        if (audioSource == null)
-            audioSource = GetComponent<AudioSource>();
+        if (useTts)
+            EnsureAudioSource();
 
         EnsureHeadBubble();
+    }
+
+    public void ConfigureTts(bool enabled, string language = "vi")
+    {
+        useTts = enabled;
+        if (!string.IsNullOrWhiteSpace(language))
+            ttsLanguage = language;
+
+        if (useTts)
+            EnsureAudioSource();
     }
 
     private void LateUpdate()
@@ -109,7 +122,10 @@ public class NpcDialoguePresenter : MonoBehaviour
     public void ShowSingle(string dialogue, string speakerName, float displaySeconds)
     {
         if (_displayRoutine != null)
+        {
             StopCoroutine(_displayRoutine);
+            _isSpeaking = false;
+        }
 
         _displayRoutine = StartCoroutine(DisplayRoutine(dialogue, speakerName, displaySeconds));
     }
@@ -120,6 +136,7 @@ public class NpcDialoguePresenter : MonoBehaviour
         {
             StopCoroutine(_displayRoutine);
             _displayRoutine = null;
+            _isSpeaking = false;
         }
 
         if (UseScreenOverlay())
@@ -250,6 +267,15 @@ public class NpcDialoguePresenter : MonoBehaviour
 
     private IEnumerator PlayTts(string text)
     {
+        _isSpeaking = true;
+        EnsureAudioSource();
+        if (audioSource == null)
+        {
+            Debug.LogWarning("[NpcDialoguePresenter] Không tạo được AudioSource để phát TTS.");
+            _isSpeaking = false;
+            yield break;
+        }
+
         string requestUrl =
             $"https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl={ttsLanguage}&q={UnityWebRequest.EscapeURL(text)}";
 
@@ -262,16 +288,35 @@ public class NpcDialoguePresenter : MonoBehaviour
             if (request.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogWarning($"[NpcDialoguePresenter] TTS failed: {request.error}");
+                _isSpeaking = false;
                 yield break;
             }
 
             AudioClip clip = DownloadHandlerAudioClip.GetContent(request);
             if (clip == null)
+            {
+                _isSpeaking = false;
                 yield break;
+            }
 
             audioSource.Stop();
             audioSource.PlayOneShot(clip);
             yield return new WaitForSeconds(clip.length);
+            _isSpeaking = false;
         }
+    }
+
+    private void EnsureAudioSource()
+    {
+        if (audioSource != null)
+            return;
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
+        audioSource.spatialBlend = 0f;
     }
 }

@@ -29,6 +29,8 @@ public class VRCheckoutTeleport : MonoBehaviour
     public CharacterController characterController;
     public Behaviour xrDeviceSimulator;
     public bool lockAfterTeleport = true;
+    [Tooltip("Giữ XR Device Simulator hoạt động để tay cầm vẫn chọn được tiền khi đã khóa vị trí player.")]
+    public bool keepControllerInteractionActive = true;
 
     [Header("Desired LOCAL rotation of Main Camera at checkout")]
     public Vector3 checkoutCameraEuler = new Vector3(30f, 260f, 0f);
@@ -171,7 +173,7 @@ public class VRCheckoutTeleport : MonoBehaviour
         if (characterController != null)
             characterController.enabled = false;
 
-        if (xrDeviceSimulator != null)
+        if (xrDeviceSimulator != null && !keepControllerInteractionActive)
             xrDeviceSimulator.enabled = false;
     }
 
@@ -179,7 +181,7 @@ public class VRCheckoutTeleport : MonoBehaviour
     {
         isLocked = false;
 
-        if (xrDeviceSimulator != null)
+        if (xrDeviceSimulator != null && !keepControllerInteractionActive)
             xrDeviceSimulator.enabled = true;
 
         if (characterController != null)

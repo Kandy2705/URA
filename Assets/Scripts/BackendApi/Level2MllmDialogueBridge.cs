@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +17,8 @@ public class Level2MllmDialogueBridge : MonoBehaviour
     [Header("Config")]
     [SerializeField] private BackendApiConfig apiConfig;
     [SerializeField] private string citizenIdOverride = "";
+    [SerializeField] private bool autoAuthenticateFromPostmanCollection = true;
+    [SerializeField] private string postmanCollectionRelativePath = "md/AL-SERVICE.postman_collection.json";
 
     [Header("Level 2 intro sequence")]
     [SerializeField] private bool runIntroSequenceOnStart = true;
@@ -23,6 +27,7 @@ public class Level2MllmDialogueBridge : MonoBehaviour
     [SerializeField] private float delayBetweenIntroSteps = 5f;
     [SerializeField] private bool triggerPrioritySetup = true;
     [SerializeField] private bool triggerHiddenTaskSetup = true;
+    [SerializeField] private bool triggerNpcDistractionAfterIntro = true;
 
     [Header("Map zones (gửi backend nếu DataManager chưa có dữ liệu)")]
     [SerializeField]
@@ -49,6 +54,7 @@ public class Level2MllmDialogueBridge : MonoBehaviour
     private bool _introRunning;
     private bool _hasAnnouncedReadList;
     private bool _hasRequestedCheckout;
+    private bool _apiBootstrapFinished;
 
     private void Awake()
     {
@@ -68,14 +74,91 @@ public class Level2MllmDialogueBridge : MonoBehaviour
     private void Start()
     {
         SubscribeGameplayEvents();
-
-        if (runIntroSequenceOnStart)
-            StartCoroutine(RunIntroSequence());
+        StartCoroutine(InitializeApiAndRunStartFlow());
     }
 
     private void OnDestroy()
     {
         UnsubscribeGameplayEvents();
+    }
+
+    private IEnumerator InitializeApiAndRunStartFlow()
+    {
+        Debug.Log("[Level2MllmDialogueBridge] Bắt đầu khởi tạo API cho Scene-level-2.");
+        yield return EnsureApiReady();
+
+        if (runIntroSequenceOnStart)
+            yield return RunIntroSequence();
+    }
+
+    private IEnumerator EnsureApiReady()
+    {
+        if (_apiBootstrapFinished)
+            yield break;
+
+        _apiBootstrapFinished = true;
+
+        if (!autoAuthenticateFromPostmanCollection || apiConfig == null)
+            yield break;
+
+        MllmApiClient apiClient = GetComponent<MllmApiClient>();
+        MllmAuthClient authClient = GetComponent<MllmAuthClient>();
+        if (apiClient == null || authClient == null)
+            yield break;
+
+        PostmanAuthInfo authInfo = LoadPostmanAuthInfo();
+        if (!string.IsNullOrWhiteSpace(authInfo.host))
+            apiConfig.baseUrl = authInfo.host.TrimEnd('/');
+
+        if (sessionContext != null &&
+            string.IsNullOrWhiteSpace(citizenIdOverride) &&
+            !string.IsNullOrWhiteSpace(authInfo.citizenId))
+        {
+            sessionContext.citizenId = authInfo.citizenId;
+            Debug.Log("[Level2MllmDialogueBridge] Đã nạp citizen_id từ Postman collection.");
+        }
+
+        bool hasTokenAlready =
+            !string.IsNullOrWhiteSpace(apiClient.GetEffectiveBearerToken()) ||
+            !string.IsNullOrWhiteSpace(apiConfig.bearerToken);
+
+        if (!hasTokenAlready &&
+            !string.IsNullOrWhiteSpace(authInfo.username) &&
+            !string.IsNullOrWhiteSpace(authInfo.password))
+        {
+            bool loginCompleted = false;
+
+            yield return authClient.Login(
+                apiConfig,
+                authInfo.username,
+                authInfo.password,
+                token =>
+                {
+                    apiClient.SetBearerToken(token.access_token);
+                    apiConfig.sendBearerToken = true;
+                    apiConfig.bearerToken = token.access_token;
+                    loginCompleted = true;
+                    Debug.Log("[Level2MllmDialogueBridge] Login API thành công từ Postman collection.");
+                },
+                (statusCode, message) =>
+                {
+                    loginCompleted = true;
+                    Debug.LogWarning($"[Level2MllmDialogueBridge] Login API thất bại ({statusCode}): {message}");
+                });
+
+            yield return WaitUntilOrTimeout(() => loginCompleted, 15f);
+        }
+
+        bool helloCompleted = false;
+        apiClient.PingHello((ok, message) =>
+        {
+            helloCompleted = true;
+            Debug.Log(ok
+                ? $"[Level2MllmDialogueBridge] Hello API OK: {message}"
+                : $"[Level2MllmDialogueBridge] Hello API failed: {message}");
+        });
+
+        yield return WaitUntilOrTimeout(() => helloCompleted, 15f);
     }
 
     private void LoadConfigIfNeeded()
@@ -96,6 +179,10 @@ public class Level2MllmDialogueBridge : MonoBehaviour
         if (apiClient == null)
             apiClient = servicesRoot.gameObject.AddComponent<MllmApiClient>();
 
+        MllmAuthClient authClient = servicesRoot.GetComponent<MllmAuthClient>();
+        if (authClient == null)
+            authClient = servicesRoot.gameObject.AddComponent<MllmAuthClient>();
+
         if (sessionContext == null)
             sessionContext = servicesRoot.GetComponent<GameSessionContext>();
         if (sessionContext == null)
@@ -113,6 +200,7 @@ public class Level2MllmDialogueBridge : MonoBehaviour
         NpcDialoguePresenter dialoguePresenter = servicesRoot.GetComponent<NpcDialoguePresenter>();
         if (dialoguePresenter == null)
             dialoguePresenter = servicesRoot.gameObject.AddComponent<NpcDialoguePresenter>();
+        dialoguePresenter.ConfigureTts(false, "vi");
 
         apiClient.SetConfig(apiConfig);
         orchestrator.Configure(apiConfig, apiClient, sessionContext, actionDispatcher, dialoguePresenter);
@@ -261,15 +349,38 @@ public class Level2MllmDialogueBridge : MonoBehaviour
                     MllmDialogueRequestFactory.BuildReadShoppingList(sessionContext, listController),
                     cb),
                 "read_shopping_list");
+            yield return WaitForNpcSpeechToFinish();
+        }
+
+        if (triggerNpcDistractionAfterIntro)
+        {
+            yield return RunDialogueWithRetry(RequestNpcDistraction, "npc_distraction");
+            yield return WaitForNpcSpeechToFinish();
         }
     }
 
     private IEnumerator RunIntroDialogueStep(Action<Action<MllmApiCallResult>> sendStep, string stepName)
     {
         yield return RunDialogueWithRetry(sendStep, stepName);
+        yield return WaitForNpcSpeechToFinish();
 
         if (delayBetweenIntroSteps > 0f)
             yield return new WaitForSeconds(delayBetweenIntroSteps);
+    }
+
+    private IEnumerator WaitForNpcSpeechToFinish()
+    {
+        NpcDialoguePresenter presenter = GetComponent<NpcDialoguePresenter>();
+        if (presenter == null)
+            yield break;
+
+        const float speechTimeoutSeconds = 45f;
+        float elapsed = 0f;
+        while (presenter.IsSpeaking && elapsed < speechTimeoutSeconds)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
     }
 
     private IEnumerator RunDialogueWithRetry(Action<Action<MllmApiCallResult>> sendStep, string stepName)
@@ -364,13 +475,7 @@ public class Level2MllmDialogueBridge : MonoBehaviour
             return;
 
         string newItemName = newPrefab != null ? newPrefab.name : string.Empty;
-        // Postman: caller_info + shifting_task{old_item, new_item, reason}
-        orchestrator.RequestDialogue(
-            MllmDialogueRequestFactory.BuildShiftingOrder(
-                sessionContext,
-                oldName,
-                newItemName,
-                $"Danh sách đổi từ {oldName} sang {newItemName} (x{newQuantity})"));
+        StartCoroutine(HandleShiftingOrderSequence(oldName, newItemName, newQuantity));
     }
 
     private void HandleRandomListChange(string oldName, string newName, int newQuantity, string discountInfo)
@@ -378,12 +483,43 @@ public class Level2MllmDialogueBridge : MonoBehaviour
         if (orchestrator == null)
             return;
 
-        // Postman: discount_items[{item_name, offers[{discount_percentage, condition_instruction}]}]
-        orchestrator.RequestDialogue(
-            MllmDialogueRequestFactory.BuildFlashSaleDistraction(
-                sessionContext,
-                newName,
-                discountInfo));
+        StartCoroutine(HandleRandomListChangeSequence(oldName, newName, newQuantity, discountInfo));
+    }
+
+    private IEnumerator HandleShiftingOrderSequence(string oldName, string newName, int newQuantity)
+    {
+        yield return RunDialogueWithRetry(
+            cb => orchestrator.RequestDialogue(
+                MllmDialogueRequestFactory.BuildShiftingOrder(
+                    sessionContext,
+                    oldName,
+                    newName,
+                    $"Danh sách đổi từ {oldName} sang {newName} (x{newQuantity})",
+                    newQuantity),
+                cb),
+            "shifting_order");
+        yield return WaitForNpcSpeechToFinish();
+    }
+
+    private IEnumerator HandleRandomListChangeSequence(
+        string oldName,
+        string newName,
+        int newQuantity,
+        string discountInfo)
+    {
+        yield return HandleShiftingOrderSequence(oldName, newName, newQuantity);
+
+        yield return RunDialogueWithRetry(
+            cb => orchestrator.RequestDialogue(
+                MllmDialogueRequestFactory.BuildFlashSaleDistraction(
+                    sessionContext,
+                    newName,
+                    discountInfo,
+                    oldItem: oldName,
+                    newQuantity: newQuantity),
+                cb),
+            "flash_sale_distraction");
+        yield return WaitForNpcSpeechToFinish();
     }
 
     private void HandleTimeUp()
@@ -404,29 +540,64 @@ public class Level2MllmDialogueBridge : MonoBehaviour
                 MllmDialogueRequestFactory.BuildTimeUpAnnouncement(sessionContext, gameTimer),
                 cb),
             "time_up");
-
-        if (_hasRequestedCheckout)
-            yield break;
-
-        _hasRequestedCheckout = true;
-        yield return RunDialogueWithRetry(
-            cb => orchestrator.RequestDialogue(
-                MllmDialogueRequestFactory.BuildCheckoutCheck(sessionContext, cartManager),
-                cb),
-            "checkout");
     }
 
-    private void RequestCheckoutCheck()
+    public void FinalizeCheckoutAfterPayment(PaymentSummary paymentSummary)
     {
-        if (_hasRequestedCheckout || orchestrator == null)
+        if (_hasRequestedCheckout)
             return;
 
         _hasRequestedCheckout = true;
-        StartCoroutine(RunDialogueWithRetry(
-            cb => orchestrator.RequestDialogue(
-                MllmDialogueRequestFactory.BuildCheckoutCheck(sessionContext, cartManager),
-                cb),
-            "checkout"));
+        StartCoroutine(FinalizeCheckoutAfterPaymentRoutine(paymentSummary));
+    }
+
+    private IEnumerator FinalizeCheckoutAfterPaymentRoutine(PaymentSummary paymentSummary)
+    {
+        yield return EnsureApiReady();
+
+        MllmApiClient apiClient = GetComponent<MllmApiClient>();
+        if (apiClient == null)
+            yield break;
+
+        if (sessionContext != null)
+            sessionContext.gamePhase = MllmGamePhases.PostGame;
+
+        MllmGenerateDialogueRequest request = MllmDialogueRequestFactory.BuildCheckoutCheck(
+            sessionContext,
+            cartManager,
+            paymentSummary);
+
+        bool completed = false;
+        MllmApiCallResult callResult = null;
+        apiClient.TryGenerateDialogue(
+            request,
+            result =>
+            {
+                callResult = result;
+                completed = true;
+            },
+            bypassGate: true);
+
+        yield return WaitUntilOrTimeout(() => completed, 45f);
+
+        if (callResult == null)
+        {
+            Debug.LogWarning("[Level2MllmDialogueBridge] Checkout API không trả kết quả sau khi player xác nhận thanh toán.");
+            yield break;
+        }
+
+        if (callResult.success)
+        {
+            Debug.Log("[Level2MllmDialogueBridge] Checkout API đã gửi xong sau khi player xác nhận thanh toán.");
+        }
+        else if (callResult.wasSkipped)
+        {
+            Debug.LogWarning($"[Level2MllmDialogueBridge] Checkout API bị skip: {callResult.skipReason}");
+        }
+        else
+        {
+            Debug.LogWarning($"[Level2MllmDialogueBridge] Checkout API lỗi: {callResult.errorMessage}");
+        }
     }
 
     public void RequestMapIntro(Action<MllmApiCallResult> onComplete = null)
@@ -479,6 +650,16 @@ public class Level2MllmDialogueBridge : MonoBehaviour
             onComplete);
     }
 
+    public void RequestNpcDistraction(Action<MllmApiCallResult> onComplete = null)
+    {
+        if (orchestrator == null)
+            return;
+
+        orchestrator.RequestDialogue(
+            MllmDialogueRequestFactory.BuildNpcDistraction(sessionContext),
+            onComplete);
+    }
+
     private IEnumerable<MapZoneInfo> BuildMapZonesFromDataManager()
     {
         if (dataManager == null || dataManager.targets == null || dataManager.targets.Length == 0)
@@ -504,9 +685,93 @@ public class Level2MllmDialogueBridge : MonoBehaviour
         return zones.Count > 0 ? zones : defaultMapZones;
     }
 
+    private PostmanAuthInfo LoadPostmanAuthInfo()
+    {
+        PostmanAuthInfo info = new PostmanAuthInfo();
+
+        try
+        {
+            string projectRoot = Directory.GetParent(Application.dataPath)?.FullName;
+            if (string.IsNullOrWhiteSpace(projectRoot))
+                return info;
+
+            string collectionPath = Path.Combine(projectRoot, postmanCollectionRelativePath);
+            if (!File.Exists(collectionPath))
+            {
+                Debug.LogWarning($"[Level2MllmDialogueBridge] Không tìm thấy Postman collection: {collectionPath}");
+                return info;
+            }
+
+            JObject root = JObject.Parse(File.ReadAllText(collectionPath));
+            JArray variables = root["variable"] as JArray;
+            if (variables != null)
+            {
+                foreach (JToken variable in variables)
+                {
+                    string key = variable?["key"]?.ToString();
+                    string value = variable?["value"]?.ToString();
+                    if (key == "host")
+                        info.host = value;
+                    else if (key == "citizen_id")
+                        info.citizenId = value;
+                }
+            }
+
+            JObject loginItem = FindPostmanItem(root["item"] as JArray, "login");
+            JArray urlencoded = loginItem?["request"]?["body"]?["urlencoded"] as JArray;
+            if (urlencoded != null)
+            {
+                foreach (JToken field in urlencoded)
+                {
+                    string key = field?["key"]?.ToString();
+                    string value = field?["value"]?.ToString();
+                    if (key == "username")
+                        info.username = value;
+                    else if (key == "password")
+                        info.password = value;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"[Level2MllmDialogueBridge] Không parse được Postman collection: {ex.Message}");
+        }
+
+        return info;
+    }
+
+    private JObject FindPostmanItem(JArray items, string name)
+    {
+        if (items == null)
+            return null;
+
+        foreach (JToken item in items)
+        {
+            if (item == null)
+                continue;
+
+            if (string.Equals(item["name"]?.ToString(), name, StringComparison.OrdinalIgnoreCase))
+                return item as JObject;
+
+            JObject nested = FindPostmanItem(item["item"] as JArray, name);
+            if (nested != null)
+                return nested;
+        }
+
+        return null;
+    }
+
     [ContextMenu("Level2/Test Map Intro")]
     private void ContextTestMapIntro() => RequestMapIntro();
 
     [ContextMenu("Level2/Test Time Up")]
     private void ContextTestTimeUp() => HandleTimeUp();
+
+    private struct PostmanAuthInfo
+    {
+        public string host;
+        public string citizenId;
+        public string username;
+        public string password;
+    }
 }

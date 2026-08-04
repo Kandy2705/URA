@@ -19,6 +19,7 @@ public class ListResultCompare : MonoBehaviour
 
     public static bool compareResultListUpdated = false;
     public Action LoadCSV;
+    private bool hasFinalizedReport;
 
     void Start()
     {
@@ -50,10 +51,6 @@ public class ListResultCompare : MonoBehaviour
 
     void Update()
     {
-        if (!gameTimer.isRunning)
-        {
-            LoadCSV?.Invoke();
-        }
     }
 
     private void ProcessItem(GameObject item, ref string quantityText)
@@ -100,17 +97,34 @@ public class ListResultCompare : MonoBehaviour
 
     private void LoadCompareResult()
     {
+        if (hasFinalizedReport)
+            return;
+
         Debug.Log("Dữ liệu đang được chạy");
 
-        foreach(CompareResult result in compareResults)
+        List<CompareResult> filteredResults = new List<CompareResult>();
+        foreach (CompareResult result in compareResults)
         {
-            if(result.required == false && result.currentQuantity == 0) break;
-            DataManager.Instance.AddCompareResult(result);
+            if (result.required == false && result.currentQuantity == 0)
+                break;
+
+            filteredResults.Add(result);
         }
-    
-        DataManager.Instance.Report();
+
+        if (DataManager.Instance != null)
+        {
+            DataManager.Instance.SetCompareResults(filteredResults);
+            DataManager.Instance.Report();
+        }
+
+        hasFinalizedReport = true;
         LoadCSV -= LoadCompareResult;
         Debug.Log("Đã chạy xong hàm Load các compare data");
+    }
+
+    public void FinalizeResultsForReport()
+    {
+        LoadCompareResult();
     }
 
     void OnEnable()

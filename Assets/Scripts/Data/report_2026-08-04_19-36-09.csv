@@ -1,0 +1,25 @@
+Booth Type,Visit Count
+Fruits,1
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+Fruits
+
+Product,Time (s)
+Bắp cải,11.89043
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Cuộn cắt pizza,0,0,Thiếu 6,0
+Xẻng,0,0,Thiếu 5,0
+Kẹo socola,0,0,Thiếu 8,0
+Táo xanh,0,0,Thiếu 3,0
+Kem,0,0,Thiếu 7,0
+Chai rượu,0,0,Thiếu 8,0
+Cây khuấy,0,0,Thiếu 8,0
+Muỗng gỗ,0,0,Thiếu 6,0
+Bắp cải,7,18000,Dư 7,126000
+
+Total Items,7
+Total Price,126000
+Show list ,0 time

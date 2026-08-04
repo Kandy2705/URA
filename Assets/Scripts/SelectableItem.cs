@@ -5,6 +5,7 @@ public class SelectableItem : MonoBehaviour
 {
     public string itemName;
     public int price;
+    [Min(1)] public int stockQuantity = 1;
     
 
     void Start() {
