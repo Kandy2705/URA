@@ -8494,11 +8494,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemNameText: {fileID: 1585872935}
   NotificationPanel: {fileID: 1684175791}
-  UserCameraTransform: {fileID: 2109809155}
   notificationCanvasGroup: {fileID: 1684175793}
-  DisplayDistance: 0.5
+  acquiredDisplayDuration: 2.5
+  acquiredDisplayYOffset: 0.35
+  notificationBoard: {fileID: 0}
+  notificationBoardText: {fileID: 0}
+  notificationBoardCanvasGroup: {fileID: 0}
   proximityHintDistance: 2.5
   proximityScanInterval: 0.15
+  UserCameraTransform: {fileID: 2109809155}
+  DisplayDistance: 0.5
   inventoryView: []
   isNew: 0
   inventoryText: {fileID: 1748016655}
@@ -32322,6 +32327,18 @@ PrefabInstance:
       value: -5.44
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -32360,6 +32377,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8391222552659086748, guid: d2a12c3b07b67194e8734df875b8b766, type: 3}
       propertyPath: m_IsActive
