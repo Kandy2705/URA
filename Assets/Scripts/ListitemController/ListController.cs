@@ -198,7 +198,7 @@ public class ListController : MonoBehaviour
             OnRandomListChange?.Invoke(lastReplacedOldName, lastReplacedNewName, lastReplacedQuantity, discountInfo);
 
             // 🌟 Gọi thông báo UI
-            ShowNotification(msg, 3f);
+            ShowNotification(msg, 6f);
         }
     }
 

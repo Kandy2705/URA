@@ -5,14 +5,20 @@ using TMPro;
 
 public class PokeManager : MonoBehaviour
 {
+    [Header("Bought-item notification (alertBoard)")]
     [SerializeField] private TMP_Text itemNameText;
     [SerializeField] private GameObject NotificationPanel;
-    [SerializeField] private Transform UserCameraTransform;
     [SerializeField] private CanvasGroup notificationCanvasGroup;
-    public float DisplayDistance = 0.5f;
-    [Header("Proximity item hint")]
+    [SerializeField] private float acquiredDisplayDuration = 2.5f;
+    [SerializeField] private float acquiredDisplayYOffset = 0.35f;
+    [Header("Proximity item hint (notificationBoard)")]
+    [SerializeField] private GameObject notificationBoard;
+    [SerializeField] private TMP_Text notificationBoardText;
+    [SerializeField] private CanvasGroup notificationBoardCanvasGroup;
     [SerializeField] private float proximityHintDistance = 2.5f;
     [SerializeField] private float proximityScanInterval = 0.15f;
+    [SerializeField] private Transform UserCameraTransform;
+    public float DisplayDistance = 0.5f;
     public static PokeManager Instance { get; private set; }
     public Dictionary<string, BillEntry> inventory = new Dictionary<string, BillEntry>();
     private readonly Dictionary<string, int> initialProductStock = new Dictionary<string, int>();
@@ -47,8 +53,17 @@ public class PokeManager : MonoBehaviour
             notificationCanvasGroup.blocksRaycasts = false;
         }
 
+        if (notificationBoardCanvasGroup != null)
+        {
+            notificationBoardCanvasGroup.interactable = false;
+            notificationBoardCanvasGroup.blocksRaycasts = false;
+        }
+
         if (NotificationPanel != null)
             NotificationPanel.SetActive(false);
+
+        if (notificationBoard != null)
+            notificationBoard.SetActive(false);
 
         UpdateTotalsAndUI();
     }
@@ -102,7 +117,7 @@ public class PokeManager : MonoBehaviour
 
         UpdateInventoryView();
         UpdateTotalsAndUI();
-        ShowItemHint(item);
+        ShowAcquiredItemNotification(item);
 
         Debug.Log($"Poked: {item.itemName}, Price: {item.price}, Quantity: {inventory[item.itemName].quantity}");
     }
@@ -247,42 +262,87 @@ public class PokeManager : MonoBehaviour
         return stock.TryGetValue(itemName, out int value) ? value : 0;
     }
 
-    private void ShowItemHint(SelectableItem item)
+    private void ShowAcquiredItemNotification(SelectableItem item)
     {
-        if (item == null || NotificationPanel == null || UserCameraTransform == null)
+        if (item == null || UserCameraTransform == null)
             return;
 
-        EnsureProductStockInitialized();
-        int remainingStock = GetRemainingStock(item.itemName);
-        string stockText = remainingStock > 0 ? $"Còn lại: {remainingStock}" : "Hết hàng";
+        if (NotificationPanel == null)
+        {
+            ShowItemHint(item);
+            return;
+        }
 
         if (itemNameText != null)
         {
             itemNameText.enableAutoSizing = true;
             itemNameText.fontSizeMin = 18f;
             itemNameText.fontSizeMax = 34f;
-            itemNameText.text =
-                $"{item.itemName}\n{item.price:N0}đ  |  {stockText}\n" +
-                (remainingStock > 0 ? "Chạm để lấy" : "Vui lòng chọn món khác");
+            itemNameText.text = item.itemName;
         }
 
         NotificationPanel.SetActive(true);
         if (notificationCanvasGroup != null)
             notificationCanvasGroup.alpha = 0.92f;
 
-        Vector3 newPosition = UserCameraTransform.position + UserCameraTransform.forward * DisplayDistance;
+        Vector3 newPosition = UserCameraTransform.position + UserCameraTransform.forward * DisplayDistance
+                              + UserCameraTransform.up * acquiredDisplayYOffset;
         NotificationPanel.transform.position = newPosition;
         NotificationPanel.transform.rotation = Quaternion.LookRotation(
             NotificationPanel.transform.position - UserCameraTransform.position
         );
+
+        StopCoroutine(nameof(HideAcquiredItemNotificationAfter));
+        StartCoroutine(HideAcquiredItemNotificationAfter());
     }
 
-    private void HideItemHint()
+    private IEnumerator HideAcquiredItemNotificationAfter()
     {
+        yield return new WaitForSeconds(acquiredDisplayDuration);
+
         if (notificationCanvasGroup != null)
             notificationCanvasGroup.alpha = 0f;
 
         if (NotificationPanel != null)
             NotificationPanel.SetActive(false);
+    }
+
+    private void ShowItemHint(SelectableItem item)
+    {
+        if (item == null || notificationBoard == null || UserCameraTransform == null)
+            return;
+
+        EnsureProductStockInitialized();
+        int remainingStock = GetRemainingStock(item.itemName);
+        string stockText = remainingStock > 0 ? $"Còn lại: {remainingStock}" : "Hết hàng";
+
+        if (notificationBoardText != null)
+        {
+            notificationBoardText.enableAutoSizing = true;
+            notificationBoardText.fontSizeMin = 18f;
+            notificationBoardText.fontSizeMax = 34f;
+            notificationBoardText.text =
+                $"{item.itemName}\n{item.price:N0}đ  |  {stockText}\n" +
+                (remainingStock > 0 ? "Chạm để lấy" : "Vui lòng chọn món khác");
+        }
+
+        notificationBoard.SetActive(true);
+        if (notificationBoardCanvasGroup != null)
+            notificationBoardCanvasGroup.alpha = 0.92f;
+
+        Vector3 newPosition = UserCameraTransform.position + UserCameraTransform.forward * DisplayDistance;
+        notificationBoard.transform.position = newPosition;
+        notificationBoard.transform.rotation = Quaternion.LookRotation(
+            notificationBoard.transform.position - UserCameraTransform.position
+        );
+    }
+
+    private void HideItemHint()
+    {
+        if (notificationBoardCanvasGroup != null)
+            notificationBoardCanvasGroup.alpha = 0f;
+
+        if (notificationBoard != null)
+            notificationBoard.SetActive(false);
     }
 }
