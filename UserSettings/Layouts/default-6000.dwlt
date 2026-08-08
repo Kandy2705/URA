@@ -41,7 +41,7 @@ MonoBehaviour:
     x: 0
     y: 61
     width: 1512
-    height: 845
+    height: 840
   m_ShowMode: 4
   m_Title: Game
   m_RootView: {fileID: 6}
@@ -66,7 +66,7 @@ MonoBehaviour:
     x: 0
     y: 36
     width: 1512
-    height: 789
+    height: 784
   m_MinSize: {x: 200, y: 228}
   m_MaxSize: {x: 4000, y: 4028}
   m_ActualView: {fileID: 11}
@@ -142,7 +142,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1512
-    height: 845
+    height: 840
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 825
+    y: 820
     width: 1512
     height: 20
   m_MinSize: {x: 0, y: 0}
@@ -213,8 +213,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Package Manager\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 232
-    y: 61
+    x: 0
+    y: 26
     width: 1132
     height: 552
   m_SerializedDataModeController:
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 61
+    y: 0
     width: 1512
     height: 36
   m_SerializedDataModeController:
@@ -518,9 +518,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 97
+    y: 36
     width: 1512
-    height: 765
+    height: 784
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -542,7 +542,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 3024, y: 1488}
+  m_TargetSize: {x: 3024, y: 1526}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -594,7 +594,7 @@ MonoBehaviour:
       height: 744
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 3024, y: 1530}
+  m_LastWindowPixelSize: {x: 1512, y: 765}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000

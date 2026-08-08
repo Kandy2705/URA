@@ -29,6 +29,7 @@ public class GameTimer : MonoBehaviour
     private int seconds;
     private int minutes;
     private int hours;
+    private bool checkoutTriggered = false;
 
     // public static event Action OnTimeUpPaymentTriggered;
 
@@ -37,7 +38,8 @@ public class GameTimer : MonoBehaviour
         (hours, minutes, seconds) = TimeUtils.SecondsToHMS(limitSeconds);
         foreach (Timer timer in timers) timer.startAtRuntime = false;
         foreach (Timer timer in timers) UIStartTime(timer);
-        paymentUI.SetActive(false);
+        if (paymentUI != null)
+            paymentUI.SetActive(false);
     }
 
     void Start()
@@ -82,16 +84,34 @@ public class GameTimer : MonoBehaviour
         isRunning = false;
         //DataManager.Instance.Report();
 
-        Scene demoScene = SceneManager.GetSceneByName("Demo_18_11");
         Scene level2Scene = SceneManager.GetSceneByName("Scene-level-2");
         Scene dressScene = SceneManager.GetSceneByName("Dress_Game");
 
-        bool hasDemo = demoScene.IsValid() && demoScene.isLoaded;
         bool hasLevel2 = level2Scene.IsValid() && level2Scene.isLoaded;
         bool hasDress = dressScene.IsValid() && dressScene.isLoaded;
 
-        if ((hasDemo) && !hasDress)
+        if (hasLevel2)
         {
+            Debug.Log("StopTimer: Đang ở Level 2 — flow thanh toán do MoveToCheckout xử lý riêng.");
+            return;
+        }
+
+        if (!hasDress)
+        {
+            // Level 1: bấm thanh toán lần 1 → tính tiền + hiện Dress_Game.
+            if (checkoutTriggered)
+            {
+                Debug.Log("StopTimer: Đã trigger thanh toán rồi, bỏ qua.");
+                return;
+            }
+
+            checkoutTriggered = true;
+
+            if (CartManager.Instance != null)
+            {
+                CartManager.Instance.ProcessCheckout();
+            }
+
             const string dressName = "Dress_Game";
 
             if (!Application.CanStreamedLevelBeLoaded(dressName))
@@ -101,26 +121,21 @@ public class GameTimer : MonoBehaviour
             }
 
             SceneManager.LoadSceneAsync(dressName, LoadSceneMode.Additive);
-            Debug.Log("StopTimer: Đã load thêm Dress_Game (Additive).");
+            Debug.Log("StopTimer: Đã tính tiền và load thêm Dress_Game (Additive).");
             return;
         }
 
-        if (hasDemo && hasDress)
+        // Đã có Dress_Game → bấm tiếp để chuyển sang Level 2.
+        const string level2Name = "Scene-level-2";
+
+        if (!Application.CanStreamedLevelBeLoaded(level2Name))
         {
-            const string level2Name = "Scene-level-2";
-
-            if (!Application.CanStreamedLevelBeLoaded(level2Name))
-            {
-                Debug.LogError($"Scene '{level2Name}' không có trong Build Settings.");
-                return;
-            }
-
-            SceneManager.LoadScene(level2Name, LoadSceneMode.Single);
-            Debug.Log("StopTimer: Đã chuyển sang Scene-level-2 (Single), tắt luôn Demo_18_11 và Dress_Game.");
+            Debug.LogError($"Scene '{level2Name}' không có trong Build Settings.");
             return;
         }
 
-        Debug.Log("StopTimer: Trạng thái scene hiện tại không khớp rule nào, không làm gì.");
+        SceneManager.LoadScene(level2Name, LoadSceneMode.Single);
+        Debug.Log("StopTimer: Đã chuyển sang Scene-level-2 (Single).");
     }
 
     void UpdateUI()
@@ -139,7 +154,9 @@ public class GameTimer : MonoBehaviour
         UpdateUI();
 
         Debug.Log("Hết giờ");
-        paymentUI.SetActive(true);
+
+        if (paymentUI != null)
+            paymentUI.SetActive(true);
 
         if (CartManager.Instance != null)
         {
@@ -160,9 +177,30 @@ public class GameTimer : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("GameTimer: Không tìm thấy VRCheckoutTeleport — bỏ qua flow thanh toán khi hết giờ.");
+            Debug.LogWarning("GameTimer: Không tìm thấy VRCheckoutTeleport — chạy flow thanh toán đơn giản (Level 1).");
+            LoadDressSceneAfterCheckout();
         }
 
         onTimeUp?.Invoke();
+    }
+
+    private void LoadDressSceneAfterCheckout()
+    {
+        Scene dressScene = SceneManager.GetSceneByName("Dress_Game");
+        bool hasDress = dressScene.IsValid() && dressScene.isLoaded;
+
+        if (hasDress)
+            return;
+
+        const string dressName = "Dress_Game";
+
+        if (!Application.CanStreamedLevelBeLoaded(dressName))
+        {
+            Debug.LogError($"Scene '{dressName}' không có trong Build Settings.");
+            return;
+        }
+
+        SceneManager.LoadSceneAsync(dressName, LoadSceneMode.Additive);
+        Debug.Log("GameTimer: Đã load thêm Dress_Game (Additive) khi hết giờ.");
     }
 }

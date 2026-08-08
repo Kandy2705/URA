@@ -153,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "K\u1EB9o socola"
   price: 12000
+  stockQuantity: 1
 --- !u!1001 &3224003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -847,6 +848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "K\u1EB9o socola"
   price: 12000
+  stockQuantity: 1
 --- !u!4 &43478918 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 796717960244648349, guid: 81d249e507294d741858fb7216679ec4, type: 3}
@@ -1188,6 +1190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "K\u1EB9o socola"
   price: 12000
+  stockQuantity: 1
 --- !u!1001 &54511696
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8204,7 +8207,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8747907326224632397, guid: 0cbc0856f0fb8d84a81be5dea463c369, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -147
       objectReference: {fileID: 0}
     - target: {fileID: 8747907326224632397, guid: 0cbc0856f0fb8d84a81be5dea463c369, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8224,11 +8227,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8747907326224632397, guid: 0cbc0856f0fb8d84a81be5dea463c369, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -33.7
+      value: -32
       objectReference: {fileID: 0}
     - target: {fileID: 8747907326224632397, guid: 0cbc0856f0fb8d84a81be5dea463c369, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 300
+      value: 608
       objectReference: {fileID: 0}
     - target: {fileID: 8747907326224632397, guid: 0cbc0856f0fb8d84a81be5dea463c369, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -16569,6 +16572,13 @@ MonoBehaviour:
   announceRequiredAmountWithTts: 1
   amountAnnouncementTemplate: "T\u1ED5ng ti\u1EC1n c\u1EA7n thanh to\xE1n l\xE0 {0}
     \u0111\u1ED3ng"
+  paymentSuccessTemplate: "Ch\xE1u \u0111\xE3 nh\u1EADn {0} \u0111\u1ED3ng v\xE0
+    th\u1ED1i l\u1EA1i {1} \u0111\u1ED3ng. C\u1EA3m \u01A1n b\xE1c."
+  paymentShortageTemplate: "B\xE1c \u0111\xE3 \u0111\u01B0a thi\u1EBFu {0} \u0111\u1ED3ng
+    r\u1ED3i, b\xE1c vui l\xF2ng ch\u1ECDn th\xEAm ti\u1EC1n nh\xE9."
+  insufficientWalletMessage: "B\xE1c kh\xF4ng \u0111\u1EE7 ti\u1EC1n r\u1ED3i n\xEAn
+    ch\xE1u s\u1EBD b\u1ECF b\u1EDBt \u0111\u1ED3 ra nh\xE9. C\u1EA3m \u01A1n b\xE1c
+    \u0111\xE3 tham gia."
 --- !u!114 &716524638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21656,6 +21666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "K\u1EB9o socola"
   price: 12000
+  stockQuantity: 1
 --- !u!1001 &893861775
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25232,7 +25243,7 @@ RectTransform:
   m_GameObject: {fileID: 1052076635}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.31, y: 1.31, z: 1.31}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1639058533}
@@ -25249,9 +25260,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 472, y: 393}
+  m_SizeDelta: {x: 720.6107, y: 600}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1052076637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25291,7 +25302,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1052076639
 Canvas:
   m_ObjectHideFlags: 0
@@ -25301,8 +25312,8 @@ Canvas:
   m_GameObject: {fileID: 1052076635}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 2
+  m_Camera: {fileID: 1589138101}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -26697,6 +26708,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "K\u1EB9o socola"
   price: 12000
+  stockQuantity: 1
 --- !u!4 &1125751570 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1058049622156651196, guid: 737c2fda69259de40b4fb5965b86a9e7, type: 3}
@@ -29650,6 +29662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "K\u1EB9o socola"
   price: 12000
+  stockQuantity: 1
 --- !u!4 &1257860679 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 520041274079275570, guid: 2851bdb646102b54ab18a381c30a0cf5, type: 3}
@@ -38805,6 +38818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "K\u1EB9o socola"
   price: 12000
+  stockQuantity: 1
 --- !u!4 &1650768330 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3288269870832922608, guid: 2f120549ced5a7240a1b5f0bb5ce2254, type: 3}
@@ -39505,6 +39519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "K\u1EB9o socola"
   price: 12000
+  stockQuantity: 1
 --- !u!1001 &1683094269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43565,7 +43580,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1680501587, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.83
+      value: 1.69
       objectReference: {fileID: 0}
     - target: {fileID: 1680501587, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -53621,7 +53636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Level2MllmDialogueBridge
   apiConfig: {fileID: 11400000, guid: c9f5b2d43e6a1748b9c0d1e2f3a4b5c6, type: 2}
-  citizenIdOverride: ''
+  citizenIdOverride: 
   autoAuthenticateFromPostmanCollection: 1
   postmanCollectionRelativePath: md/AL-SERVICE.postman_collection.json
   runIntroSequenceOnStart: 1
