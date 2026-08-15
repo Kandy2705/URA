@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using System.IO;
 using System.Linq;
+using TMPro.Examples;
 
 public class DataManager : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class DataManager : MonoBehaviour
     }
     private List<CompareResult> compareResults = new List<CompareResult>();
     private PaymentSummary paymentSummary;
+    private List<int> submitted_amounts_history = new List<int>();
+    private List<int> difference_amounts_history = new List<int>();
 
     public void AddCompareResult(CompareResult result)
     {
@@ -35,6 +38,12 @@ public class DataManager : MonoBehaviour
     public void SetPaymentSummary(PaymentSummary summary)
     {
         paymentSummary = summary;
+    }
+
+    public void SetPaymentHistory(List<int> submittedAmountsHistory, List<int> differenceAmountsHistory)
+    {
+        submitted_amounts_history = submittedAmountsHistory;
+        difference_amounts_history = differenceAmountsHistory;
     }
 
     public Transform player;          // Player transform
@@ -126,6 +135,9 @@ public class DataManager : MonoBehaviour
         string path = Path.Combine(dirPath, fileName);
         using (StreamWriter writer = new StreamWriter(path, false))
         {
+            writer.WriteLine($"Participant ID:,{GameSessionContext.Instance.citizenId}");
+            writer.WriteLine($"Level:,{GameSessionContext.Instance.level}");
+
             writer.WriteLine("Booth Type,Visit Count");
             writer.WriteLine($"Fruits,{num_visit_fruits}");
             writer.WriteLine($"Drinks,{num_visit_drinks}");
@@ -239,6 +251,12 @@ public class DataManager : MonoBehaviour
                 }
             }
             writer.WriteLine("Show list ," + click_num + " time" + (click_num <= 1 ? "" : "s"));
+
+            int correct_money_count = submitted_amounts_history.Count;
+            writer.WriteLine($"Correct Money Count: ,{correct_money_count}");
+            
+            writer.WriteLine($"Submitted Amounts History: ,{string.Join(",", submitted_amounts_history)}");
+            writer.WriteLine($"Difference Amounts History: ,{string.Join(",", difference_amounts_history)}");
         }
     }
 
