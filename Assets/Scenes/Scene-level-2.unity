@@ -1010,16 +1010,18 @@ MonoBehaviour:
   - {fileID: 7928218173533933786, guid: f3ba1b015110d31459d677fc896f7e92, type: 3}
   - {fileID: 2757006321740363870, guid: 43dc60078cfd5b546979ce81618bc3e8, type: 3}
   - {fileID: 7928218173533933786, guid: 4d6c7a5b3633a664882584eb782536ae, type: 3}
+  choicedItems: []
   limit: 2
   currentLimit: 0
-  choicedItems: []
+  enforceManualViewLimitForLegacyList: 0
   spawnOnStart: 5
   showDuration: 10
+  enableRandomTaskChange: 0
+  minDelay: 30
+  maxDelay: 90
   notificationCanvas: {fileID: 0}
   notificationText: {fileID: 0}
   hasTriggeredRandomChange: 0
-  minDelay: 30
-  maxDelay: 90
 --- !u!114 &47635412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16580,6 +16582,7 @@ MonoBehaviour:
   mainCameraPoi: {fileID: 725169554}
   cashierFaceTarget: {fileID: 2007358536}
   paymentUiToHide: {fileID: 1081175119}
+  scrollUiSampleToHide: {fileID: 0}
   movementScripts:
   - {fileID: 0}
   turnScripts: []
@@ -23068,6 +23071,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -30
       objectReference: {fileID: 0}
+    - target: {fileID: 3284743035059852446, guid: baa17bc8d8dc40743a08c63f90b230d2, type: 3}
+      propertyPath: m_VerticalScrollbar
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3284743035059852446, guid: baa17bc8d8dc40743a08c63f90b230d2, type: 3}
+      propertyPath: m_HorizontalScrollbar
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3284743035328591767, guid: baa17bc8d8dc40743a08c63f90b230d2, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -23106,7 +23117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3284743035855046855, guid: baa17bc8d8dc40743a08c63f90b230d2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00021802784
+      value: -0.0004246634
       objectReference: {fileID: 0}
     - target: {fileID: 3284743035855046855, guid: baa17bc8d8dc40743a08c63f90b230d2, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -38389,6 +38400,79 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1637412869
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1637412870}
+  - component: {fileID: 1637412871}
+  m_Layer: 0
+  m_Name: ShoppingMissionController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1637412870
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637412869}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1637412871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637412869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddccbddf192fd6a4089d7bdfb7a0af5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShoppingMissionController
+  listController: {fileID: 1825740876}
+  gameTimer: {fileID: 0}
+  initialTasks:
+  - itemName: "T\xE1o xanh"
+    requiredQuantity: 2
+    viewPrefab: {fileID: 2757006321740363870, guid: 43dc60078cfd5b546979ce81618bc3e8, type: 3}
+  autoShowInitialTasks: 1
+  supplementalTaskCandidates:
+  - itemName: Nho
+    requiredQuantity: 1
+    viewPrefab: {fileID: 7928218173533933786, guid: 4af2936e2f6b83341b587d56197408c4, type: 3}
+  supplementalMinDelay: 30
+  supplementalMaxDelay: 90
+  supplementalNotificationDuration: 5
+  maxSupplementalTasks: 2
+  supplementalCutoffSeconds: 30
+  legacyMissions:
+  - missionId: 1
+    displayName: Mission_1
+    items:
+    - itemName: "T\xE1o xanh"
+      requiredQuantity: 1
+      viewPrefab: {fileID: 2757006321740363870, guid: 43dc60078cfd5b546979ce81618bc3e8, type: 3}
+  - missionId: 2
+    displayName: Mission_2
+    items:
+    - itemName: Nho
+      requiredQuantity: 1
+      viewPrefab: {fileID: 7928218173533933786, guid: 4af2936e2f6b83341b587d56197408c4, type: 3}
 --- !u!1 &1639058532
 GameObject:
   m_ObjectHideFlags: 0
@@ -45083,16 +45167,18 @@ MonoBehaviour:
   - {fileID: 7928218173533933786, guid: 55272f09f146e114db48a13c6e386400, type: 3}
   - {fileID: 7928218173533933786, guid: 19daee7bb1a64f245884eb8b8a762c62, type: 3}
   - {fileID: 7928218173533933786, guid: dd266f06b981cb949ab128d577d5e6a8, type: 3}
+  choicedItems: []
   limit: 2
   currentLimit: 0
-  choicedItems: []
+  enforceManualViewLimitForLegacyList: 0
   spawnOnStart: 8
   showDuration: 10
+  enableRandomTaskChange: 0
+  minDelay: 1
+  maxDelay: 10
   notificationCanvas: {fileID: 281647689}
   notificationText: {fileID: 281647690}
   hasTriggeredRandomChange: 1
-  minDelay: 1
-  maxDelay: 10
 --- !u!114 &1825740877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48038,6 +48124,10 @@ PrefabInstance:
     - target: {fileID: 5514050420445824797, guid: 4d40f3bd6652f4484a1ffe2a42e59ff8, type: 3}
       propertyPath: m_Name
       value: Tag (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6786624598739033334, guid: 4d40f3bd6652f4484a1ffe2a42e59ff8, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -55206,3 +55296,4 @@ SceneRoots:
   - {fileID: 1763324417}
   - {fileID: 901067267}
   - {fileID: 757235830}
+  - {fileID: 1637412870}

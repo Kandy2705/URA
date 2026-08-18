@@ -1,294 +1,253 @@
-using UnityEngine;
 using System;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
 
+/// <summary>Builds result/scoring data for both initial and supplemental tasks.</summary>
 public class ListResultCompare : MonoBehaviour
-{   
+{
     public ListController listController;
     [SerializeField] private GameObject dataContainer;
-    [SerializeField] private Transform obtainProductContainer; 
-    [SerializeField] private Transform wrongProductContainer; 
-
+    [SerializeField] private Transform obtainProductContainer;
+    [SerializeField] private Transform wrongProductContainer;
     [SerializeField] private GameTimer gameTimer;
-    private List<GameObject> choicedItems;
-    private float itemHeight = 5f;   
-    private float startY = 10f;      
+
+    private readonly Dictionary<string, int> requiredQuantities = new Dictionary<string, int>(StringComparer.Ordinal);
+    private ShoppingMissionController taskController;
+    private float itemHeight = 5f;
+    private float startY = 10f;
     public List<CompareResult> compareResults = new List<CompareResult>();
-
     public bool loadStart = true;
-
     public static bool compareResultListUpdated = false;
     public Action LoadCSV;
 
-    void Start()
+    private void Start()
     {
         if (listController == null)
+            listController = FindListController();
+        if (gameTimer == null)
+            gameTimer = FindFirstObjectByType<GameTimer>();
+
+        taskController = FindFirstObjectByType<ShoppingMissionController>();
+        if (taskController != null)
         {
-            listController = FindFirstObjectByType<ListController>();
-            if (listController == null)
-            {
-                Debug.LogError("Không tìm thấy ListController trong scene!");
-                return;
-            }    
-            Debug.Log($"ListResultCompare: Loaded {choicedItems?.Count ?? 0} choicedItems");
+            taskController.OnInitialTasksRendered += HandleInitialTasksRendered;
+            taskController.OnSupplementalTaskAdded += HandleSupplementalTaskAdded;
+            RegisterTasks(taskController.InitialTasks);
         }
-
-        listController.OnListChanged += HandleListChanged;
-
-        choicedItems = listController.choicedItems;
-
-        string quantityText = "";
-
-        foreach(GameObject item in choicedItems)
+        else
         {
-            ProcessItem(item, ref quantityText);
+            RegisterRenderedLegacyItems();
+            if (listController != null)
+                listController.OnListChanged += HandleLegacyListChanged;
         }
 
         LoadCSV += LoadCompareResult;
         loadStart = false;
     }
 
-    void Update()
+    private void OnDestroy()
     {
-        if (!gameTimer.isRunning)
+        if (taskController != null)
         {
+            taskController.OnInitialTasksRendered -= HandleInitialTasksRendered;
+            taskController.OnSupplementalTaskAdded -= HandleSupplementalTaskAdded;
+        }
+        if (listController != null)
+            listController.OnListChanged -= HandleLegacyListChanged;
+    }
+
+    private void OnEnable()
+    {
+        if (PokeManager.Instance != null)
+            PokeManager.Instance.OnInventoryChanged += HandleBillChanged;
+    }
+
+    private void OnDisable()
+    {
+        if (PokeManager.Instance != null)
+            PokeManager.Instance.OnInventoryChanged -= HandleBillChanged;
+    }
+
+    private void Update()
+    {
+        if (gameTimer != null && !gameTimer.isRunning)
             LoadCSV?.Invoke();
-        }
     }
 
-    private void ProcessItem(GameObject item, ref string quantityText)
+    private void HandleInitialTasksRendered(IReadOnlyList<ShoppingTaskItem> tasks)
     {
-        Debug.Log("Processing item: " + item.name);
-        quantityText = "0";
-        string itemName = item.transform.Find("Name").GetComponent<TMPro.TMP_Text>().text;
-        int itemQuantity = int.Parse(item.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
-        BillEntry entry = new BillEntry(itemName, 0, itemQuantity);
-
-        
-        CompareData(entry, 0, itemQuantity, ref quantityText);
-        CreateNewInstantData(entry, obtainProductContainer, ref quantityText);
+        // Initial tasks are rendered only once per session; this protects the immutable list
+        // from accidental re-render/reset while a supplemental notification is active.
+        if (requiredQuantities.Count == 0)
+            RegisterTasks(tasks);
     }
 
-    public void HandleListChanged(string oldName, GameObject newData, int newQuantity)
+    private void HandleSupplementalTaskAdded(ShoppingTaskItem task) => RegisterTask(task);
+
+    private void RegisterTasks(IReadOnlyList<ShoppingTaskItem> tasks)
     {
-        BillEntry entry = null;
-        if (CartManager.Instance.bill.ContainsKey(newData.name))
+        if (tasks == null)
+            return;
+        foreach (ShoppingTaskItem task in tasks)
+            RegisterTask(task);
+    }
+
+    private void RegisterTask(ShoppingTaskItem task)
+    {
+        if (task == null || string.IsNullOrWhiteSpace(task.itemName))
+            return;
+
+        int requiredQuantity = Mathf.Max(1, task.requiredQuantity);
+        requiredQuantities.TryGetValue(task.itemName, out int currentRequired);
+        requiredQuantities[task.itemName] = currentRequired + requiredQuantity;
+        UpsertRequiredResult(task.itemName);
+    }
+
+    private void RegisterRenderedLegacyItems()
+    {
+        if (listController == null)
+            return;
+        foreach (GameObject item in listController.choicedItems)
         {
-            Debug.Log("Vao if la an lon");
-            entry = CartManager.Instance.bill[newData.name];
+            TMP_Text name = item != null ? item.transform.Find("Name")?.GetComponent<TMP_Text>() : null;
+            TMP_Text quantity = item != null ? item.transform.Find("Quantity")?.GetComponent<TMP_Text>() : null;
+            if (name == null || quantity == null || !int.TryParse(quantity.text, out int count))
+                continue;
+            RegisterTask(new ShoppingTaskItem(name.text, count));
         }
+    }
+
+    private void HandleLegacyListChanged(string oldName, GameObject newData, int newQuantity)
+    {
+        if (!string.IsNullOrWhiteSpace(oldName))
+            requiredQuantities.Remove(oldName);
+        if (newData != null)
+            RegisterTask(new ShoppingTaskItem(newData.name, newQuantity));
+    }
+
+    private void HandleBillChanged(BillEntry entry, bool _)
+    {
+        if (entry == null || string.IsNullOrWhiteSpace(entry.itemName))
+            return;
+
+        if (requiredQuantities.ContainsKey(entry.itemName))
+        {
+            UpsertRequiredResult(entry.itemName);
+            UpdateDisplay(obtainProductContainer, entry.itemName, FormatQuantity(entry.itemName));
+            return;
+        }
+
+        UpsertUnexpectedResult(entry);
+        if (!HasDisplay(wrongProductContainer, entry.itemName))
+            CreateNewInstantData(entry, wrongProductContainer, entry.quantity.ToString());
         else
+            UpdateDisplay(wrongProductContainer, entry.itemName, entry.quantity.ToString());
+    }
+
+    private void UpsertRequiredResult(string itemName)
+    {
+        int required = requiredQuantities[itemName];
+        BillEntry entry = GetInventoryEntry(itemName);
+        int current = entry?.quantity ?? 0;
+        string display = FormatQuantity(current, required);
+        UpsertCompareResult(itemName, current, required, entry?.price ?? 0, true);
+        if (!HasDisplay(obtainProductContainer, itemName))
+            CreateNewInstantData(new BillEntry(itemName, entry?.price ?? 0, current), obtainProductContainer, display);
+        else
+            UpdateDisplay(obtainProductContainer, itemName, display);
+    }
+
+    private void UpsertUnexpectedResult(BillEntry entry) =>
+        UpsertCompareResult(entry.itemName, entry.quantity, 0, entry.price, false);
+
+    private void UpsertCompareResult(string itemName, int current, int required, int price, bool isRequired)
+    {
+        string ignored = string.Empty;
+        string status = StatusChange(current, required, ref ignored);
+        int index = compareResults.FindIndex(result => result.itemName == itemName);
+        CompareResult result = new CompareResult(itemName, current, required, status, price, isRequired);
+        if (index >= 0)
+            compareResults[index] = result;
+        else
+            compareResults.Add(result);
+    }
+
+    private BillEntry GetInventoryEntry(string itemName)
+    {
+        return PokeManager.Instance != null && PokeManager.Instance.inventory.TryGetValue(itemName, out BillEntry entry)
+            ? entry : null;
+    }
+
+    private string FormatQuantity(string itemName) =>
+        FormatQuantity(GetInventoryEntry(itemName)?.quantity ?? 0, requiredQuantities[itemName]);
+
+    private string FormatQuantity(int current, int required)
+    {
+        string text = string.Empty;
+        StatusChange(current, required, ref text);
+        return text;
+    }
+
+    public string StatusChange(int currentQuantity, int indexQuantity, ref string quantityText)
+    {
+        if (currentQuantity < indexQuantity)
         {
-            Debug.Log("Vao else la an cac");
-            entry = new BillEntry(newData.name, 0, 0);
-            Debug.Log($"Số lượng mới của vật phẩm là {entry.quantity}");
+            int shortage = indexQuantity - currentQuantity;
+            quantityText = $"{currentQuantity} (Thiếu {shortage})";
+            return $"Thiếu {shortage}";
         }
+        if (currentQuantity == indexQuantity)
+        {
+            quantityText = $"{currentQuantity} (Đủ)";
+            return "Đủ";
+        }
+        int surplus = currentQuantity - indexQuantity;
+        quantityText = $"{currentQuantity} (Dư {surplus})";
+        return $"Dư {surplus}";
+    }
 
-        int index = compareResults.FindIndex(r => r.itemName == oldName);
-        Debug.Log($"GIá trị index hiện tại là {index} cho item: {oldName}");
+    private void CreateNewInstantData(BillEntry entry, Transform parentContainer, string quantityText)
+    {
+        if (dataContainer == null || parentContainer == null)
+            return;
+        GameObject data = Instantiate(dataContainer, parentContainer, false);
+        data.name = entry.itemName;
+        TMP_Text name = data.transform.Find("Name")?.GetComponent<TMP_Text>();
+        TMP_Text quantity = data.transform.Find("Quantity")?.GetComponent<TMP_Text>();
+        if (name != null) name.text = entry.itemName;
+        if (quantity != null) quantity.text = quantityText;
+        Vector3 newPos = new Vector3(0f, startY, 0f);
+        if (parentContainer.childCount > 1)
+            newPos.y = parentContainer.GetChild(parentContainer.childCount - 2).localPosition.y - itemHeight;
+        data.transform.localPosition = newPos;
+    }
 
+    private static bool HasDisplay(Transform parent, string itemName) =>
+        parent != null && parent.Find(itemName) != null;
 
-        string quantityText = "0";
+    private static void UpdateDisplay(Transform parent, string itemName, string quantityText)
+    {
+        Transform item = parent != null ? parent.Find(itemName) : null;
+        TMP_Text quantity = item != null ? item.Find("Quantity")?.GetComponent<TMP_Text>() : null;
+        if (quantity != null) quantity.text = quantityText;
+    }
 
-        string status = StatusChange(entry.quantity, newQuantity, ref quantityText);
-
-        CompareResult newResult = new CompareResult(entry.itemName, entry.quantity, newQuantity, status, entry.price, true);
-        compareResults[index] = newResult;
-
-        Debug.Log("Dữ liệu của compare list đã được thay đổi !");
+    private static ListController FindListController()
+    {
+        foreach (ListController candidate in FindObjectsByType<ListController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+            if (candidate != null && candidate.HasListContainer)
+                return candidate;
+        return FindFirstObjectByType<ListController>();
     }
 
     private void LoadCompareResult()
     {
-        Debug.Log("Dữ liệu đang được chạy");
-
-        foreach(CompareResult result in compareResults)
-        {
-            if(result.required == false && result.currentQuantity == 0) break;
+        if (DataManager.Instance == null)
+            return;
+        foreach (CompareResult result in compareResults)
             DataManager.Instance.AddCompareResult(result);
-        }
-    
         DataManager.Instance.Report();
         LoadCSV -= LoadCompareResult;
-        Debug.Log("Đã chạy xong hàm Load các compare data");
-    }
-
-    void OnEnable()
-    {
-        Debug.Log("ListResultCompare: OnEnable được gọi, đăng ký event");
-        if (PokeManager.Instance != null)
-        {
-            PokeManager.Instance.OnInventoryChanged += HandleBillChanged;
-        }
-        else
-        {
-            Debug.LogError("ListResultCompare không tìm thấy PokeManager!");
-        }
-    }
-
-    void OnDisable()
-    {
-        if (PokeManager.Instance != null)
-        {
-            PokeManager.Instance.OnInventoryChanged -= HandleBillChanged;
-        }
-    }
-
-    public void CompareData(BillEntry entry, int currentQuantity, int IndexQuantity, ref string quantityText)
-    {
-        Debug.Log($"CompareData() called for {entry.itemName}: {currentQuantity}/{IndexQuantity}");
-
-        string status = StatusChange(currentQuantity, IndexQuantity, ref quantityText);
-
-        HandleCompareResultList(entry.itemName, currentQuantity, IndexQuantity, status, entry.price);
-    }
-
-    public string StatusChange(int currentQuantity, int IndexQuantity, ref string quantityText)
-    {
-        string status = "";
-        if (currentQuantity < IndexQuantity)
-        {
-            int shortage = IndexQuantity - currentQuantity;
-            status = $"Thiếu {shortage}";
-            quantityText = $"{currentQuantity} (Thiếu {shortage})";
-        }
-        else if (currentQuantity == IndexQuantity)
-        {
-            status = "Đủ";
-            quantityText = $"{currentQuantity} (Đủ)";
-        }
-        else
-        {
-            int surplus = currentQuantity - IndexQuantity;
-            status = $"Dư {surplus}";
-            quantityText = $"{currentQuantity} (Dư {surplus})";
-        }
-        return status;
-    }
-
-    private void HandleCompareResultList(string itemName, int currentQuantity, int indexQuantity, string status, int price)
-    {
-
-        int existingIndex = compareResults.FindIndex(r => r.itemName == itemName);
-
-        if (loadStart)
-        {
-            CompareResult newResult = new CompareResult(itemName, currentQuantity, indexQuantity, status, price, true);
-            compareResults.Add(newResult);
-        }
-        else
-        {
-            if (existingIndex != -1)
-            {
-                bool lastRequireStatus = compareResults[existingIndex].required;
-                CompareResult newResult = new CompareResult(itemName, currentQuantity, indexQuantity, status, price, lastRequireStatus);
-                compareResults[existingIndex] = newResult;
-            }
-            else
-            {
-                CompareResult newResult = new CompareResult(itemName, currentQuantity, indexQuantity, status, price, false);
-                compareResults.Add(newResult);
-            }
-        }
-
-        
-    }
-   
-    public void CreateNewInstantData(BillEntry entry, Transform parentContainer, ref string quantityText)
-    {
-        Debug.Log("Creating new instant data for: " + entry.itemName);
-        GameObject data = Instantiate(dataContainer, parentContainer, false);
-        data.name = entry.itemName;
-        data.transform.Find("Name").GetComponent<TMPro.TMP_Text>().text = entry.itemName;
-        data.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text = quantityText;
-
-        Vector3 newPos = new Vector3(0f, startY, 0f);
-        if (parentContainer.childCount > 1)
-        {
-            Transform lastItem = parentContainer.GetChild(parentContainer.childCount - 2);
-            newPos.y = lastItem.localPosition.y - itemHeight;
-        }
-        data.transform.localPosition = newPos;
-    }
-
-    void HandleBillChanged(BillEntry entry, bool isNew)
-    {
-        if (entry == null) return; 
-        
-        Transform parentContainer;
-
-        string addItem = entry.itemName;
-        int currentQuantity = entry.quantity;
-
-        GameObject matchedItem = choicedItems.Find(item =>
-            item.transform.Find("Name").GetComponent<TMPro.TMP_Text>().text == addItem
-        );
-
-        if (isNew)
-        {
-            string quantityText = entry.quantity.ToString();
-            if (matchedItem)
-            {
-                parentContainer = obtainProductContainer;
-                // Debug.Log($"Found matching item in choicedItems: {addItem}");
-                // Debug.Log("Số sản phẩm hiện tại là: " + entry.quantity);
-
-                // int choiceQuantity = int.Parse(matchedItem.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
-                // CompareData(entry, entry.quantity, choiceQuantity, ref quantityText);
-
-                int choiceQuantity = int.Parse(matchedItem.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
-                CompareData(entry, currentQuantity, choiceQuantity, ref quantityText);
-                
-                for (int i = 0; i < parentContainer.childCount; i++)
-                {
-                    Transform child = parentContainer.GetChild(i);
-                    if (child.Find("Name").GetComponent<TMPro.TMP_Text>().text == entry.itemName)
-                    {
-                        child.Find("Quantity").GetComponent<TMPro.TMP_Text>().text = quantityText;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                parentContainer = wrongProductContainer;
-                Debug.LogWarning($"No matching item found in choicedItems for: {addItem}");
-                CompareData(entry, entry.quantity, 0, ref quantityText);
-                CreateNewInstantData(entry, parentContainer, ref quantityText);
-            }
-        }
-        else
-        {
-            string quantityText = currentQuantity.ToString();
-
-            if (matchedItem)
-            {
-                parentContainer = obtainProductContainer;
-                Debug.Log($"Found matching item in choicedItems: {addItem}");
-                Debug.Log("Số sản phẩm hiện tại là: " + entry.quantity);
-                int choiceQuantity = int.Parse(matchedItem.transform.Find("Quantity").GetComponent<TMPro.TMP_Text>().text);
-                CompareData(entry ,currentQuantity, choiceQuantity, ref quantityText);
-            }
-            else
-            {
-                parentContainer = wrongProductContainer;
-                Debug.LogWarning($"No matching item found in choicedItems for: {addItem}");
-                CompareData(entry, entry.quantity, 0, ref quantityText);
-
-            }
-            
-            // Cập nhật UI
-            for (int i = 0; i < parentContainer.childCount; i++)
-            {
-                Transform child = parentContainer.GetChild(i);
-                if (child.Find("Name").GetComponent<TMPro.TMP_Text>().text == entry.itemName)
-                {
-                    child.Find("Quantity").GetComponent<TMPro.TMP_Text>().text = quantityText;
-                    break;
-                }
-            }
-        }
-        // DataManager.Instance.ExportCSV(compareResults);
-
     }
 }

@@ -1,28 +1,32 @@
 using System;
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine;
 
-
+/// <summary>
+/// Shopping-list view. Legacy random-list APIs remain for scenes that do not use ShoppingMissionController.
+/// </summary>
 public class ListController : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] private GameObject listContainer; 
+    [SerializeField] private GameObject listContainer;
 
-    [Header("Data")]
-    [SerializeField] private List<GameObject> availablePrefabs;
+    [Header("Legacy data / mission view prefabs")]
+    [SerializeField] private List<GameObject> availablePrefabs = new List<GameObject>();
+    [SerializeField] public List<GameObject> choicedItems = new List<GameObject>();
 
-    [Header("Limit")]
+    [Header("Manual view limit")]
     [SerializeField] private int limit = 2;
-    [SerializeField] private int currentLimit = 0;
+    [SerializeField] private int currentLimit;
+    [SerializeField] private bool enforceManualViewLimitForLegacyList;
 
-    [SerializeField] public List<GameObject> choicedItems;
-
-    [Header("Config")]
+    [Header("Legacy random list")]
     [SerializeField] private int spawnOnStart = 5;
     [SerializeField] private float showDuration = 10f;
+    [SerializeField] private bool enableRandomTaskChange = false;
+    [SerializeField] private float minDelay = 30f;
+    [SerializeField] private float maxDelay = 90f;
 
     [Header("Notify UI")]
     [SerializeField] private GameObject notificationCanvas;
@@ -30,194 +34,209 @@ public class ListController : MonoBehaviour
 
     public GameObject NotificationCanvas => notificationCanvas;
     public TextMeshProUGUI NotificationText => notificationText;
-
+    public bool HasListContainer => listContainer != null;
     public bool hasTriggeredRandomChange = true;
     public bool HasPendingRandomChange => hasTriggeredRandomChange;
+    public event Action<string, GameObject, int> OnListChanged;
+    public event Action<int> OnListShown;
+    public event Action<string, string, int, string> OnRandomListChange;
+    public event Action<IReadOnlyList<ShoppingTaskItem>> OnInitialTasksRendered;
 
-    private string currentScene;
-
-    [SerializeField] private float minDelay = 30f;
-    [SerializeField] private float maxDelay = 90f;
-
-    private int spawnCount = 0;
+    private readonly List<GameObject> renderedItems = new List<GameObject>();
     private Coroutine currentRoutine;
+    private int spawnCount;
     private string lastReplacedOldName;
     private string lastReplacedNewName;
     private int lastReplacedQuantity;
 
-    public event Action<string, GameObject, int> OnListChanged;
-    public event Action<int> OnListShown;
-    public event Action<string, string, int, string> OnRandomListChange;
-
     private void Start()
     {
-        
-        currentScene = SceneManager.GetActiveScene().name;
-        for (int i = 0; i < spawnOnStart; i++) SpawnItemInList();
-        ShowList();
-        currentLimit = 0;
-        if(currentScene != "Demo_18_11") StartCoroutine(RandomChangeCoroutine());
+        if (FindFirstObjectByType<ShoppingMissionController>() != null)
+            return;
+
+        for (int i = 0; i < spawnOnStart; i++)
+            SpawnItemInList();
+        ShowListAutomatically();
+        ResetViewLimit();
+        if (enableRandomTaskChange)
+            StartCoroutine(RandomChangeCoroutine());
     }
 
-    private void Update()
-    {
-        // if (Input.GetKeyDown(KeyCode.L))
-        // {
-        //      ReplaceRandomItemWithUniquePrefab();
-        // }
-    }
-
+    /// <summary>Manual request; retained for NoticeBoardButtonFunction and NpcActionDispatcher.</summary>
     public void ShowList()
     {
-
-        if (currentRoutine != null || (currentLimit == limit && currentScene == "Scene-level-2"))
-        {
+        if (currentRoutine != null || (ShouldLimitManualViews() && currentLimit >= limit))
             return;
-        }
+
         currentLimit++;
-        Debug.Log("Show list " + currentLimit + " lần");
         OnListShown?.Invoke(currentLimit);
         currentRoutine = StartCoroutine(ShowThenHide());
     }
 
+    /// <summary>Used for the initial list. It deliberately does not consume a manual view.</summary>
+    public void ShowListAutomatically()
+    {
+        if (listContainer == null)
+            return;
+        if (currentRoutine != null)
+            StopCoroutine(currentRoutine);
+        currentRoutine = StartCoroutine(ShowThenHide());
+    }
+
+    // A stale scene persistent call references this method; keep it as a compatibility shim.
+    public void ToggleList()
+    {
+        if (listContainer != null && listContainer.activeSelf)
+        {
+            if (currentRoutine != null)
+                StopCoroutine(currentRoutine);
+            listContainer.SetActive(false);
+            currentRoutine = null;
+            return;
+        }
+        ShowList();
+    }
+
+    public void ResetViewLimit() => currentLimit = 0;
+    public int GetClickNumber() => currentLimit;
+
+    public void RenderTasks(IReadOnlyList<ShoppingTaskItem> tasks)
+    {
+        ClearRenderedItems();
+        choicedItems.Clear();
+        spawnCount = 0;
+        if (tasks != null)
+        {
+            foreach (ShoppingTaskItem task in tasks)
+                SpawnMissionItem(task);
+        }
+        OnInitialTasksRendered?.Invoke(tasks);
+    }
+
+    public void ShowNotification(string message, float duration = 3f)
+    {
+        if (notificationText != null)
+            notificationText.text = message;
+        if (notificationCanvas == null)
+            return;
+        notificationCanvas.SetActive(true);
+        StartCoroutine(HideNotificationAfter(duration));
+    }
+
+    private bool ShouldLimitManualViews() =>
+        enforceManualViewLimitForLegacyList || FindFirstObjectByType<ShoppingMissionController>() != null;
 
     private IEnumerator ShowThenHide()
     {
+        if (listContainer == null)
+        {
+            currentRoutine = null;
+            yield break;
+        }
         listContainer.SetActive(true);
         yield return new WaitForSeconds(showDuration);
         listContainer.SetActive(false);
         currentRoutine = null;
     }
 
-    private void SpawnItemInList()
+    private void SpawnMissionItem(ShoppingTaskItem task)
     {
-        if (availablePrefabs.Count == 0)
+        if (task == null)
+            return;
+        GameObject prefab = task.viewPrefab != null ? task.viewPrefab : FindPrefab(task.itemName);
+        if (prefab == null || listContainer == null)
         {
-            Debug.Log("Đã hết item để chọn!");
+            Debug.LogWarning($"[ListController] Missing view prefab for mission item '{task.itemName}'.");
             return;
         }
+        GameObject item = Instantiate(prefab, listContainer.transform);
+        ConfigureItemView(item, task.itemName, task.requiredQuantity);
+    }
 
-        int randomIndex    = UnityEngine.Random.Range(0, availablePrefabs.Count);
-        int randomQuantity = UnityEngine.Random.Range(1, 10);
+    private GameObject FindPrefab(string itemName)
+    {
+        foreach (GameObject prefab in availablePrefabs)
+        {
+            if (prefab != null && string.Equals(prefab.name, itemName, StringComparison.Ordinal))
+                return prefab;
+        }
+        return null;
+    }
 
-        GameObject randomPrefab = availablePrefabs[randomIndex];
-        GameObject spawnedItem  = Instantiate(randomPrefab, listContainer.transform);
-
-        choicedItems.Add(spawnedItem);
-
-        spawnedItem.transform.localPosition = new Vector3(0f, 20f + spawnCount * -25f, 0f);
-        spawnedItem.transform.localRotation = Quaternion.identity;
-
-        var quantityText = spawnedItem.transform.Find("Quantity")?.GetComponent<TextMeshProUGUI>();
-        if (quantityText != null) quantityText.text = randomQuantity.ToString();
-
-        spawnCount++;
+    private void SpawnItemInList()
+    {
+        if (availablePrefabs.Count == 0 || listContainer == null)
+            return;
+        int randomIndex = UnityEngine.Random.Range(0, availablePrefabs.Count);
+        GameObject prefab = availablePrefabs[randomIndex];
+        ConfigureItemView(Instantiate(prefab, listContainer.transform), prefab.name, UnityEngine.Random.Range(1, 10));
         availablePrefabs.RemoveAt(randomIndex);
+    }
+
+    private void ConfigureItemView(GameObject item, string itemName, int quantity)
+    {
+        if (item == null)
+            return;
+        renderedItems.Add(item);
+        choicedItems.Add(item);
+        item.transform.localPosition = new Vector3(0f, 20f + spawnCount * -25f, 0f);
+        item.transform.localRotation = Quaternion.identity;
+        TMP_Text nameText = item.transform.Find("Name")?.GetComponent<TMP_Text>();
+        TMP_Text quantityText = item.transform.Find("Quantity")?.GetComponent<TMP_Text>();
+        if (nameText != null) nameText.text = itemName;
+        if (quantityText != null) quantityText.text = Mathf.Max(1, quantity).ToString();
+        spawnCount++;
+    }
+
+    private void ClearRenderedItems()
+    {
+        foreach (GameObject item in renderedItems)
+        {
+            if (item != null)
+                Destroy(item);
+        }
+        renderedItems.Clear();
     }
 
     public string ReplaceRandomItemWithUniquePrefab()
     {
-        if (choicedItems.Count == 0)
-        {
-            Debug.Log("Không có item nào để thay đổi!");
-            return "Không có item nào để thay đổi!";
-        }
-
-        if (availablePrefabs.Count == 0)
-        {
-            Debug.Log("Không có prefab nào trong availablePrefabs!");
-            return "Không có prefab nào trong availablePrefabs!";
-        }
-
-        HashSet<string> currentNames = new HashSet<string>();
-
-        foreach (var item in choicedItems)
-        {
-            currentNames.Add(item.name);
-        }
-
-        List<GameObject> validPrefabs = new List<GameObject>();
-
-        foreach (var prefab in availablePrefabs)
-        {
-            if (!currentNames.Contains(prefab.name))
-            {
-                validPrefabs.Add(prefab);
-            }
-        }
-       
-        int randomItemIndex = UnityEngine.Random.Range(0, choicedItems.Count);
-        GameObject targetItem = choicedItems[randomItemIndex];
-
-        GameObject oldPrefab = targetItem;
-
-        var oldNameText = targetItem.transform.Find("Name")?.GetComponent<TextMeshProUGUI>();
-        string oldName = oldNameText != null ? oldNameText.text : targetItem.name;
-
-        GameObject newPrefab = validPrefabs[UnityEngine.Random.Range(0, validPrefabs.Count)];
-        targetItem.name = newPrefab.name;
-
-        var nameText = targetItem.transform.Find("Name")?.GetComponent<TextMeshProUGUI>();
-        if (nameText != null)
-            nameText.text = newPrefab.name;
-        
-        int newQuantity = UnityEngine.Random.Range(1, 10);
-        var quantityText = targetItem.transform.Find("Quantity")?.GetComponent<TextMeshProUGUI>();
-        if (quantityText != null)
-            quantityText.text = newQuantity.ToString();
-
-        //ListResultCompare.compareResultListUpdated = true;   
-
-        lastReplacedOldName = oldName;
-        lastReplacedNewName = newPrefab.name;
-        lastReplacedQuantity = newQuantity;
-
-        Debug.Log($"Đã đổi {oldName} → {newPrefab.name} (x{newQuantity})");
-
-        OnListChanged?.Invoke(oldName, newPrefab, newQuantity);
-
-        return $"Đã đổi {oldName} → {newPrefab.name} (x{newQuantity})";
+        if (choicedItems.Count == 0 || availablePrefabs.Count == 0)
+            return "Không có item hoặc prefab để thay đổi.";
+        GameObject target = choicedItems[UnityEngine.Random.Range(0, choicedItems.Count)];
+        GameObject prefab = availablePrefabs[UnityEngine.Random.Range(0, availablePrefabs.Count)];
+        TMP_Text oldText = target.transform.Find("Name")?.GetComponent<TMP_Text>();
+        lastReplacedOldName = oldText != null ? oldText.text : target.name;
+        lastReplacedNewName = prefab.name;
+        lastReplacedQuantity = UnityEngine.Random.Range(1, 10);
+        ConfigureExistingItem(target, lastReplacedNewName, lastReplacedQuantity);
+        OnListChanged?.Invoke(lastReplacedOldName, prefab, lastReplacedQuantity);
+        return $"Đã đổi {lastReplacedOldName} → {lastReplacedNewName} (x{lastReplacedQuantity})";
     }
 
+    private static void ConfigureExistingItem(GameObject item, string name, int quantity)
+    {
+        TMP_Text nameText = item.transform.Find("Name")?.GetComponent<TMP_Text>();
+        TMP_Text quantityText = item.transform.Find("Quantity")?.GetComponent<TMP_Text>();
+        if (nameText != null) nameText.text = name;
+        if (quantityText != null) quantityText.text = quantity.ToString();
+    }
 
     private IEnumerator RandomChangeCoroutine()
     {
-        float waitTime = UnityEngine.Random.Range(minDelay, maxDelay);
-        Debug.Log($"Sự kiện đổi item sẽ xảy ra trong {waitTime} giây...");
-
-        yield return new WaitForSeconds(waitTime);
-
-
-        if (hasTriggeredRandomChange)
-        {
-            
-            string discountInfo = ItemsManager.DiscountRandomItem();
-            string msg = ReplaceRandomItemWithUniquePrefab();
-
-            hasTriggeredRandomChange = false;
-            OnRandomListChange?.Invoke(lastReplacedOldName, lastReplacedNewName, lastReplacedQuantity, discountInfo);
-
-            // 🌟 Gọi thông báo UI
-            ShowNotification(msg, 3f);
-        }
-    }
-
-    private void ShowNotification(string message, float duration = 3f)
-    {
-        notificationText.text = message;
-        notificationCanvas.SetActive(true);
-        StartCoroutine(HideNotificationAfter(duration));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(minDelay, maxDelay));
+        if (!hasTriggeredRandomChange)
+            yield break;
+        string discountInfo = ItemsManager.DiscountRandomItem();
+        string message = ReplaceRandomItemWithUniquePrefab();
+        hasTriggeredRandomChange = false;
+        OnRandomListChange?.Invoke(lastReplacedOldName, lastReplacedNewName, lastReplacedQuantity, discountInfo);
+        ShowNotification(message);
     }
 
     private IEnumerator HideNotificationAfter(float duration)
     {
         yield return new WaitForSeconds(duration);
-        notificationCanvas.SetActive(false);
+        if (notificationCanvas != null)
+            notificationCanvas.SetActive(false);
     }
-
-    public int GetClickNumber()
-    {
-        return currentLimit;
-    }
-
 }

@@ -14,22 +14,13 @@ public class SelectableItem : MonoBehaviour
     void OnDestroy() {
         ItemsManager.UnregisterSelectableItem(this);
     }
-    // private void OnMouseDown()
-    // {
-    //     GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-    //     if (playerObj == null)
-    //     {
-    //         Debug.LogWarning("Không tìm thấy Player với tag 'Player'");
-    //         return;
-    //     }
-    //
-    //     float dist = Vector3.Distance(transform.position, playerObj.transform.position);
-    //
-    //     if (CartManager.Instance != null)
-    //     {
-    //         CartManager.Instance.AddItem(this);
-    //     }
-    //
-    //     Destroy(gameObject);
-    // }
+#if UNITY_EDITOR
+    // Fast task-testing fallback. It deliberately uses the same inventory path as XR poke
+    // and does not destroy the shelf product, so repeated clicks can test quantities.
+    private void OnMouseDown()
+    {
+        if (Application.isPlaying && PokeManager.Instance != null)
+            PokeManager.Instance.PokingItem(this);
+    }
+#endif
 }
