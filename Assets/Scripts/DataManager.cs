@@ -135,8 +135,8 @@ public class DataManager : MonoBehaviour
         string path = Path.Combine(dirPath, fileName);
         using (StreamWriter writer = new StreamWriter(path, false))
         {
-            writer.WriteLine($"Participant ID:,{GameSessionContext.Instance.citizenId}");
-            writer.WriteLine($"Level:,{GameSessionContext.Instance.level}");
+            writer.WriteLine($"Participant ID,{GameSessionContext.Instance.citizenId}");
+            writer.WriteLine($"Level,{GameSessionContext.Instance.level}");
 
             writer.WriteLine("Booth Type,Visit Count");
             writer.WriteLine($"Fruits,{num_visit_fruits}");
@@ -146,6 +146,28 @@ public class DataManager : MonoBehaviour
 
             writer.WriteLine("Visit Order of Booths");
             writer.WriteLine(string.Join(" -> ", booths_priority));
+            writer.WriteLine();
+
+
+            int click_num = -1;
+            // GameObject target = GameObject.Find("Supermarket/Notice_Board/UI Sample/Scroll UI Sample");
+            if (target == null)
+            {
+                Debug.Log("KHÔNG TÌM THẤY GameObject Scroll UI Sample");
+            }
+            else
+            {
+                ListController listCtrlr = target.GetComponent<ListController>();
+                if (listCtrlr == null)
+                {
+                    Debug.Log("KHÔNG TÌM THẤY Component của Object");
+                }
+                else
+                {
+                    click_num = listCtrlr.GetClickNumber();
+                }
+            }
+            writer.WriteLine($"Show list {click_num} time{(click_num == 1 ? ' ' : 's')}");
             writer.WriteLine();
 
             writer.WriteLine("Product,Time (s)");
@@ -183,9 +205,6 @@ public class DataManager : MonoBehaviour
             }
 
             writer.WriteLine();
-            writer.WriteLine("Total Items," + grandTotalItems);
-            writer.WriteLine("Total Price," + grandTotalPrice);
-            writer.WriteLine();
 
             writer.WriteLine("Bill Item,Quantity,Unit Price,Subtotal");
             if (CartManager.Instance != null && CartManager.Instance.bill != null)
@@ -201,6 +220,11 @@ public class DataManager : MonoBehaviour
             }
 
             writer.WriteLine();
+
+            writer.WriteLine("Total Items," + grandTotalItems);
+            writer.WriteLine("Total Price," + grandTotalPrice);
+            writer.WriteLine();
+
             writer.WriteLine("Payment Summary");
             writer.WriteLine("Required Amount,Paid Amount,Difference,Result,Note");
             if (paymentSummary != null)
@@ -229,34 +253,16 @@ public class DataManager : MonoBehaviour
             {
                 writer.WriteLine("0,0,0,NOT_CAPTURED,Payment summary not available");
             }
+            writer.WriteLine();
 
-
-            int click_num = -1;
-            // GameObject target = GameObject.Find("Supermarket/Notice_Board/UI Sample/Scroll UI Sample");
-
-            if (target == null)
-            {
-                Debug.Log("KHÔNG TÌM THẤY GameObject Scroll UI Sample");
+            if(submitted_amounts_history != null && difference_amounts_history != null){
+                int correct_money_count = submitted_amounts_history.Count;
+                writer.WriteLine($"Correct Money Count,{correct_money_count}");
+                writer.WriteLine($"Submitted Amounts History,{string.Join("," , submitted_amounts_history)}");
+                writer.WriteLine($"Difference Amounts History,{string.Join("," , difference_amounts_history)}");
+            }else{
+                writer.WriteLine("Fail to record Submit history !");
             }
-            else
-            {
-                ListController listCtrlr = target.GetComponent<ListController>();
-                if (listCtrlr == null)
-                {
-                    Debug.Log("KHÔNG TÌM THẤY Component của Object");
-                }
-                else
-                {
-                    click_num = listCtrlr.GetClickNumber();
-                }
-            }
-            writer.WriteLine("Show list ," + click_num + " time" + (click_num <= 1 ? "" : "s"));
-
-            int correct_money_count = submitted_amounts_history.Count;
-            writer.WriteLine($"Correct Money Count: ,{correct_money_count}");
-            
-            writer.WriteLine($"Submitted Amounts History: ,{string.Join(",", submitted_amounts_history)}");
-            writer.WriteLine($"Difference Amounts History: ,{string.Join(",", difference_amounts_history)}");
         }
     }
 
