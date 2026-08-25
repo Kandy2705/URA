@@ -19,8 +19,16 @@ public class ShoppingCart : MonoBehaviour
 
     private CollectibleItem GetItemDefinition(string name)
     {
-        // Dùng Linq để tìm item trong database có tên trùng khớp
-        return allItemDefinitions.FirstOrDefault(item => item.itemName == name);
+        // Tên hiển thị trong scene có thể khác chữ hoa/thường hoặc có khoảng trắng
+        // thừa so với tên trong database (ví dụ: "Kẹo socola" / "Kẹo Socola").
+        if (allItemDefinitions == null || string.IsNullOrWhiteSpace(name))
+            return null;
+
+        string normalizedName = name.Trim();
+        return allItemDefinitions.FirstOrDefault(item =>
+            item != null &&
+            !string.IsNullOrWhiteSpace(item.itemName) &&
+            string.Equals(item.itemName.Trim(), normalizedName, System.StringComparison.OrdinalIgnoreCase));
     }
 
     public void Start()

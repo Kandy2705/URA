@@ -58,6 +58,15 @@ public class CartManager : MonoBehaviour
         UpdateBillUI();
 
         PokeManager.Instance.ClearCart();
+
+        // Level 1 hoàn tất ở bước thanh toán tại giỏ hàng.
+        // Level 2 có PaymentManager và chỉ xuất report sau khi người chơi
+        // chọn tiền/thanh toán xong, nên không export sớm ở đây.
+        if (PaymentManager.Instance == null && DataManager.Instance != null)
+        {
+            DataManager.Instance.Report();
+            Debug.Log("[CartManager] Đã xuất CSV sau khi thanh toán tại giỏ hàng (Level 1).");
+        }
     }
 
     private void UpdateBillUI()

@@ -120,10 +120,14 @@ public class DataManager : MonoBehaviour
     {
         string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
         string fileName = $"report_{timestamp}.csv";
-        string dirPath = Path.Combine(Application.dataPath, "Scripts/Data");
+        // Application.dataPath trỏ vào vùng dữ liệu của APK trên Android/Quest,
+        // thường là read-only. persistentDataPath là thư mục dành cho dữ liệu
+        // phát sinh khi chạy app và có thể ghi được trên thiết bị.
+        string dirPath = Path.Combine(Application.persistentDataPath, "Data");
         if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
 
         string path = Path.Combine(dirPath, fileName);
+        Debug.Log($"[DataManager] CSV report saved at: {path}");
         using (StreamWriter writer = new StreamWriter(path, false))
         {
             writer.WriteLine("Booth Type,Visit Count");
@@ -240,6 +244,52 @@ public class DataManager : MonoBehaviour
             }
             writer.WriteLine("Show list ," + click_num + " time" + (click_num <= 1 ? "" : "s"));
         }
+
+        TryExportToPublicDownloads(path, fileName);
+    }
+
+    private static void TryExportToPublicDownloads(string sourcePath, string fileName)
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        // Android 10+ requires MediaStore to write into the public Downloads folder.
+        try
+        {
+            using (AndroidJavaObject activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer")
+                       .GetStatic<AndroidJavaObject>("currentActivity"))
+            using (AndroidJavaObject resolver = activity.Call<AndroidJavaObject>("getContentResolver"))
+            using (AndroidJavaClass downloads = new AndroidJavaClass("android.provider.MediaStore$Downloads"))
+            using (AndroidJavaObject downloadsUri = downloads.GetStatic<AndroidJavaObject>("EXTERNAL_CONTENT_URI"))
+            using (AndroidJavaObject values = new AndroidJavaObject("android.content.ContentValues"))
+            {
+                values.Call("put", "_display_name", fileName);
+                values.Call("put", "mime_type", "text/csv");
+                values.Call("put", "relative_path", "Download/URA/");
+
+                using (AndroidJavaObject uri = resolver.Call<AndroidJavaObject>("insert", downloadsUri, values))
+                {
+                    if (uri == null)
+                    {
+                        Debug.LogWarning("[DataManager] Không thể tạo file CSV trong thư mục Downloads.");
+                        return;
+                    }
+
+                    using (AndroidJavaObject outputStream = resolver.Call<AndroidJavaObject>("openOutputStream", uri))
+                    {
+                        outputStream.Call("write", File.ReadAllBytes(sourcePath));
+                        outputStream.Call("flush");
+                    }
+                }
+            }
+
+            Debug.Log($"[DataManager] CSV copied to Quest Downloads/URA/{fileName}");
+        }
+        catch (System.Exception exception)
+        {
+            Debug.LogWarning($"[DataManager] Không thể export CSV ra Downloads: {exception.Message}");
+        }
+#else
+        Debug.Log($"[DataManager] Public Downloads export chỉ chạy trên Android/Quest. File gốc: {sourcePath}");
+#endif
     }
 
     private static string EscapeCsv(string value)

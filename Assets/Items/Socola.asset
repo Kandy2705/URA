@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce6bd46f4600fc54cad26772ee5f6d32, type: 3}
   m_Name: Socola
   m_EditorClassIdentifier: 
-  itemName: "K\u1EB9o Socola"
+  itemName: "K\u1EB9o socola"
   itemIcon: {fileID: 21300000, guid: 9be268e0c4cb1c5478eb432c374f253f, type: 3}

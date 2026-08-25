@@ -149,10 +149,16 @@ public class MllmApiClient : MonoBehaviour
 
         Debug.Log($"[MllmApiClient] POST {config.GenerateDialogueUrl}\nPayload: {json}");
 
+        NpcDialoguePresenter presenter = NpcDialoguePresenter.Instance ?? FindObjectOfType<NpcDialoguePresenter>();
+        if (presenter != null)
+        {
+            presenter.ShowApiRequesting(config.GenerateDialogueUrl);
+        }
+
         using (UnityWebRequest webRequest = BuildJsonPostRequest(config.GenerateDialogueUrl, json))
         {
             yield return webRequest.SendWebRequest();
-            MllmApiCallResult result = ParseGenerateDialogueResponse(webRequest);
+            MllmApiCallResult result = ParseGenerateDialogueResponse(webRequest, presenter);
             onComplete?.Invoke(result);
         }
 
@@ -165,6 +171,12 @@ public class MllmApiClient : MonoBehaviour
         {
             onComplete?.Invoke(false, "BackendApiConfig chưa được gán.");
             yield break;
+        }
+
+        NpcDialoguePresenter presenter = NpcDialoguePresenter.Instance ?? FindObjectOfType<NpcDialoguePresenter>();
+        if (presenter != null)
+        {
+            presenter.ShowApiRequesting(config.HelloUrl);
         }
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(config.HelloUrl))
@@ -181,6 +193,22 @@ public class MllmApiClient : MonoBehaviour
             Debug.Log(ok
                 ? $"[MllmApiClient] Hello OK: {message}"
                 : $"[MllmApiClient] Hello failed: {message}");
+
+            if (presenter != null)
+            {
+                if (ok)
+                {
+                    presenter.ShowHeadBubbleDebug($"[PING SUCCESS]\nHTTP: 200\n\n{message}", 3f);
+                }
+                else if (webRequest.result == UnityWebRequest.Result.ConnectionError)
+                {
+                    presenter.ShowNetworkError(webRequest.error ?? "Cannot resolve destination host");
+                }
+                else
+                {
+                    presenter.ShowApiError((int)webRequest.responseCode, webRequest.result.ToString(), webRequest.error, webRequest.downloadHandler?.text);
+                }
+            }
 
             onComplete?.Invoke(ok, message);
         }
@@ -209,8 +237,11 @@ public class MllmApiClient : MonoBehaviour
             webRequest.SetRequestHeader("Authorization", "Bearer " + token);
     }
 
-    private MllmApiCallResult ParseGenerateDialogueResponse(UnityWebRequest webRequest)
+    private MllmApiCallResult ParseGenerateDialogueResponse(UnityWebRequest webRequest, NpcDialoguePresenter presenter = null)
     {
+        if (presenter == null)
+            presenter = NpcDialoguePresenter.Instance ?? FindObjectOfType<NpcDialoguePresenter>();
+
         string body = webRequest.downloadHandler?.text;
         int statusCode = (int)webRequest.responseCode;
         bool isTimeout = webRequest.result == UnityWebRequest.Result.ConnectionError &&
@@ -223,10 +254,25 @@ public class MllmApiClient : MonoBehaviour
             string message = BuildHttpErrorMessage(statusCode, webRequest.error, body, webRequest.result);
             Debug.LogError($"[MllmApiClient] Generate dialogue failed ({statusCode}): {message}");
 
+            if (presenter != null)
+            {
+                if (isTimeout)
+                    presenter.ShowApiTimeout();
+                else if (isNetworkError)
+                    presenter.ShowNetworkError(webRequest.error ?? "Cannot resolve destination host");
+                else
+                    presenter.ShowApiError(statusCode, webRequest.result.ToString(), webRequest.error, body);
+            }
+
             MllmApiCallResult errorResult = MllmApiCallResult.FromError(statusCode, message, body);
             errorResult.isTimeout = isTimeout;
             errorResult.isNetworkError = isNetworkError;
             return errorResult;
+        }
+
+        if (presenter != null)
+        {
+            presenter.ShowApiSuccess(statusCode, body);
         }
 
         try
@@ -234,6 +280,9 @@ public class MllmApiClient : MonoBehaviour
             MllmGenerateDialogueResponse response = JsonConvert.DeserializeObject<MllmGenerateDialogueResponse>(body);
             if (response?.result == null)
             {
+                if (presenter != null)
+                    presenter.ShowJsonError(body, "Response thiếu field 'result'.");
+
                 return MllmApiCallResult.FromError(statusCode, "Response thiếu field 'result'.", body);
             }
 
@@ -242,11 +291,22 @@ public class MllmApiClient : MonoBehaviour
                 $"latency={response.latency_seconds:F2}s | model={response.model_latency_seconds:F2}s\n" +
                 $"dialogue: {response.result.dialogue}");
 
+            if (presenter != null)
+            {
+                presenter.ShowParseSuccess(response.result.dialogue);
+            }
+
             return MllmApiCallResult.FromSuccess(response, body, statusCode);
         }
         catch (Exception ex)
         {
             Debug.LogError($"[MllmApiClient] Không parse được response: {ex.Message}\nBody: {body}");
+
+            if (presenter != null)
+            {
+                presenter.ShowJsonError(body, ex.Message);
+            }
+
             return MllmApiCallResult.FromError(statusCode, $"Parse error: {ex.Message}", body);
         }
     }
