@@ -332,6 +332,7 @@ public class PaymentManager : MonoBehaviour
 
     public void SetRequiredAmount(int amount)
     {
+        Debug.Log($"[PaymentManager] SetRequiredAmount({amount}) được gọi.");
         requiredAmount = Mathf.Max(0, amount);
         BeginCheckoutSession();
     }
@@ -355,15 +356,20 @@ public class PaymentManager : MonoBehaviour
 
     public void ConfirmPayment()
     {
-        if (!checkoutSessionActive || isResolvingPayment)
-        {
-            Debug.Log("PaymentManager: Không có phiên thanh toán đang mở.");
+        Debug.Log($"[PaymentManager] ConfirmPayment() được gọi! checkoutSessionActive={checkoutSessionActive}, currentAmount={currentAmount}, requiredAmount={requiredAmount}");
+
+        if (isResolvingPayment)
             return;
+
+        if (!checkoutSessionActive)
+        {
+            Debug.Log("[PaymentManager] Phiên thanh toán chưa mở -> Tự động kích hoạt phiên thanh toán.");
+            BeginCheckoutSession();
         }
 
         if (paymentConfirmed)
         {
-            Debug.Log("PaymentManager: Phiên thanh toán này đã được xác nhận.");
+            Debug.Log("[PaymentManager] Phiên thanh toán này đã được xác nhận.");
             return;
         }
 
@@ -379,11 +385,15 @@ public class PaymentManager : MonoBehaviour
 
     private IEnumerator ResolvePaymentAttemptRoutine()
     {
+        Debug.Log($"[PaymentManager] Bắt đầu ResolvePaymentAttemptRoutine: currentAmount={currentAmount}, requiredAmount={requiredAmount}");
+
         while (isPlayingCashierIntro)
             yield return null;
 
         int difference = currentAmount - requiredAmount;
         AudioSource targetAudioSource = ResolveCashierAudioSource(ResolveCashierAnimator());
+
+        Debug.Log($"[PaymentManager] ResolvePaymentAttemptRoutine: difference={difference}, targetAudioSource={(targetAudioSource != null)}");
 
         if (difference >= 0)
         {
@@ -431,6 +441,7 @@ public class PaymentManager : MonoBehaviour
     {
         paymentConfirmed = true;
         isResolvingPayment = false;
+        checkoutSessionActive = false;
         lastPaymentSummary = BuildPaymentSummary();
 
         if (DataManager.Instance != null)
@@ -459,8 +470,13 @@ public class PaymentManager : MonoBehaviour
 
         RefreshAllMoneyItems();
 
+        if (paymentUiRoot != null)
+            paymentUiRoot.SetActive(false);
+
+        UpdateUI();
+
         Debug.Log(
-            $"PaymentManager: Đã chốt thanh toán | required={requiredAmount:N0} | paid={currentAmount:N0} | " +
+            $"[PaymentManager] Đã chốt thanh toán | required={requiredAmount:N0} | paid={currentAmount:N0} | " +
             $"result={lastPaymentSummary.resultCode} | note={lastPaymentSummary.note}");
     }
 
@@ -544,6 +560,8 @@ public class PaymentManager : MonoBehaviour
 
     public void PlayCashierIntro()
     {
+        Debug.Log($"[PaymentManager] PlayCashierIntro() được gọi. isPlayingCashierIntro={isPlayingCashierIntro}");
+
         if (isPlayingCashierIntro)
             return;
 
@@ -558,13 +576,15 @@ public class PaymentManager : MonoBehaviour
         AudioSource targetAudioSource = ResolveCashierAudioSource(targetAnimator);
         bool canAnimateCashier = targetAnimator != null && HasAnimatorParameter(targetAnimator, cashierPayingParameter);
 
+        Debug.Log($"[PaymentManager] PlayCashierIntroRoutine bắt đầu: targetAnimator={(targetAnimator != null)}, targetAudioSource={(targetAudioSource != null)}, requiredAmount={requiredAmount}");
+
         if (targetAnimator == null)
         {
-            Debug.LogWarning("PaymentManager: Không tìm thấy Animator của NPC cashier đang active trong Scene-level-2.");
+            Debug.LogWarning("[PaymentManager] Không tìm thấy Animator của NPC cashier đang active trong Scene-level-2.");
         }
         else if (!canAnimateCashier)
         {
-            Debug.LogWarning($"PaymentManager: Animator '{targetAnimator.runtimeAnimatorController?.name}' không có bool parameter '{cashierPayingParameter}'.");
+            Debug.LogWarning($"[PaymentManager] Animator '{targetAnimator.runtimeAnimatorController?.name}' không có bool parameter '{cashierPayingParameter}'.");
         }
 
         if (canAnimateCashier)
@@ -576,7 +596,7 @@ public class PaymentManager : MonoBehaviour
         if (canAnimateCashier)
             targetAnimator.SetBool(cashierPayingParameter, false);
 
-        if (announceRequiredAmountWithTts && targetAudioSource != null && requiredAmount > 0)
+        if (announceRequiredAmountWithTts && targetAudioSource != null)
             yield return PlayAmountAnnouncement(targetAudioSource, requiredAmount);
 
         isPlayingCashierIntro = false;
@@ -667,6 +687,8 @@ public class PaymentManager : MonoBehaviour
 
         cashierAudioSource.playOnAwake = false;
         cashierAudioSource.loop = false;
+        cashierAudioSource.volume = 1f;
+        cashierAudioSource.mute = false;
         cashierAudioSource.spatialBlend = 0f;
         cashierAudioSource.dopplerLevel = 0f;
 
@@ -704,38 +726,64 @@ public class PaymentManager : MonoBehaviour
 
     private IEnumerator PlayCashierSpeech(AudioSource audioSource, string announcement)
     {
-        if (audioSource == null || string.IsNullOrWhiteSpace(announcement))
+        if (string.IsNullOrWhiteSpace(announcement))
             yield break;
 
-        Debug.Log($"PaymentManager cashier: {announcement}");
+        Debug.Log($"[PaymentManager] NPC thu ngân bắt đầu gọi TTS: {announcement}");
 
+        // 1. Hiển thị lời thoại trên bubble đầu NPC / UI
+        NpcDialoguePresenter presenter = FindObjectOfType<NpcDialoguePresenter>();
+        if (presenter != null)
+        {
+            presenter.ShowSingle(announcement, "Thu ngân", Mathf.Max(4f, announcement.Length * 0.08f));
+        }
+
+        // 2. Phát âm thanh beep xác nhận của quầy thu ngân
+        if (audioSource != null && cashierBeepClip != null)
+        {
+            audioSource.PlayOneShot(cashierBeepClip);
+        }
+
+        // 3. Thử tải giọng đọc TTS online
+        string encodedText = UnityWebRequest.EscapeURL(announcement);
         string requestUrl =
-            $"https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q={UnityWebRequest.EscapeURL(announcement)}";
+            $"https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q={encodedText}";
+
+        Debug.Log($"[PaymentManager] TTS URL: {requestUrl}");
 
         using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(requestUrl, AudioType.MPEG))
         {
             request.timeout = 10;
-            request.SetRequestHeader("User-Agent", "Mozilla/5.0");
+            request.SetRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+            request.SetRequestHeader("Referer", "https://translate.google.com/");
+            request.SetRequestHeader("Accept", "*/*");
 
             yield return request.SendWebRequest();
 
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogWarning($"Không thể tải audio đọc số tiền: {request.error}");
-                yield break;
-            }
+            Debug.Log($"[PaymentManager] TTS Result: {request.result}");
+            Debug.Log($"[PaymentManager] TTS Error: {request.error}");
+            Debug.Log($"[PaymentManager] TTS HTTP Code: {request.responseCode}");
 
-            AudioClip announcementClip = DownloadHandlerAudioClip.GetContent(request);
-            if (announcementClip == null)
+            if (request.result == UnityWebRequest.Result.Success)
             {
-                Debug.LogWarning("Không tạo được AudioClip đọc số tiền.");
-                yield break;
+                AudioClip announcementClip = DownloadHandlerAudioClip.GetContent(request);
+                if (announcementClip != null && audioSource != null)
+                {
+                    audioSource.Stop();
+                    audioSource.clip = announcementClip;
+                    audioSource.Play();
+                    yield return new WaitForSeconds(announcementClip.length);
+                    yield break;
+                }
             }
-
-            audioSource.Stop();
-            audioSource.PlayOneShot(announcementClip);
-            yield return new WaitForSeconds(announcementClip.length);
+            else
+            {
+                Debug.LogWarning($"[PaymentManager] Google TTS: {request.responseCode} | {request.error}");
+            }
         }
+
+        // Thời gian chờ đọc thoại nếu không có TTS online
+        yield return new WaitForSeconds(Mathf.Max(2.5f, announcement.Length * 0.06f));
     }
 
     private static string ConvertNumberToVietnameseWords(int amount)

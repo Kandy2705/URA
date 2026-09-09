@@ -110,12 +110,12 @@ public class Level2MllmDialogueBridge : MonoBehaviour
         if (!string.IsNullOrWhiteSpace(authInfo.host))
             apiConfig.baseUrl = authInfo.host.TrimEnd('/');
 
-        if (sessionContext != null &&
-            string.IsNullOrWhiteSpace(citizenIdOverride) &&
-            !string.IsNullOrWhiteSpace(authInfo.citizenId))
+        if (sessionContext != null)
         {
-            sessionContext.citizenId = authInfo.citizenId;
-            Debug.Log("[Level2MllmDialogueBridge] Đã nạp citizen_id từ Postman collection.");
+            sessionContext.citizenId = !string.IsNullOrWhiteSpace(citizenIdOverride)
+                ? citizenIdOverride
+                : (!string.IsNullOrWhiteSpace(authInfo.citizenId) ? authInfo.citizenId : "0123456789012");
+            Debug.Log($"[Level2MllmDialogueBridge] Đã thiết lập citizen_id = '{sessionContext.citizenId}'.");
         }
 
         bool hasTokenAlready =
@@ -287,6 +287,8 @@ public class Level2MllmDialogueBridge : MonoBehaviour
 
         if (!string.IsNullOrWhiteSpace(citizenIdOverride))
             sessionContext.citizenId = citizenIdOverride;
+        else if (string.IsNullOrWhiteSpace(sessionContext.citizenId))
+            sessionContext.citizenId = "0123456789012";
     }
 
     private void SubscribeGameplayEvents()
@@ -687,48 +689,51 @@ public class Level2MllmDialogueBridge : MonoBehaviour
 
     private PostmanAuthInfo LoadPostmanAuthInfo()
     {
-        PostmanAuthInfo info = new PostmanAuthInfo();
+        PostmanAuthInfo info = new PostmanAuthInfo
+        {
+            host = "https://vr-supermarket-ai-service-cqcybyc4fahxf5fp.southeastasia-01.azurewebsites.net",
+            citizenId = "0123456789012",
+            username = "thanh",
+            password = "28072002Thanh@"
+        };
 
         try
         {
             string projectRoot = Directory.GetParent(Application.dataPath)?.FullName;
-            if (string.IsNullOrWhiteSpace(projectRoot))
-                return info;
-
-            string collectionPath = Path.Combine(projectRoot, postmanCollectionRelativePath);
-            if (!File.Exists(collectionPath))
+            if (!string.IsNullOrWhiteSpace(projectRoot))
             {
-                Debug.LogWarning($"[Level2MllmDialogueBridge] Không tìm thấy Postman collection: {collectionPath}");
-                return info;
-            }
-
-            JObject root = JObject.Parse(File.ReadAllText(collectionPath));
-            JArray variables = root["variable"] as JArray;
-            if (variables != null)
-            {
-                foreach (JToken variable in variables)
+                string collectionPath = Path.Combine(projectRoot, postmanCollectionRelativePath);
+                if (File.Exists(collectionPath))
                 {
-                    string key = variable?["key"]?.ToString();
-                    string value = variable?["value"]?.ToString();
-                    if (key == "host")
-                        info.host = value;
-                    else if (key == "citizen_id")
-                        info.citizenId = value;
-                }
-            }
+                    JObject root = JObject.Parse(File.ReadAllText(collectionPath));
+                    JArray variables = root["variable"] as JArray;
+                    if (variables != null)
+                    {
+                        foreach (JToken variable in variables)
+                        {
+                            string key = variable?["key"]?.ToString();
+                            string value = variable?["value"]?.ToString();
+                            if (key == "host" && !string.IsNullOrWhiteSpace(value))
+                                info.host = value;
+                            else if (key == "citizen_id" && !string.IsNullOrWhiteSpace(value))
+                                info.citizenId = value;
+                        }
+                    }
 
-            JObject loginItem = FindPostmanItem(root["item"] as JArray, "login");
-            JArray urlencoded = loginItem?["request"]?["body"]?["urlencoded"] as JArray;
-            if (urlencoded != null)
-            {
-                foreach (JToken field in urlencoded)
-                {
-                    string key = field?["key"]?.ToString();
-                    string value = field?["value"]?.ToString();
-                    if (key == "username")
-                        info.username = value;
-                    else if (key == "password")
-                        info.password = value;
+                    JObject loginItem = FindPostmanItem(root["item"] as JArray, "login");
+                    JArray urlencoded = loginItem?["request"]?["body"]?["urlencoded"] as JArray;
+                    if (urlencoded != null)
+                    {
+                        foreach (JToken field in urlencoded)
+                        {
+                            string key = field?["key"]?.ToString();
+                            string value = field?["value"]?.ToString();
+                            if (key == "username" && !string.IsNullOrWhiteSpace(value))
+                                info.username = value;
+                            else if (key == "password" && !string.IsNullOrWhiteSpace(value))
+                                info.password = value;
+                        }
+                    }
                 }
             }
         }

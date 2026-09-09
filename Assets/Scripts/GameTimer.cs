@@ -31,15 +31,26 @@ public class GameTimer : MonoBehaviour
     private int hours;
     private bool checkoutTriggered = false;
 
+    public static GameTimer Instance { get; private set; }
+
     // public static event Action OnTimeUpPaymentTriggered;
 
     void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+
         (hours, minutes, seconds) = TimeUtils.SecondsToHMS(limitSeconds);
         foreach (Timer timer in timers) timer.startAtRuntime = false;
         foreach (Timer timer in timers) UIStartTime(timer);
         if (paymentUI != null)
             paymentUI.SetActive(false);
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
     }
 
     void Start()

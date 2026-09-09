@@ -26,6 +26,12 @@ public class MllmAuthClient : MonoBehaviour
             yield break;
         }
 
+        NpcDialoguePresenter presenter = NpcDialoguePresenter.Instance ?? FindObjectOfType<NpcDialoguePresenter>();
+        if (presenter != null)
+        {
+            presenter.ShowApiRequesting(config.LoginUrl);
+        }
+
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
@@ -42,6 +48,15 @@ public class MllmAuthClient : MonoBehaviour
             {
                 string message = BuildHttpErrorMessage(statusCode, request.error, body);
                 Debug.LogError($"[MllmAuthClient] Login failed ({statusCode}): {message}");
+
+                if (presenter != null)
+                {
+                    if (request.result == UnityWebRequest.Result.ConnectionError)
+                        presenter.ShowNetworkError($"Login failed: {request.error}");
+                    else
+                        presenter.ShowApiError(statusCode, request.result.ToString(), request.error, body);
+                }
+
                 onError?.Invoke(statusCode, message);
                 yield break;
             }
@@ -51,15 +66,27 @@ public class MllmAuthClient : MonoBehaviour
                 MllmTokenResponse tokenResponse = JsonConvert.DeserializeObject<MllmTokenResponse>(body);
                 if (tokenResponse == null || string.IsNullOrWhiteSpace(tokenResponse.access_token))
                 {
+                    if (presenter != null)
+                        presenter.ShowJsonError(body, "Login response không có access_token.");
+
                     onError?.Invoke(statusCode, "Login response không có access_token.");
                     yield break;
                 }
 
                 Debug.Log($"[MllmAuthClient] Login thành công cho user '{tokenResponse.username}'.");
+
+                if (presenter != null)
+                {
+                    presenter.ShowHeadBubbleDebug($"[AUTH SUCCESS]\nĐăng nhập Backend thành công: {tokenResponse.username}", 2f);
+                }
+
                 onSuccess?.Invoke(tokenResponse);
             }
             catch (Exception ex)
             {
+                if (presenter != null)
+                    presenter.ShowJsonError(body, ex.Message);
+
                 onError?.Invoke(statusCode, $"Không parse được login response: {ex.Message}");
             }
         }
