@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using TMPro;
 using System.IO;
+using System.Linq;
+using TMPro.Examples;
 
 public class DataManager : MonoBehaviour
 {
@@ -17,10 +19,31 @@ public class DataManager : MonoBehaviour
         else Destroy(gameObject);
     }
     private List<CompareResult> compareResults = new List<CompareResult>();
+    private PaymentSummary paymentSummary;
+    private List<int> submitted_amounts_history = new List<int>();
+    private List<int> difference_amounts_history = new List<int>();
 
     public void AddCompareResult(CompareResult result)
     {
         compareResults.Add(result);
+    }
+
+    public void SetCompareResults(IEnumerable<CompareResult> results)
+    {
+        compareResults = results != null
+            ? new List<CompareResult>(results)
+            : new List<CompareResult>();
+    }
+
+    public void SetPaymentSummary(PaymentSummary summary)
+    {
+        paymentSummary = summary;
+    }
+
+    public void SetPaymentHistory(List<int> submittedAmountsHistory, List<int> differenceAmountsHistory)
+    {
+        submitted_amounts_history = submittedAmountsHistory;
+        difference_amounts_history = differenceAmountsHistory;
     }
 
     public Transform player;          // Player transform
@@ -106,12 +129,19 @@ public class DataManager : MonoBehaviour
     {
         string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
         string fileName = $"report_{timestamp}.csv";
-        string dirPath = Path.Combine(Application.dataPath, "Scripts/Data");
+        // Application.dataPath trỏ vào vùng dữ liệu của APK trên Android/Quest,
+        // thường là read-only. persistentDataPath là thư mục dành cho dữ liệu
+        // phát sinh khi chạy app và có thể ghi được trên thiết bị.
+        string dirPath = Path.Combine(Application.persistentDataPath, "Data");
         if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
 
         string path = Path.Combine(dirPath, fileName);
+        Debug.Log($"[DataManager] CSV report saved at: {path}");
         using (StreamWriter writer = new StreamWriter(path, false))
         {
+            writer.WriteLine($"Participant ID,{GameSessionContext.Instance.citizenId}");
+            writer.WriteLine($"Level,{GameSessionContext.Instance.level}");
+
             writer.WriteLine("Booth Type,Visit Count");
             writer.WriteLine($"Fruits,{num_visit_fruits}");
             writer.WriteLine($"Drinks,{num_visit_drinks}");
@@ -120,6 +150,28 @@ public class DataManager : MonoBehaviour
 
             writer.WriteLine("Visit Order of Booths");
             writer.WriteLine(string.Join(" -> ", booths_priority));
+            writer.WriteLine();
+
+
+            int click_num = -1;
+            // GameObject target = GameObject.Find("Supermarket/Notice_Board/UI Sample/Scroll UI Sample");
+            if (target == null)
+            {
+                Debug.Log("KHÔNG TÌM THẤY GameObject Scroll UI Sample");
+            }
+            else
+            {
+                ListController listCtrlr = target.GetComponent<ListController>();
+                if (listCtrlr == null)
+                {
+                    Debug.Log("KHÔNG TÌM THẤY Component của Object");
+                }
+                else
+                {
+                    click_num = listCtrlr.GetClickNumber();
+                }
+            }
+            writer.WriteLine($"Show list {click_num} time{(click_num == 1 ? ' ' : 's')}");
             writer.WriteLine();
 
             writer.WriteLine("Product,Time (s)");
@@ -157,31 +209,121 @@ public class DataManager : MonoBehaviour
             }
 
             writer.WriteLine();
+
+            writer.WriteLine("Bill Item,Quantity,Unit Price,Subtotal");
+            if (CartManager.Instance != null && CartManager.Instance.bill != null)
+            {
+                foreach (BillEntry entry in CartManager.Instance.bill.Values.OrderBy(item => item.itemName))
+                {
+                    if (entry == null)
+                        continue;
+
+                    long subtotal = (long)entry.price * entry.quantity;
+                    writer.WriteLine($"{EscapeCsv(entry.itemName)},{entry.quantity},{entry.price},{subtotal}");
+                }
+            }
+
+            writer.WriteLine();
+
             writer.WriteLine("Total Items," + grandTotalItems);
             writer.WriteLine("Total Price," + grandTotalPrice);
+            writer.WriteLine();
 
-
-            int click_num = -1;
-            // GameObject target = GameObject.Find("Supermarket/Notice_Board/UI Sample/Scroll UI Sample");
-
-            if (target == null)
+            writer.WriteLine("Payment Summary");
+            writer.WriteLine("Required Amount,Paid Amount,Difference,Result,Note");
+            if (paymentSummary != null)
             {
-                Debug.Log("KHÔNG TÌM THẤY GameObject Scroll UI Sample");
+                writer.WriteLine(
+                    $"{paymentSummary.requiredAmount},{paymentSummary.paidAmount},{paymentSummary.differenceAmount}," +
+                    $"{paymentSummary.resultCode},{EscapeCsv(paymentSummary.note)}");
+
+                writer.WriteLine();
+                writer.WriteLine("Starting Wallet");
+                writer.WriteLine("Denomination,Count,Subtotal");
+                foreach (WalletBillSnapshot snapshot in paymentSummary.startingWallet)
+                {
+                    writer.WriteLine($"{snapshot.denomination},{snapshot.count},{snapshot.subtotal}");
+                }
+
+                writer.WriteLine();
+                writer.WriteLine("Submitted Bills");
+                writer.WriteLine("Denomination,Count,Subtotal");
+                foreach (WalletBillSnapshot snapshot in paymentSummary.submittedBills)
+                {
+                    writer.WriteLine($"{snapshot.denomination},{snapshot.count},{snapshot.subtotal}");
+                }
             }
             else
             {
-                ListController listCtrlr = target.GetComponent<ListController>();
-                if (listCtrlr == null)
+                writer.WriteLine("0,0,0,NOT_CAPTURED,Payment summary not available");
+            }
+            writer.WriteLine();
+
+            if(submitted_amounts_history != null && difference_amounts_history != null){
+                int correct_money_count = submitted_amounts_history.Count;
+                writer.WriteLine($"Correct Money Count,{correct_money_count}");
+                writer.WriteLine($"Submitted Amounts History,{string.Join("," , submitted_amounts_history)}");
+                writer.WriteLine($"Difference Amounts History,{string.Join("," , difference_amounts_history)}");
+            }else{
+                writer.WriteLine("Fail to record Submit history !");
+            }
+        }
+
+        TryExportToPublicDownloads(path, fileName);
+    }
+
+    private static void TryExportToPublicDownloads(string sourcePath, string fileName)
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        // Android 10+ requires MediaStore to write into the public Downloads folder.
+        try
+        {
+            using (AndroidJavaObject activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer")
+                       .GetStatic<AndroidJavaObject>("currentActivity"))
+            using (AndroidJavaObject resolver = activity.Call<AndroidJavaObject>("getContentResolver"))
+            using (AndroidJavaClass downloads = new AndroidJavaClass("android.provider.MediaStore$Downloads"))
+            using (AndroidJavaObject downloadsUri = downloads.GetStatic<AndroidJavaObject>("EXTERNAL_CONTENT_URI"))
+            using (AndroidJavaObject values = new AndroidJavaObject("android.content.ContentValues"))
+            {
+                values.Call("put", "_display_name", fileName);
+                values.Call("put", "mime_type", "text/csv");
+                values.Call("put", "relative_path", "Download/URA/");
+
+                using (AndroidJavaObject uri = resolver.Call<AndroidJavaObject>("insert", downloadsUri, values))
                 {
-                    Debug.Log("KHÔNG TÌM THẤY Component của Object");
-                }
-                else
-                {
-                    click_num = listCtrlr.GetClickNumber();
+                    if (uri == null)
+                    {
+                        Debug.LogWarning("[DataManager] Không thể tạo file CSV trong thư mục Downloads.");
+                        return;
+                    }
+
+                    using (AndroidJavaObject outputStream = resolver.Call<AndroidJavaObject>("openOutputStream", uri))
+                    {
+                        outputStream.Call("write", File.ReadAllBytes(sourcePath));
+                        outputStream.Call("flush");
+                    }
                 }
             }
-            writer.WriteLine("Show list ," + click_num + " time" + (click_num <= 1 ? "" : "s"));
+
+            Debug.Log($"[DataManager] CSV copied to Quest Downloads/URA/{fileName}");
         }
+        catch (System.Exception exception)
+        {
+            Debug.LogWarning($"[DataManager] Không thể export CSV ra Downloads: {exception.Message}");
+        }
+#else
+        Debug.Log($"[DataManager] Public Downloads export chỉ chạy trên Android/Quest. File gốc: {sourcePath}");
+#endif
+    }
+
+    private static string EscapeCsv(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+            return string.Empty;
+
+        bool needsQuotes = value.Contains(",") || value.Contains("\"") || value.Contains("\n");
+        string escaped = value.Replace("\"", "\"\"");
+        return needsQuotes ? $"\"{escaped}\"" : escaped;
     }
 
 

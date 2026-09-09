@@ -1,0 +1,24 @@
+Booth Type,Visit Count
+Fruits,1
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+Fruits
+
+Product,Time (s)
+Bắp cải,21.19439
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Hủ muối,0,0,Thiếu 1,0
+Chảo gang,0,0,Thiếu 1,0
+Nồi,0,0,Thiếu 6,0
+Dao bự,0,0,Thiếu 8,0
+Cà chua,0,0,Thiếu 7,0
+Hủ tiêu,0,0,Thiếu 7,0
+Nĩa,0,0,Thiếu 3,0
+Bắp cải,6,18000,Dư 2,108000
+
+Total Items,6
+Total Price,108000
+Show list ,0 time

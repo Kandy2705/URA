@@ -1,0 +1,43 @@
+Booth Type,Visit Count
+Fruits,1
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+Fruits
+
+Product,Time (s)
+Nho,10.90129
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Mật ong,0,0,Thiếu 9,0
+Dĩa vuông,0,0,Thiếu 6,0
+Thịt xay,0,0,Thiếu 3,0
+Chảo gang,0,0,Thiếu 3,0
+Đũa,0,0,Thiếu 9,0
+Kem,0,0,Thiếu 1,0
+Muỗng gỗ,0,0,Thiếu 4,0
+Ly rượu,0,0,Thiếu 6,0
+Nho,6,25000,Dư 6,150000
+
+Total Items,6
+Total Price,150000
+
+Bill Item,Quantity,Unit Price,Subtotal
+Nho,6,25000,150000
+
+Payment Summary
+Required Amount,Paid Amount,Difference,Result,Note
+150000,150000,0,EXACT,Tra du tien
+
+Starting Wallet
+Denomination,Count,Subtotal
+100000,1,100000
+50000,2,100000
+10000,2,20000
+
+Submitted Bills
+Denomination,Count,Subtotal
+100000,1,100000
+50000,1,50000
+Show list ,0 time

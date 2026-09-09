@@ -1,0 +1,44 @@
+Booth Type,Visit Count
+Fruits,2
+Drinks,0
+Snacks,0
+
+Visit Order of Booths
+Fruits -> Fruits
+
+Product,Time (s)
+Nho,62.33591
+Cà rốt,81.60661
+
+Product Name,Total Count,Unit Price,Status,Subtotal
+Ly,0,0,Thiếu 6,0
+Mật ong,0,0,Thiếu 7,0
+Hộp sữa,0,0,Thiếu 6,0
+Nho,3,25000,Dư 1,75000
+Bát,0,0,Thiếu 5,0
+Muỗng,0,0,Thiếu 4,0
+Táo xanh,0,0,Thiếu 8,0
+Dĩa tròn ,0,0,Thiếu 6,0
+Cà rốt,3,6000,Dư 3,18000
+
+Total Items,6
+Total Price,93000
+
+Bill Item,Quantity,Unit Price,Subtotal
+Cà rốt,3,6000,18000
+Nho,3,25000,75000
+
+Payment Summary
+Required Amount,Paid Amount,Difference,Result,Note
+93000,100000,7000,OVERPAID,"Du 7,000 VND"
+
+Starting Wallet
+Denomination,Count,Subtotal
+100000,2,200000
+20000,4,80000
+10000,1,10000
+
+Submitted Bills
+Denomination,Count,Subtotal
+100000,1,100000
+Show list ,0 time

@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using UnityEngine;
-using TMPro;
-using System;
 using System.Linq;
+using TMPro;
+using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class PaymentManager : MonoBehaviour
 {
     public static PaymentManager Instance;
+
     private static readonly string[] NumberWords =
     {
         "không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"
@@ -22,6 +23,23 @@ public class PaymentManager : MonoBehaviour
     [Header("Liên kết UI")]
     public TMP_Text requiredAmountText;
     public TMP_Text currentAmountText;
+
+    [Header("Ví tiền ban đầu của player")]
+    [SerializeField] private List<WalletBillDefinition> startingWallet = new List<WalletBillDefinition>
+    {
+        new WalletBillDefinition(100000, 1),
+        new WalletBillDefinition(50000, 2),
+        new WalletBillDefinition(10000, 2)
+    };
+    [SerializeField] private bool randomizeStartingWallet = true;
+    [SerializeField] private int minimumStartingMoney = 150000;
+    [SerializeField] private int maximumStartingMoney = 300000;
+    [SerializeField] private int startingMoneyStep = 10000;
+
+    [Header("UI runtime")]
+    [SerializeField] private string confirmButtonName = "ConfirmButton";
+    [SerializeField] private string paymentUiRootName = "PaymentUI Variant";
+    [SerializeField] private GameObject paymentUiRoot;
 
     [Header("Cashier intro")]
     [SerializeField] private bool playCashierIntroOnStart = false;
@@ -36,38 +54,259 @@ public class PaymentManager : MonoBehaviour
     [SerializeField] private bool announceRequiredAmountWithTts = true;
     [SerializeField] private string amountAnnouncementTemplate = "Tổng tiền cần thanh toán là {0} đồng";
 
-    [Header("Payment result")]
-    [SerializeField] private bool announcePaymentResultWithTts = true;
-    [SerializeField] private string notEnoughMoneyMessage = "Số tiền cô đưa chưa đủ, cần thêm {0} đồng. Cảm ơn cô đã tham gia làm nhiệm vụ, chào và tạm biệt cô";
-    [SerializeField] private string enoughMoneyMessage = "Cảm ơn quý khách, tôi đã nhận được tiền, hẹn gặp lại quý khách";
+    [Header("Cashier payment feedback")]
+    [SerializeField] private string paymentSuccessTemplate =
+        "Cháu đã nhận {0} đồng và thối lại {1} đồng. Cảm ơn bác.";
+    [SerializeField] private string paymentShortageTemplate =
+        "Bác đã đưa thiếu {0} đồng rồi, bác vui lòng chọn thêm tiền nhé.";
+    [SerializeField] private string insufficientWalletMessage =
+        "Bác không đủ tiền rồi nên cháu sẽ bỏ bớt đồ ra nhé. Cảm ơn bác đã tham gia.";
+
+    private readonly Dictionary<int, int> availableBillCounts = new Dictionary<int, int>();
+    private readonly Dictionary<int, int> submittedBillCounts = new Dictionary<int, int>();
+    private readonly Dictionary<int, List<MoneyItem>> moneyItemsByDenomination = new Dictionary<int, List<MoneyItem>>();
+    private readonly List<int> submittedAmountsHistory = new List<int>();
+    private readonly List<int> differenceAmountsHistory = new List<int>();
 
     private bool isPlayingCashierIntro;
+    private bool isResolvingPayment;
+    private bool checkoutSessionActive;
+    private bool paymentConfirmed;
+    private PaymentSummary lastPaymentSummary;
+    private static int lastGeneratedWalletTotal = -1;
+    private static string lastGeneratedWalletSignature;
+
+    public PaymentSummary LastPaymentSummary => lastPaymentSummary;
+    public bool HasConfirmedPayment => paymentConfirmed;
+    public int CurrentAmount => currentAmount;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-        if (requiredAmountText != null)
-            requiredAmountText.text = requiredAmount.ToString("N0");
+        PrepareStartingWallet();
+        ResolveRuntimeReferences();
+        RebuildWalletState();
+        UpdateUI();
+        WireConfirmButton();
     }
 
     private void Start()
     {
+        RegisterExistingMoneyItems();
         UpdateUI();
+
+        if (playCashierIntroOnStart)
+            PlayCashierIntro();
+    }
+
+    private void EnsureDefaultWallet()
+    {
+        if (startingWallet != null && startingWallet.Count > 0)
+            return;
+
+        startingWallet = new List<WalletBillDefinition>
+        {
+            new WalletBillDefinition(100000, 1),
+            new WalletBillDefinition(50000, 2),
+            new WalletBillDefinition(10000, 2)
+        };
+    }
+
+    private void PrepareStartingWallet()
+    {
+        if (!randomizeStartingWallet)
+        {
+            EnsureDefaultWallet();
+            return;
+        }
+
+        int step = Mathf.Max(10000, startingMoneyStep);
+        int minimum = Mathf.Max(step, Mathf.CeilToInt(minimumStartingMoney / (float)step) * step);
+        int maximum = Mathf.Max(minimum, Mathf.FloorToInt(maximumStartingMoney / (float)step) * step);
+
+        List<WalletBillDefinition> generatedWallet = null;
+        string generatedSignature = string.Empty;
+
+        for (int attempt = 0; attempt < 20; attempt++)
+        {
+            int targetUnits = Random.Range(minimum / step, maximum / step + 1);
+            int targetAmount = targetUnits * step;
+            generatedWallet = BuildRandomWallet(targetAmount);
+            generatedSignature = BuildWalletSignature(generatedWallet);
+
+            if (targetAmount != lastGeneratedWalletTotal &&
+                generatedSignature != lastGeneratedWalletSignature)
+                break;
+        }
+
+        startingWallet = generatedWallet ?? new List<WalletBillDefinition>
+        {
+            new WalletBillDefinition(100000, 1),
+            new WalletBillDefinition(50000, 1)
+        };
+        int total = startingWallet.Sum(bill => bill.denomination * bill.count);
+        lastGeneratedWalletTotal = total;
+        lastGeneratedWalletSignature = BuildWalletSignature(startingWallet);
+        Debug.Log($"PaymentManager: Ví random của lượt này = {total:N0} VND ({lastGeneratedWalletSignature}).");
+    }
+
+    private static List<WalletBillDefinition> BuildRandomWallet(int targetAmount)
+    {
+        int[] denominations = { 100000, 50000, 20000, 10000 };
+        List<WalletBillDefinition> wallet = new List<WalletBillDefinition>();
+        int remaining = targetAmount;
+
+        for (int i = 0; i < denominations.Length; i++)
+        {
+            int denomination = denominations[i];
+            int maximumCount = remaining / denomination;
+            int count = i == denominations.Length - 1
+                ? maximumCount
+                : Random.Range(0, maximumCount + 1);
+
+            if (count > 0)
+                wallet.Add(new WalletBillDefinition(denomination, count));
+
+            remaining -= denomination * count;
+        }
+
+        return wallet;
+    }
+
+    private static string BuildWalletSignature(IEnumerable<WalletBillDefinition> wallet)
+    {
+        return string.Join(
+            ", ",
+            wallet
+                .Where(bill => bill != null && bill.count > 0)
+                .OrderByDescending(bill => bill.denomination)
+                .Select(bill => $"{bill.denomination:N0}x{bill.count}"));
+    }
+
+    private void ResolveRuntimeReferences()
+    {
+        if (paymentUiRoot != null)
+            return;
+
+        Transform[] sceneTransforms = FindObjectsOfType<Transform>(true);
+        foreach (Transform sceneTransform in sceneTransforms)
+        {
+            if (sceneTransform == null || sceneTransform.name != paymentUiRootName)
+                continue;
+
+            paymentUiRoot = sceneTransform.gameObject;
+            return;
+        }
+
+        Debug.LogWarning($"PaymentManager: Không tìm thấy UI '{paymentUiRootName}' trong scene.");
+    }
+
+    private void WireConfirmButton()
+    {
+        Button[] buttons = FindObjectsOfType<Button>(true);
+        foreach (Button button in buttons)
+        {
+            if (button == null || button.gameObject.name != confirmButtonName)
+                continue;
+
+            button.onClick.RemoveListener(ConfirmPayment);
+            button.onClick.AddListener(ConfirmPayment);
+            return;
+        }
+    }
+
+    private void RegisterExistingMoneyItems()
+    {
+        MoneyItem[] moneyItems = FindObjectsOfType<MoneyItem>(true);
+        foreach (MoneyItem moneyItem in moneyItems)
+            RegisterMoneyItem(moneyItem);
+    }
+
+    public void RegisterMoneyItem(MoneyItem moneyItem)
+    {
+        if (moneyItem == null)
+            return;
+
+        int denomination = moneyItem.MoneyValue;
+        if (denomination <= 0)
+            return;
+
+        if (!moneyItemsByDenomination.TryGetValue(denomination, out List<MoneyItem> items))
+        {
+            items = new List<MoneyItem>();
+            moneyItemsByDenomination[denomination] = items;
+        }
+
+        if (!items.Contains(moneyItem))
+            items.Add(moneyItem);
+
+        moneyItem.RefreshAvailability(GetRemainingBillCount(denomination), CanUseBills());
     }
 
     public void AddMoney(int amount)
     {
+        if (!checkoutSessionActive || paymentConfirmed)
+        {
+            Debug.Log("PaymentManager: Phiên thanh toán chưa mở hoặc đã chốt.");
+            return;
+        }
+
+        if (amount <= 0)
+            return;
+
+        if (!availableBillCounts.TryGetValue(amount, out int remaining) || remaining <= 0)
+        {
+            Debug.Log($"PaymentManager: Không còn tờ {amount:N0} để đưa.");
+            RefreshMoneyItemState(amount);
+            return;
+        }
+
+        availableBillCounts[amount] = remaining - 1;
+        submittedBillCounts[amount] = GetSubmittedBillCount(amount) + 1;
         currentAmount += amount;
+
         UpdateUI();
+        RefreshMoneyItemState(amount);
     }
 
     public void ResetMoney()
     {
-        Debug.Log("Nút reset đã được ấn");
+        if (!checkoutSessionActive && !paymentConfirmed)
+        {
+            RebuildWalletState();
+            UpdateUI();
+            return;
+        }
+
         currentAmount = 0;
+        submittedBillCounts.Clear();
+        RebuildWalletState();
+        paymentConfirmed = false;
+        lastPaymentSummary = null;
+
         UpdateUI();
+    }
+
+    private void RebuildWalletState()
+    {
+        availableBillCounts.Clear();
+        EnsureDefaultWallet();
+
+        foreach (WalletBillDefinition bill in startingWallet)
+        {
+            if (bill == null || bill.denomination <= 0 || bill.count < 0)
+                continue;
+
+            availableBillCounts[bill.denomination] = bill.count;
+        }
+
+        RefreshAllMoneyItems();
     }
 
     private void UpdateUI()
@@ -77,6 +316,8 @@ public class PaymentManager : MonoBehaviour
 
         if (currentAmountText != null)
             currentAmountText.text = currentAmount.ToString("N0");
+
+        RefreshAllMoneyItems();
     }
 
     public void UpdatePaymentUI()
@@ -86,146 +327,250 @@ public class PaymentManager : MonoBehaviour
         {
             requiredAmount = CartManager.Instance.TotalPaid;
             Debug.Log($"Update Payment UI: requiredAmount = {requiredAmount}");
-            UpdateUI();
         }
+
+        BeginCheckoutSession();
+    }
+
+    public void SetRequiredAmount(int amount)
+    {
+        Debug.Log($"[PaymentManager] SetRequiredAmount({amount}) được gọi.");
+        requiredAmount = Mathf.Max(0, amount);
+        BeginCheckoutSession();
+    }
+
+    private void BeginCheckoutSession()
+    {
+        ResolveRuntimeReferences();
+        checkoutSessionActive = true;
+        isResolvingPayment = false;
+        paymentConfirmed = false;
+        lastPaymentSummary = null;
+        currentAmount = 0;
+        submittedBillCounts.Clear();
+        submittedAmountsHistory.Clear();
+        differenceAmountsHistory.Clear();
+        RebuildWalletState();
+
+        if (paymentUiRoot != null)
+            paymentUiRoot.SetActive(true);
+
+        UpdateUI();
     }
 
     public void ConfirmPayment()
     {
-        if (currentAmount >= requiredAmount)
+        Debug.Log($"[PaymentManager] ConfirmPayment() được gọi! checkoutSessionActive={checkoutSessionActive}, currentAmount={currentAmount}, requiredAmount={requiredAmount}");
+
+        if (isResolvingPayment)
+            return;
+
+        if (!checkoutSessionActive)
         {
-            int change = currentAmount - requiredAmount;
+            Debug.Log("[PaymentManager] Phiên thanh toán chưa mở -> Tự động kích hoạt phiên thanh toán.");
+            BeginCheckoutSession();
         }
-        else
+
+        if (paymentConfirmed)
         {
-            int missing = requiredAmount - currentAmount;
+            Debug.Log("[PaymentManager] Phiên thanh toán này đã được xác nhận.");
+            return;
         }
+
+        isResolvingPayment = true;
+        checkoutSessionActive = false;
+        RefreshAllMoneyItems();
+
+        if (paymentUiRoot != null)
+            paymentUiRoot.SetActive(false);
+
+        StartCoroutine(ResolvePaymentAttemptRoutine());
     }
 
-    public string randomMistake(double originalPayment)
+    private IEnumerator ResolvePaymentAttemptRoutine()
     {
-        const double MISTAKE_RATE = 0.1;
-        const int PAYMENT_TOLERANT = 50;
+        Debug.Log($"[PaymentManager] Bắt đầu ResolvePaymentAttemptRoutine: currentAmount={currentAmount}, requiredAmount={requiredAmount}");
 
-        bool isMistaken = (UnityEngine.Random.value < MISTAKE_RATE) ? true : false;
-        if (isMistaken)
+        while (isPlayingCashierIntro)
+            yield return null;
+
+        int difference = currentAmount - requiredAmount;
+        submittedAmountsHistory.Add(currentAmount);
+        differenceAmountsHistory.Add(difference);
+        AudioSource targetAudioSource = ResolveCashierAudioSource(ResolveCashierAnimator());
+
+        Debug.Log($"[PaymentManager] ResolvePaymentAttemptRoutine: difference={difference}, targetAudioSource={(targetAudioSource != null)}");
+
+        if (difference >= 0)
         {
-            int randomTolerant = UnityEngine.Random.Range(0, PAYMENT_TOLERANT);
-            int newPayment = (int)(originalPayment * (1 + randomTolerant / 100.0));
-            Debug.Log("Số tiền bằng số  là " + newPayment);
-            Debug.Log("Số tiền bằng chữ là " + NumberToVietnamese(newPayment));
-            return "Số tiền thanh toán là " + NumberToVietnamese(newPayment) + "đồng";
+            string successMessage = string.Format(
+                CultureInfo.InvariantCulture,
+                paymentSuccessTemplate,
+                ConvertNumberToVietnameseWords(currentAmount),
+                ConvertNumberToVietnameseWords(difference));
+
+            yield return PlayCashierSpeech(targetAudioSource, successMessage);
+            FinalizePayment();
+            yield break;
         }
-        else
+
+        int shortage = Mathf.Abs(difference);
+        if (HasRemainingBills())
         {
-            return "Số tiền thanh toán là " + NumberToVietnamese((int)originalPayment) + "đồng";
+            string shortageMessage = string.Format(
+                CultureInfo.InvariantCulture,
+                paymentShortageTemplate,
+                ConvertNumberToVietnameseWords(shortage));
+
+            yield return PlayCashierSpeech(targetAudioSource, shortageMessage);
+
+            checkoutSessionActive = true;
+            isResolvingPayment = false;
+
+            if (paymentUiRoot != null)
+                paymentUiRoot.SetActive(true);
+
+            UpdateUI();
+            yield break;
         }
+
+        yield return PlayCashierSpeech(targetAudioSource, insufficientWalletMessage);
+        FinalizePayment();
     }
 
-
-
-    private enum SpecialCase { MƯƠI, MƯỜI, LẺ }
-
-    private string HundredNumberToVietnamese(int number)
+    private bool HasRemainingBills()
     {
-        if (number == 0) return "Không";
-
-        string[] units = { "không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín" };
-        string result = "";
-
-        int tram = (number % 1000) / 100;
-        int muoi = (number % 100) / 10;
-        int donVi = number % 10;
-        bool hasNumber = false;
-        // Hàng Trăm
-        if (tram > 0)
-        {
-            result += units[tram] + " trăm ";
-            hasNumber = true;
-        }
-
-        // Hàng Chục
-        SpecialCase sCase = SpecialCase.MƯƠI;
-        if (muoi == 0)
-        {
-            if (donVi > 0 && hasNumber)
-            {
-                result += " lẻ ";
-                sCase = SpecialCase.LẺ;
-            }
-        }
-        else if (muoi == 1)
-        {
-            result += " mười ";
-            sCase = SpecialCase.MƯỜI;
-            hasNumber = true;
-        }
-        else
-        {
-            result += units[muoi] + " mươi ";
-            sCase = SpecialCase.MƯƠI;
-            hasNumber = true;
-        }
-
-        // Hàng Đơn vị
-        if (donVi > 0)
-        {
-            if (hasNumber && donVi == 1 && sCase == SpecialCase.MƯƠI) result += "mốt";
-            else if (hasNumber && donVi == 5 && sCase != SpecialCase.LẺ) result += "lăm";
-            else result += units[donVi];
-        }
-
-        return result.Trim().Replace("  ", " ");
+        return availableBillCounts.Values.Any(count => count > 0);
     }
 
-    private string NumberToVietnamese(int number)
+    private void FinalizePayment()
     {
-        if (number == 0) return "Không";
+        paymentConfirmed = true;
+        isResolvingPayment = false;
+        checkoutSessionActive = false;
+        lastPaymentSummary = BuildPaymentSummary();
 
-        string[] placeTxt = { "", " nghìn ", " triệu ", " tỷ " };
-        int[] placeNum = { 1, 1000, 1000000, 1000000000 };
-        string res = "";
-
-        int currentPlaceNum = 0;
-        for (int i = placeNum.Length - 1; i >= 0; i--)
+        if (DataManager.Instance != null)
         {
-            if (number >= placeNum[i])
-            {
-                currentPlaceNum = i;
-                break;
-            }
+            DataManager.Instance.SetPaymentSummary(lastPaymentSummary);
+            DataManager.Instance.SetPaymentHistory(submittedAmountsHistory, differenceAmountsHistory);
+        } 
+
+        ListResultCompare[] listResultCompares = FindObjectsOfType<ListResultCompare>(true);
+        ListResultCompare listResultCompare = listResultCompares.Length > 0 ? listResultCompares[0] : null;
+        if (listResultCompare != null)
+        {
+            listResultCompare.FinalizeResultsForReport();
+        }
+        else if (DataManager.Instance != null)
+        {
+            DataManager.Instance.Report();
         }
 
-        while (currentPlaceNum >= 0)
+        MonoBehaviour[] behaviours = FindObjectsOfType<MonoBehaviour>(true);
+        foreach (MonoBehaviour behaviour in behaviours)
         {
-            int chunk = number / placeNum[currentPlaceNum];
+            if (behaviour == null || behaviour.GetType().Name != "Level2MllmDialogueBridge")
+                continue;
 
-            if (chunk > 0)
-            {
-                res += HundredNumberToVietnamese(chunk) + placeTxt[currentPlaceNum];
-            }
-            else if (res != "" && currentPlaceNum > 0)
-            {
-                res += "không" + placeTxt[currentPlaceNum];
-            }
-
-            number %= placeNum[currentPlaceNum];
-            currentPlaceNum--;
+            behaviour.SendMessage("FinalizeCheckoutAfterPayment", lastPaymentSummary, SendMessageOptions.DontRequireReceiver);
+            break;
         }
 
-        return res.Trim();
-    }
+        RefreshAllMoneyItems();
 
+        if (paymentUiRoot != null)
+            paymentUiRoot.SetActive(false);
 
-    public void SetRequiredAmount(int amount)
-    {
-        requiredAmount = Mathf.Max(0, amount);
-        currentAmount = 0;
         UpdateUI();
+
+        Debug.Log(
+            $"[PaymentManager] Đã chốt thanh toán | required={requiredAmount:N0} | paid={currentAmount:N0} | " +
+            $"result={lastPaymentSummary.resultCode} | note={lastPaymentSummary.note}");
+    }
+
+    private PaymentSummary BuildPaymentSummary()
+    {
+        return PaymentSummary.Create(
+            requiredAmount,
+            currentAmount,
+            BuildStartingWalletSnapshots(),
+            BuildSubmittedWalletSnapshots());
+    }
+
+    private List<WalletBillSnapshot> BuildStartingWalletSnapshots()
+    {
+        List<WalletBillSnapshot> snapshots = new List<WalletBillSnapshot>();
+        foreach (WalletBillDefinition bill in startingWallet.OrderByDescending(item => item.denomination))
+        {
+            if (bill == null || bill.denomination <= 0 || bill.count <= 0)
+                continue;
+
+            snapshots.Add(new WalletBillSnapshot(bill.denomination, bill.count));
+        }
+
+        return snapshots;
+    }
+
+    private List<WalletBillSnapshot> BuildSubmittedWalletSnapshots()
+    {
+        List<WalletBillSnapshot> snapshots = new List<WalletBillSnapshot>();
+        foreach ((int denomination, int count) in submittedBillCounts.OrderByDescending(pair => pair.Key))
+        {
+            if (count <= 0)
+                continue;
+
+            snapshots.Add(new WalletBillSnapshot(denomination, count));
+        }
+
+        return snapshots;
+    }
+
+    private bool CanUseBills()
+    {
+        return checkoutSessionActive && !paymentConfirmed;
+    }
+
+    private int GetRemainingBillCount(int denomination)
+    {
+        return availableBillCounts.TryGetValue(denomination, out int count) ? count : 0;
+    }
+
+    private int GetSubmittedBillCount(int denomination)
+    {
+        return submittedBillCounts.TryGetValue(denomination, out int count) ? count : 0;
+    }
+
+    private void RefreshAllMoneyItems()
+    {
+        foreach (int denomination in moneyItemsByDenomination.Keys.ToList())
+            RefreshMoneyItemState(denomination);
+    }
+
+    private void RefreshMoneyItemState(int denomination)
+    {
+        if (!moneyItemsByDenomination.TryGetValue(denomination, out List<MoneyItem> items))
+            return;
+
+        int remainingCount = GetRemainingBillCount(denomination);
+        bool canInteract = CanUseBills();
+
+        for (int i = items.Count - 1; i >= 0; i--)
+        {
+            if (items[i] == null)
+            {
+                items.RemoveAt(i);
+                continue;
+            }
+
+            items[i].RefreshAvailability(remainingCount, canInteract);
+        }
     }
 
     public void PlayCashierIntro()
     {
+        Debug.Log($"[PaymentManager] PlayCashierIntro() được gọi. isPlayingCashierIntro={isPlayingCashierIntro}");
+
         if (isPlayingCashierIntro)
             return;
 
@@ -240,39 +585,28 @@ public class PaymentManager : MonoBehaviour
         AudioSource targetAudioSource = ResolveCashierAudioSource(targetAnimator);
         bool canAnimateCashier = targetAnimator != null && HasAnimatorParameter(targetAnimator, cashierPayingParameter);
 
+        Debug.Log($"[PaymentManager] PlayCashierIntroRoutine bắt đầu: targetAnimator={(targetAnimator != null)}, targetAudioSource={(targetAudioSource != null)}, requiredAmount={requiredAmount}");
+
         if (targetAnimator == null)
         {
-            Debug.LogWarning("PaymentManager: Không tìm thấy Animator của NPC cashier đang active trong Scene-level-2.");
+            Debug.LogWarning("[PaymentManager] Không tìm thấy Animator của NPC cashier đang active trong Scene-level-2.");
         }
         else if (!canAnimateCashier)
         {
-            Debug.LogWarning($"PaymentManager: Animator '{targetAnimator.runtimeAnimatorController?.name}' không có bool parameter '{cashierPayingParameter}'.");
+            Debug.LogWarning($"[PaymentManager] Animator '{targetAnimator.runtimeAnimatorController?.name}' không có bool parameter '{cashierPayingParameter}'.");
         }
 
         if (canAnimateCashier)
-        {
             targetAnimator.SetBool(cashierPayingParameter, true);
-        }
 
         if (targetAudioSource != null && cashierBeepClip != null)
-        {
             yield return PlayRepeatedClip(targetAudioSource, cashierBeepClip, Mathf.Max(1, cashierBeepLoopCount));
-        }
 
         if (canAnimateCashier)
-        {
             targetAnimator.SetBool(cashierPayingParameter, false);
-        }
 
-        if (announceRequiredAmountWithTts && targetAudioSource != null && requiredAmount > 0)
-        {
+        if (announceRequiredAmountWithTts && targetAudioSource != null)
             yield return PlayAmountAnnouncement(targetAudioSource, requiredAmount);
-        }
-
-        if (announcePaymentResultWithTts && targetAudioSource != null)
-        {
-            yield return PlayPaymentResultAnnouncement(targetAudioSource);
-        }
 
         isPlayingCashierIntro = false;
     }
@@ -329,6 +663,9 @@ public class PaymentManager : MonoBehaviour
         if (animator == null || animator.runtimeAnimatorController == null)
             return false;
 
+        if (cashierChargeController != null)
+            return animator.runtimeAnimatorController == cashierChargeController;
+
         return animator.runtimeAnimatorController.name == "NPC_charge_money";
     }
 
@@ -359,6 +696,8 @@ public class PaymentManager : MonoBehaviour
 
         cashierAudioSource.playOnAwake = false;
         cashierAudioSource.loop = false;
+        cashierAudioSource.volume = 1f;
+        cashierAudioSource.mute = false;
         cashierAudioSource.spatialBlend = 0f;
         cashierAudioSource.dopplerLevel = 0f;
 
@@ -390,79 +729,70 @@ public class PaymentManager : MonoBehaviour
             CultureInfo.InvariantCulture,
             amountAnnouncementTemplate,
             amountWords);
-        string requestUrl =
-            $"https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q={UnityWebRequest.EscapeURL(announcement)}";
 
-        using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(requestUrl, AudioType.MPEG))
-        {
-            request.timeout = 10;
-            request.SetRequestHeader("User-Agent", "Mozilla/5.0");
-
-            yield return request.SendWebRequest();
-
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogWarning($"Không thể tải audio đọc số tiền: {request.error}");
-                yield break;
-            }
-
-            AudioClip announcementClip = DownloadHandlerAudioClip.GetContent(request);
-            if (announcementClip == null)
-            {
-                Debug.LogWarning("Không tạo được AudioClip đọc số tiền.");
-                yield break;
-            }
-
-            audioSource.Stop();
-            audioSource.PlayOneShot(announcementClip);
-            yield return new WaitForSeconds(announcementClip.length);
-        }
+        yield return PlayCashierSpeech(audioSource, announcement);
     }
 
-    private IEnumerator PlayPaymentResultAnnouncement(AudioSource audioSource)
+    private IEnumerator PlayCashierSpeech(AudioSource audioSource, string announcement)
     {
-        int missing = requiredAmount - currentAmount;
-        string announcement;
-        string amountWords = ConvertNumberToVietnameseWords(missing);
+        if (string.IsNullOrWhiteSpace(announcement))
+            yield break;
 
-        if (missing > 0)
+        Debug.Log($"[PaymentManager] NPC thu ngân bắt đầu gọi TTS: {announcement}");
+
+        // 1. Hiển thị lời thoại trên bubble đầu NPC / UI
+        NpcDialoguePresenter presenter = FindObjectOfType<NpcDialoguePresenter>();
+        if (presenter != null)
         {
-            announcement = string.Format(CultureInfo.InvariantCulture, notEnoughMoneyMessage, amountWords);
+            presenter.ShowSingle(announcement, "Thu ngân", Mathf.Max(4f, announcement.Length * 0.08f));
         }
-        else
+
+        // 2. Phát âm thanh beep xác nhận của quầy thu ngân
+        if (audioSource != null && cashierBeepClip != null)
         {
-            announcement = enoughMoneyMessage;
+            audioSource.PlayOneShot(cashierBeepClip);
         }
 
-        Debug.Log($"[PaymentManager] Kết quả thanh toán: {announcement}");
-
+        // 3. Thử tải giọng đọc TTS online
+        string encodedText = UnityWebRequest.EscapeURL(announcement);
         string requestUrl =
-            $"https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q={UnityWebRequest.EscapeURL(announcement)}";
+            $"https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q={encodedText}";
+
+        Debug.Log($"[PaymentManager] TTS URL: {requestUrl}");
 
         using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(requestUrl, AudioType.MPEG))
         {
             request.timeout = 10;
-            request.SetRequestHeader("User-Agent", "Mozilla/5.0");
+            request.SetRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+            request.SetRequestHeader("Referer", "https://translate.google.com/");
+            request.SetRequestHeader("Accept", "*/*");
 
             yield return request.SendWebRequest();
 
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogWarning($"Không thể tải audio thông báo thanh toán: {request.error}");
-                yield break;
-            }
+            Debug.Log($"[PaymentManager] TTS Result: {request.result}");
+            Debug.Log($"[PaymentManager] TTS Error: {request.error}");
+            Debug.Log($"[PaymentManager] TTS HTTP Code: {request.responseCode}");
 
-            AudioClip resultClip = DownloadHandlerAudioClip.GetContent(request);
-            if (resultClip == null)
+            if (request.result == UnityWebRequest.Result.Success)
             {
-                Debug.LogWarning("Không tạo được AudioClip thông báo thanh toán.");
-                yield break;
+                AudioClip announcementClip = DownloadHandlerAudioClip.GetContent(request);
+                if (announcementClip != null && audioSource != null)
+                {
+                    audioSource.Stop();
+                    audioSource.clip = announcementClip;
+                    audioSource.Play();
+                    yield return new WaitForSeconds(announcementClip.length);
+                    yield break;
+                }
             }
-
-            audioSource.Stop();
-            audioSource.PlayOneShot(resultClip);
-            yield return new WaitForSeconds(resultClip.length);
+            else
+            {
+                Debug.LogWarning($"[PaymentManager] Google TTS: {request.responseCode} | {request.error}");
+            }
         }
+
+        // Thời gian chờ đọc thoại nếu không có TTS online
+        yield return new WaitForSeconds(Mathf.Max(2.5f, announcement.Length * 0.06f));
     }
 
     private static string ConvertNumberToVietnameseWords(int amount)

@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MllmDialogueOrchestrator : MonoBehaviour
@@ -106,6 +108,10 @@ public class MllmDialogueOrchestrator : MonoBehaviour
         if (result.wasSkipped)
         {
             Debug.Log($"[MllmDialogueOrchestrator] API skipped — {result.skipReason}");
+            if (dialoguePresenter != null && dialoguePresenter.ShowApiDebugOnHeadBubble)
+            {
+                dialoguePresenter.ShowHeadBubbleDebug($"[API SKIPPED]\nLý do: {result.skipReason}", 2.5f);
+            }
             OnDialogueCompleted?.Invoke(result);
             onComplete?.Invoke(result);
             return;
@@ -140,6 +146,19 @@ public class MllmDialogueOrchestrator : MonoBehaviour
         if (logReasoning && !string.IsNullOrWhiteSpace(response.result.reasoning))
             Debug.Log($"[MllmDialogueOrchestrator] reasoning: {response.result.reasoning}");
 
+        StartCoroutine(TransitionToDialogueRoutine(response));
+
+        if (actionDispatcher != null && !string.IsNullOrWhiteSpace(response.result.action))
+            actionDispatcher.Dispatch(response.result.action);
+    }
+
+    private IEnumerator TransitionToDialogueRoutine(MllmGenerateDialogueResponse response)
+    {
+        if (dialoguePresenter != null && dialoguePresenter.ShowApiDebugOnHeadBubble)
+        {
+            yield return new WaitForSeconds(1.5f);
+        }
+
         if (dialoguePresenter != null)
         {
             if (response.result.dialogue_map != null && response.result.dialogue_map.Count > 0)
@@ -147,9 +166,6 @@ public class MllmDialogueOrchestrator : MonoBehaviour
             else
                 dialoguePresenter.Present(response.result.dialogue);
         }
-
-        if (actionDispatcher != null && !string.IsNullOrWhiteSpace(response.result.action))
-            actionDispatcher.Dispatch(response.result.action);
     }
 
     private void ApplyFallback(MllmApiCallResult result)
@@ -171,7 +187,7 @@ public class MllmDialogueOrchestrator : MonoBehaviour
             }
         };
 
-        if (dialoguePresenter != null)
+        if (dialoguePresenter != null && !dialoguePresenter.ShowApiDebugOnHeadBubble)
             dialoguePresenter.Present(fallbackDialogue);
 
         if (actionDispatcher != null && !string.IsNullOrWhiteSpace(fallbackAction))
