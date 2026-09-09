@@ -65,6 +65,8 @@ public class PaymentManager : MonoBehaviour
     private readonly Dictionary<int, int> availableBillCounts = new Dictionary<int, int>();
     private readonly Dictionary<int, int> submittedBillCounts = new Dictionary<int, int>();
     private readonly Dictionary<int, List<MoneyItem>> moneyItemsByDenomination = new Dictionary<int, List<MoneyItem>>();
+    private readonly List<int> submittedAmountsHistory = new List<int>();
+    private readonly List<int> differenceAmountsHistory = new List<int>();
 
     private bool isPlayingCashierIntro;
     private bool isResolvingPayment;
@@ -346,6 +348,8 @@ public class PaymentManager : MonoBehaviour
         lastPaymentSummary = null;
         currentAmount = 0;
         submittedBillCounts.Clear();
+        submittedAmountsHistory.Clear();
+        differenceAmountsHistory.Clear();
         RebuildWalletState();
 
         if (paymentUiRoot != null)
@@ -391,6 +395,8 @@ public class PaymentManager : MonoBehaviour
             yield return null;
 
         int difference = currentAmount - requiredAmount;
+        submittedAmountsHistory.Add(currentAmount);
+        differenceAmountsHistory.Add(difference);
         AudioSource targetAudioSource = ResolveCashierAudioSource(ResolveCashierAnimator());
 
         Debug.Log($"[PaymentManager] ResolvePaymentAttemptRoutine: difference={difference}, targetAudioSource={(targetAudioSource != null)}");
@@ -445,7 +451,10 @@ public class PaymentManager : MonoBehaviour
         lastPaymentSummary = BuildPaymentSummary();
 
         if (DataManager.Instance != null)
+        {
             DataManager.Instance.SetPaymentSummary(lastPaymentSummary);
+            DataManager.Instance.SetPaymentHistory(submittedAmountsHistory, differenceAmountsHistory);
+        } 
 
         ListResultCompare[] listResultCompares = FindObjectsOfType<ListResultCompare>(true);
         ListResultCompare listResultCompare = listResultCompares.Length > 0 ? listResultCompares[0] : null;
