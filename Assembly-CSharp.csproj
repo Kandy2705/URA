@@ -76,6 +76,7 @@
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_ExampleScript_01.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/VertexShakeB.cs" />
+    <Compile Include="Assets/Scripts/ShoppingMission/ShoppingMission.cs" />
     <Compile Include="Assets/Scripts/CartShopping/CollectibleItem.cs" />
     <Compile Include="Assets/Scripts/BackendApi/NpcSceneResolver.cs" />
     <Compile Include="Assets/Scripts/BackendApi/MllmApiClient.cs" />
@@ -86,6 +87,8 @@
     <Compile Include="Assets/Scripts/PlayerPickUp.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/VertexZoom.cs" />
     <Compile Include="Assets/Scripts/ListitemController/ListManager.cs" />
+    <Compile Include="Assets/Scripts/ShoppingMission/ShoppingTaskItem.cs" />
+    <Compile Include="Assets/Scripts/ShoppingMission/ShoppingMissionController.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_TextSelector_B.cs" />
     <Compile Include="Assets/Scripts/CompareResults.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/SkewTextExample.cs" />

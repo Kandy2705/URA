@@ -33,6 +33,8 @@ public class GameTimer : MonoBehaviour
 
     public static GameTimer Instance { get; private set; }
 
+    public float RemainingSeconds => Mathf.Max(0f, timeLeft);
+
     // public static event Action OnTimeUpPaymentTriggered;
 
     void Awake()
