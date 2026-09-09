@@ -71,6 +71,7 @@
     <Compile Include="Assets/Scripts/UIManager.cs" />
     <Compile Include="Assets/Scripts/NPCFollowCamera.cs" />
     <Compile Include="Assets/Scripts/DataManager.cs" />
+    <Compile Include="Assets/Scripts/TutorialSceneController.cs" />
     <Compile Include="Assets/Scripts/PokeObjects.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_ExampleScript_01.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMPro_InstructionOverlay.cs" />
