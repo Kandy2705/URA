@@ -66,7 +66,7 @@ public class TutorialSceneController : MonoBehaviour
     [SerializeField] private PracticeAction[] practiceActionPerPage;
     [Tooltip("Tự mở bài tập sau khi người dùng đọc trang trong vài giây.")]
     [SerializeField] private bool autoOpenPractice = true;
-    [SerializeField] [Min(0.5f)] private float autoPracticeDelay = 1.75f;
+    [SerializeField][Min(0.5f)] private float autoPracticeDelay = 1.75f;
 
     [Header("=== UI Text & Progress ===")]
     [Tooltip("Text hiển thị số trang hiện tại, ví dụ: '1 / 5'.")]
@@ -77,21 +77,21 @@ public class TutorialSceneController : MonoBehaviour
 
     [Header("=== Animation ===")]
     [Tooltip("Thời gian fade giữa các trang (giây). Đặt 0 để tắt fade.")]
-    [SerializeField] [Min(0f)] private float fadeDuration = 0.25f;
+    [SerializeField][Min(0f)] private float fadeDuration = 0.25f;
 
     [Header("=== Điều Khiển VR ===")]
     [Tooltip("Cho phép bóp cò trên một trong hai tay cầm để sang bước tiếp theo.")]
     [SerializeField] private bool triggerToAdvance = true;
 
     [Tooltip("Ngưỡng nhận thao tác bóp cò (0-1).")]
-    [SerializeField] [Range(0.1f, 1f)] private float triggerPressThreshold = 0.65f;
+    [SerializeField][Range(0.1f, 1f)] private float triggerPressThreshold = 0.65f;
 
     // ─────────────────────────────────────────────
     // PRIVATE STATE
     // ─────────────────────────────────────────────
 
-    private int _currentPage      = 0;
-    private int _totalPages       = 0;
+    private int _currentPage = 0;
+    private int _totalPages = 0;
     private bool _isTransitioning = false;
     private CanvasGroup[] _pageCanvasGroups;
     private readonly List<InputDevice> _vrControllers = new List<InputDevice>();
@@ -125,9 +125,9 @@ public class TutorialSceneController : MonoBehaviour
         EnsurePracticeUi();
 
         // Gắn sự kiện nút
-        if (btnNext  != null) btnNext.onClick.AddListener(GoToNextPage);
-        if (btnPrev  != null) btnPrev.onClick.AddListener(GoToPrevPage);
-        if (btnSkip  != null) btnSkip.onClick.AddListener(SkipTutorial);
+        if (btnNext != null) btnNext.onClick.AddListener(GoToNextPage);
+        if (btnPrev != null) btnPrev.onClick.AddListener(GoToPrevPage);
+        if (btnSkip != null) btnSkip.onClick.AddListener(SkipTutorial);
         if (btnStart != null) btnStart.onClick.AddListener(StartGame);
         if (practiceButtons != null)
         {
@@ -291,9 +291,9 @@ public class TutorialSceneController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (btnNext  != null) btnNext.onClick.RemoveListener(GoToNextPage);
-        if (btnPrev  != null) btnPrev.onClick.RemoveListener(GoToPrevPage);
-        if (btnSkip  != null) btnSkip.onClick.RemoveListener(SkipTutorial);
+        if (btnNext != null) btnNext.onClick.RemoveListener(GoToNextPage);
+        if (btnPrev != null) btnPrev.onClick.RemoveListener(GoToPrevPage);
+        if (btnSkip != null) btnSkip.onClick.RemoveListener(SkipTutorial);
         if (btnStart != null) btnStart.onClick.RemoveListener(StartGame);
         if (practiceButtons != null)
         {
@@ -476,6 +476,21 @@ public class TutorialSceneController : MonoBehaviour
 
     private bool IsPracticeActionPressed(PracticeAction action)
     {
+#if UNITY_EDITOR
+        if (action == PracticeAction.Thumbstick &&
+            (Input.GetAxisRaw("Horizontal") != 0f || Input.GetAxisRaw("Vertical") != 0f ||
+             Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+            return true;
+
+        if (action == PracticeAction.Trigger &&
+            (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.T) || Input.GetMouseButton(0)))
+            return true;
+
+        if ((action == PracticeAction.Grip || action == PracticeAction.QuickMenu) &&
+            (Input.GetKey(KeyCode.G) || Input.GetMouseButton(1) || Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.M)))
+            return true;
+#endif
+
         _vrControllers.Clear();
         InputDevices.GetDevicesWithCharacteristics(
             InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.HeldInHand,
@@ -631,8 +646,8 @@ public class TutorialSceneController : MonoBehaviour
     {
         if (index < 0 || index >= _totalPages || _pageCanvasGroups[index] == null) return;
         CanvasGroup cg = _pageCanvasGroups[index];
-        cg.alpha          = alpha;
-        cg.interactable   = alpha >= 0.999f;
+        cg.alpha = alpha;
+        cg.interactable = alpha >= 0.999f;
         cg.blocksRaycasts = alpha >= 0.999f;
     }
 
@@ -641,13 +656,13 @@ public class TutorialSceneController : MonoBehaviour
         if (index < 0 || index >= _totalPages || _pageCanvasGroups[index] == null)
             yield break;
 
-        float elapsed     = 0f;
-        CanvasGroup cg    = _pageCanvasGroups[index];
+        float elapsed = 0f;
+        CanvasGroup cg = _pageCanvasGroups[index];
 
         while (elapsed < fadeDuration)
         {
-            elapsed  += Time.unscaledDeltaTime;
-            cg.alpha  = Mathf.Lerp(fromAlpha, toAlpha, Mathf.Clamp01(elapsed / fadeDuration));
+            elapsed += Time.unscaledDeltaTime;
+            cg.alpha = Mathf.Lerp(fromAlpha, toAlpha, Mathf.Clamp01(elapsed / fadeDuration));
             yield return null;
         }
         cg.alpha = toAlpha;
@@ -661,8 +676,8 @@ public class TutorialSceneController : MonoBehaviour
     {
         if (_totalPages == 0)
         {
-            if (btnPrev  != null) btnPrev.gameObject.SetActive(false);
-            if (btnNext  != null) btnNext.gameObject.SetActive(false);
+            if (btnPrev != null) btnPrev.gameObject.SetActive(false);
+            if (btnNext != null) btnNext.gameObject.SetActive(false);
             if (btnStart != null) btnStart.gameObject.SetActive(false);
             if (txtPageIndicator != null) txtPageIndicator.text = "0 / 0";
             if (imgProgressBar != null) imgProgressBar.fillAmount = 0f;
@@ -670,13 +685,13 @@ public class TutorialSceneController : MonoBehaviour
         }
 
         bool isFirst = (_currentPage <= 0);
-        bool isLast  = (_currentPage >= _totalPages - 1);
+        bool isLast = (_currentPage >= _totalPages - 1);
 
         // Nút Prev: ẩn ở trang đầu
-        if (btnPrev  != null) btnPrev.gameObject.SetActive(!isFirst);
+        if (btnPrev != null) btnPrev.gameObject.SetActive(!isFirst);
 
         // Nút Next: ẩn ở trang cuối
-        if (btnNext  != null) btnNext.gameObject.SetActive(!isLast);
+        if (btnNext != null) btnNext.gameObject.SetActive(!isLast);
 
         // Nút Start: chỉ hiện ở trang cuối
         if (btnStart != null) btnStart.gameObject.SetActive(isLast);
