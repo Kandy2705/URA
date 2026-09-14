@@ -3,7 +3,7 @@ using System.Collections;
 using TMPro;
 public class QuestManager : MonoBehaviour
 {
-    private enum QuestStep { LookAtObject, WalkToLocation, Completed }
+    private enum QuestStep { LookAtObject, WalkToLocation, CommingSoon }
     [SerializeField] private QuestStep currentStep = QuestStep.LookAtObject;
 
     [Header("Core References")]
@@ -15,17 +15,20 @@ public class QuestManager : MonoBehaviour
     [SerializeField] private float lookDistanceMax = 5f;
     [SerializeField] private float viewThresholdAngle = 15f;
     [SerializeField] private float requiredLookDuration = 10f;
+    [SerializeField] private string QuestNotification1 = "Hãy nhìn bảng 10s và ghi nhớ danh sách!";
     private float lookTimer = 0f;
 
     [Header("Step 2: Walk to Destination")]
     [SerializeField] private Transform destinationPoint; // Điểm cần tới
     [SerializeField] private float arrivalDistance = 5f; // Khoảng cách được tính là "đã tới gần"
     [SerializeField] private float requiredStayDuration = 10f;
+    [SerializeField] private string QuestNotification2 = "Hãy dùng cần analog di chuyển đến điểm mũi tên đang chỉ và đợi 10s!";
+
     private float stayTimer = 0f;
 
     void Start()
     {
-        ShowQuestNotification("Nhiệm vụ: Hãy nhìn bảng 10s và ghi nhớ danh sách!");
+        ShowQuestNotification(QuestNotification1);
 
         if (playerCamera == null) playerCamera = Camera.main;
 
@@ -38,7 +41,7 @@ public class QuestManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("[QuestManager] Không tìm ra bảng");
+                Log("Không tìm ra bảng");
             }
         }
 
@@ -57,7 +60,7 @@ public class QuestManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("[QuestManager] Không tìm ra CheckPoint");
+                Log("Không tìm ra CheckPoint");
             }
         }
     }
@@ -74,7 +77,7 @@ public class QuestManager : MonoBehaviour
                 HandleWalkStep();
                 break;
 
-            case QuestStep.Completed:
+            case QuestStep.CommingSoon:
                 break;
         }
     }
@@ -89,7 +92,7 @@ public class QuestManager : MonoBehaviour
         if (isLooking)
         {
             lookTimer += Time.deltaTime;
-            Debug.Log($"[QuestManager] Đang nhìn mục tiêu: {lookTimer:F1}/{requiredLookDuration}s");
+            Log($"Đang nhìn mục tiêu: {lookTimer:F1}/{requiredLookDuration}s");
 
             if (lookTimer >= requiredLookDuration)
             {
@@ -123,7 +126,7 @@ public class QuestManager : MonoBehaviour
 
     private void CompleteStep1()
     {
-        Debug.Log("[QuestManager] Hoàn thành Bước 1! Đang đổi hướng mũi tên sang điểm đến...");
+        Log("Hoàn thành Bước 1! Đang đổi hướng mũi tên sang điểm đến...");
         currentStep = QuestStep.WalkToLocation;
 
         // Đổi mục tiêu của mũi tên sang điểm đến mới
@@ -131,6 +134,8 @@ public class QuestManager : MonoBehaviour
         {
             pointer.SetTarget(destinationPoint);
         }
+
+        ShowQuestNotification(QuestNotification2);
     }
 
     // Xử lý Bước 2: Đi đến vị trí
@@ -143,11 +148,11 @@ public class QuestManager : MonoBehaviour
         Vector2 playerPosition2D = new Vector2(playerCamera.transform.position.x, playerCamera.transform.position.z);
         Vector2 destinationPosition2D = new Vector2(destinationPoint.position.x, destinationPoint.position.z);
         float distance = Vector2.Distance(playerPosition2D, destinationPosition2D);
-        Debug.Log($"[QuestManager] Khoảng cách là {distance}");
+        Log($"Khoảng cách là {distance}");
         if (distance <= arrivalDistance)
         {
             stayTimer += Time.deltaTime;
-            Debug.Log($"[QuestManager] Đang đứng trong vùng đích: {stayTimer:F1}/{requiredStayDuration}s");
+            Log($"Đang đứng trong vùng đích: {stayTimer:F1}/{requiredStayDuration}s");
 
             if (stayTimer >= requiredStayDuration)
             {
@@ -163,14 +168,22 @@ public class QuestManager : MonoBehaviour
 
     private void CompleteAllQuests()
     {
-        currentStep = QuestStep.Completed;
-        Debug.Log("[QuestManager] Toàn bộ chuỗi nhiệm vụ hoàn thành!");
+        currentStep = QuestStep.CommingSoon;
+        Log("Coming Soon!");
 
         // Ẩn mũi tên khi xong hết
         if (pointer != null)
         {
             pointer.SetTarget(null);
+            pointer.gameObject.SetActive(false);
         }
+
+        ShowQuestNotification("Coming Soon");
+    }
+
+    private void Log(string message)
+    {
+        Debug.Log($"[QuestManager] {message}");
     }
 
     [Header("Quest UI Notification")]
@@ -178,8 +191,8 @@ public class QuestManager : MonoBehaviour
     [SerializeField] private CanvasGroup notificationCanvasGroup;
     [SerializeField] private TextMeshProUGUI notificationText;
     [SerializeField] private float displayDistance = 1.2f;
-    [SerializeField] private float displayYOffset = -0.1f;
-    [SerializeField] private float notificationDuration = 5.0f;
+    [SerializeField] private float displayYOffset = -1.2f;
+    [SerializeField] private float notificationDuration = 5f;
 
     private Coroutine hideNotificationCoroutine;
 
