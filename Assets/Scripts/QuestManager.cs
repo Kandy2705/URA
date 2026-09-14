@@ -3,7 +3,7 @@ using System.Collections;
 using TMPro;
 public class QuestManager : MonoBehaviour
 {
-    private enum QuestStep { LookAtObject, WalkToLocation, Completed }
+    private enum QuestStep { LookAtObject, WalkToLocation, GrabItem, Completed }
     [SerializeField] private QuestStep currentStep = QuestStep.LookAtObject;
 
     [Header("Core References")]
@@ -19,6 +19,8 @@ public class QuestManager : MonoBehaviour
 
     [Header("Step 2: Walk to Destination")]
     [SerializeField] private Transform destinationPoint; // Điểm cần tới
+    [Header("Step 3: Grab Sample Item")]
+    [SerializeField] private Transform sampleItem;
     [SerializeField] private float arrivalDistance = 5f; // Khoảng cách được tính là "đã tới gần"
     [SerializeField] private float requiredStayDuration = 10f;
     private float stayTimer = 0f;
@@ -236,5 +238,66 @@ public class QuestManager : MonoBehaviour
             questCanvasObject.SetActive(false);
 
         hideNotificationCoroutine = null;
+    }
+    public void OnSampleItemGrabbed()
+    {
+        if (currentStep != QuestStep.GrabItem) return;
+
+        currentStep = QuestStep.Completed;
+        StartCoroutine(FinishGrabTutorialRoutine());
+    }
+
+    private IEnumerator FinishGrabTutorialRoutine()
+    {
+        ShowQuestNotification("Đã hoàn thành! Item đã được thêm vào giỏ hàng.");
+
+        if (pointer != null)
+            pointer.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(3.0f);
+
+        if (questCanvasObject != null)
+            questCanvasObject.SetActive(false);
+    }
+
+    public void OnWrongItemInteracted()
+    {
+        if (currentStep != QuestStep.GrabItem) return;
+
+        ShowQuestNotification("Bạn chọn nhầm vật khác!\nHãy hướng tay vào item có mũi tên và bấm nút bên hông.");
+    }
+    // Khi bấm / nhặt đúng Item mẫu vào giỏ hàng
+    public void OnSampleItemAddedToCart()
+    {
+        if (currentStep != QuestStep.GrabItem) return;
+
+        currentStep = QuestStep.Completed;
+        StartCoroutine(FinishTutorialRoutine());
+    }
+
+    private IEnumerator FinishTutorialRoutine()
+    {
+        ShowQuestNotification("Đã hoàn thành! Item đã được thêm vào giỏ hàng.");
+
+        // Tắt mũi tên chỉ hướng
+        if (pointer != null)
+            pointer.gameObject.SetActive(false);
+
+        // Dừng hiển thị vài giây
+        yield return new WaitForSeconds(3.0f);
+
+        if (questCanvasObject != null)
+            questCanvasObject.SetActive(false);
+
+        Debug.Log("[QuestManager] Toàn bộ tutorial kết thúc thành công.");
+    }
+
+    // Khi người chơi chạm / bóp nhầm vật khác trên kệ
+    public void OnWrongItemTouched()
+    {
+        if (currentStep != QuestStep.GrabItem) return;
+
+        // Hiện lại đúng gợi ý theo đề bài
+        ShowQuestNotification("Bạn chọn nhầm vật thể khác!\nHướng tay cầm vào item được chỉ mũi tên và bấm nút bên hông.");
     }
 }
