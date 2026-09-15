@@ -1,240 +1,350 @@
-using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine;
+
+/// <summary>
+/// Điều phối chuỗi nhiệm vụ: nhìn bảng -> đi tới CheckPoint -> nhặt đúng item và bỏ vào giỏ.
+/// Tất cả reference gameplay phải được kéo thủ công vào Inspector.
+/// </summary>
 public class QuestManager : MonoBehaviour
 {
-    private enum QuestStep { LookAtObject, WalkToLocation, CommingSoon }
+    private enum QuestStep { LookAtObject, WalkToLocation, PickUpItem, Completed }
+
+    [Header("Quest State")]
     [SerializeField] private QuestStep currentStep = QuestStep.LookAtObject;
 
-    [Header("Core References")]
+    [Header("Core References - assign in Inspector")]
     [SerializeField] private Camera playerCamera;
     [SerializeField] private Pointer pointer;
 
-    [Header("Step 1: Look at Object")]
+    [Header("Step 1: Look at Notice Board")]
     [SerializeField] private Transform targetObject;
-    [SerializeField] private float lookDistanceMax = 5f;
     [SerializeField] private float viewThresholdAngle = 15f;
     [SerializeField] private float requiredLookDuration = 10f;
-    [SerializeField] private string QuestNotification1 = "Hãy nhìn bảng 10s và ghi nhớ danh sách!";
-    private float lookTimer = 0f;
+    [SerializeField] private string lookStepMessage = "Hãy nhìn bảng thông báo trong 10 giây và ghi nhớ danh sách!";
+    private float lookTimer;
 
-    [Header("Step 2: Walk to Destination")]
-    [SerializeField] private Transform destinationPoint; // Điểm cần tới
-    [SerializeField] private float arrivalDistance = 5f; // Khoảng cách được tính là "đã tới gần"
+    [Header("Step 2: Walk to CheckPoint")]
+    [SerializeField] private Transform destinationPoint;
+    [SerializeField] private float arrivalDistance = 5f;
     [SerializeField] private float requiredStayDuration = 10f;
-    [SerializeField] private string QuestNotification2 = "Hãy dùng cần analog di chuyển đến điểm mũi tên đang chỉ và đợi 10s!";
+    [SerializeField] private string walkStepMessage = "Hãy dùng cần analog đi tới điểm được chỉ và đứng đó trong 10 giây!";
+    private float stayTimer;
+    private bool isTransitioningToPickUpStep;
 
-    private float stayTimer = 0f;
+    [Header("Step 3: Pick Up Item")]
+    [SerializeField] private Transform playerTransform;
+    [SerializeField] private Transform sampleItem;
+    [SerializeField] private GameObject defaultItemCylinderObject;
+    [SerializeField] private GameObject groundArrowObject;
+    [SerializeField] private GroundArrow groundArrow;
+    [SerializeField] private GameObject controllerTutorialCanvas;
+    [SerializeField] private float delayBeforeStep3 = 2f;
+    [SerializeField] private string pickUpStepMessage = "Hãy hướng tay vào item mẫu và bấm nút Grip bên hông để nhặt!";
+    [SerializeField] private string wrongItemMessage = "Bạn đã chọn nhầm vật phẩm. Hãy làm theo mũi tên và nhặt đúng item mẫu!";
+    [SerializeField] private string itemGrabbedMessage = "Đã nhặt đúng item. Hãy đưa item vào giỏ hàng!";
+    [SerializeField] private string completedMessage = "Chúc mừng! Bạn đã hoàn thành toàn bộ chuỗi nhiệm vụ.";
 
-    void Start()
+    [Header("Quest UI Notification")]
+    [SerializeField] private GameObject questCanvasObject;
+    [SerializeField] private CanvasGroup notificationCanvasGroup;
+    [SerializeField] private TextMeshProUGUI notificationText;
+    [SerializeField] private float displayDistance = 1.2f;
+    [SerializeField] private float displayYOffset = -1.2f;
+    [SerializeField] private float notificationDuration = 5f;
+    private Coroutine hideNotificationCoroutine;
+
+    private void OnEnable()
     {
-        ShowQuestNotification(QuestNotification1);
+        SampleItem.OnSampleItemAddedToCart += HandleSampleItemAddedToCart;
+        SampleItem.OnWrongItemTouched += HandleWrongItemTouched;
+    }
 
-        if (playerCamera == null) playerCamera = Camera.main;
+    private void OnDisable()
+    {
+        SampleItem.OnSampleItemAddedToCart -= HandleSampleItemAddedToCart;
+        SampleItem.OnWrongItemTouched -= HandleWrongItemTouched;
+    }
 
-        if (targetObject == null)
+    private void Start()
+    {
+        // Không dùng GameObject.Find. Nếu chưa gán, các object sẽ không được tự tìm.
+        if (groundArrow == null && groundArrowObject != null)
+            groundArrow = groundArrowObject.GetComponent<GroundArrow>();
+
+        HidePickUpGuidance();
+        ShowQuestNotification(lookStepMessage);
+
+        if (pointer != null && targetObject != null)
         {
-            GameObject gameObject = GameObject.Find("Notice_Board");
-            if (gameObject != null)
-            {
-                targetObject = gameObject.transform;
-            }
-            else
-            {
-                Log("Không tìm ra bảng");
-            }
-        }
-
-        if (pointer == null)
-        {
-            pointer = Object.FindAnyObjectByType<Pointer>();
+            pointer.gameObject.SetActive(true);
             pointer.SetTarget(targetObject);
-        }
-
-        if (destinationPoint == null)
-        {
-            GameObject gameObject = GameObject.Find("CheckPoint");
-            if (gameObject != null)
-            {
-                destinationPoint = gameObject.transform;
-            }
-            else
-            {
-                Log("Không tìm ra CheckPoint");
-            }
         }
     }
 
-    void Update()
+    private void Update()
     {
         switch (currentStep)
         {
             case QuestStep.LookAtObject:
                 HandleLookStep();
                 break;
-
             case QuestStep.WalkToLocation:
                 HandleWalkStep();
                 break;
-
-            case QuestStep.CommingSoon:
+            case QuestStep.PickUpItem:
+            case QuestStep.Completed:
                 break;
         }
     }
 
-    // Xử lý Bước 1: Nhìn vào vật
+    // ------------------------- Step 1 -------------------------
+
     private void HandleLookStep()
     {
-        if (targetObject == null) return;
+        if (targetObject == null || playerCamera == null)
+            return;
 
-        bool isLooking = CheckIfLookingAtTarget();
-
-        if (isLooking)
+        if (CheckIfLookingAtTarget())
         {
             lookTimer += Time.deltaTime;
-            Log($"Đang nhìn mục tiêu: {lookTimer:F1}/{requiredLookDuration}s");
-
             if (lookTimer >= requiredLookDuration)
-            {
                 CompleteStep1();
-            }
         }
         else
         {
-            // Rời mắt thì reset bộ đếm
-            lookTimer = 0;
+            lookTimer = 0f;
         }
     }
 
     private bool CheckIfLookingAtTarget()
     {
-        if (targetObject == null || playerCamera == null) return false;
+        Vector3 toTarget = targetObject.position - playerCamera.transform.position;
+        if (toTarget.sqrMagnitude <= Mathf.Epsilon)
+            return true;
 
-        Vector3 cameraPos = playerCamera.transform.position;
-        Vector3 toTarget = targetObject.position - cameraPos;
-
-        // 1. Kiểm tra góc nhìn trong phạm vi cho phép
-        float angle = Vector3.Angle(playerCamera.transform.forward, toTarget);
-        if (angle > viewThresholdAngle) return false;
-
-        // 2. Bắn tia kiểm tra xem có vật cản chắn tầm mắt không
-        // RaycastHit hit;
-        // if (Physics.Raycast(cameraPos, toTarget.normalized, out hit, lookDistanceMax)) return false;
-
-        return true;
+        return Vector3.Angle(playerCamera.transform.forward, toTarget) <= viewThresholdAngle;
     }
 
     private void CompleteStep1()
     {
-        Log("Hoàn thành Bước 1! Đang đổi hướng mũi tên sang điểm đến...");
         currentStep = QuestStep.WalkToLocation;
+        stayTimer = 0f;
 
-        // Đổi mục tiêu của mũi tên sang điểm đến mới
         if (pointer != null && destinationPoint != null)
-        {
             pointer.SetTarget(destinationPoint);
-        }
 
-        ShowQuestNotification(QuestNotification2);
+        ShowQuestNotification(walkStepMessage);
     }
 
-    // Xử lý Bước 2: Đi đến vị trí
+    // ------------------------- Step 2 -------------------------
+
     private void HandleWalkStep()
     {
-        if (destinationPoint == null) return;
+        if (destinationPoint == null || playerTransform == null || isTransitioningToPickUpStep)
+            return;
 
-        // Tính khoảng cách giữa vị trí chân Player (Camera chiếu xuống mặt phẳng) và điểm đến
+        Vector2 playerPosition = new Vector2(playerTransform.position.x, playerTransform.position.z);
+        Vector2 destinationPosition = new Vector2(destinationPoint.position.x, destinationPoint.position.z);
+        float distance = Vector2.Distance(playerPosition, destinationPosition);
 
-        Vector2 playerPosition2D = new Vector2(playerCamera.transform.position.x, playerCamera.transform.position.z);
-        Vector2 destinationPosition2D = new Vector2(destinationPoint.position.x, destinationPoint.position.z);
-        float distance = Vector2.Distance(playerPosition2D, destinationPosition2D);
-        Log($"Khoảng cách là {distance}");
         if (distance <= arrivalDistance)
         {
             stayTimer += Time.deltaTime;
-            Log($"Đang đứng trong vùng đích: {stayTimer:F1}/{requiredStayDuration}s");
-
             if (stayTimer >= requiredStayDuration)
-            {
-                CompleteAllQuests();
-            }
+                CompleteStep2();
         }
         else
         {
-            // Đi ra khỏi vùng thì reset timer
             stayTimer = 0f;
         }
     }
 
-    private void CompleteAllQuests()
+    private void CompleteStep2()
     {
-        currentStep = QuestStep.CommingSoon;
-        Log("Coming Soon!");
+        if (isTransitioningToPickUpStep)
+            return;
 
-        // Ẩn mũi tên khi xong hết
+        isTransitioningToPickUpStep = true;
+        StartCoroutine(BeginPickUpStepAfterDelay());
+    }
+
+    private IEnumerator BeginPickUpStepAfterDelay()
+    {
+        yield return new WaitForSeconds(delayBeforeStep3);
+
         if (pointer != null)
         {
             pointer.SetTarget(null);
             pointer.gameObject.SetActive(false);
         }
 
-        ShowQuestNotification("Coming Soon");
+        BeginPickUpStep();
     }
 
-    private void Log(string message)
+    // ------------------------- Step 3 -------------------------
+
+    private void BeginPickUpStep()
     {
-        Debug.Log($"[QuestManager] {message}");
-    }
+        currentStep = QuestStep.PickUpItem;
 
-    [Header("Quest UI Notification")]
-    [SerializeField] private GameObject questCanvasObject; // Kéo thẳng GameObject Canvas vào đây
-    [SerializeField] private CanvasGroup notificationCanvasGroup;
-    [SerializeField] private TextMeshProUGUI notificationText;
-    [SerializeField] private float displayDistance = 1.2f;
-    [SerializeField] private float displayYOffset = -1.2f;
-    [SerializeField] private float notificationDuration = 5f;
+        // Tắt hình trụ 3D mặc định quanh item nếu scene có object này.
+        if (defaultItemCylinderObject != null)
+            defaultItemCylinderObject.SetActive(false);
 
-    private Coroutine hideNotificationCoroutine;
-
-    public void ShowQuestNotification(string message)
-    {
-        if (playerCamera == null) playerCamera = Camera.main;
-
-        if (playerCamera == null || questCanvasObject == null)
+        if (groundArrow != null)
         {
-            Debug.LogWarning("Chưa gán đủ Camera hoặc QuestCanvasObject!");
+            groundArrow.SetTarget(sampleItem);
+            groundArrow.Show(true);
+        }
+        else if (groundArrowObject != null)
+        {
+            groundArrowObject.SetActive(true);
+        }
+
+        if (controllerTutorialCanvas != null)
+            controllerTutorialCanvas.SetActive(true);
+
+        ShowQuestNotification(pickUpStepMessage);
+    }
+
+    /// <summary>Gọi khi người chơi chạm hoặc nhặt nhầm vật phẩm khác.</summary>
+    public void OnWrongItemInteracted()
+    {
+        if (currentStep != QuestStep.PickUpItem)
+            return;
+
+        if (controllerTutorialCanvas != null)
+            controllerTutorialCanvas.SetActive(true);
+
+        ShowQuestNotification(wrongItemMessage);
+    }
+
+    /// <summary>Alias tương thích với UnityEvent hoặc script cũ trong scene.</summary>
+    public void OnWrongItemTouched()
+    {
+        if (currentStep != QuestStep.PickUpItem)
+            return;
+
+        if (controllerTutorialCanvas != null)
+            controllerTutorialCanvas.SetActive(true);
+
+        ShowQuestNotification("Bạn chọn nhầm vật thể khác! Hướng tay cầm vào item và bấm nút bên hông.");
+    }
+
+    /// <summary>Đã nhặt đúng item nhưng chưa bỏ vào giỏ, nên chưa hoàn thành quest.</summary>
+    public void OnSampleItemGrabbed()
+    {
+        if (currentStep != QuestStep.PickUpItem)
+            return;
+
+        ShowQuestNotification(itemGrabbedMessage);
+    }
+
+    /// <summary>Gọi từ trigger giỏ hàng. Chỉ sampleItem được tính là hoàn thành.</summary>
+    public void OnTargetItemAddedToCart(GameObject itemAdded)
+    {
+        if (currentStep != QuestStep.PickUpItem || itemAdded == null || sampleItem == null)
+            return;
+
+        bool isTargetItem = itemAdded == sampleItem.gameObject
+            || itemAdded.transform.IsChildOf(sampleItem)
+            || sampleItem.IsChildOf(itemAdded.transform);
+        if (!isTargetItem)
+        {
+            OnWrongItemInteracted();
             return;
         }
 
-        if (notificationText != null)
+        CompleteQuestFromCart();
+    }
+
+    /// <summary>Alias parameterless cho event SampleItem hiện có.</summary>
+    public void OnSampleItemAddedToCart()
+    {
+        if (currentStep != QuestStep.PickUpItem)
+            return;
+
+        CompleteQuestFromCart();
+    }
+
+    private void CompleteQuestFromCart()
+    {
+        currentStep = QuestStep.Completed;
+        isTransitioningToPickUpStep = false;
+        HidePickUpGuidance();
+        StartCoroutine(FinishQuestAfterDelay());
+    }
+
+    private void HandleSampleItemAddedToCart()
+    {
+        OnSampleItemAddedToCart();
+    }
+
+    private void HandleWrongItemTouched()
+    {
+        OnWrongItemInteracted();
+    }
+
+    private IEnumerator FinishQuestAfterDelay()
+    {
+        ShowQuestNotification("Đã hoàn thành! Item đã được thêm vào giỏ hàng.");
+
+        yield return new WaitForSeconds(3f);
+
+        if (pointer != null)
         {
-            notificationText.text = message;
+            pointer.SetTarget(null);
+            pointer.gameObject.SetActive(false);
         }
 
-        Transform camTransform = playerCamera.transform;
+        if (questCanvasObject != null)
+            questCanvasObject.SetActive(false);
 
-        // Đặt vị trí trước mắt Camera
-        Vector3 targetPos = camTransform.position 
-                        + (camTransform.forward * displayDistance) 
-                        + (camTransform.up * displayYOffset);
+        if (notificationCanvasGroup != null)
+            notificationCanvasGroup.alpha = 0f;
+    }
 
-        questCanvasObject.transform.position = targetPos;
+    private void HidePickUpGuidance()
+    {
+        if (groundArrow != null)
+            groundArrow.Show(false);
 
-        // Quay mặt phẳng về phía mắt nhìn
-        questCanvasObject.transform.LookAt(camTransform.position);
-        questCanvasObject.transform.Rotate(0, 180, 0); // Khắc phục ngược gương nếu có
+        if (groundArrowObject != null)
+            groundArrowObject.SetActive(false);
+
+        if (controllerTutorialCanvas != null)
+            controllerTutorialCanvas.SetActive(false);
+    }
+
+    // ------------------------- UI -------------------------
+
+    public void ShowQuestNotification(string message)
+    {
+        if (notificationText != null)
+            notificationText.text = message;
+
+        if (questCanvasObject == null)
+            return;
+
+        if (playerCamera != null)
+        {
+            Transform cameraTransform = playerCamera.transform;
+            questCanvasObject.transform.position = cameraTransform.position
+                + cameraTransform.forward * displayDistance
+                + cameraTransform.up * displayYOffset;
+            questCanvasObject.transform.LookAt(cameraTransform.position);
+            questCanvasObject.transform.Rotate(0f, 180f, 0f);
+        }
 
         questCanvasObject.SetActive(true);
 
         if (notificationCanvasGroup != null)
-        {
             notificationCanvasGroup.alpha = 1f;
-        }
 
         if (hideNotificationCoroutine != null)
-        {
             StopCoroutine(hideNotificationCoroutine);
-        }
+
         hideNotificationCoroutine = StartCoroutine(HideNotificationAfter(notificationDuration));
     }
 
