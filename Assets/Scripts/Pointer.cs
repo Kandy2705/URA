@@ -14,22 +14,9 @@ public class Pointer : MonoBehaviour
     {
         if (mainCamera == null)
             mainCamera = Camera.main;
-        if (target == null){
-            GameObject gameObject = GameObject.Find("Notice_Board");
-            if(gameObject != null){
-                target = gameObject.transform;
-            }else{
-                Debug.Log("[ArrowObject] Không tìm ra bảng");
-            }
-        }
     }
 
     void Update(){
-   
-    }
-
-    void LateUpdate()
-    {
         if (mainCamera == null || target == null) return;
 
         Vector3 targetPosition = mainCamera.transform.position 
@@ -43,6 +30,11 @@ public class Pointer : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(directionToTarget);
         }
+    }
+
+    void LateUpdate()
+    {
+        
     }
 
     // Hàm cập nhật target mới khi đổi nhiệm vụ/mục tiêu
