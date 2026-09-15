@@ -10,10 +10,10 @@ using TMPro;
 /// Controller cho scene hướng dẫn sử dụng tay cầm VR.
 /// Hiển thị các trang hướng dẫn dạng carousel và cho phép dùng cò tay cầm
 /// để chuyển bước mà không cần biết cách dùng tia UI từ trước.
-/// Sau khi xem xong hoặc nhấn Skip → tự động chuyển sang Scene-level-1.
+/// Sau khi xem xong hoặc nhấn Skip → tự động chuyển sang Scene-level-1-tourtorial.
 /// 
 /// Cách setup trong Unity:
-///  1. Tạo Scene mới tên "Scene-Tutorial" → vào Build Settings → thêm vào TRƯỚC Scene-level-1.
+///  1. Tạo Scene mới tên "Scene-Tutorial" → vào Build Settings → thêm vào TRƯỚC Scene-level-1-tourtorial.
 ///  2. Tạo Canvas → tạo GameObject "TutorialController" → gắn script này lên.
 ///  3. Tạo các child GameObject cho từng trang hướng dẫn (Page_01, Page_02, ...).
 ///  4. Kéo các reference vào Inspector theo mô tả Tooltip bên dưới.
@@ -33,7 +33,7 @@ public class TutorialSceneController : MonoBehaviour
 
     [Header("=== Scene Chuyển Tiếp ===")]
     [Tooltip("Tên scene sẽ load sau khi hướng dẫn kết thúc (phải có trong Build Settings).")]
-    [SerializeField] private string nextSceneName = "Scene-level-1";
+    [SerializeField] private string nextSceneName = "Scene-level-1-tourtorial";
 
     [Header("=== Các Trang Hướng Dẫn ===")]
     [Tooltip("Kéo các GameObject của từng trang hướng dẫn vào đây theo thứ tự. " +

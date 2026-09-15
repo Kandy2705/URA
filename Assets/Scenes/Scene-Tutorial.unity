@@ -1662,7 +1662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7fc7f44b57403a80498b117e902dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialSceneController
-  nextSceneName: Scene-level-1
+  nextSceneName: Scene-level-1-tourtorial
   tutorialPages:
   - {fileID: 1504876842}
   - {fileID: 309646097}
