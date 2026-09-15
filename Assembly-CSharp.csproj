@@ -105,6 +105,7 @@
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/VertexShakeA.cs" />
     <Compile Include="Assets/Scripts/BackendApi/Level2MllmDialogueBridge.cs" />
     <Compile Include="Assets/Scripts/CartManager.cs" />
+    <Compile Include="Assets/Scripts/Pointer.cs" />
     <Compile Include="Assets/Scripts/CartShopping/CartItemUIEntry.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/Benchmark01_UGUI.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/SimpleScript.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TextConsoleSimulator.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TeleType.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_TextEventCheck.cs" />
+    <Compile Include="Assets/Scripts/QuestManager.cs" />
     <Compile Include="Assets/Scripts/CheckoutButtonBinder.cs" />
     <Compile Include="Assets/Scripts/BackendApi/MllmEventCodes.cs" />
     <Compile Include="Assets/Scripts/GameOverHandler.cs" />
