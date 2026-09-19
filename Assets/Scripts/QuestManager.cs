@@ -1,10 +1,14 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine.XR.Interaction.Toolkit;
 public class QuestManager : MonoBehaviour
 {
-    private enum QuestStep { LookAtObject, WalkToLocation, CommingSoon }
+    private enum QuestStep { LookAtObject, WalkToLocation, AcquireTutorialItem, CommingSoon }
     [SerializeField] private QuestStep currentStep = QuestStep.LookAtObject;
+    [Tooltip("The quest state entered when this scene starts. This does not remove the sequential quest flow.")]
+    [SerializeField] private QuestStep startStep = QuestStep.LookAtObject;
+    private bool hasInitializedStartStep;
 
     [Header("Core References")]
     [SerializeField] private Camera playerCamera;
@@ -26,10 +30,16 @@ public class QuestManager : MonoBehaviour
 
     private float stayTimer = 0f;
 
+    [Header("Step 3: Acquire Tutorial Item")]
+    [SerializeField] private SelectableItem tutorialItem;
+    [SerializeField] private string tutorialItemInstruction = "Hãy lấy hộp sữa đang được đánh dấu.\nHướng tay cầm vào hộp sữa và bấm nút bên hông để lấy.";
+    private const string WrongTutorialItemInstruction = "Bạn chọn sai món rồi, hãy chọn lại nhé.";
+    [SerializeField] private TutorialTargetVisual tutorialTargetVisual;
+    private UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor[] tutorialInteractors;
+    private bool tutorialItemStepCompleted;
+
     void Start()
     {
-        ShowQuestNotification(QuestNotification1);
-
         if (playerCamera == null) playerCamera = Camera.main;
 
         if (targetObject == null)
@@ -45,11 +55,7 @@ public class QuestManager : MonoBehaviour
             }
         }
 
-        if (pointer == null)
-        {
-            pointer = Object.FindAnyObjectByType<Pointer>();
-            pointer.SetTarget(targetObject);
-        }
+        ResolvePointer();
 
         if (destinationPoint == null)
         {
@@ -63,6 +69,43 @@ public class QuestManager : MonoBehaviour
                 Log("Không tìm ra CheckPoint");
             }
         }
+
+        currentStep = startStep;
+        hasInitializedStartStep = true;
+        InitializeConfiguredStartStep();
+    }
+
+    private void OnEnable()
+    {
+        if (hasInitializedStartStep && currentStep == QuestStep.AcquireTutorialItem && !tutorialItemStepCompleted)
+            EnterAcquireTutorialItem();
+    }
+
+    private void InitializeConfiguredStartStep()
+    {
+        lookTimer = 0f;
+        stayTimer = 0f;
+
+        switch (currentStep)
+        {
+            case QuestStep.LookAtObject:
+                SetPointerTarget(targetObject);
+                ShowQuestNotification(QuestNotification1);
+                break;
+
+            case QuestStep.WalkToLocation:
+                SetPointerTarget(destinationPoint);
+                ShowQuestNotification(QuestNotification2);
+                break;
+
+            case QuestStep.AcquireTutorialItem:
+                StartTutorialItemStep();
+                break;
+
+            case QuestStep.CommingSoon:
+                CompleteAllQuests();
+                break;
+        }
     }
 
     void Update()
@@ -75,6 +118,9 @@ public class QuestManager : MonoBehaviour
 
             case QuestStep.WalkToLocation:
                 HandleWalkStep();
+                break;
+
+            case QuestStep.AcquireTutorialItem:
                 break;
 
             case QuestStep.CommingSoon:
@@ -130,10 +176,7 @@ public class QuestManager : MonoBehaviour
         currentStep = QuestStep.WalkToLocation;
 
         // Đổi mục tiêu của mũi tên sang điểm đến mới
-        if (pointer != null && destinationPoint != null)
-        {
-            pointer.SetTarget(destinationPoint);
-        }
+        SetPointerTarget(destinationPoint);
 
         ShowQuestNotification(QuestNotification2);
     }
@@ -156,7 +199,7 @@ public class QuestManager : MonoBehaviour
 
             if (stayTimer >= requiredStayDuration)
             {
-                CompleteAllQuests();
+                StartTutorialItemStep();
             }
         }
         else
@@ -172,13 +215,223 @@ public class QuestManager : MonoBehaviour
         Log("Coming Soon!");
 
         // Ẩn mũi tên khi xong hết
-        if (pointer != null)
-        {
-            pointer.SetTarget(null);
-            pointer.gameObject.SetActive(false);
-        }
+        ClearPointerTarget(nameof(CompleteAllQuests));
+        SetArrowWrapperActive(false, nameof(CompleteAllQuests));
+
+        if (tutorialTargetVisual != null)
+            tutorialTargetVisual.SetVisualsActive(false);
 
         ShowQuestNotification("Coming Soon");
+    }
+
+    private void StartTutorialItemStep()
+    {
+        currentStep = QuestStep.AcquireTutorialItem;
+        stayTimer = 0f;
+        tutorialItemStepCompleted = false;
+        ClearPreviousStepPresentation();
+        EnterAcquireTutorialItem();
+    }
+
+    private void EnterAcquireTutorialItem()
+    {
+        Debug.Log("[QuestManager] EnterAcquireTutorialItem BEGIN");
+
+        if (tutorialItem == null)
+        {
+            Debug.LogError("[QuestManager] Tutorial item is not configured.");
+            return;
+        }
+
+        tutorialTargetVisual = tutorialTargetVisual != null
+            ? tutorialTargetVisual
+            : tutorialItem.GetComponent<TutorialTargetVisual>();
+        if (tutorialTargetVisual == null)
+            tutorialTargetVisual = tutorialItem.gameObject.AddComponent<TutorialTargetVisual>();
+        tutorialTargetVisual.SetPlayerCamera(playerCamera);
+        tutorialTargetVisual.SetTarget(tutorialItem);
+        tutorialTargetVisual.SetVisualsActive(true);
+        SetPointerTarget(tutorialItem.transform);
+
+        Debug.Log($"[QuestManager] EnterAcquireTutorialItem END | arrowActive={pointer != null && pointer.gameObject.activeSelf} | camera={(pointer != null && pointer.MainCamera != null ? pointer.MainCamera.name : "None")} | target={(pointer != null && pointer.Target != null ? pointer.Target.name : "None")}");
+
+        SubscribeTutorialItemEvents();
+        ShowQuestNotification(tutorialItemInstruction);
+    }
+
+    private void SubscribeTutorialItemEvents()
+    {
+        UnsubscribeTutorialItemEvents();
+        if (PokeManager.Instance != null)
+            PokeManager.Instance.OnItemSuccessfullyAdded += HandleItemSuccessfullyAdded;
+        else
+            Debug.LogWarning("[QuestManager] PokeManager is missing; the tutorial item cannot complete this step.");
+
+        UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor[] activeInteractors =
+            FindObjectsByType<UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor>(FindObjectsInactive.Exclude,
+                FindObjectsSortMode.None);
+        tutorialInteractors = System.Array.FindAll(activeInteractors, interactor =>
+            interactor != null &&
+            (interactor.gameObject.name == "Left_NearFarInteractor" || interactor.gameObject.name == "Right_NearFarInteractor"));
+
+        if (tutorialInteractors.Length == 0)
+            Debug.LogWarning("[QuestManager] Left_NearFarInteractor and Right_NearFarInteractor could not be resolved.");
+
+        foreach (UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor interactor in tutorialInteractors)
+            interactor.selectEntered.AddListener(HandleInteractorSelectEntered);
+    }
+
+    private void UnsubscribeTutorialItemEvents()
+    {
+        if (PokeManager.Instance != null)
+            PokeManager.Instance.OnItemSuccessfullyAdded -= HandleItemSuccessfullyAdded;
+
+        if (tutorialInteractors == null)
+            return;
+
+        foreach (UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor interactor in tutorialInteractors)
+            if (interactor != null)
+                interactor.selectEntered.RemoveListener(HandleInteractorSelectEntered);
+        tutorialInteractors = null;
+    }
+
+    private void HandleInteractorSelectEntered(SelectEnterEventArgs args)
+    {
+        if (currentStep != QuestStep.AcquireTutorialItem || tutorialItemStepCompleted)
+            return;
+
+        if (args.interactableObject == null)
+        {
+            ShowQuestNotification(WrongTutorialItemInstruction);
+            return;
+        }
+
+        SelectableItem selectedItem = args.interactableObject.transform.GetComponentInParent<SelectableItem>();
+        // Product selections are handled after a real cart mutation by PokeManager.
+        // This listener remains responsible only for non-product interactables.
+        if (selectedItem == null)
+            ShowQuestNotification(WrongTutorialItemInstruction);
+    }
+
+    private void HandleItemSuccessfullyAdded(SelectableItem sourceItem)
+    {
+        if (currentStep != QuestStep.AcquireTutorialItem || tutorialItemStepCompleted)
+            return;
+
+        if (sourceItem != tutorialItem)
+        {
+            // A different product reached the real cart successfully. Keep every
+            // guidance visual active and remind the player of the exact target.
+            ShowQuestNotification(WrongTutorialItemInstruction);
+            return;
+        }
+
+        tutorialItemStepCompleted = true;
+        UnsubscribeTutorialItemEvents();
+        CompleteAllQuests();
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log($"[QuestManager] OnDisable while state={currentStep}");
+        UnsubscribeTutorialItemEvents();
+        HideTutorialItemGuidance();
+    }
+
+    private void HideTutorialItemGuidance()
+    {
+        ClearPointerTarget(nameof(HideTutorialItemGuidance));
+        SetArrowWrapperActive(false, nameof(HideTutorialItemGuidance));
+
+        if (tutorialTargetVisual != null)
+            tutorialTargetVisual.SetVisualsActive(false);
+    }
+
+    private void ClearPreviousStepPresentation()
+    {
+        lookTimer = 0f;
+        stayTimer = 0f;
+
+        if (hideNotificationCoroutine != null)
+        {
+            StopCoroutine(hideNotificationCoroutine);
+            hideNotificationCoroutine = null;
+        }
+
+        if (notificationCanvasGroup != null)
+            notificationCanvasGroup.alpha = 0f;
+        if (questCanvasObject != null)
+            questCanvasObject.SetActive(false);
+
+        ClearPointerTarget(nameof(ClearPreviousStepPresentation));
+        SetArrowWrapperActive(false, nameof(ClearPreviousStepPresentation));
+
+        if (tutorialTargetVisual != null)
+            tutorialTargetVisual.SetVisualsActive(false);
+    }
+
+    private void SetPointerTarget(Transform target)
+    {
+        ResolvePointer();
+        if (pointer == null)
+            return;
+
+        if (target != null)
+        {
+            pointer.InitializeCamera(playerCamera);
+            Debug.Log($"[QuestManager] ArrowWrapper before activate: {pointer.gameObject.activeSelf}");
+            SetArrowWrapperActive(true, nameof(SetPointerTarget));
+            ClearPointerTarget(nameof(SetPointerTarget));
+        }
+        else
+        {
+            ClearPointerTarget(nameof(SetPointerTarget));
+            SetArrowWrapperActive(false, nameof(SetPointerTarget));
+            return;
+        }
+
+        pointer.SetTarget(target);
+
+        if (target != null)
+            Debug.Log($"[QuestManager] Pointer target -> {target.name}");
+    }
+
+    private void ResolvePointer()
+    {
+        if (pointer == null)
+            pointer = Object.FindFirstObjectByType<Pointer>(FindObjectsInactive.Include);
+
+        if (pointer == null)
+        {
+            Debug.LogWarning("[QuestManager] Pointer is missing; direction guidance is unavailable.");
+            return;
+        }
+
+        pointer.InitializeCamera(playerCamera);
+    }
+
+    private void ClearPointerTarget(string source)
+    {
+        if (pointer == null)
+            return;
+
+        Debug.Log($"[QuestManager] Pointer target -> None from {source}");
+        pointer.SetTarget(null);
+    }
+
+    private void SetArrowWrapperActive(bool active, string source)
+    {
+        ResolvePointer();
+        if (pointer == null)
+            return;
+
+        if (!active)
+            Debug.Log($"[QuestManager] ArrowWrapper -> INACTIVE from {source}");
+
+        pointer.gameObject.SetActive(active);
+
+        if (active)
+            Debug.Log("[QuestManager] ArrowWrapper -> ACTIVE");
     }
 
     private void Log(string message)
@@ -234,6 +487,7 @@ public class QuestManager : MonoBehaviour
         if (hideNotificationCoroutine != null)
         {
             StopCoroutine(hideNotificationCoroutine);
+            hideNotificationCoroutine = null;
         }
         hideNotificationCoroutine = StartCoroutine(HideNotificationAfter(notificationDuration));
     }

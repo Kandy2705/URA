@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
+using System;
 using UnityEngine;
 using TMPro;
 
@@ -28,6 +29,7 @@ public class PokeManager : MonoBehaviour
     [SerializeField] private List<BillEntry> inventoryView = new List<BillEntry>();
     public delegate void InventoryChangedHandler(BillEntry entry, bool isNew);
     public event InventoryChangedHandler OnInventoryChanged;
+    public event Action<SelectableItem> OnItemSuccessfullyAdded;
     private int totalValue = 0;
     private SelectableItem[] selectableItems;
     private float nextProximityScanTime;
@@ -117,6 +119,7 @@ public class PokeManager : MonoBehaviour
 
         UpdateInventoryView();
         UpdateTotalsAndUI();
+        OnItemSuccessfullyAdded?.Invoke(item);
         ShowAcquiredItemNotification(item);
 
         Debug.Log($"Poked: {item.itemName}, Price: {item.price}, Quantity: {inventory[item.itemName].quantity}");

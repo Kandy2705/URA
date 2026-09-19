@@ -10,10 +10,11 @@ public class Pointer : MonoBehaviour
     [SerializeField] private float distanceFromCamera = 1.2f;
     [SerializeField] private float verticalOffset = -0.3f;
     [SerializeField] private float smoothSpeed = 10f;
+    public Camera MainCamera => mainCamera;
+    public Transform Target => target;
     void Start()
     {
-        if (mainCamera == null)
-            mainCamera = Camera.main;
+        InitializeCamera(null);
     }
 
     void Update(){
@@ -41,5 +42,14 @@ public class Pointer : MonoBehaviour
     public void SetTarget(Transform newTarget)
     {
         target = newTarget;
+    }
+
+    public void InitializeCamera(Camera preferredCamera)
+    {
+        if (mainCamera == null)
+            mainCamera = preferredCamera != null ? preferredCamera : Camera.main;
+
+        if (mainCamera == null)
+            Debug.LogWarning("[Pointer] Main Camera is missing; pointer cannot update.");
     }
 }
