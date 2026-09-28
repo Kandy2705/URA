@@ -11239,13 +11239,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 610951435}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 123c2cacf6f08524d9047d60536cc849, type: 3}
+  m_Script: {fileID: 11500000, guid: 206698ea070e59849b5de2f03119f36c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestManager
   currentStep: 0
   playerCamera: {fileID: 0}
-  pointer: {fileID: 0}
-  targetObject: {fileID: 0}
+  pointer: {fileID: 1298102422}
+  targetObject: {fileID: 2128949074}
   lookDistanceMax: 5
   viewThresholdAngle: 15
   requiredLookDuration: 10
@@ -11258,7 +11258,7 @@ MonoBehaviour:
   questCanvasObject: {fileID: 857953967}
   notificationCanvasGroup: {fileID: 857953972}
   notificationText: {fileID: 119797249}
-  displayDistance: 1.5
+  displayDistance: 1.2
   displayYOffset: -1.2
   notificationDuration: 5
 --- !u!4 &610951437
@@ -23565,7 +23565,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1298102421}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f307a590436e7eb42929b47069e71be1, type: 3}
+  m_Script: {fileID: 11500000, guid: d7923200e308f514b83cbbba214dc963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pointer
   mainCamera: {fileID: 0}
