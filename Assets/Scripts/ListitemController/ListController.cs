@@ -39,6 +39,7 @@ public class ListController : MonoBehaviour
     public bool HasPendingRandomChange => hasTriggeredRandomChange;
     public event Action<string, GameObject, int> OnListChanged;
     public event Action<int> OnListShown;
+    public event Action OnListHidden;
     public event Action<string, string, int, string> OnRandomListChange;
     public event Action<IReadOnlyList<ShoppingTaskItem>> OnInitialTasksRendered;
     public event Action OnMainListGenerated;
@@ -109,6 +110,7 @@ public class ListController : MonoBehaviour
                 StopCoroutine(currentRoutine);
             listContainer.SetActive(false);
             currentRoutine = null;
+            OnListHidden?.Invoke();
             return;
         }
         ShowList();
@@ -162,6 +164,7 @@ public class ListController : MonoBehaviour
         yield return new WaitForSeconds(showDuration);
         listContainer.SetActive(false);
         currentRoutine = null;
+        OnListHidden?.Invoke();
     }
 
     private void SpawnMissionItem(ShoppingTaskItem task)

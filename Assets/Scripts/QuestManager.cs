@@ -67,13 +67,54 @@ public class QuestManager : MonoBehaviour
     [SerializeField] private TutorialTargetVisual tutorialTargetVisual;
     private UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor[] tutorialInteractors;
 
-    [Header("Step 4: Open UI")]
+    [Header("Step 4: Toolbar Tutorial")]
     [SerializeField] private ListController listController;
-    [SerializeField] private float requiredUIReadDuration = 10f;
-    [SerializeField] private string questNotification4 = "Bấm cò mở thanh công cụ, chọn Danh sách/Giỏ hàng và đọc trong 10 giây.";
-    private float uiReadTimer = 0f;
-    private bool uiWasOpened = false;
-    private int listViewsBeforeOpen;
+    [Tooltip("Mũi tên nhỏ chỉ vào nút/bảng UI trên thanh công cụ.")]
+    [SerializeField] private UIPointer uiPointer;
+    [Tooltip("Mũi tên 3D trước mặt người chơi, chỉ vào vật trong scene (bảng danh sách, đồng hồ).")]
+    [SerializeField] private WorldPointer worldPointer;
+    [SerializeField] private Transform listButtonTarget;
+    [SerializeField] private Transform cartButtonTarget;
+    [SerializeField] private Transform cancelButtonTarget;
+    [SerializeField] private Transform timeButtonTarget;
+    [SerializeField] private Transform listBoardTarget;
+    [SerializeField] private Transform cartPanelTarget;
+    [SerializeField] private Transform realTimerTarget;
+    [SerializeField] private Button cartButton;
+    [SerializeField] private Button cancelButton;
+    [SerializeField] private Button timeButton;
+    [SerializeField, Min(0f)] private float introDuration = 2.5f;
+    [SerializeField, Min(0f)] private float cartExplanationDuration = 2.5f;
+    [SerializeField, Min(0f)] private float timeExplanationDuration = 2.5f;
+
+    // Các thao tác con của Bước 4 (từ nhánh feat/tutorial-interactions-with-toolbar).
+    private enum ToolbarStep
+    {
+        IntroToolbar,
+        SelectListButton,
+        ExplainListBoard,
+        SelectCartButton,
+        ExplainCart,
+        CloseCart,
+        SelectTimeButton,
+        ExplainRealTimer,
+        CloseTimePanel,
+        CompletedToolbarTutorial
+    }
+
+    private const string IntroToolbarMessage = "Giờ chúng ta sẽ thao tác với thanh công cụ.";
+    private const string SelectListButtonMessage = "Bấm vào Danh sách để xem các sản phẩm cần mua.";
+    private const string ExplainListBoardMessage = "Đây là danh sách sản phẩm cần mua. Hãy ghi nhớ các món trong danh sách nhé!";
+    private const string SelectCartButtonMessage = "Bấm vào Giỏ hàng để xem các sản phẩm đã chọn.";
+    private const string ExplainCartMessage = "Đây là giỏ hàng. Bạn có thể xem các sản phẩm đã chọn tại đây.";
+    private const string CloseCartMessage = "Bấm HỦY để đóng giỏ hàng.";
+    private const string SelectTimeButtonMessage = "Bấm vào Đồng hồ để xem thời gian còn lại.";
+    private const string ExplainRealTimerMessage = "Đây là thời gian còn lại. Hãy hoàn thành mua sắm trước khi hết giờ nhé!";
+    private const string CloseTimePanelMessage = "Bấm HỦY để đóng bảng thời gian và tiếp tục.";
+
+    private ToolbarStep toolbarStep = ToolbarStep.IntroToolbar;
+    private Coroutine toolbarRoutine;
+    private bool toolbarSubscribed;
 
     [Header("Tutorial UI Elements")]
     [SerializeField] private GameObject questCanvasObject;
@@ -138,6 +179,7 @@ public class QuestManager : MonoBehaviour
         ResolveTutorialItem();
         if (listController == null)
             listController = Object.FindFirstObjectByType<ListController>();
+        SubscribeToolbarActions();
 
         EnsureTutorialUI();
         InitializeButtons();
@@ -149,13 +191,19 @@ public class QuestManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if (hasInitializedStartStep && currentStep == QuestStep.PickItem)
+        if (!hasInitializedStartStep)
+            return;
+
+        if (currentStep == QuestStep.PickItem)
             EnterPickItemGuidance();
+        SubscribeToolbarActions();
     }
 
     private void OnDisable()
     {
         ExitPickItemGuidance();
+        StopToolbarRoutine();
+        UnsubscribeToolbarActions();
     }
 
     public void EnsureParenting()
@@ -240,7 +288,7 @@ public class QuestManager : MonoBehaviour
                 break;
 
             case QuestStep.OpenUI:
-                HandleOpenUIStep();
+                // Bước 4 chạy theo sự kiện thật của thanh công cụ (xem EnterToolbarStep).
                 break;
 
             case QuestStep.Complete:
@@ -395,28 +443,6 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    private void HandleOpenUIStep()
-    {
-        if (!uiWasOpened)
-        {
-            if (listController == null)
-                listController = Object.FindFirstObjectByType<ListController>();
-
-            if (listController != null && listController.GetClickNumber() > listViewsBeforeOpen)
-                uiWasOpened = true;
-
-            if (!uiWasOpened && IsToolbarVisible())
-                uiWasOpened = true;
-        }
-
-        if (!uiWasOpened)
-            return;
-
-        uiReadTimer += Time.deltaTime;
-        if (uiReadTimer >= requiredUIReadDuration)
-            CompleteAllQuests();
-    }
-
     private void CompleteAllQuests()
     {
         if (isTransitioning) return;
@@ -453,8 +479,8 @@ public class QuestManager : MonoBehaviour
         isTransitioning = false;
         lookTimer = 0f;
         checkpointTimer = 0f;
-        uiReadTimer = 0f;
-        uiWasOpened = false;
+        toolbarRoutine = null;
+        toolbarStep = ToolbarStep.IntroToolbar;
         wrongItemPicked = false;
 
         SetStep(QuestStep.LookAtMap);
@@ -478,6 +504,12 @@ public class QuestManager : MonoBehaviour
     {
         if (step != QuestStep.PickItem)
             ExitPickItemGuidance();
+
+        if (step != QuestStep.OpenUI)
+        {
+            StopToolbarRoutine();
+            HideToolbarPointers();
+        }
 
         currentStep = step;
 
@@ -515,11 +547,14 @@ public class QuestManager : MonoBehaviour
                 break;
 
             case QuestStep.OpenUI:
-                uiReadTimer = 0f;
-                uiWasOpened = false;
-                listViewsBeforeOpen = listController != null ? listController.GetClickNumber() : 0;
                 if (pointer != null)
                     pointer.gameObject.SetActive(false);
+                if (listController == null)
+                    listController = Object.FindFirstObjectByType<ListController>();
+                // Đăng ký lại để chắc chắn bắt được ListController vừa tìm thấy.
+                UnsubscribeToolbarActions();
+                SubscribeToolbarActions();
+                EnterToolbarStep(ToolbarStep.IntroToolbar);
                 break;
 
             case QuestStep.Complete:
@@ -569,13 +604,12 @@ public class QuestManager : MonoBehaviour
                 break;
 
             case QuestStep.OpenUI:
-                float uiProgress = Mathf.Clamp01(uiReadTimer / Mathf.Max(0.01f, requiredUIReadDuration));
-                overallProgress = 0.75f + uiProgress * 0.25f;
-                title = "BƯỚC 4/4: MỞ THANH CÔNG CỤ";
-                instruction = questNotification4;
-                status = !uiWasOpened
-                    ? "<color=#FBBF24>Bấm cò và chọn Danh sách/Giỏ hàng để bắt đầu.</color>"
-                    : $"<color=#00E5FF>Đang đọc danh sách: {uiReadTimer:F1}s / {requiredUIReadDuration:F0}s</color>";
+                int toolbarIndex = (int)toolbarStep;
+                int toolbarCount = (int)ToolbarStep.CompletedToolbarTutorial;
+                overallProgress = 0.75f + 0.25f * Mathf.Clamp01((float)toolbarIndex / toolbarCount);
+                title = "BƯỚC 4/4: THANH CÔNG CỤ";
+                instruction = GetToolbarMessage(toolbarStep);
+                status = $"<color=#00E5FF>Thao tác {Mathf.Min(toolbarIndex + 1, toolbarCount)}/{toolbarCount}</color>";
                 break;
 
             case QuestStep.Complete:
@@ -773,24 +807,244 @@ public class QuestManager : MonoBehaviour
         return $"<color=#FBBF24>Còn cách CheckPoint: {distance:F1}m. Tiếp tục di chuyển.</color>";
     }
 
-    private bool IsToolbarVisible()
+    // ===== Bước 4: hướng dẫn thanh công cụ (từ nhánh feat/tutorial-interactions-with-toolbar) =====
+    private void SubscribeToolbarActions()
     {
-        UIManager[] managers = Object.FindObjectsByType<UIManager>(
-            FindObjectsInactive.Include, FindObjectsSortMode.None);
-        foreach (UIManager manager in managers)
-        {
-            if (manager == null)
-                continue;
+        if (toolbarSubscribed)
+            return;
 
-            CanvasGroup[] groups = manager.GetComponentsInChildren<CanvasGroup>(true);
-            foreach (CanvasGroup group in groups)
-            {
-                if (group != null && group.alpha > 0.9f && group.interactable)
-                    return true;
-            }
+        if (listController != null)
+        {
+            listController.OnListShown += HandleListShown;
+            listController.OnListHidden += HandleListHidden;
         }
 
+        if (cartButton != null)
+            cartButton.onClick.AddListener(HandleCartButtonClicked);
+        if (cancelButton != null)
+            cancelButton.onClick.AddListener(HandleCancelButtonClicked);
+        if (timeButton != null)
+            timeButton.onClick.AddListener(HandleTimeButtonClicked);
+
+        toolbarSubscribed = true;
+    }
+
+    private void UnsubscribeToolbarActions()
+    {
+        if (!toolbarSubscribed)
+            return;
+
+        if (listController != null)
+        {
+            listController.OnListShown -= HandleListShown;
+            listController.OnListHidden -= HandleListHidden;
+        }
+
+        if (cartButton != null)
+            cartButton.onClick.RemoveListener(HandleCartButtonClicked);
+        if (cancelButton != null)
+            cancelButton.onClick.RemoveListener(HandleCancelButtonClicked);
+        if (timeButton != null)
+            timeButton.onClick.RemoveListener(HandleTimeButtonClicked);
+
+        toolbarSubscribed = false;
+    }
+
+    private bool ValidateToolbarReferences()
+    {
+        bool valid = true;
+        valid &= WarnIfMissing(listController, nameof(listController));
+        valid &= WarnIfMissing(cartButton, nameof(cartButton));
+        valid &= WarnIfMissing(timeButton, nameof(timeButton));
+        WarnIfMissing(cancelButton, nameof(cancelButton));
+        WarnIfMissing(uiPointer, nameof(uiPointer));
+        WarnIfMissing(worldPointer, nameof(worldPointer));
+        return valid;
+    }
+
+    private bool WarnIfMissing(Object reference, string fieldName)
+    {
+        if (reference != null)
+            return true;
+
+        Debug.LogWarning($"[QuestManager] Missing toolbar tutorial reference: {fieldName}.", this);
         return false;
+    }
+
+    private void StopToolbarRoutine()
+    {
+        if (toolbarRoutine == null)
+            return;
+
+        StopCoroutine(toolbarRoutine);
+        toolbarRoutine = null;
+    }
+
+    private void EnterToolbarStep(ToolbarStep step)
+    {
+        StopToolbarRoutine();
+        toolbarStep = step;
+        Log($"Thanh công cụ -> {step}");
+
+        switch (step)
+        {
+            case ToolbarStep.IntroToolbar:
+                HideToolbarPointers();
+                if (!ValidateToolbarReferences())
+                {
+                    Log("Thiếu tham chiếu cho hướng dẫn thanh công cụ, bỏ qua bước 4.");
+                    CompleteAllQuests();
+                    return;
+                }
+                toolbarRoutine = StartCoroutine(AdvanceToolbarAfterDelay(introDuration, ToolbarStep.SelectListButton));
+                break;
+
+            case ToolbarStep.SelectListButton:
+                ShowUIPointer(listButtonTarget);
+                break;
+
+            case ToolbarStep.ExplainListBoard:
+                ShowWorldPointer(listBoardTarget);
+                break;
+
+            case ToolbarStep.SelectCartButton:
+                ShowUIPointer(cartButtonTarget);
+                break;
+
+            case ToolbarStep.ExplainCart:
+                ShowUIPointer(cartPanelTarget);
+                toolbarRoutine = StartCoroutine(AdvanceToolbarAfterDelay(cartExplanationDuration, ToolbarStep.CloseCart));
+                break;
+
+            case ToolbarStep.CloseCart:
+                ShowUIPointer(cancelButtonTarget);
+                break;
+
+            case ToolbarStep.SelectTimeButton:
+                ShowUIPointer(timeButtonTarget);
+                break;
+
+            case ToolbarStep.ExplainRealTimer:
+                ShowWorldPointer(realTimerTarget);
+                toolbarRoutine = StartCoroutine(AdvanceToolbarAfterDelay(timeExplanationDuration, ToolbarStep.CloseTimePanel));
+                break;
+
+            case ToolbarStep.CloseTimePanel:
+                ShowUIPointer(cancelButtonTarget);
+                break;
+
+            case ToolbarStep.CompletedToolbarTutorial:
+                HideToolbarPointers();
+                CompleteAllQuests();
+                return;
+        }
+
+        UpdateUI();
+    }
+
+    private IEnumerator AdvanceToolbarAfterDelay(float delay, ToolbarStep nextStep)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        toolbarRoutine = null;
+        if (currentStep == QuestStep.OpenUI)
+            EnterToolbarStep(nextStep);
+    }
+
+    private void ShowUIPointer(Transform target)
+    {
+        if (worldPointer != null) worldPointer.SetTarget(null);
+        if (uiPointer != null) uiPointer.SetTarget(target);
+    }
+
+    private void ShowWorldPointer(Transform target)
+    {
+        if (uiPointer != null) uiPointer.SetTarget(null);
+        if (worldPointer != null) worldPointer.SetTarget(target);
+    }
+
+    private void HideToolbarPointers()
+    {
+        if (uiPointer != null) uiPointer.SetTarget(null);
+        if (worldPointer != null) worldPointer.SetTarget(null);
+    }
+
+    private bool IsInToolbarStep(ToolbarStep step) =>
+        hasInitializedStartStep && currentStep == QuestStep.OpenUI && toolbarStep == step;
+
+    private void HandleListShown(int _)
+    {
+        if (IsInToolbarStep(ToolbarStep.SelectListButton))
+            EnterToolbarStep(ToolbarStep.ExplainListBoard);
+    }
+
+    private void HandleListHidden()
+    {
+        if (IsInToolbarStep(ToolbarStep.ExplainListBoard))
+            EnterToolbarStep(ToolbarStep.SelectCartButton);
+    }
+
+    private void HandleCartButtonClicked()
+    {
+        if (IsInToolbarStep(ToolbarStep.SelectCartButton))
+        {
+            Log($"Cart button clicked: {GetHierarchyPath(cartButton.transform)}");
+            EnterToolbarStep(ToolbarStep.ExplainCart);
+        }
+    }
+
+    private void HandleCancelButtonClicked()
+    {
+        if (IsInToolbarStep(ToolbarStep.CloseTimePanel))
+        {
+            Log($"Cancel button clicked: {GetHierarchyPath(cancelButton.transform)}");
+            EnterToolbarStep(ToolbarStep.CompletedToolbarTutorial);
+        }
+        else if (IsInToolbarStep(ToolbarStep.ExplainCart) || IsInToolbarStep(ToolbarStep.CloseCart))
+        {
+            Log($"Cancel button clicked: {GetHierarchyPath(cancelButton.transform)}");
+            EnterToolbarStep(ToolbarStep.SelectTimeButton);
+        }
+    }
+
+    private void HandleTimeButtonClicked()
+    {
+        if (IsInToolbarStep(ToolbarStep.SelectTimeButton))
+        {
+            Log($"Time button clicked: {GetHierarchyPath(timeButton.transform)}");
+            EnterToolbarStep(ToolbarStep.ExplainRealTimer);
+        }
+    }
+
+    private static string GetToolbarMessage(ToolbarStep step)
+    {
+        switch (step)
+        {
+            case ToolbarStep.IntroToolbar: return IntroToolbarMessage;
+            case ToolbarStep.SelectListButton: return SelectListButtonMessage;
+            case ToolbarStep.ExplainListBoard: return ExplainListBoardMessage;
+            case ToolbarStep.SelectCartButton: return SelectCartButtonMessage;
+            case ToolbarStep.ExplainCart: return ExplainCartMessage;
+            case ToolbarStep.CloseCart: return CloseCartMessage;
+            case ToolbarStep.SelectTimeButton: return SelectTimeButtonMessage;
+            case ToolbarStep.ExplainRealTimer: return ExplainRealTimerMessage;
+            case ToolbarStep.CloseTimePanel: return CloseTimePanelMessage;
+            default: return "Hoàn tất hướng dẫn thanh công cụ.";
+        }
+    }
+
+    private static string GetHierarchyPath(Transform item)
+    {
+        if (item == null)
+            return "<missing>";
+
+        string path = item.name;
+        while (item.parent != null)
+        {
+            item = item.parent;
+            path = $"{item.name}/{path}";
+        }
+
+        return path;
     }
 
     public void EnsureTutorialUI()
