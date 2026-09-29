@@ -45388,7 +45388,7 @@ MonoBehaviour:
   enforceManualViewLimitForLegacyList: 0
   spawnOnStart: 8
   showDuration: 10
-  enableRandomTaskChange: 0
+  enableRandomTaskChange: 1
   minDelay: 1
   maxDelay: 10
   notificationCanvas: {fileID: 281647689}

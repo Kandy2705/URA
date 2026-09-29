@@ -72,11 +72,14 @@
     <Compile Include="Assets/Scripts/NPCFollowCamera.cs" />
     <Compile Include="Assets/Scripts/DataManager.cs" />
     <Compile Include="Assets/Scripts/TutorialSceneController.cs" />
+    <Compile Include="Assets/Scripts/TutorialTargetVisual.cs" />
     <Compile Include="Assets/Scripts/PokeObjects.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_ExampleScript_01.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/VertexShakeB.cs" />
+    <Compile Include="Assets/Scripts/ShoppingMission/SupplementalShoppingTaskController.cs" />
     <Compile Include="Assets/Scripts/ShoppingMission/ShoppingMission.cs" />
+    <Compile Include="Assets/Scripts/UIPointer.cs" />
     <Compile Include="Assets/Scripts/CartShopping/CollectibleItem.cs" />
     <Compile Include="Assets/Scripts/BackendApi/NpcSceneResolver.cs" />
     <Compile Include="Assets/Scripts/BackendApi/MllmApiClient.cs" />
@@ -115,6 +118,7 @@
     <Compile Include="Assets/Scripts/TouchController.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_DigitValidator.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_FrameRateCounter.cs" />
+    <Compile Include="Assets/Scripts/WorldPointer.cs" />
     <Compile Include="Assets/Scripts/PlayerMove.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/Benchmark01.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TextMeshSpawner.cs" />

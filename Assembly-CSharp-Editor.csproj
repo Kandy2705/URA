@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Assets/Joystick Pack/Scripts/Editor/JoystickEditor.cs" />
     <Compile Include="Assets/Joystick Pack/Scripts/Editor/VariableJoystickEditor.cs" />
+    <Compile Include="Assets/Tests/Editor/SupplementalShoppingTaskResultTests.cs" />
     <Compile Include="Assets/Scripts/Editor/BuildScript.cs" />
     <Compile Include="Assets/Joystick Pack/Scripts/Editor/DynamicJoystickEditor.cs" />
     <Compile Include="Assets/GolemiteGames/TimersMadeEasyLite/Editor/TimerEditor.cs" />
