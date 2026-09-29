@@ -41,6 +41,9 @@ public class ListController : MonoBehaviour
     public event Action<int> OnListShown;
     public event Action<string, string, int, string> OnRandomListChange;
     public event Action<IReadOnlyList<ShoppingTaskItem>> OnInitialTasksRendered;
+    public event Action OnMainListGenerated;
+    public bool MainListGenerated { get; private set; }
+    public IReadOnlyList<GameObject> RemainingPrefabs => availablePrefabs;
 
     private readonly List<GameObject> renderedItems = new List<GameObject>();
     private Coroutine currentRoutine;
@@ -51,21 +54,35 @@ public class ListController : MonoBehaviour
 
     private void Start()
     {
-        if (FindFirstObjectByType<ShoppingMissionController>() != null)
+        if (HasMissionControllerInThisScene())
+            return;
+
+        EnsureMainListGenerated();
+    }
+
+    public void EnsureMainListGenerated()
+    {
+        if (MainListGenerated || listContainer == null)
             return;
 
         for (int i = 0; i < spawnOnStart; i++)
             SpawnItemInList();
-        ShowListAutomatically();
+        MainListGenerated = true;
+        OnMainListGenerated?.Invoke();
         ResetViewLimit();
-        if (enableRandomTaskChange)
-            StartCoroutine(RandomChangeCoroutine());
+        if (isActiveAndEnabled)
+        {
+            ShowListAutomatically();
+            if (enableRandomTaskChange)
+                StartCoroutine(RandomChangeCoroutine());
+        }
     }
 
     /// <summary>Manual request; retained for NoticeBoardButtonFunction and NpcActionDispatcher.</summary>
     public void ShowList()
     {
-        if (currentRoutine != null || (ShouldLimitManualViews() && currentLimit >= limit))
+        if (!isActiveAndEnabled || listContainer == null ||
+            currentRoutine != null || (ShouldLimitManualViews() && currentLimit >= limit))
             return;
 
         currentLimit++;
@@ -124,7 +141,15 @@ public class ListController : MonoBehaviour
     }
 
     private bool ShouldLimitManualViews() =>
-        enforceManualViewLimitForLegacyList || FindFirstObjectByType<ShoppingMissionController>() != null;
+        enforceManualViewLimitForLegacyList || HasMissionControllerInThisScene();
+
+    private bool HasMissionControllerInThisScene()
+    {
+        foreach (ShoppingMissionController controller in FindObjectsByType<ShoppingMissionController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+            if (controller.gameObject.scene == gameObject.scene)
+                return true;
+        return false;
+    }
 
     private IEnumerator ShowThenHide()
     {

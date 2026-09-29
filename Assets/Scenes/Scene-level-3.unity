@@ -1012,16 +1012,18 @@ MonoBehaviour:
   - {fileID: 7928218173533933786, guid: f3ba1b015110d31459d677fc896f7e92, type: 3}
   - {fileID: 2757006321740363870, guid: 43dc60078cfd5b546979ce81618bc3e8, type: 3}
   - {fileID: 7928218173533933786, guid: 4d6c7a5b3633a664882584eb782536ae, type: 3}
+  choicedItems: []
   limit: 2
   currentLimit: 0
-  choicedItems: []
+  enforceManualViewLimitForLegacyList: 0
   spawnOnStart: 5
   showDuration: 10
+  enableRandomTaskChange: 0
+  minDelay: 30
+  maxDelay: 90
   notificationCanvas: {fileID: 0}
   notificationText: {fileID: 0}
   hasTriggeredRandomChange: 0
-  minDelay: 30
-  maxDelay: 90
 --- !u!114 &47635412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45902,16 +45904,18 @@ MonoBehaviour:
   - {fileID: 7928218173533933786, guid: 55272f09f146e114db48a13c6e386400, type: 3}
   - {fileID: 7928218173533933786, guid: 19daee7bb1a64f245884eb8b8a762c62, type: 3}
   - {fileID: 7928218173533933786, guid: dd266f06b981cb949ab128d577d5e6a8, type: 3}
+  choicedItems: []
   limit: 2
   currentLimit: 0
-  choicedItems: []
+  enforceManualViewLimitForLegacyList: 0
   spawnOnStart: 8
   showDuration: 10
+  enableRandomTaskChange: 0
+  minDelay: 1
+  maxDelay: 10
   notificationCanvas: {fileID: 281647689}
   notificationText: {fileID: 281647690}
   hasTriggeredRandomChange: 1
-  minDelay: 1
-  maxDelay: 10
 --- !u!114 &1825740877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50989,6 +50993,7 @@ MonoBehaviour:
   obtainProductContainer: {fileID: 1702625027}
   wrongProductContainer: {fileID: 2144530966}
   gameTimer: {fileID: 946661622}
+  supplementalTaskController: {fileID: 8800100302}
   compareResults: []
   loadStart: 1
 --- !u!4 &1988423455 stripped
@@ -55643,6 +55648,57 @@ MonoBehaviour:
   gameTimer: {fileID: 946661622}
   dataManager: {fileID: 704792030}
   cartManager: {fileID: 1987290805}
+--- !u!1 &8800100300
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8800100301}
+  - component: {fileID: 8800100302}
+  m_Layer: 0
+  m_Name: SupplementalShoppingTaskController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8800100301
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8800100300}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8800100302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8800100300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b23496ac19a44a8a7d344524314e622, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::SupplementalShoppingTaskController
+  listController: {fileID: 1825740876}
+  gameTimer: {fileID: 946661622}
+  pokeManager: {fileID: 466411858}
+  minDelay: 30
+  maxDelay: 90
+  notificationDuration: 8
+  cutoffSeconds: 240
 --- !u!1001 &8136502170138022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57203,6 +57259,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 8800100301}
   - {fileID: 8800100201}
   - {fileID: 607626252}
   - {fileID: 650729779}
