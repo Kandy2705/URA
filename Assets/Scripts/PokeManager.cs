@@ -257,6 +257,12 @@ public class PokeManager : MonoBehaviour
         return GetStockValue(remainingProductStock, itemName);
     }
 
+    public int GetAvailableQuantity(string itemName)
+    {
+        EnsureProductStockInitialized();
+        return GetRemainingStock(itemName);
+    }
+
     private static int GetStockValue(Dictionary<string, int> stock, string itemName)
     {
         return stock.TryGetValue(itemName, out int value) ? value : 0;
