@@ -3,12 +3,16 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class QuestManager : MonoBehaviour
 {
     // Bốn bước người chơi phải thực hiện, sau đó mới được chuyển vào level chính.
     public enum QuestStep { LookAtMap, MoveToPoint, PickItem, OpenUI, Complete }
     [SerializeField] private QuestStep currentStep = QuestStep.LookAtMap;
+    [Tooltip("Bước bắt đầu khi scene chạy (dùng để test nhanh). Không làm mất luồng tuần tự của các bước.")]
+    [SerializeField] private QuestStep startStep = QuestStep.LookAtMap;
+    private bool hasInitializedStartStep;
 
     public enum UIPlacementMode
     {
@@ -59,6 +63,9 @@ public class QuestManager : MonoBehaviour
     private int targetItemQuantityBeforePick;
     private int inventoryQuantityBeforePick;
     private bool wrongItemPicked;
+    [Tooltip("Hiệu ứng đánh dấu (▼ + highlight) trên item mẫu. Để trống sẽ tự thêm vào item.")]
+    [SerializeField] private TutorialTargetVisual tutorialTargetVisual;
+    private UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor[] tutorialInteractors;
 
     [Header("Step 4: Open UI")]
     [SerializeField] private ListController listController;
@@ -112,11 +119,11 @@ public class QuestManager : MonoBehaviour
                 Log("Không tìm ra Notice_Board");
         }
 
-        // 3. Tìm Pointer
+        // 3. Tìm Pointer (kể cả khi ArrowWrapper đang tắt)
         if (pointer == null)
-        {
-            pointer = Object.FindAnyObjectByType<Pointer>();
-        }
+            pointer = Object.FindFirstObjectByType<Pointer>(FindObjectsInactive.Include);
+        if (pointer != null)
+            pointer.InitializeCamera(playerCamera);
 
         // 4. Tìm CheckPoint
         if (destinationPoint == null)
@@ -135,8 +142,20 @@ public class QuestManager : MonoBehaviour
         EnsureTutorialUI();
         InitializeButtons();
 
-        // Khởi động bước 1
-        SetStep(QuestStep.LookAtMap);
+        // Khởi động bước bắt đầu (mặc định là bước 1)
+        hasInitializedStartStep = true;
+        SetStep(startStep);
+    }
+
+    private void OnEnable()
+    {
+        if (hasInitializedStartStep && currentStep == QuestStep.PickItem)
+            EnterPickItemGuidance();
+    }
+
+    private void OnDisable()
+    {
+        ExitPickItemGuidance();
     }
 
     public void EnsureParenting()
@@ -457,6 +476,9 @@ public class QuestManager : MonoBehaviour
 
     private void SetStep(QuestStep step)
     {
+        if (step != QuestStep.PickItem)
+            ExitPickItemGuidance();
+
         currentStep = step;
 
         switch (currentStep)
@@ -489,6 +511,7 @@ public class QuestManager : MonoBehaviour
                     pointer.gameObject.SetActive(true);
                     pointer.SetTarget(targetItem.transform);
                 }
+                EnterPickItemGuidance();
                 break;
 
             case QuestStep.OpenUI:
@@ -582,6 +605,99 @@ public class QuestManager : MonoBehaviour
         {
             notificationText.text = txtStepInstruction.text;
         }
+    }
+
+    // ===== Bước 3: đánh dấu item mẫu + lắng nghe sự kiện lấy item (từ nhánh grabbing-item-tutorial) =====
+    private void EnterPickItemGuidance()
+    {
+        if (targetItem == null)
+        {
+            Debug.LogWarning("[QuestManager] Chưa có item mẫu cho bước lấy item.");
+            return;
+        }
+
+        if (tutorialTargetVisual == null)
+            tutorialTargetVisual = targetItem.GetComponent<TutorialTargetVisual>();
+        if (tutorialTargetVisual == null)
+            tutorialTargetVisual = targetItem.gameObject.AddComponent<TutorialTargetVisual>();
+
+        tutorialTargetVisual.SetPlayerCamera(playerCamera);
+        tutorialTargetVisual.SetTarget(targetItem);
+        tutorialTargetVisual.SetVisualsActive(true);
+
+        SubscribePickItemEvents();
+    }
+
+    private void ExitPickItemGuidance()
+    {
+        UnsubscribePickItemEvents();
+
+        if (tutorialTargetVisual != null)
+            tutorialTargetVisual.SetVisualsActive(false);
+    }
+
+    private void SubscribePickItemEvents()
+    {
+        UnsubscribePickItemEvents();
+
+        if (PokeManager.Instance != null)
+            PokeManager.Instance.OnItemSuccessfullyAdded += HandleItemSuccessfullyAdded;
+        else
+            Debug.LogWarning("[QuestManager] PokeManager is missing; chỉ dùng cách kiểm tra giỏ hàng dự phòng.");
+
+        UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor[] activeInteractors =
+            Object.FindObjectsByType<UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor>(
+                FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        tutorialInteractors = System.Array.FindAll(activeInteractors, interactor =>
+            interactor != null &&
+            (interactor.gameObject.name == "Left_NearFarInteractor" || interactor.gameObject.name == "Right_NearFarInteractor"));
+
+        if (tutorialInteractors.Length == 0)
+            Debug.LogWarning("[QuestManager] Left_NearFarInteractor and Right_NearFarInteractor could not be resolved.");
+
+        foreach (UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor interactor in tutorialInteractors)
+            interactor.selectEntered.AddListener(HandleInteractorSelectEntered);
+    }
+
+    private void UnsubscribePickItemEvents()
+    {
+        if (PokeManager.Instance != null)
+            PokeManager.Instance.OnItemSuccessfullyAdded -= HandleItemSuccessfullyAdded;
+
+        if (tutorialInteractors == null)
+            return;
+
+        foreach (UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor interactor in tutorialInteractors)
+            if (interactor != null)
+                interactor.selectEntered.RemoveListener(HandleInteractorSelectEntered);
+        tutorialInteractors = null;
+    }
+
+    private void HandleInteractorSelectEntered(SelectEnterEventArgs args)
+    {
+        if (currentStep != QuestStep.PickItem)
+            return;
+
+        // Item sản phẩm được PokeManager xử lý sau khi thực sự vào giỏ.
+        // Listener này chỉ bắt trường hợp người chơi cầm nhầm vật không phải sản phẩm.
+        if (args.interactableObject == null ||
+            args.interactableObject.transform.GetComponentInParent<SelectableItem>() == null)
+            wrongItemPicked = true;
+    }
+
+    private void HandleItemSuccessfullyAdded(SelectableItem sourceItem)
+    {
+        if (currentStep != QuestStep.PickItem)
+            return;
+
+        if (sourceItem != targetItem)
+        {
+            wrongItemPicked = true;
+            return;
+        }
+
+        Log($"Đã lấy đúng item mẫu: {targetItem.itemName}.");
+        SetStep(QuestStep.OpenUI);
     }
 
     private void ResolveTutorialItem()
