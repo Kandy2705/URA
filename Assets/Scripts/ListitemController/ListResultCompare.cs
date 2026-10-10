@@ -14,6 +14,8 @@ public class ListResultCompare : MonoBehaviour
 
     private readonly Dictionary<string, int> requiredQuantities = new Dictionary<string, int>(StringComparer.Ordinal);
     private ShoppingMissionController taskController;
+    [SerializeField] private SupplementalShoppingTaskController supplementalTaskController;
+    private bool mainListRegistered;
     private float itemHeight = 5f;
     private float startY = 10f;
     public List<CompareResult> compareResults = new List<CompareResult>();
@@ -38,9 +40,20 @@ public class ListResultCompare : MonoBehaviour
         }
         else
         {
-            RegisterRenderedLegacyItems();
             if (listController != null)
+            {
+                listController.OnMainListGenerated += HandleMainListGenerated;
                 listController.OnListChanged += HandleLegacyListChanged;
+                if (listController.MainListGenerated)
+                    HandleMainListGenerated();
+            }
+        }
+
+        if (supplementalTaskController != null)
+        {
+            supplementalTaskController.OnSupplementalTaskAdded += HandleSupplementalTaskAdded;
+            foreach (ShoppingTaskItem task in supplementalTaskController.SupplementalTasks)
+                HandleSupplementalTaskAdded(task);
         }
 
         LoadCSV += LoadCompareResult;
@@ -55,7 +68,12 @@ public class ListResultCompare : MonoBehaviour
             taskController.OnSupplementalTaskAdded -= HandleSupplementalTaskAdded;
         }
         if (listController != null)
+        {
+            listController.OnMainListGenerated -= HandleMainListGenerated;
             listController.OnListChanged -= HandleLegacyListChanged;
+        }
+        if (supplementalTaskController != null)
+            supplementalTaskController.OnSupplementalTaskAdded -= HandleSupplementalTaskAdded;
     }
 
     private void OnEnable()
@@ -85,6 +103,14 @@ public class ListResultCompare : MonoBehaviour
     }
 
     private void HandleSupplementalTaskAdded(ShoppingTaskItem task) => RegisterTask(task);
+
+    private void HandleMainListGenerated()
+    {
+        if (mainListRegistered)
+            return;
+        mainListRegistered = true;
+        RegisterRenderedLegacyItems();
+    }
 
     private void RegisterTasks(IReadOnlyList<ShoppingTaskItem> tasks)
     {
