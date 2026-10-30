@@ -3,9 +3,11 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public class ItemsManager : MonoBehaviour {
+public class ItemsManager : MonoBehaviour
+{
     private static List<SelectableItem> itemList = new List<SelectableItem>();
     private static HashSet<string> itemNameList = new HashSet<string>();
+    private static List<SelectableItem> discountedList = new List<SelectableItem>();
     private static int minDiscount = 10;
     private static int maxDiscount = 60;
 
@@ -42,6 +44,7 @@ public class ItemsManager : MonoBehaviour {
             if (item.itemName == randomName)
             {
                 item.price = (int)(item.price * (1 - randomDiscount / 100.0));
+                discountedList.Add(item);
                 Debug.Log($"Đã giảm giá {item.itemName}, còn {item.price}");
             }
         }
@@ -49,5 +52,14 @@ public class ItemsManager : MonoBehaviour {
         discountText = $"Đã giảm giá {randomName} {randomDiscount} phần trăm";
         Debug.Log(discountText);
         return discountText;
+    }
+
+    public static List<SelectableItem> getDiscountedList()
+    {
+        return discountedList;
+    }
+    public static List<SelectableItem> getItemList()
+    {
+        return itemList;
     }
 }
