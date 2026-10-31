@@ -17074,6 +17074,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   checkoutTeleport: {fileID: 0}
+  surveyPrefab: {fileID: 3487411923840087517, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
   isRunning: 0
 --- !u!114 &946661623
 MonoBehaviour:

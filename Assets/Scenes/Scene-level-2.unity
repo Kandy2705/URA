@@ -6940,19 +6940,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4781612990478361687, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 390
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4781612990478361687, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 600
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4781612990478361687, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5977155412597114208, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
       propertyPath: m_Name
       value: SurveyTesting
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977155412597114208, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7272874606953063132, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
       propertyPath: m_AnchorMax.y
@@ -23770,31 +23774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4203138407175866219, guid: baa17bc8d8dc40743a08c63f90b230d2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4203138407175866219, guid: baa17bc8d8dc40743a08c63f90b230d2, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4203138407175866219, guid: baa17bc8d8dc40743a08c63f90b230d2, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2145257488}
-    - target: {fileID: 4203138407175866219, guid: baa17bc8d8dc40743a08c63f90b230d2, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4203138407175866219, guid: baa17bc8d8dc40743a08c63f90b230d2, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: prepareQuestions
-      objectReference: {fileID: 0}
-    - target: {fileID: 4203138407175866219, guid: baa17bc8d8dc40743a08c63f90b230d2, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Survey, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4203138407175866219, guid: baa17bc8d8dc40743a08c63f90b230d2, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5116415167257856923, guid: baa17bc8d8dc40743a08c63f90b230d2, type: 3}
       propertyPath: m_AnchorMax.y

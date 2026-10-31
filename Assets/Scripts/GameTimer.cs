@@ -24,6 +24,10 @@ public class GameTimer : MonoBehaviour
     [Tooltip("Khi hết giờ sẽ chạy luồng thanh toán giống nút thanh toán giỏ hàng (teleport tới PoiChargeMoney + khoá di chuyển + cashier intro).")]
     [SerializeField] private VRCheckoutTeleport checkoutTeleport;
 
+    [Header("Khảo sát sau thanh toán (Level 1)")]
+    [Tooltip("Prefab khảo sát, sinh ra khi scene chưa có sẵn Survey.")]
+    [SerializeField] private Survey surveyPrefab;
+
     private float timeLeft;
     public bool isRunning = false;
     private int seconds;
@@ -125,16 +129,17 @@ public class GameTimer : MonoBehaviour
                 CartManager.Instance.ProcessCheckout();
             }
 
-            const string dressName = "Dress_Game";
-
-            if (!Application.CanStreamedLevelBeLoaded(dressName))
+            // Thanh toán xong → làm khảo sát trước, xong mới qua Dress_Game.
+            Survey survey = ResolveSurvey();
+            if (survey != null)
             {
-                Debug.LogError($"Scene '{dressName}' không có trong Build Settings.");
+                survey.OnCompleted += LoadDressSceneAfterCheckout;
+                survey.Show();
+                Debug.Log("StopTimer: Đã tính tiền, hiện màn hình khảo sát.");
                 return;
             }
 
-            SceneManager.LoadSceneAsync(dressName, LoadSceneMode.Additive);
-            Debug.Log("StopTimer: Đã tính tiền và load thêm Dress_Game (Additive).");
+            LoadDressSceneAfterCheckout();
             return;
         }
 
@@ -195,6 +200,18 @@ public class GameTimer : MonoBehaviour
         }
 
         onTimeUp?.Invoke();
+    }
+
+    private Survey ResolveSurvey()
+    {
+        Survey survey = FindFirstObjectByType<Survey>(FindObjectsInactive.Include);
+        if (survey == null && surveyPrefab != null)
+        {
+            GameObject surveyRoot = Instantiate(surveyPrefab.transform.root.gameObject);
+            surveyRoot.SetActive(false);
+            survey = surveyRoot.GetComponentInChildren<Survey>(true);
+        }
+        return survey;
     }
 
     private void LoadDressSceneAfterCheckout()

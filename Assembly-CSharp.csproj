@@ -43,7 +43,7 @@
     <UnityVersion>6000.3.11f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="/Users/kandy2705/.vscode/extensions/visualstudiotoolsforunity.vstuc-1.3.1/Analyzers/Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="/Users/kandy2705/.vscode/extensions/visualstudiotoolsforunity.vstuc-1.3.2/Analyzers/Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="/Applications/Unity/Hub/Editor/6000.3.11f1/Unity.app/Contents/Resources/BuildPipeline/Unity.SourceGenerators/Unity.SourceGenerators.dll" />
     <Analyzer Include="/Applications/Unity/Hub/Editor/6000.3.11f1/Unity.app/Contents/Resources/BuildPipeline/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="/Applications/Unity/Hub/Editor/6000.3.11f1/Unity.app/Contents/Resources/BuildPipeline/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
@@ -159,6 +159,7 @@
     <Compile Include="Assets/Scripts/NPC/NPCMovement.cs" />
     <Compile Include="Assets/Scripts/BackendApi/MllmDialogueOrchestrator.cs" />
     <Compile Include="Assets/Scripts/BackendApi/MllmAuthClient.cs" />
+    <Compile Include="Assets/Scripts/Survey.cs" />
     <Compile Include="Assets/Scripts/GameTimer.cs" />
   </ItemGroup>
   <ItemGroup>

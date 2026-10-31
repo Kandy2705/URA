@@ -23,6 +23,7 @@ public class ItemsManager : MonoBehaviour
     {
         itemList.Remove(item);
         itemNameList.Remove(item.itemName);
+        discountedList.Remove(item);
     }
 
     public static void Testing()
@@ -43,7 +44,8 @@ public class ItemsManager : MonoBehaviour
         {
             if (item.itemName == randomName)
             {
-                item.price = (int)(item.price * (1 - randomDiscount / 100.0));
+                // Làm tròn tới 1.000đ (tờ nhỏ nhất) để luôn trả vừa đủ được bằng tiền giấy.
+                item.price = Mathf.Max(1000, Mathf.RoundToInt(item.price * (1 - randomDiscount / 100f) / 1000f) * 1000);
                 discountedList.Add(item);
                 Debug.Log($"Đã giảm giá {item.itemName}, còn {item.price}");
             }

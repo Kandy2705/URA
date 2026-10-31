@@ -31,10 +31,16 @@ public class PaymentManager : MonoBehaviour
         new WalletBillDefinition(50000, 2),
         new WalletBillDefinition(10000, 2)
     };
+    [Tooltip("Sinh ví theo số tiền cần trả mỗi lượt thanh toán (bỏ qua Starting Wallet ở trên).")]
     [SerializeField] private bool randomizeStartingWallet = true;
-    [SerializeField] private int minimumStartingMoney = 150000;
-    [SerializeField] private int maximumStartingMoney = 300000;
-    [SerializeField] private int startingMoneyStep = 10000;
+    [Tooltip("Số tờ gây nhiễu thêm vào ví ngoài bộ tiền trả vừa đủ.")]
+    [SerializeField, Range(0, 4)] private int distractorBillCount = 2;
+
+    // Trùng với các tờ có trên UI thanh toán.
+    private static readonly int[] Denominations =
+    {
+        500000, 200000, 100000, 50000, 20000, 10000, 5000, 2000, 1000
+    };
 
     [Header("UI runtime")]
     [SerializeField] private string confirmButtonName = "ConfirmButton";
@@ -62,6 +68,12 @@ public class PaymentManager : MonoBehaviour
     [SerializeField] private string insufficientWalletMessage =
         "Bác không đủ tiền rồi nên cháu sẽ bỏ bớt đồ ra nhé. Cảm ơn bác đã tham gia.";
 
+    [Header("Khảo sát sau thanh toán")]
+    [SerializeField] private string surveyInviteMessage =
+        "Cảm ơn bác đã mua sắm ở cửa hàng ạ. Bác giúp cháu làm một bài khảo sát nhỏ nhé.";
+    [SerializeField] private string surveyThanksMessage =
+        "Cảm ơn bác đã tham gia khảo sát ạ.";
+
     private readonly Dictionary<int, int> availableBillCounts = new Dictionary<int, int>();
     private readonly Dictionary<int, int> submittedBillCounts = new Dictionary<int, int>();
     private readonly Dictionary<int, List<MoneyItem>> moneyItemsByDenomination = new Dictionary<int, List<MoneyItem>>();
@@ -73,8 +85,6 @@ public class PaymentManager : MonoBehaviour
     private bool checkoutSessionActive;
     private bool paymentConfirmed;
     private PaymentSummary lastPaymentSummary;
-    private static int lastGeneratedWalletTotal = -1;
-    private static string lastGeneratedWalletSignature;
 
     public PaymentSummary LastPaymentSummary => lastPaymentSummary;
     public bool HasConfirmedPayment => paymentConfirmed;
@@ -89,7 +99,7 @@ public class PaymentManager : MonoBehaviour
             return;
         }
 
-        PrepareStartingWallet();
+        EnsureDefaultWallet();
         ResolveRuntimeReferences();
         RebuildWalletState();
         UpdateUI();
@@ -118,65 +128,64 @@ public class PaymentManager : MonoBehaviour
         };
     }
 
+    // Ví được sinh theo số tiền cần trả để bài tập luôn giải được và có ý nghĩa luyện tính:
+    // - luôn có ít nhất một cách trả vừa đủ, và không tờ nào một mình đủ trả (phải cộng nhiều tờ);
+    // - thêm vài tờ gây nhiễu cùng cỡ mệnh giá để phải chọn, nhưng ít loại tờ để không quá tải.
     private void PrepareStartingWallet()
     {
-        if (!randomizeStartingWallet)
+        if (!randomizeStartingWallet || requiredAmount <= 0)
         {
             EnsureDefaultWallet();
             return;
         }
 
-        int step = Mathf.Max(10000, startingMoneyStep);
-        int minimum = Mathf.Max(step, Mathf.CeilToInt(minimumStartingMoney / (float)step) * step);
-        int maximum = Mathf.Max(minimum, Mathf.FloorToInt(maximumStartingMoney / (float)step) * step);
-
-        List<WalletBillDefinition> generatedWallet = null;
-        string generatedSignature = string.Empty;
-
-        for (int attempt = 0; attempt < 20; attempt++)
-        {
-            int targetUnits = Random.Range(minimum / step, maximum / step + 1);
-            int targetAmount = targetUnits * step;
-            generatedWallet = BuildRandomWallet(targetAmount);
-            generatedSignature = BuildWalletSignature(generatedWallet);
-
-            if (targetAmount != lastGeneratedWalletTotal &&
-                generatedSignature != lastGeneratedWalletSignature)
-                break;
-        }
-
-        startingWallet = generatedWallet ?? new List<WalletBillDefinition>
-        {
-            new WalletBillDefinition(100000, 1),
-            new WalletBillDefinition(50000, 1)
-        };
+        startingWallet = BuildWalletForAmount(requiredAmount, distractorBillCount);
         int total = startingWallet.Sum(bill => bill.denomination * bill.count);
-        lastGeneratedWalletTotal = total;
-        lastGeneratedWalletSignature = BuildWalletSignature(startingWallet);
-        Debug.Log($"PaymentManager: Ví random của lượt này = {total:N0} VND ({lastGeneratedWalletSignature}).");
+        Debug.Log($"PaymentManager: Ví cho {requiredAmount:N0} VND = {total:N0} VND ({BuildWalletSignature(startingWallet)}).");
     }
 
-    private static List<WalletBillDefinition> BuildRandomWallet(int targetAmount)
+    private static List<WalletBillDefinition> BuildWalletForAmount(int amount, int distractors)
     {
-        int[] denominations = { 100000, 50000, 20000, 10000 };
-        List<WalletBillDefinition> wallet = new List<WalletBillDefinition>();
-        int remaining = targetAmount;
+        int smallest = Denominations[Denominations.Length - 1];
+        int target = Mathf.CeilToInt(amount / (float)smallest) * smallest;
+        Dictionary<int, int> counts = new Dictionary<int, int>();
 
-        for (int i = 0; i < denominations.Length; i++)
+        int remaining = target;
+        foreach (int denomination in Denominations)
         {
-            int denomination = denominations[i];
-            int maximumCount = remaining / denomination;
-            int count = i == denominations.Length - 1
-                ? maximumCount
-                : Random.Range(0, maximumCount + 1);
+            if (denomination >= target && target > smallest)
+                continue;
 
-            if (count > 0)
-                wallet.Add(new WalletBillDefinition(denomination, count));
+            int count = remaining / denomination;
+            if (count <= 0)
+                continue;
 
+            counts[denomination] = count;
             remaining -= denomination * count;
         }
 
-        return wallet;
+        // Tờ gây nhiễu: các mệnh giá đã có trong ví hoặc nhỏ hơn liền kề.
+        List<int> candidates = new List<int>();
+        for (int i = 0; i < Denominations.Length; i++)
+        {
+            if (!counts.ContainsKey(Denominations[i]))
+                continue;
+
+            candidates.Add(Denominations[i]);
+            if (i + 1 < Denominations.Length)
+                candidates.Add(Denominations[i + 1]);
+        }
+
+        for (int i = 0; i < distractors && candidates.Count > 0; i++)
+        {
+            int denomination = candidates[Random.Range(0, candidates.Count)];
+            counts[denomination] = (counts.TryGetValue(denomination, out int count) ? count : 0) + 1;
+        }
+
+        return counts
+            .OrderByDescending(pair => pair.Key)
+            .Select(pair => new WalletBillDefinition(pair.Key, pair.Value))
+            .ToList();
     }
 
     private static string BuildWalletSignature(IEnumerable<WalletBillDefinition> wallet)
@@ -209,7 +218,10 @@ public class PaymentManager : MonoBehaviour
 
     private void WireConfirmButton()
     {
-        Button[] buttons = FindObjectsOfType<Button>(true);
+        // Màn khảo sát cũng có nút tên ConfirmButton, nên ưu tiên tìm trong UI thanh toán.
+        Button[] buttons = paymentUiRoot != null
+            ? paymentUiRoot.GetComponentsInChildren<Button>(true)
+            : FindObjectsOfType<Button>(true);
         foreach (Button button in buttons)
         {
             if (button == null || button.gameObject.name != confirmButtonName)
@@ -350,6 +362,7 @@ public class PaymentManager : MonoBehaviour
         submittedBillCounts.Clear();
         submittedAmountsHistory.Clear();
         differenceAmountsHistory.Clear();
+        PrepareStartingWallet();
         RebuildWalletState();
 
         if (paymentUiRoot != null)
@@ -484,9 +497,32 @@ public class PaymentManager : MonoBehaviour
 
         UpdateUI();
 
+        StartCoroutine(RunSurveyRoutine());
+
         Debug.Log(
             $"[PaymentManager] Đã chốt thanh toán | required={requiredAmount:N0} | paid={currentAmount:N0} | " +
             $"result={lastPaymentSummary.resultCode} | note={lastPaymentSummary.note}");
+    }
+
+    // Thu ngân mời làm khảo sát → hiện khảo sát → cảm ơn khi làm xong.
+    private IEnumerator RunSurveyRoutine()
+    {
+        Survey survey = FindFirstObjectByType<Survey>(FindObjectsInactive.Include);
+        if (survey == null)
+            yield break;
+
+        AudioSource targetAudioSource = ResolveCashierAudioSource(ResolveCashierAnimator());
+        yield return PlayCashierSpeech(targetAudioSource, surveyInviteMessage);
+
+        bool completed = false;
+        System.Action handleCompleted = () => completed = true;
+        survey.OnCompleted += handleCompleted;
+        survey.Show();
+        yield return new WaitUntil(() => completed);
+        survey.OnCompleted -= handleCompleted;
+
+        if (survey.HasQuestions)
+            yield return PlayCashierSpeech(targetAudioSource, surveyThanksMessage);
     }
 
     private PaymentSummary BuildPaymentSummary()
