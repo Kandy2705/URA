@@ -4,6 +4,7 @@ using TMPro;
 using System.IO;
 using System.Linq;
 using TMPro.Examples;
+using NUnit.Framework;
 
 public class DataManager : MonoBehaviour
 {
@@ -124,6 +125,7 @@ public class DataManager : MonoBehaviour
         float elapsed = Time.time - startTime;
         product_times[product] = elapsed;
     }
+
 
     public void ExportCSV(List<CompareResult> compareResults)
     {
@@ -259,12 +261,15 @@ public class DataManager : MonoBehaviour
             }
             writer.WriteLine();
 
-            if(submitted_amounts_history != null && difference_amounts_history != null){
+            if (submitted_amounts_history != null && difference_amounts_history != null)
+            {
                 int correct_money_count = submitted_amounts_history.Count;
                 writer.WriteLine($"Correct Money Count,{correct_money_count}");
-                writer.WriteLine($"Submitted Amounts History,{string.Join("," , submitted_amounts_history)}");
-                writer.WriteLine($"Difference Amounts History,{string.Join("," , difference_amounts_history)}");
-            }else{
+                writer.WriteLine($"Submitted Amounts History,{string.Join(",", submitted_amounts_history)}");
+                writer.WriteLine($"Difference Amounts History,{string.Join(",", difference_amounts_history)}");
+            }
+            else
+            {
                 writer.WriteLine("Fail to record Submit history !");
             }
         }

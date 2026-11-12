@@ -115,6 +115,7 @@ public class PokeManager : MonoBehaviour
         if (DataManager.Instance != null)
         {
             DataManager.Instance.updateTime(item.itemName);
+            Survey.updateShoppingHist(item.itemName);
         }
 
         UpdateInventoryView();

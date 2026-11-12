@@ -238,6 +238,7 @@ public class ListController : MonoBehaviour
         lastReplacedQuantity = UnityEngine.Random.Range(1, 10);
         ConfigureExistingItem(target, lastReplacedNewName, lastReplacedQuantity);
         OnListChanged?.Invoke(lastReplacedOldName, prefab, lastReplacedQuantity);
+        Survey.updateReplacedItem(lastReplacedOldName);
         return $"Đã đổi {lastReplacedOldName} → {lastReplacedNewName} (x{lastReplacedQuantity})";
     }
 
@@ -266,5 +267,15 @@ public class ListController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         if (notificationCanvas != null)
             notificationCanvas.SetActive(false);
+    }
+
+    public string getLastReplaceOldName()
+    {
+        return lastReplacedOldName;
+    }
+
+    public string getLastReplaceNewName()
+    {
+        return lastReplacedOldName;
     }
 }
