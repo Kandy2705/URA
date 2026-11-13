@@ -10,6 +10,12 @@ public class Survey : MonoBehaviour
     private int currentQuestion = 0;
     private List<string> questions = new List<string>
     {
+        "Món nào đang được giảm giá ?",
+        "Món đầu tiên bạn mua là gì ?",
+        "Món nào trong danh sách đã bị đổi sang món khác ?",
+        "Bạn mua món {X} sau món nào ?",
+        "Món {X} bạn mua là món thứ mấy ?",
+        "Bạn có hoàn thành nhiệm vụ phụ không ?"
     };
 
     public class Answers
@@ -46,23 +52,23 @@ public class Survey : MonoBehaviour
             .ToList();
     }
 
-    // private void generateOptions(string correctOption, List<string> optionSource, int optionNum = 4)
-    // {
+    private void generateOptions(string correctOption, List<string> optionSource, int optionNum = 4)
+    {
+        answersList.Add(new Answers());
+        answersList[currentQuestion].answers.Add(correctOption);
 
-    //     answersList.Add(new Answers());
-    //     answersList[currentQuestion].answers.Add(correctOption);
+        List<string> wrongOptions = optionSource;
+        wrongOptions.RemoveAll(item => item == correctOption);
 
-    //     List<string> wrongOptions = optionSource;
-    //     wrongOptions.Remove(correctOption);
+        for (int i = 0; i < optionNum - 1 && optionSource.Count > 0; i++)
+        {
+            int randomDistractAnswer = UnityEngine.Random.Range(0, optionSource.Count);
+            Logging($"Random distract ans: {optionSource[randomDistractAnswer]}");
+            answersList[currentQuestion].answers.Add(optionSource[randomDistractAnswer]);
+            optionSource.RemoveAt(randomDistractAnswer);
+        }
+    }
 
-    //     for (int i = 0; i < optionNum - 1 && optionSource.Count > 0; i++)
-    //     {
-    //         int randomDistractAnswer = UnityEngine.Random.Range(0, optionSource.Count);
-    //         Logging($"Random distract ans: {optionSource[randomDistractAnswer]}");
-    //         answersList[currentQuestion].answers.Add(optionSource[randomDistractAnswer]);
-    //         optionSource.RemoveAt(randomDistractAnswer);
-    //     }
-    // }
     // Question01
     private void getAnswer1()
     {
@@ -78,63 +84,25 @@ public class Survey : MonoBehaviour
         // Logging("All items: " + allItems.Count.ToString());
         // Logging("Discounted Items: " + discountedItems.Count.ToString());
 
-        List<string> notDiscountedList = allItems.Except(discountedItems).ToList();
+        List<string> notDiscountedItems = allItems.Except(discountedItems).ToList();
         int randomCorrectAnswer = UnityEngine.Random.Range(0, discountedItems.Count);
 
-        answersList.Add(new Answers());
-        answersList[currentQuestion].answers.Add(discountedItems[randomCorrectAnswer]);
-        for (int i = 0; i < Options.Count - 1 && notDiscountedList.Count > 0; i++)
-        {
-            int randomDistractAnswer = UnityEngine.Random.Range(0, notDiscountedList.Count);
-            Logging($"Random distract ans: {notDiscountedList[randomDistractAnswer]}");
-            answersList[currentQuestion].answers.Add(notDiscountedList[randomDistractAnswer]);
-            notDiscountedList.RemoveAt(randomDistractAnswer);
-        }
+        generateOptions(discountedItems[randomCorrectAnswer], notDiscountedItems);
         Logging("getAnswer1");
     }
     // Quest02
     private void getAnswer2()
     {
         string firstItem = shopping_history.Count > 0 ? shopping_history[0] : "";
-
-        answersList.Add(new Answers());
-        answersList[currentQuestion].answers.Add(firstItem);
+        generateOptions(firstItem, allItems);
         
-        int[] distractIndexes = new int[NUMBER_OF_OPTIONS - 1];
-        for (int i = 0; i < NUMBER_OF_OPTIONS - 1; i++)
-        {
-            int randomDistractAnswer = 0;
-            do
-            {
-                randomDistractAnswer = UnityEngine.Random.Range(0, allItems.Count);
-            } while (allItems[randomDistractAnswer] == firstItem && !distractIndexes.Contains(randomDistractAnswer));
-            Logging($"Random distract ans: {allItems[randomDistractAnswer]}");
-            answersList[currentQuestion].answers.Add(allItems[randomDistractAnswer]);
-            distractIndexes[i] = randomDistractAnswer;
-        }
         Logging($"Câu hỏi {currentQuestion} có {answersList[currentQuestion].answers.Count} đáp án, đáp án đầu tiên {(answersList[currentQuestion].answers.Count > 0 ? answersList[currentQuestion].answers[0] : "không có")}");
         Logging("getAnswer2");
     }
     // Question03
     private void getAnswer3()
     {
-        answersList.Add(new Answers());
-        answersList[currentQuestion].answers.Add(replacedItem);
-        
-        int[] distractIndexes = new int[NUMBER_OF_OPTIONS - 1];
-        for (int i = 0; i < NUMBER_OF_OPTIONS - 1; i++)
-        {
-            int retry = 0;
-            int randomDistractAnswer = 0;
-            do
-            {
-                retry++;
-                randomDistractAnswer = UnityEngine.Random.Range(0, allItems.Count);
-            } while (retry < MAX_RANDOM_RETRY && allItems[randomDistractAnswer] == replacedItem && !distractIndexes.Contains(randomDistractAnswer));
-            Logging($"Random distract ans: {allItems[randomDistractAnswer]}");
-            answersList[currentQuestion].answers.Add(allItems[randomDistractAnswer]);
-            distractIndexes[i] = randomDistractAnswer;
-        }
+        generateOptions(replacedItem, allItems);
         Logging("getAnswer3");
     }
     // Question04
@@ -142,25 +110,10 @@ public class Survey : MonoBehaviour
     {
         int randomChosenItem = UnityEngine.Random.Range(1, shopping_history.Count);
         string chosenItem = shopping_history[randomChosenItem];
-        questions[currentQuestion].Replace("{X}", chosenItem);
+        questions[currentQuestion] = questions[currentQuestion].Replace("{X}", chosenItem);
+        Logging(questions[currentQuestion]);
+        generateOptions(shopping_history[randomChosenItem - 1], allItems);
 
-        answersList.Add(new Answers());
-        answersList[currentQuestion].answers.Add(shopping_history[randomChosenItem - 1]);
-
-        int[] distractIndexes = new int[NUMBER_OF_OPTIONS - 1];
-        for (int i = 0; i < NUMBER_OF_OPTIONS - 1; i++)
-        {
-            int retry = 0;
-            int randomDistractAnswer = 0;
-            do
-            {
-                retry++;
-                randomDistractAnswer = UnityEngine.Random.Range(0, allItems.Count);
-            } while (retry < MAX_RANDOM_RETRY && allItems[randomDistractAnswer] == chosenItem && !distractIndexes.Contains(randomDistractAnswer));
-            Logging($"Random distract ans: {allItems[randomDistractAnswer]}");
-            answersList[currentQuestion].answers.Add(allItems[randomDistractAnswer]);
-            distractIndexes[i] = randomDistractAnswer;
-        }
         Logging("getAnswer4");
     }
 
@@ -169,25 +122,13 @@ public class Survey : MonoBehaviour
     {
         int randomChosenItem = UnityEngine.Random.Range(0, shopping_history.Count);
         string chosenItem = shopping_history[randomChosenItem];
-        questions[currentQuestion].Replace("{X}", chosenItem);
+        questions[currentQuestion] = questions[currentQuestion].Replace("{X}", chosenItem);
+        Logging(questions[currentQuestion]);
 
-        answersList.Add(new Answers());
-        answersList[currentQuestion].answers.Add((randomChosenItem + 1).ToString());
+        List<string> wrongOptions = Enumerable.Range(1, shopping_history.Count).Select(i => i.ToString()).ToList();
 
-        int[] distraction = new int[NUMBER_OF_OPTIONS - 1];
-        for (int i = 0; i < NUMBER_OF_OPTIONS - 1; i++)
-        {
-            int retry = 0;
-            int randomDistractAnswer = 0;
-            do
-            {
-                retry++;
-                randomDistractAnswer = UnityEngine.Random.Range(0, shopping_history.Count);
-            } while (retry < MAX_RANDOM_RETRY && randomDistractAnswer != randomChosenItem && !distraction.Contains(randomDistractAnswer));
-            Logging($"Random distract ans: {randomDistractAnswer}");
-            answersList[currentQuestion].answers.Add((randomDistractAnswer + 1).ToString());
-            distraction[i] = randomDistractAnswer;
-        }
+        generateOptions((randomChosenItem + 1).ToString(), wrongOptions);
+
         Logging("getAnswer5");
     }
     
@@ -339,4 +280,14 @@ public class Survey : MonoBehaviour
     {
         Debug.Log($"[Survey] {msg}");
     }
+}
+
+
+public interface questionTemplate
+{
+    
+}
+public class Question01
+{
+
 }
