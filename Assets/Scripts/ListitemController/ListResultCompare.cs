@@ -275,6 +275,10 @@ public class ListResultCompare : MonoBehaviour
         if (hasFinalizedReport || DataManager.Instance == null)
             return;
 
+        // Wait for the cash payment flow to capture its summary before exporting.
+        if (PaymentManager.Instance != null && !PaymentManager.Instance.HasConfirmedPayment)
+            return;
+
         List<CompareResult> filteredResults = new List<CompareResult>();
         foreach (CompareResult result in compareResults)
         {
