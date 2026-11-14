@@ -249,8 +249,7 @@ public class Survey : MonoBehaviour
             new Question06Strategy(question06SO)
         };
 
-        questionStrategies = pool;
-        // questionStrategies = pool.OrderBy(_ => UnityEngine.Random.value).ToList();
+        questionStrategies = pool.OrderBy(_ => UnityEngine.Random.value).ToList();
     }
 
     private void BuildAllValidQuestions()
