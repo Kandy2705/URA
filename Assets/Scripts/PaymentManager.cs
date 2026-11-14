@@ -88,6 +88,7 @@ public class PaymentManager : MonoBehaviour
 
     public PaymentSummary LastPaymentSummary => lastPaymentSummary;
     public bool HasConfirmedPayment => paymentConfirmed;
+    public bool IsCheckoutInProgress => checkoutSessionActive || isResolvingPayment || paymentConfirmed;
     public int CurrentAmount => currentAmount;
 
     private void Awake()

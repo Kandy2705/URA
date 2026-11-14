@@ -55,6 +55,20 @@ public class Level2MllmDialogueBridge : MonoBehaviour
     private bool _hasAnnouncedReadList;
     private bool _hasRequestedCheckout;
     private bool _apiBootstrapFinished;
+    private bool _introCompleted;
+
+    public bool IsDialogueBusy
+    {
+        get
+        {
+            MllmApiClient client = GetComponent<MllmApiClient>();
+            NpcDialoguePresenter presenter = GetComponent<NpcDialoguePresenter>();
+            return (runIntroSequenceOnStart && !_introCompleted) || _introRunning ||
+                (client != null && client.IsRequestInFlight) ||
+                (orchestrator != null && orchestrator.IsPresentationPending) ||
+                (presenter != null && presenter.IsPresenting);
+        }
+    }
 
     private void Awake()
     {
@@ -89,6 +103,8 @@ public class Level2MllmDialogueBridge : MonoBehaviour
 
         if (runIntroSequenceOnStart)
             yield return RunIntroSequence();
+
+        _introCompleted = true;
     }
 
     private IEnumerator EnsureApiReady()
@@ -341,8 +357,6 @@ public class Level2MllmDialogueBridge : MonoBehaviour
         if (sessionContext != null)
             sessionContext.gamePhase = MllmGamePhases.InGame;
 
-        _introRunning = false;
-
         if (!_hasAnnouncedReadList)
         {
             _hasAnnouncedReadList = true;
@@ -359,6 +373,8 @@ public class Level2MllmDialogueBridge : MonoBehaviour
             yield return RunDialogueWithRetry(RequestNpcDistraction, "npc_distraction");
             yield return WaitForNpcSpeechToFinish();
         }
+
+        _introRunning = false;
     }
 
     private IEnumerator RunIntroDialogueStep(Action<Action<MllmApiCallResult>> sendStep, string stepName)
@@ -378,7 +394,8 @@ public class Level2MllmDialogueBridge : MonoBehaviour
 
         const float speechTimeoutSeconds = 45f;
         float elapsed = 0f;
-        while (presenter.IsSpeaking && elapsed < speechTimeoutSeconds)
+        while (((orchestrator != null && orchestrator.IsPresentationPending) || presenter.IsPresenting) &&
+            elapsed < speechTimeoutSeconds)
         {
             elapsed += Time.unscaledDeltaTime;
             yield return null;

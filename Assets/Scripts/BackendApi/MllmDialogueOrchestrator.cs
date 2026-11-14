@@ -18,6 +18,9 @@ public class MllmDialogueOrchestrator : MonoBehaviour
 
     public event Action<MllmApiCallResult> OnDialogueCompleted;
 
+    private int pendingPresentations;
+    public bool IsPresentationPending => pendingPresentations > 0;
+
     private void Awake()
     {
         ResolveReferences();
@@ -154,17 +157,23 @@ public class MllmDialogueOrchestrator : MonoBehaviour
 
     private IEnumerator TransitionToDialogueRoutine(MllmGenerateDialogueResponse response)
     {
-        if (dialoguePresenter != null && dialoguePresenter.ShowApiDebugOnHeadBubble)
+        pendingPresentations++;
+        try
         {
-            yield return new WaitForSeconds(1.5f);
-        }
+            if (dialoguePresenter != null && dialoguePresenter.ShowApiDebugOnHeadBubble)
+                yield return new WaitForSeconds(1.5f);
 
-        if (dialoguePresenter != null)
+            if (dialoguePresenter != null)
+            {
+                if (response.result.dialogue_map != null && response.result.dialogue_map.Count > 0)
+                    dialoguePresenter.PresentMap(response.result.dialogue_map);
+                else
+                    dialoguePresenter.Present(response.result.dialogue);
+            }
+        }
+        finally
         {
-            if (response.result.dialogue_map != null && response.result.dialogue_map.Count > 0)
-                dialoguePresenter.PresentMap(response.result.dialogue_map);
-            else
-                dialoguePresenter.Present(response.result.dialogue);
+            pendingPresentations--;
         }
     }
 

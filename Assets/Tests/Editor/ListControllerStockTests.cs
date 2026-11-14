@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
@@ -92,6 +93,54 @@ public class ListControllerStockTests
         Assert.That(changes, Is.Zero);
         Assert.That(list.choicedItems[0].transform.Find("Name").GetComponent<TMP_Text>().text,
             Is.EqualTo(originalName));
+    }
+
+    [Test]
+    public void RandomChange_WaitsForIntroEvenWhenNpcIsNotSpeakingYet()
+    {
+        ListController list = CreateList();
+        GameTimer timer = CreateObject("Timer").AddComponent<GameTimer>();
+        timer.isRunning = true;
+        Level2MllmDialogueBridge bridge = CreateObject("Dialogue").AddComponent<Level2MllmDialogueBridge>();
+        bridge.enabled = true;
+        SetField(list, "randomChangeTimer", timer);
+        SetField(list, "randomChangeDialogueBridge", bridge);
+        SetField(list, "npcSpeechBufferSeconds", 0f);
+        SetField(list, "minDelay", 0f);
+        SetField(list, "maxDelay", 0f);
+        IEnumerator routine = (IEnumerator)typeof(ListController)
+            .GetMethod("RandomChangeCoroutine", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(list, null);
+
+        Assert.That(routine.MoveNext(), Is.True); // Wait for scene startup.
+        Assert.That(bridge.IsDialogueBusy, Is.True); // Includes pending API bootstrap/intro.
+        Assert.That(routine.MoveNext(), Is.True);
+        Assert.That(routine.MoveNext(), Is.True);
+        Assert.That(list.HasPendingRandomChange, Is.True);
+
+        list.hasTriggeredRandomChange = false;
+        Assert.That(routine.MoveNext(), Is.False);
+    }
+
+    [Test]
+    public void RandomChange_WhenTimerStopsWhileWaiting_DoesNotChangeTasksOrNotify()
+    {
+        ListController list = CreateList();
+        GameTimer timer = CreateObject("Timer").AddComponent<GameTimer>();
+        timer.isRunning = true;
+        SetField(list, "randomChangeTimer", timer);
+        SetField(list, "npcSpeechBufferSeconds", float.MaxValue);
+        int notifications = 0;
+        list.OnRandomListChange += (_, __, ___, ____) => notifications++;
+        IEnumerator routine = (IEnumerator)typeof(ListController)
+            .GetMethod("RandomChangeCoroutine", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(list, null);
+
+        Assert.That(routine.MoveNext(), Is.True);
+        Assert.That(routine.MoveNext(), Is.True);
+        timer.isRunning = false;
+
+        Assert.That(routine.MoveNext(), Is.False);
+        Assert.That(notifications, Is.Zero);
+        Assert.That(list.choicedItems, Is.Empty);
     }
 
     private ListController CreateList(params string[] names)

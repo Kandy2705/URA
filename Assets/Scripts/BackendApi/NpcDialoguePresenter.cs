@@ -42,6 +42,7 @@ public class NpcDialoguePresenter : MonoBehaviour
     private bool _isSpeaking;
 
     public bool IsSpeaking => _isSpeaking;
+    public bool IsPresenting => _displayRoutine != null || _isSpeaking;
     public bool ShowApiDebugOnHeadBubble => showApiDebugOnHeadBubble;
 
     private void Awake()

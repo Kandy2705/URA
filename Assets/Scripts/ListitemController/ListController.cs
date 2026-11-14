@@ -27,6 +27,10 @@ public class ListController : MonoBehaviour
     [SerializeField] private bool enableRandomTaskChange = false;
     [SerializeField] private float minDelay = 30f;
     [SerializeField] private float maxDelay = 90f;
+    [Tooltip("Thời gian đệm sau khi NPC hoàn tất hướng dẫn/lời thoại trước khi cho phép đổi hàng.")]
+    [SerializeField, Min(0f)] private float npcSpeechBufferSeconds = 3f;
+    [SerializeField] private GameTimer randomChangeTimer;
+    [SerializeField] private Level2MllmDialogueBridge randomChangeDialogueBridge;
 
     [Header("Notify UI")]
     [SerializeField] private GameObject notificationCanvas;
@@ -288,7 +292,43 @@ public class ListController : MonoBehaviour
 
     private IEnumerator RandomChangeCoroutine()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(minDelay, maxDelay));
+        // Let every scene component finish Start before checking timer/intro state.
+        yield return null;
+        if (randomChangeTimer == null)
+            randomChangeTimer = FindSceneComponent<GameTimer>();
+        if (randomChangeDialogueBridge == null)
+            randomChangeDialogueBridge = FindSceneComponent<Level2MllmDialogueBridge>();
+        float quietSeconds = 0f;
+        float delayRemaining = 0f;
+        bool delayStarted = false;
+
+        while (hasTriggeredRandomChange)
+        {
+            if ((randomChangeTimer != null && !randomChangeTimer.isRunning) ||
+                (PaymentManager.Instance != null && PaymentManager.Instance.IsCheckoutInProgress))
+                yield break;
+
+            bool dialogueBusy = randomChangeDialogueBridge != null && randomChangeDialogueBridge.isActiveAndEnabled &&
+                randomChangeDialogueBridge.IsDialogueBusy;
+            quietSeconds = dialogueBusy ? 0f : quietSeconds + Time.deltaTime;
+            bool ready = !dialogueBusy && quietSeconds >= npcSpeechBufferSeconds;
+
+            if (!delayStarted && ready)
+            {
+                delayRemaining = UnityEngine.Random.Range(Mathf.Min(minDelay, maxDelay), Mathf.Max(minDelay, maxDelay));
+                delayStarted = true;
+            }
+            else if (delayStarted)
+            {
+                delayRemaining -= Time.deltaTime;
+            }
+
+            if (delayStarted && delayRemaining <= 0f && ready)
+                break;
+
+            yield return null;
+        }
+
         if (!hasTriggeredRandomChange)
             yield break;
         string discountInfo = ItemsManager.DiscountRandomItem();
@@ -297,6 +337,14 @@ public class ListController : MonoBehaviour
         if (lastReplacedQuantity > 0)
             OnRandomListChange?.Invoke(lastReplacedOldName, lastReplacedNewName, lastReplacedQuantity, discountInfo);
         ShowNotification(message);
+    }
+
+    private T FindSceneComponent<T>() where T : Component
+    {
+        foreach (T component in FindObjectsByType<T>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+            if (component.gameObject.scene == gameObject.scene)
+                return component;
+        return null;
     }
 
     private IEnumerator HideNotificationAfter(float duration)
