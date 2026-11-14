@@ -66,6 +66,12 @@ public class ListController : MonoBehaviour
         if (MainListGenerated || listContainer == null)
             return;
 
+        if (PokeManager.Instance == null)
+        {
+            Debug.LogWarning("[ListController] Cannot generate random tasks before inventory is available.", this);
+            return;
+        }
+
         for (int i = 0; i < spawnOnStart; i++)
             SpawnItemInList();
         MainListGenerated = true;
@@ -193,12 +199,42 @@ public class ListController : MonoBehaviour
 
     private void SpawnItemInList()
     {
-        if (availablePrefabs.Count == 0 || listContainer == null)
+        if (listContainer == null || !TryChooseStockedPrefab(out GameObject prefab, out int quantity))
             return;
-        int randomIndex = UnityEngine.Random.Range(0, availablePrefabs.Count);
-        GameObject prefab = availablePrefabs[randomIndex];
-        ConfigureItemView(Instantiate(prefab, listContainer.transform), prefab.name, UnityEngine.Random.Range(1, 10));
-        availablePrefabs.RemoveAt(randomIndex);
+        ConfigureItemView(Instantiate(prefab, listContainer.transform), prefab.name, quantity);
+        availablePrefabs.Remove(prefab);
+    }
+
+    private bool TryChooseStockedPrefab(out GameObject prefab, out int quantity)
+    {
+        prefab = null;
+        quantity = 0;
+        if (PokeManager.Instance == null)
+            return false;
+
+        HashSet<string> listedNames = new HashSet<string>(StringComparer.Ordinal);
+        foreach (GameObject row in choicedItems)
+        {
+            TMP_Text nameText = row != null ? row.transform.Find("Name")?.GetComponent<TMP_Text>() : null;
+            if (nameText != null)
+                listedNames.Add(nameText.text);
+        }
+
+        List<GameObject> candidates = new List<GameObject>();
+        foreach (GameObject candidate in availablePrefabs)
+        {
+            if (candidate != null && !listedNames.Contains(candidate.name) &&
+                PokeManager.Instance.GetAvailableQuantity(candidate.name) > 0)
+                candidates.Add(candidate);
+        }
+
+        if (candidates.Count == 0)
+            return false;
+
+        prefab = candidates[UnityEngine.Random.Range(0, candidates.Count)];
+        int maxQuantity = Mathf.Min(9, PokeManager.Instance.GetAvailableQuantity(prefab.name));
+        quantity = UnityEngine.Random.Range(1, maxQuantity + 1);
+        return true;
     }
 
     private void ConfigureItemView(GameObject item, string itemName, int quantity)
@@ -228,15 +264,16 @@ public class ListController : MonoBehaviour
 
     public string ReplaceRandomItemWithUniquePrefab()
     {
-        if (choicedItems.Count == 0 || availablePrefabs.Count == 0)
-            return "Không có item hoặc prefab để thay đổi.";
+        lastReplacedQuantity = 0;
+        if (choicedItems.Count == 0 || !TryChooseStockedPrefab(out GameObject prefab, out int quantity))
+            return "Không có sản phẩm còn hàng phù hợp để thay đổi nhiệm vụ.";
         GameObject target = choicedItems[UnityEngine.Random.Range(0, choicedItems.Count)];
-        GameObject prefab = availablePrefabs[UnityEngine.Random.Range(0, availablePrefabs.Count)];
         TMP_Text oldText = target.transform.Find("Name")?.GetComponent<TMP_Text>();
         lastReplacedOldName = oldText != null ? oldText.text : target.name;
         lastReplacedNewName = prefab.name;
-        lastReplacedQuantity = UnityEngine.Random.Range(1, 10);
+        lastReplacedQuantity = quantity;
         ConfigureExistingItem(target, lastReplacedNewName, lastReplacedQuantity);
+        availablePrefabs.Remove(prefab);
         OnListChanged?.Invoke(lastReplacedOldName, prefab, lastReplacedQuantity);
         return $"Đã đổi {lastReplacedOldName} → {lastReplacedNewName} (x{lastReplacedQuantity})";
     }
@@ -257,7 +294,8 @@ public class ListController : MonoBehaviour
         string discountInfo = ItemsManager.DiscountRandomItem();
         string message = ReplaceRandomItemWithUniquePrefab();
         hasTriggeredRandomChange = false;
-        OnRandomListChange?.Invoke(lastReplacedOldName, lastReplacedNewName, lastReplacedQuantity, discountInfo);
+        if (lastReplacedQuantity > 0)
+            OnRandomListChange?.Invoke(lastReplacedOldName, lastReplacedNewName, lastReplacedQuantity, discountInfo);
         ShowNotification(message);
     }
 
