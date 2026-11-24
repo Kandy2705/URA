@@ -33,11 +33,12 @@ public class ShoppingCart : MonoBehaviour
 
     public void Start()
     {
+        started = true;
         if (PokeManager.Instance != null)
         {
             UpdateCartUI();
 
-            PokeManager.Instance.OnInventoryChanged += (entry, isNew) => UpdateCartUI();
+            BindInventory();
         }
         else
         {
@@ -45,6 +46,24 @@ public class ShoppingCart : MonoBehaviour
         }
     }
 
+    private PokeManager inventoryPublisher;
+    private bool started;
+    private void OnEnable() { if (started) BindInventory(); }
+    private void OnDisable()
+    {
+        if (inventoryPublisher != null)
+            inventoryPublisher.OnInventoryChanged -= HandleInventoryChanged;
+        inventoryPublisher = null;
+    }
+    private void BindInventory()
+    {
+        if (inventoryPublisher == PokeManager.Instance) return;
+        OnDisable();
+        inventoryPublisher = PokeManager.Instance;
+        if (inventoryPublisher != null)
+            inventoryPublisher.OnInventoryChanged += HandleInventoryChanged;
+    }
+    private void HandleInventoryChanged(BillEntry entry, bool isNew) => UpdateCartUI();
     //public void RemoveSpecificItemInstance(CartItemInstance itemToRemoveInstance)
     //{
     //    if (collectedItems.Remove(itemToRemoveInstance))

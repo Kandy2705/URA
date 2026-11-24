@@ -39,6 +39,10 @@ public class VRCheckoutTeleport : MonoBehaviour
     private Quaternion savedRigRotation;
     private Quaternion savedCameraLocalRotation;
     private bool isLocked = false;
+    private bool level3CheckoutStarted;
+    private readonly System.Collections.Generic.Dictionary<Component, bool> checkoutStates =
+        new System.Collections.Generic.Dictionary<Component, bool>();
+    public bool CheckoutStarted => level3CheckoutStarted;
 
     private void Awake()
     {
@@ -112,6 +116,8 @@ public class VRCheckoutTeleport : MonoBehaviour
     public void MoveToCheckout()
     {
         ResolveTargets();
+        bool level3 = gameObject.scene.name == "Scene-level-3";
+        if (level3 && level3CheckoutStarted) return;
 
         Transform checkoutTarget = GetCheckoutTarget();
         if (xrOrigin == null || mainCamera == null || checkoutTarget == null)
@@ -120,6 +126,17 @@ public class VRCheckoutTeleport : MonoBehaviour
             return;
         }
 
+        if (level3)
+        {
+            if (PaymentManager.Instance == null || CartManager.Instance == null) return;
+            level3CheckoutStarted = true;
+            foreach (CharacterController capsule in xrOrigin.GetComponentsInChildren<CharacterController>(true))
+            {
+                checkoutStates[capsule] = capsule.enabled;
+                capsule.enabled = false;
+            }
+            if (GameTimer.Instance != null) GameTimer.Instance.isRunning = false;
+        }
         int checkoutAmount = PrepareCheckoutAmount();
 
         if (paymentUiToHide != null)
@@ -165,6 +182,13 @@ public class VRCheckoutTeleport : MonoBehaviour
     public void LockPlayer()
     {
         isLocked = true;
+        if (gameObject.scene.name == "Scene-level-3")
+        {
+            foreach (Behaviour[] group in new[] { movementScripts, turnScripts, otherControlScripts })
+                if (group != null) foreach (Behaviour provider in group)
+                    if (provider != null && !checkoutStates.ContainsKey(provider))
+                        checkoutStates[provider] = provider.enabled;
+        }
 
         SetBehaviours(movementScripts, false);
         SetBehaviours(turnScripts, false);
@@ -190,10 +214,24 @@ public class VRCheckoutTeleport : MonoBehaviour
         SetBehaviours(movementScripts, true);
         SetBehaviours(turnScripts, true);
         SetBehaviours(otherControlScripts, true);
+        if (gameObject.scene.name == "Scene-level-3")
+        {
+            foreach (var state in checkoutStates)
+                if (state.Key != null && state.Key is Behaviour behaviour) behaviour.enabled = state.Value;
+                else if (state.Key != null && state.Key is CharacterController capsule) capsule.enabled = state.Value;
+            checkoutStates.Clear();
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (gameObject.scene.name == "Scene-level-3" && isLocked) UnlockPlayer();
     }
 
     public void ReturnFromCheckout()
     {
+        // Payment retry stays at the counter; a completed run uses scene restart/exit.
+        if (gameObject.scene.name == "Scene-level-3") return;
         if (characterController != null)
             characterController.enabled = false;
 

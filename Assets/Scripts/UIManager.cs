@@ -28,6 +28,10 @@ public class UIManager : MonoBehaviour
     [Tooltip("Thời gian fade (0 = hiện/ẩn ngay). Dùng unscaled time để không lệ thuộc Time.timeScale.")]
     [Min(0f)][SerializeField] private float fadeDuration = 0f;
 
+    // Read actual opacity too: menu buttons may change CanvasGroup visibility directly.
+    public bool IsMenuVisible => menuRoot != null && menuRoot.activeInHierarchy &&
+        (canvasGroup != null ? canvasGroup.alpha > 0.01f : _visible);
+
     private bool _visible;
     private Coroutine _fadeCo;
 

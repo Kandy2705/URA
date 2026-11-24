@@ -44,7 +44,7 @@ public class PokeManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        else if (Instance != this) { Destroy(gameObject); return; }
 
         if (Camera.main != null)
             UserCameraTransform = Camera.main.transform;
@@ -67,13 +67,17 @@ public class PokeManager : MonoBehaviour
         if (notificationBoard != null)
             notificationBoard.SetActive(false);
 
+        PrepareStatusPanel(NotificationPanel, 0.30f, 0.10f);
+        PrepareStatusPanel(notificationBoard, 0.34f, 0.12f);
         UpdateTotalsAndUI();
     }
+
+    private void OnDestroy() { if (Instance == this) Instance = null; }
 
     private void Start()
     {
         selectableItems = FindObjectsByType<SelectableItem>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
-        InitializeProductStock();
+        EnsureProductStockInitialized();
     }
 
     private void Update()
@@ -87,6 +91,13 @@ public class PokeManager : MonoBehaviour
 
     public void PokingItem(SelectableItem item)
     {
+        if (item == null) return;
+        var facing = item.GetComponent<Level3StockFacing>();
+        if (facing != null)
+        {
+            if (!facing.CanPurchase) return;
+            item.price = facing.stockOwner.price;
+        }
         EnsureProductStockInitialized();
         int remainingStock = GetRemainingStock(item.itemName);
         if (remainingStock <= 0)
@@ -97,6 +108,7 @@ public class PokeManager : MonoBehaviour
         }
 
         remainingProductStock[item.itemName] = remainingStock - 1;
+        if (facing != null) facing.Consume();
         isNew = false;
         BillEntry entry;
         if (inventory.ContainsKey(item.itemName))
@@ -152,6 +164,8 @@ public class PokeManager : MonoBehaviour
             {
                 int currentStock = GetRemainingStock(itemName);
                 remainingProductStock[itemName] = Mathf.Min(initialStock, currentStock + 1);
+                var owner = Array.Find(selectableItems, p => p != null && p.itemName == itemName && p.GetComponent<Level3StockFacing>() != null && p.GetComponent<Level3StockFacing>().IsStockOwner);
+                if (owner != null) Level3StockFacing.RestoreReturnedUnit(owner);
             }
 
             UpdateInventoryView();
@@ -193,6 +207,12 @@ public class PokeManager : MonoBehaviour
 
     private void UpdateProximityHint()
     {
+        if (ShoppingMenuIsVisible())
+        {
+            HideItemHint();
+            if (NotificationPanel != null) NotificationPanel.SetActive(false);
+            return;
+        }
         if (UserCameraTransform == null && Camera.main != null)
             UserCameraTransform = Camera.main.transform;
 
@@ -209,6 +229,8 @@ public class PokeManager : MonoBehaviour
             if (item == null || !item.isActiveAndEnabled)
                 continue;
 
+            var facing = item.GetComponent<Level3StockFacing>();
+            if (facing != null && !facing.CanPurchase) continue;
             float distance = Vector3.Distance(UserCameraTransform.position, item.transform.position);
             if (distance > closestDistance)
                 continue;
@@ -247,6 +269,8 @@ public class PokeManager : MonoBehaviour
             if (item == null || string.IsNullOrWhiteSpace(item.itemName))
                 continue;
 
+            var facing = item.GetComponent<Level3StockFacing>();
+            if (facing != null && !facing.IsStockOwner) continue;
             int stockToAdd = Mathf.Max(1, item.stockQuantity);
             initialProductStock[item.itemName] = GetStockValue(initialProductStock, item.itemName) + stockToAdd;
         }
@@ -273,7 +297,7 @@ public class PokeManager : MonoBehaviour
 
     private void ShowAcquiredItemNotification(SelectableItem item)
     {
-        if (item == null || UserCameraTransform == null)
+        if (item == null || UserCameraTransform == null || ShoppingMenuIsVisible())
             return;
 
         if (NotificationPanel == null)
@@ -295,7 +319,7 @@ public class PokeManager : MonoBehaviour
             notificationCanvasGroup.alpha = 0.92f;
 
         Vector3 newPosition = UserCameraTransform.position + UserCameraTransform.forward * DisplayDistance
-                              + UserCameraTransform.up * acquiredDisplayYOffset;
+                              + UserCameraTransform.up * Mathf.Min(acquiredDisplayYOffset, 0.18f);
         NotificationPanel.transform.position = newPosition;
         NotificationPanel.transform.rotation = Quaternion.LookRotation(
             NotificationPanel.transform.position - UserCameraTransform.position
@@ -318,11 +342,20 @@ public class PokeManager : MonoBehaviour
 
     private void ShowItemHint(SelectableItem item)
     {
-        if (item == null || notificationBoard == null || UserCameraTransform == null)
+        if (item == null || notificationBoard == null || UserCameraTransform == null || ShoppingMenuIsVisible())
             return;
 
+        if (item == null) return;
+        var facing = item.GetComponent<Level3StockFacing>();
+        if (facing != null)
+        {
+            if (!facing.CanPurchase) return;
+            item.price = facing.stockOwner.price;
+        }
         EnsureProductStockInitialized();
         int remainingStock = GetRemainingStock(item.itemName);
+        var displayFacing = item.GetComponent<Level3StockFacing>();
+        if (displayFacing != null && displayFacing.stockOwner != null) item.price = displayFacing.stockOwner.price;
         string stockText = remainingStock > 0 ? $"Còn lại: {remainingStock}" : "Hết hàng";
 
         if (notificationBoardText != null)
@@ -339,11 +372,48 @@ public class PokeManager : MonoBehaviour
         if (notificationBoardCanvasGroup != null)
             notificationBoardCanvasGroup.alpha = 0.92f;
 
-        Vector3 newPosition = UserCameraTransform.position + UserCameraTransform.forward * DisplayDistance;
+        Vector3 newPosition = UserCameraTransform.position + UserCameraTransform.forward * DisplayDistance
+                              - UserCameraTransform.up * 0.18f;
         notificationBoard.transform.position = newPosition;
         notificationBoard.transform.rotation = Quaternion.LookRotation(
             notificationBoard.transform.position - UserCameraTransform.position
         );
+    }
+
+    private bool ShoppingMenuIsVisible()
+    {
+        foreach (UIManager menu in FindObjectsByType<UIManager>(FindObjectsSortMode.None))
+            if (menu.gameObject.scene == gameObject.scene && menu.IsMenuVisible)
+                return true;
+        return false;
+    }
+
+    private static void PrepareStatusPanel(GameObject panel, float maxWidth, float maxHeight)
+    {
+        if (panel == null) return;
+        // Status overlays never own UI input or stop a controller ray before it reaches menu buttons.
+        foreach (var graphic in panel.GetComponentsInChildren<UnityEngine.UI.Graphic>(true))
+            graphic.raycastTarget = false;
+        foreach (var raycaster in panel.GetComponentsInChildren<UnityEngine.UI.GraphicRaycaster>(true))
+            raycaster.enabled = false;
+        foreach (var collider in panel.GetComponentsInChildren<Collider>(true))
+            collider.enabled = false;
+        foreach (var group in panel.GetComponentsInChildren<CanvasGroup>(true))
+        {
+            group.interactable = false;
+            group.blocksRaycasts = false;
+        }
+        var canvas = panel.GetComponentInChildren<Canvas>(true);
+        if (canvas == null) return;
+        var rect = canvas.GetComponent<RectTransform>();
+        if (rect == null) return;
+        var corners = new Vector3[4];
+        rect.GetWorldCorners(corners);
+        float width = Vector3.Distance(corners[0], corners[3]);
+        float height = Vector3.Distance(corners[0], corners[1]);
+        if (width <= 0 || height <= 0) return;
+        float factor = Mathf.Min(1f, maxWidth / width, maxHeight / height);
+        panel.transform.localScale *= factor;
     }
 
     private void HideItemHint()
@@ -355,3 +425,4 @@ public class PokeManager : MonoBehaviour
             notificationBoard.SetActive(false);
     }
 }
+

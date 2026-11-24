@@ -87,6 +87,7 @@ public class GameTimer : MonoBehaviour
         
     public void StartTimer()
     {
+        checkoutTriggered = false;
         timeLeft = limitSeconds;
         isRunning = true;
         UpdateUI();
@@ -95,6 +96,12 @@ public class GameTimer : MonoBehaviour
     public void StopTimer()
     {
         isRunning = false;
+        if (gameObject.scene.name == "Scene-level-3")
+        {
+            if (checkoutTeleport == null) checkoutTeleport = FindFirstObjectByType<VRCheckoutTeleport>();
+            if (checkoutTeleport != null) checkoutTeleport.MoveToCheckout();
+            return;
+        }
         //DataManager.Instance.Report();
 
         Scene level2Scene = SceneManager.GetSceneByName("Scene-level-2");
@@ -165,6 +172,12 @@ public class GameTimer : MonoBehaviour
         isRunning = false;
         timeLeft = 0;
         UpdateUI();
+        if (gameObject.scene.name == "Scene-level-3")
+        {
+            StopTimer();
+            onTimeUp?.Invoke();
+            return;
+        }
 
         Debug.Log("Hết giờ");
 

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -24,6 +24,8 @@ public class CartManager : MonoBehaviour
 
         UpdateBillUI();
     }
+    private void OnDestroy() { if (Instance == this) Instance = null; }
+
     public void ProcessCheckout()
     {
 
@@ -88,6 +90,11 @@ public class CartManager : MonoBehaviour
             }
         }
 
+        if (gameObject.scene.name == "Scene-level-3")
+        {
+            totalPaid = 0;
+            foreach (BillEntry entry in bill.Values) totalPaid += entry.price * entry.quantity;
+        }
         if (paidTotalText != null)
         {
             paidTotalText.text = $"Tổng: {totalPaid}₫";

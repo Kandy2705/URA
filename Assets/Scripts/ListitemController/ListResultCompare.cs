@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -26,6 +26,7 @@ public class ListResultCompare : MonoBehaviour
 
     private void Start()
     {
+        BindInventory(); // All scene Awake calls have completed.
         if (listController == null)
             listController = FindListController();
         if (gameTimer == null)
@@ -76,20 +77,26 @@ public class ListResultCompare : MonoBehaviour
             supplementalTaskController.OnSupplementalTaskAdded -= HandleSupplementalTaskAdded;
     }
 
-    private void OnEnable()
+    private PokeManager inventoryPublisher;
+    private void BindInventory()
     {
-        if (PokeManager.Instance != null)
-            PokeManager.Instance.OnInventoryChanged += HandleBillChanged;
+        if (inventoryPublisher == PokeManager.Instance) return;
+        UnbindInventory();
+        inventoryPublisher = PokeManager.Instance;
+        if (inventoryPublisher != null)
+            inventoryPublisher.OnInventoryChanged += HandleBillChanged;
     }
-
-    private void OnDisable()
+    private void UnbindInventory()
     {
-        if (PokeManager.Instance != null)
-            PokeManager.Instance.OnInventoryChanged -= HandleBillChanged;
+        if (inventoryPublisher != null)
+            inventoryPublisher.OnInventoryChanged -= HandleBillChanged;
+        inventoryPublisher = null;
     }
-
+    private void OnEnable() => BindInventory();
+    private void OnDisable() => UnbindInventory();
     private void Update()
     {
+        if (gameObject.scene.name == "Scene-level-3") return;
         if (gameTimer != null && !gameTimer.isRunning)
             LoadCSV?.Invoke();
     }
@@ -203,6 +210,8 @@ public class ListResultCompare : MonoBehaviour
 
     private BillEntry GetInventoryEntry(string itemName)
     {
+        if (gameObject.scene.name == "Scene-level-3" && CartManager.Instance != null &&
+            CartManager.Instance.bill.TryGetValue(itemName, out BillEntry billed)) return billed;
         return PokeManager.Instance != null && PokeManager.Instance.inventory.TryGetValue(itemName, out BillEntry entry)
             ? entry : null;
     }
@@ -222,17 +231,17 @@ public class ListResultCompare : MonoBehaviour
         if (currentQuantity < indexQuantity)
         {
             int shortage = indexQuantity - currentQuantity;
-            quantityText = $"{currentQuantity} (Thiếu {shortage})";
-            return $"Thiếu {shortage}";
+            quantityText = $"{currentQuantity} (Thiáº¿u {shortage})";
+            return $"Thiáº¿u {shortage}";
         }
         if (currentQuantity == indexQuantity)
         {
-            quantityText = $"{currentQuantity} (Đủ)";
-            return "Đủ";
+            quantityText = $"{currentQuantity} (Äá»§)";
+            return "Äá»§";
         }
         int surplus = currentQuantity - indexQuantity;
-        quantityText = $"{currentQuantity} (Dư {surplus})";
-        return $"Dư {surplus}";
+        quantityText = $"{currentQuantity} (DÆ° {surplus})";
+        return $"DÆ° {surplus}";
     }
 
     private void CreateNewInstantData(BillEntry entry, Transform parentContainer, string quantityText)
@@ -291,6 +300,14 @@ public class ListResultCompare : MonoBehaviour
 
     public void FinalizeResultsForReport()
     {
+        if (gameObject.scene.name == "Scene-level-3")
+        {
+            if (!mainListRegistered) HandleMainListGenerated();
+            foreach (string name in new List<string>(requiredQuantities.Keys)) UpsertRequiredResult(name);
+            if (CartManager.Instance != null)
+                foreach (BillEntry entry in CartManager.Instance.bill.Values)
+                    if (!requiredQuantities.ContainsKey(entry.itemName)) UpsertUnexpectedResult(entry);
+        }
         LoadCompareResult();
     }
 }

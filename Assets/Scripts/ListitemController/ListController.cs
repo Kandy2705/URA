@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -23,6 +24,8 @@ public class ListController : MonoBehaviour
 
     [Header("Legacy random list")]
     [SerializeField] private int spawnOnStart = 5;
+    [Tooltip("Opt in per scene: legacy list requests must match active collectible stock.")]
+    [SerializeField] private bool limitLegacyListToAvailableStock;
     [SerializeField] private float showDuration = 10f;
     [SerializeField] private bool enableRandomTaskChange = false;
     [SerializeField] private float minDelay = 30f;
@@ -66,8 +69,20 @@ public class ListController : MonoBehaviour
         if (MainListGenerated || listContainer == null)
             return;
 
-        for (int i = 0; i < spawnOnStart; i++)
-            SpawnItemInList();
+        if (gameObject.scene.name == "Scene-level-3")
+        {
+            if (!TryBuildLevel3ShoppingTasks(out List<ShoppingTaskItem> tasks))
+            {
+                Debug.LogError("[ListController] Level 3 needs at least seven stock-backed products from distinct sections to create its initial list.", this);
+                return;
+            }
+            RenderTasks(tasks);
+        }
+        else
+        {
+            for (int i = 0; i < spawnOnStart; i++)
+                SpawnItemInList();
+        }
         MainListGenerated = true;
         OnMainListGenerated?.Invoke();
         ResetViewLimit();
@@ -77,6 +92,81 @@ public class ListController : MonoBehaviour
             if (enableRandomTaskChange)
                 StartCoroutine(RandomChangeCoroutine());
         }
+    }
+
+    /// <summary>
+    /// Builds a Level 3 list from the serialized 17-item catalog, active section placement,
+    /// and current PokeManager stock. This method does not mutate stock, catalog, or UI state.
+    /// </summary>
+    public bool TryBuildLevel3ShoppingTasks(out List<ShoppingTaskItem> tasks)
+    {
+        tasks = new List<ShoppingTaskItem>();
+        if (gameObject.scene.name != "Scene-level-3")
+            return false;
+
+        PokeManager stock = PokeManager.Instance;
+        if (stock == null || stock.gameObject.scene != gameObject.scene)
+            stock = FindObjectsByType<PokeManager>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
+                .FirstOrDefault(manager => manager != null && manager.gameObject.scene == gameObject.scene);
+        Transform supermarket = gameObject.scene.GetRootGameObjects().FirstOrDefault(root => root.name == "supermarket")?.transform;
+        Transform inventory = supermarket != null ? supermarket.Find("ShoppingInventory") : null;
+        if (stock == null || inventory == null || availablePrefabs == null)
+            return false;
+
+        // Resolve identity-to-section from the active collectible representatives in the scene.
+        Dictionary<string, string> sectionByIdentity = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (SelectableItem product in inventory.GetComponentsInChildren<SelectableItem>(false))
+        {
+            if (product == null || !product.isActiveAndEnabled || string.IsNullOrWhiteSpace(product.itemName))
+                continue;
+            Level3StockFacing facing = product.GetComponent<Level3StockFacing>();
+            if (facing != null && !facing.IsStockOwner)
+                continue;
+
+            Transform section = product.transform;
+            while (section.parent != null && section.parent != inventory)
+                section = section.parent;
+            if (section.parent == inventory && !sectionByIdentity.ContainsKey(product.itemName))
+                sectionByIdentity.Add(product.itemName, section.name);
+        }
+
+        Dictionary<string, List<(GameObject view, int available)>> bySection = new Dictionary<string, List<(GameObject, int)>>(StringComparer.Ordinal);
+        HashSet<string> seenIdentities = new HashSet<string>(StringComparer.Ordinal);
+        foreach (GameObject view in availablePrefabs)
+        {
+            if (view == null || !seenIdentities.Add(view.name) || !sectionByIdentity.TryGetValue(view.name, out string sectionName))
+                continue;
+            int available = stock.GetAvailableQuantity(view.name);
+            if (available < 1)
+                continue;
+            if (!bySection.TryGetValue(sectionName, out List<(GameObject view, int available)> candidates))
+            {
+                candidates = new List<(GameObject view, int available)>();
+                bySection.Add(sectionName, candidates);
+            }
+            candidates.Add((view, available));
+        }
+
+        if (bySection.Count < 7)
+            return false;
+
+        List<string> sections = bySection.Keys.ToList();
+        for (int i = sections.Count - 1; i > 0; i--)
+        {
+            int swap = UnityEngine.Random.Range(0, i + 1);
+            (sections[i], sections[swap]) = (sections[swap], sections[i]);
+        }
+
+        int itemCount = Mathf.Min(bySection.Count, Mathf.Clamp(spawnOnStart, 7, 8));
+        for (int i = 0; i < itemCount; i++)
+        {
+            List<(GameObject view, int available)> candidates = bySection[sections[i]];
+            (GameObject view, int available) selected = candidates[UnityEngine.Random.Range(0, candidates.Count)];
+            int maximumQuantity = Mathf.Min(9, selected.available);
+            int quantity = UnityEngine.Random.Range(1, maximumQuantity + 1);
+            tasks.Add(new ShoppingTaskItem(selected.view.name, quantity) { viewPrefab = selected.view });
+        }
+        return tasks.Count >= 7 && tasks.Count <= 8;
     }
 
     /// <summary>Manual request; retained for NoticeBoardButtonFunction and NpcActionDispatcher.</summary>
@@ -195,9 +285,24 @@ public class ListController : MonoBehaviour
     {
         if (availablePrefabs.Count == 0 || listContainer == null)
             return;
+        int maximumQuantity = 9;
+        if (limitLegacyListToAvailableStock)
+        {
+            // PokeManager owns stock; initialize lazily if its Start has not run yet.
+            // Opt in per scene so Levels 1 and 2 retain existing list behavior.
+            PokeManager stock = PokeManager.Instance;
+            availablePrefabs.RemoveAll(view => view == null || stock == null ||
+                stock.gameObject.scene != gameObject.scene ||
+                stock.GetAvailableQuantity(view.name) < 1);
+            if (availablePrefabs.Count == 0)
+                return;
+        }
         int randomIndex = UnityEngine.Random.Range(0, availablePrefabs.Count);
         GameObject prefab = availablePrefabs[randomIndex];
-        ConfigureItemView(Instantiate(prefab, listContainer.transform), prefab.name, UnityEngine.Random.Range(1, 10));
+        if (limitLegacyListToAvailableStock)
+            maximumQuantity = Mathf.Min(maximumQuantity, PokeManager.Instance.GetAvailableQuantity(prefab.name));
+        ConfigureItemView(Instantiate(prefab, listContainer.transform), prefab.name,
+            UnityEngine.Random.Range(1, maximumQuantity + 1));
         availablePrefabs.RemoveAt(randomIndex);
     }
 

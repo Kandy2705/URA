@@ -70,9 +70,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3d221d7b6045c4b5da56618788d4a553, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2018599439322516246}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3d221d7b6045c4b5da56618788d4a553, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 4222242375264458680}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3d221d7b6045c4b5da56618788d4a553, type: 3}
       insertIndex: -1
@@ -88,35 +85,13 @@ PrefabInstance:
       addedObject: {fileID: 3161235045981965677}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3d221d7b6045c4b5da56618788d4a553, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3124779998262712013}
+      addedObject: {fileID: 3329669740707284666}
   m_SourcePrefab: {fileID: 100100000, guid: 3d221d7b6045c4b5da56618788d4a553, type: 3}
 --- !u!1 &729532372818562987 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3d221d7b6045c4b5da56618788d4a553, type: 3}
   m_PrefabInstance: {fileID: 495035327953679098}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &2018599439322516246
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 729532372818562987}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 7462647758340724096, guid: 5c8f96298e6c8429aa1b4dc4095fcc96, type: 3}
 --- !u!114 &4222242375264458680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,6 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "Ch\u1EA3o"
   price: 39000
+  stockQuantity: 1
 --- !u!54 &7328819013473419787
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -138,10 +114,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 729532372818562987}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 2.5
-  m_Drag: 0.5
-  m_AngularDrag: 1
+  m_LinearDamping: 0.5
+  m_AngularDamping: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -156,8 +132,8 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 1
-  m_Constraints: 126
-  m_CollisionDetection: 1
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!114 &6381431206919043553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,7 +147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 3329669740707284666}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -212,7 +189,7 @@ MonoBehaviour:
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -227,7 +204,7 @@ MonoBehaviour:
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -254,24 +231,27 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
+  m_AutoFindParentInteractableInHierarchy: 0
+  m_ParentInteractableObject: {fileID: 0}
   m_AttachTransform: {fileID: 0}
   m_SecondaryAttachTransform: {fileID: 0}
-  m_UseDynamicAttach: 0
+  m_UseDynamicAttach: 1
   m_MatchAttachPosition: 1
   m_MatchAttachRotation: 1
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 2
+  m_MovementType: 0
+  m_PredictedVisualsTransform: {fileID: 0}
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
-  m_TrackPosition: 0
+  m_TrackPosition: 1
   m_SmoothPosition: 0
   m_SmoothPositionAmount: 8
   m_TightenPosition: 0.1
-  m_TrackRotation: 0
+  m_TrackRotation: 1
   m_SmoothRotation: 0
   m_SmoothRotationAmount: 8
   m_TightenRotation: 0.1
@@ -279,7 +259,7 @@ MonoBehaviour:
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
   m_TightenScale: 0.1
-  m_ThrowOnDetach: 1
+  m_ThrowOnDetach: 0
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2
@@ -304,6 +284,10 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 0
+  m_LimitLinearVelocity: 0
+  m_LimitAngularVelocity: 0
+  m_MaxLinearVelocityDelta: 10
+  m_MaxAngularVelocityDelta: 20
 --- !u!114 &2011390097468738511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,15 +314,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9abb89d3a20de6e4eb1087c5cfa40c4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3124779998262712013
-MonoBehaviour:
+--- !u!65 &3329669740707284666
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 729532372818562987}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f32cd547aa38a346ad7fce7343830ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 3
+  m_Size: {x: 0.6574479, y: 0.12064874, z: 1.0220033}
+  m_Center: {x: 0, y: 0.06032437, z: -0.19836426}

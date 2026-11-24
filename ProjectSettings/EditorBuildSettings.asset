@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Scene-level-2.unity
     guid: 86a3c92e8a4c18f41bc349478e739183
   - enabled: 1
+    path: Assets/Scenes/Scene-level-3.unity
+    guid: 08bb52a779e664ba19388f798a64b9a6
+  - enabled: 1
     path: Assets/Scenes/Dress_Game.unity
     guid: adbfef4c5ad208746b8ccac084571322
   m_configObjects:

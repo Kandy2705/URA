@@ -96,6 +96,26 @@ public class PaymentManager : MonoBehaviour
         WireConfirmButton();
     }
 
+    private void OnDestroy() { if (Instance == this) Instance = null; }
+
+    private void OnDisable()
+    {
+        if (gameObject.scene.name != "Scene-level-3" || !isResolvingPayment || paymentConfirmed)
+            return;
+
+        // Unity stops this component's coroutines when it is disabled. Restore a retryable
+        // payment session and the Level 3 movement state instead of leaving checkout stuck.
+        isResolvingPayment = false;
+        checkoutSessionActive = true;
+        if (paymentUiRoot != null) paymentUiRoot.SetActive(true);
+        UpdateUI();
+
+        VRCheckoutTeleport checkout = FindObjectsByType<VRCheckoutTeleport>(FindObjectsSortMode.None)
+            .FirstOrDefault(candidate => candidate.gameObject.scene == gameObject.scene);
+        if (checkout != null && checkout.CheckoutStarted)
+            checkout.UnlockPlayer();
+    }
+
     private void Start()
     {
         RegisterExistingMoneyItems();
@@ -277,6 +297,7 @@ public class PaymentManager : MonoBehaviour
 
     public void ResetMoney()
     {
+        if (gameObject.scene.name == "Scene-level-3" && (paymentConfirmed || isResolvingPayment)) return;
         if (!checkoutSessionActive && !paymentConfirmed)
         {
             RebuildWalletState();
@@ -341,6 +362,8 @@ public class PaymentManager : MonoBehaviour
 
     private void BeginCheckoutSession()
     {
+        if (gameObject.scene.name == "Scene-level-3" &&
+            (checkoutSessionActive || isResolvingPayment || paymentConfirmed)) return;
         ResolveRuntimeReferences();
         checkoutSessionActive = true;
         isResolvingPayment = false;
@@ -362,9 +385,10 @@ public class PaymentManager : MonoBehaviour
     {
         Debug.Log($"[PaymentManager] ConfirmPayment() được gọi! checkoutSessionActive={checkoutSessionActive}, currentAmount={currentAmount}, requiredAmount={requiredAmount}");
 
-        if (isResolvingPayment)
+        if (isResolvingPayment || (gameObject.scene.name == "Scene-level-3" && paymentConfirmed))
             return;
 
+        if (gameObject.scene.name == "Scene-level-3" && !checkoutSessionActive) return;
         if (!checkoutSessionActive)
         {
             Debug.Log("[PaymentManager] Phiên thanh toán chưa mở -> Tự động kích hoạt phiên thanh toán.");
@@ -445,10 +469,19 @@ public class PaymentManager : MonoBehaviour
 
     private void FinalizePayment()
     {
+        if (gameObject.scene.name == "Scene-level-3" && paymentConfirmed) return;
         paymentConfirmed = true;
         isResolvingPayment = false;
         checkoutSessionActive = false;
         lastPaymentSummary = BuildPaymentSummary();
+
+        if (gameObject.scene.name == "Scene-level-3")
+        {
+            VRCheckoutTeleport checkout = FindObjectsByType<VRCheckoutTeleport>(FindObjectsSortMode.None)
+                .FirstOrDefault(candidate => candidate.gameObject.scene == gameObject.scene);
+            if (checkout != null && checkout.CheckoutStarted)
+                checkout.UnlockPlayer();
+        }
 
         if (DataManager.Instance != null)
         {
@@ -457,7 +490,9 @@ public class PaymentManager : MonoBehaviour
         } 
 
         ListResultCompare[] listResultCompares = FindObjectsOfType<ListResultCompare>(true);
-        ListResultCompare listResultCompare = listResultCompares.Length > 0 ? listResultCompares[0] : null;
+        ListResultCompare listResultCompare = gameObject.scene.name == "Scene-level-3"
+            ? listResultCompares.FirstOrDefault(c => c.gameObject.scene == gameObject.scene && c.listController != null && c.listController.HasListContainer)
+            : (listResultCompares.Length > 0 ? listResultCompares[0] : null);
         if (listResultCompare != null)
         {
             listResultCompare.FinalizeResultsForReport();
@@ -470,6 +505,7 @@ public class PaymentManager : MonoBehaviour
         MonoBehaviour[] behaviours = FindObjectsOfType<MonoBehaviour>(true);
         foreach (MonoBehaviour behaviour in behaviours)
         {
+            if (gameObject.scene.name == "Scene-level-3") break;
             if (behaviour == null || behaviour.GetType().Name != "Level2MllmDialogueBridge")
                 continue;
 
@@ -483,10 +519,29 @@ public class PaymentManager : MonoBehaviour
             paymentUiRoot.SetActive(false);
 
         UpdateUI();
+        if (gameObject.scene.name == "Scene-level-3") ShowLevel3Result(listResultCompare);
 
         Debug.Log(
             $"[PaymentManager] Đã chốt thanh toán | required={requiredAmount:N0} | paid={currentAmount:N0} | " +
             $"result={lastPaymentSummary.resultCode} | note={lastPaymentSummary.note}");
+    }
+
+    private void ShowLevel3Result(ListResultCompare results)
+    {
+        bool complete = results != null && results.compareResults.Exists(r => r.required) &&
+            results.compareResults.TrueForAll(r => r.required
+                ? r.currentQuantity == r.expectedQuantity : r.currentQuantity == 0);
+        if (paymentUiRoot != null) paymentUiRoot.SetActive(true);
+        if (requiredAmountText != null)
+            requiredAmountText.text = currentAmount < requiredAmount ? "Payment failed" :
+                (complete ? "Level 3 complete" : "Shopping incomplete");
+        if (currentAmountText != null)
+        {
+            string detail = $"Paid: {currentAmount:N0} / {requiredAmount:N0}\nChange: {Mathf.Max(0, currentAmount-requiredAmount):N0}";
+            if (results != null) foreach (CompareResult row in results.compareResults)
+                detail += $"\n{row.itemName}: {row.currentQuantity}/{row.expectedQuantity}";
+            currentAmountText.text = detail;
+        }
     }
 
     private PaymentSummary BuildPaymentSummary()

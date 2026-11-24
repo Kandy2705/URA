@@ -8,12 +8,14 @@ public class SelectableItem : MonoBehaviour
     [Min(1)] public int stockQuantity = 1;
     
 
+    private bool registered;
     void Start() {
-        ItemsManager.RegisterSelectableItem(this);
+        var facing = GetComponent<Level3StockFacing>();
+        if (facing == null || facing.IsStockOwner) { ItemsManager.RegisterSelectableItem(this); registered = true; }
     }
 
     void OnDestroy() {
-        ItemsManager.UnregisterSelectableItem(this);
+        if (registered) ItemsManager.UnregisterSelectableItem(this);
     }
 #if UNITY_EDITOR
     // Fast task-testing fallback. It deliberately uses the same inventory path as XR poke
@@ -25,3 +27,5 @@ public class SelectableItem : MonoBehaviour
     }
 #endif
 }
+
+

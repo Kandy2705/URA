@@ -14,10 +14,12 @@ public class DataManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            if (gameObject.scene.name != "Scene-level-3") DontDestroyOnLoad(gameObject);
         }
         else Destroy(gameObject);
     }
+    private void OnDestroy() { if (Instance == this) Instance = null; }
+
     private List<CompareResult> compareResults = new List<CompareResult>();
     private PaymentSummary paymentSummary;
     private List<int> submitted_amounts_history = new List<int>();
@@ -139,8 +141,8 @@ public class DataManager : MonoBehaviour
         Debug.Log($"[DataManager] CSV report saved at: {path}");
         using (StreamWriter writer = new StreamWriter(path, false))
         {
-            writer.WriteLine($"Participant ID,{GameSessionContext.Instance.citizenId}");
-            writer.WriteLine($"Level,{GameSessionContext.Instance.level}");
+            writer.WriteLine($"Participant ID,{(GameSessionContext.Instance != null ? GameSessionContext.Instance.citizenId : string.Empty)}");
+            writer.WriteLine($"Level,{(GameSessionContext.Instance != null ? GameSessionContext.Instance.level.ToString() : gameObject.scene.name)}");
 
             writer.WriteLine("Booth Type,Visit Count");
             writer.WriteLine($"Fruits,{num_visit_fruits}");
