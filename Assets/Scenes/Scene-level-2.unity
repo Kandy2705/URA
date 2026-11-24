@@ -6915,6 +6915,10 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3487411923840087517, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3487411923840087517, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
       propertyPath: question01SO
       value: 
       objectReference: {fileID: 11400000, guid: d7c7b4a5967e49643b88295d99ec071b, type: 2}
@@ -6971,6 +6975,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1583323122}
     - target: {fileID: 3487411923840087517, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
+      propertyPath: questionPool.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3487411923840087517, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
       propertyPath: 'questions.Array.data[0]'
       value: 1
       objectReference: {fileID: 0}
@@ -6990,6 +6998,26 @@ PrefabInstance:
       propertyPath: 'questions.Array.data[4]'
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 3487411923840087517, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
+      propertyPath: 'questionPool.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 55e46fbf2167ae2409e87e42f3733320, type: 2}
+    - target: {fileID: 3487411923840087517, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
+      propertyPath: 'questionPool.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 87c004de83e861f40846b3bd6c3b967a, type: 2}
+    - target: {fileID: 3487411923840087517, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
+      propertyPath: 'questionPool.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: b9761f125296c4e4fba8ad1668e9d317, type: 2}
+    - target: {fileID: 3487411923840087517, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
+      propertyPath: 'questionPool.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: f4fff13a2b0795041b3833cd904737cf, type: 2}
+    - target: {fileID: 3487411923840087517, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
+      propertyPath: 'questionPool.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 26a41dfd0a4729146adc0c876f208826, type: 2}
     - target: {fileID: 3571672220033537945, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
       value: 0.23137255
@@ -7057,6 +7085,10 @@ PrefabInstance:
     - target: {fileID: 4781612990119409267, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.00009947455
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781612990478361680, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4781612990478361685, guid: 4e2a080f451604b4ab9158a4c8726741, type: 3}
       propertyPath: m_Color.a

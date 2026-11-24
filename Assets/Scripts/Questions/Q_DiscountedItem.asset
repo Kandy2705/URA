@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 979ee6dc74ee8774eb657d1acb39e23f, type: 3}
-  m_Name: Question 6
-  m_EditorClassIdentifier: Assembly-CSharp::DynamicQuestionSO
-  questionTemplate: "B\u1EA1n c\xF3 ho\xE0n th\xE0nh nhi\u1EC7m v\u1EE5 ph\u1EE5
-    kh\xF4ng ?"
+  m_Script: {fileID: 11500000, guid: f5ec269b812dfd6408d6a32c353229cd, type: 3}
+  m_Name: Q_DiscountedItem
+  m_EditorClassIdentifier: Assembly-CSharp::DiscountedItemQuestionSO
+  questionTemplate: "M\xF3n n\xE0o \u0111ang \u0111\u01B0\u1EE3c gi\u1EA3m gi\xE1
+    ?"
   answerFormat: '{Value}'

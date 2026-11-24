@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 public class PokeManager : MonoBehaviour
 {
@@ -115,7 +116,6 @@ public class PokeManager : MonoBehaviour
         if (DataManager.Instance != null)
         {
             DataManager.Instance.updateTime(item.itemName);
-            Survey.updateShoppingHist(item.itemName);
         }
 
         UpdateInventoryView();
@@ -161,6 +161,7 @@ public class PokeManager : MonoBehaviour
     }
     public void ClearCart()
     {
+        Survey.updateShoppingHist(inventory.Keys.ToList());
         inventory.Clear();
 
         UpdateInventoryView();
